@@ -3,8 +3,10 @@ $black: #000000;
 $gray: #686868; //disabled(the same color)
 $red: #ff0000;
 $primary: #444DF2; //active(the same color)
-$active: #797EF3;
+$primary-hover: #797EF3;
 $secondary: #535AF1;
-$bg-color: #ECEEFE; //main color
-$gray-light: #ADB0D9 //button border and other elements
+$bg-color: #ECEEFE; //main color also input color(Anmeldung)
+$gray-light: #ADB0D9; //button border and other elements
+$start-color: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
+
 
