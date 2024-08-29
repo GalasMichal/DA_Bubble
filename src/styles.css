@@ -7,6 +7,7 @@
   box-sizing: border-box;
   /* border: solid 1px */
 }
+
 /*
     2. Remove default margin
   */
@@ -14,6 +15,7 @@
   margin: 0;
   padding: 0;
 }
+
 /*
     Typographic tweaks!
     3. Add accessible line-height
@@ -28,6 +30,7 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
 /*
     5. Improve media defaults
   */
@@ -39,6 +42,7 @@ svg {
   display: block;
   max-width: 100%;
 }
+
 /*
     6. Remove built-in form typography styles
   */
@@ -49,6 +53,7 @@ select {
   border: unset;
   font: inherit;
 }
+
 /*
     7. Avoid text overflows
   */
@@ -61,15 +66,11 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+
 /*
     8. Create a root stacking context
   */
 #root,
 #__next {
   isolation: isolate;
-}
-
-$b-radius-1: 1.875rem;  //30px
-$b-radius-2: 3.125rem  //50px
-
-
+}/*# sourceMappingURL=styles.css.map */
