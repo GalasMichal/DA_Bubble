@@ -1,3 +1,5 @@
+@import '../../colors.scss';
+
 @font-face {
   font-family: 'Nunito', sans-serif;
   font-style: normal;
@@ -10,7 +12,7 @@ body {
 }
 
 h2 {
-  color: #444df2;
+  color: $primary;
   font-size: 2.875rem;
   font-weight: 700;
 }
@@ -25,7 +27,7 @@ h2 {
 .login-section {
   width: 100%;
   height: 100vh;
-  background-color: #eceefe;
+  background-color: $bg-color;
 }
 
 .form-title {
@@ -45,7 +47,7 @@ h2 {
   flex-direction: column;
   width: 37.875rem;
   height: 48.0625rem;
-  background-color: #ffffff; 
+  background-color: $white; 
   border-radius: 4%;
 }
 
@@ -57,7 +59,7 @@ h2 {
   width: 31.25rem;
   height: 13.875rem;
   >a {
-    color: #797ef3;
+    color: $primary-hover;
     text-decoration: none;
     &:hover {
       color: #313ae6;
@@ -82,7 +84,7 @@ h2 {
   font-family: 'Nunito', sans-serif;
   width: 31.25rem;
   height: 3.07rem;
-  background-color: #eceefe;
+  background-color: $bg-color;
   border-radius: 50px;
   margin-bottom: 35px;
 }
@@ -104,7 +106,7 @@ h2 {
   margin-right: auto;
   text-align: center;
   justify-content: center;
-  border-bottom: 1px solid #adb0d9;
+  border-bottom: 1px solid $primary-light;
 }
 
 .sep-line-txt {
@@ -113,7 +115,7 @@ h2 {
   display: flex;
   gap: 10px;
   margin-top: 3%;
-  background-color: white;
+  background-color: $white;
   height: 35px;
 }
 
@@ -126,7 +128,7 @@ h2 {
   padding: 11px 32px 11px 32px;
   display: flex;
   gap: 10px;
-  background-color: #eceefe;
+  background-color: $bg-color;
   border-radius: 40px;
   margin-top: 4.5%;
   cursor: pointer;
@@ -169,22 +171,22 @@ h2 {
 
 .login-btn {
   color: white;
-  background-color: #444df2;
+  background-color: $primary;
   &:hover {
-    background-color: #797ef3;
+    background-color: $primary-hover;
     color: #313ae6;
   }
 }
 
 .guest-btn {
   width: 10.5625rem;
-  border: 1px solid #444df2;
-  color: #444df2;
-  background-color: white;
+  border: 1px solid $primary;
+  color: $primary;
+  background-color: $white;
   justify-content: center;
   &:hover {
-    background-color: #797ef3;
-    color: black
+    background-color: $primary-hover;
+    color: $black
   }
 }
 
@@ -199,8 +201,8 @@ h2 {
     text-decoration: none;
     cursor: pointer;
     &:hover {
-      color: #797ef3;
-      border: #797ef3 1px solid;
+      color: $primary-hover;
+      border: $primary-hover 1px solid;
       border-radius: 30px;
     }
   }
