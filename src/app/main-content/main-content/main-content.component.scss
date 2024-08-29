@@ -1,0 +1,32 @@
+@import './../../../colors.scss';
+
+.content-container{
+  background-color: $bg-color;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.sidenav-content {
+
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.side-nav-wrapper{
+  width: 22.875rem;
+  padding: 2rem 1.875rem;
+  height: 100%;
+}
+
+
+.sidenav {
+
+  margin: .9375rem .9375rem;
+  height: 100%;
+
+}
