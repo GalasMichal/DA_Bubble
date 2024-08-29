@@ -1,0 +1,261 @@
+@import '../../colors.scss';
+
+@font-face {
+  font-family: 'Nunito', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  src: local(''), url('../../assets/fonts/Nunito/Nunito-VariableFont_wght.ttf') format('ttf');
+} 
+
+@font-face {
+  font-family: 'Figtree', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  src: local(''), url('../../assets/fonts/Figtree/Figtree-VariableFont_wght.ttf') format('ttf');
+} 
+
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h2 {
+  color: $primary;
+  font-size: 2.875rem;
+  font-weight: 700;
+}
+
+.ml-mr-auto {
+  margin-left: auto;
+  margin-right: auto;  
+}
+
+/* CONTENT */
+
+.login-section {
+  width: 100%;
+  height: 100vh;
+  background-color: $bg-color;
+}
+
+.form-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 9.5%;
+  gap: 8px;
+  width: 27.75rem;
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.form-container {
+  scale: 0.8;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 37.875rem;
+  height: 48.0625rem;
+  background-color: $white; 
+  border-radius: 4%;
+}
+
+.input-container {
+  margin-top: -2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 31.25rem;
+  height: 13.875rem;
+  >a {
+    color: $primary-hover;
+    text-decoration: none;
+    &:hover {
+      color: #313ae6;
+    }
+  }
+}
+
+.input-field-mail-icon {
+  background-image: url('../../assets/media/icons/mail-icon-input-field.svg');
+}
+
+.input-field-pwd-icon {
+  background-image: url('../../assets/media/icons/pwd-lock-icon-input-field.svg');
+}
+
+.input-field {
+  background-repeat: no-repeat;
+  background-position: left 30px top 50%;
+  padding-left: 85px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  font-family: 'Nunito', sans-serif;
+  width: 31.25rem;
+  height: 3.07rem;
+  background-color: $bg-color;
+  border-radius: 50px;
+  margin-bottom: 35px;
+}
+
+.icon-input {
+  width: 24px;
+  height: 24px;
+}
+
+/* SEPERATOR LINE */
+
+.seperator-container {
+  width: 31.25rem;
+  height: 1.875rem;
+  display: flex;
+  // margin-top: -17%;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  justify-content: center;
+  border-bottom: 1px solid $primary-light;
+}
+
+.sep-line-txt {
+  border-radius: 30px;
+  padding: 5px 15px 5px 15px;
+  display: flex;
+  gap: 10px;
+  margin-top: 3%;
+  background-color: $white;
+  height: 35px;
+}
+
+/* GOOGLE BUTTON */
+
+.google-btn-container {
+  width: 31.25rem;
+  height: 3.75rem;
+  border: 0px 0px 1px 0px;
+  padding: 11px 32px 11px 32px;
+  display: flex;
+  gap: 10px;
+  background-color: $bg-color;
+  border-radius: 40px;
+  margin-top: 4.5%;
+  cursor: pointer;
+  >a {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.google-logo {
+  width: 38px;
+  height: 38px;
+  margin-right: 16px;
+}
+
+/* LOGIN BUTTONS */
+
+.btn-container {
+  width: 21rem;
+  height: 3.0625rem;
+  display: flex;
+  gap: 30px;
+  margin-top: 9%;
+  >a {
+    text-decoration: none;
+  }
+} 
+
+.login-btn, .guest-btn {
+  font-weight: 700;
+  font-size: 1.125rem;
+  cursor: pointer;
+  width: 8.5625rem;
+  height: 3.0625rem;
+  display: flex;
+  gap: 10px;
+  padding: 12px 25px 12px 25px;
+  border-radius: 25px;
+}
+
+.login-btn {
+  color: white;
+  background-color: $primary;
+  &:hover {
+    background-color: $primary-hover;
+    color: #313ae6;
+  }
+}
+
+.guest-btn {
+  width: 10.5625rem;
+  border: 1px solid $primary;
+  color: $primary;
+  background-color: $white;
+  justify-content: center;
+  &:hover {
+    background-color: $primary-hover;
+    color: $black
+  }
+}
+
+/* LEGAL IMPRINT -LINKS*/
+
+.legal-imprint-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: -10px;
+  >a {
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      color: $primary-hover;
+      border: $primary-hover 1px solid;
+      border-radius: 30px;
+    }
+  }
+}
+
+/**/
+
+.logo-container {
+  padding-top: 45px;
+}
+
+.logo {
+  width: 242.11px;
+  height: 70px;
+  // padding-left: 75px;
+}
+
+/* HEADER -login */
+
+.header-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: end;
+  gap: 62%;
+}
+
+.new-user-link {
+  >p {
+    font-weight: 400;
+    font-size: 1.125rem;
+    line-height: 24.55px;
+    color: $black;
+  }
+  >a {
+    font-family: 'Figtree', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 21.6px;
+    color: $primary-hover;
+    text-decoration: none;
+  }
+}
