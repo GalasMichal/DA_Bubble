@@ -6,9 +6,10 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 
 export const routes: Routes = [
+
   { path: 'main', component: MainContentComponent },
   { path: '', component: MenuSideLeftComponent },
   { path: 'legal', component: LegalComponent },
   { path: 'imprint', component: ImprintComponent },
-  { path: 'register', component: RegisterUserComponent },
+  { path: 'register', component: RegisterUserComponent }
 ];

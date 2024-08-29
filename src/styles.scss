@@ -1,3 +1,4 @@
+
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
@@ -30,6 +31,7 @@ $DA_Bubble-theme: mat.define-light-theme((color: (primary: $DA_Bubble-primary,
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($DA_Bubble-theme);
+@import './colors.scss';
 
 @font-face {
   font-family: 'Nunito', sans-serif;
@@ -65,7 +67,7 @@ body {
   font-family: 'Nunito', sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  background-color: #f5f5f5;
+
 }
 
 html {
@@ -116,6 +118,7 @@ h6 {
   isolation: isolate;
 }
 
+
 $b-radius-1: 1.875rem; //30px
 $b-radius-2: 3.125rem; //50px
 
@@ -123,6 +126,7 @@ $b-radius-2: 3.125rem; //50px
 
   html, body {
   height: 100%;
+
 }
 
 body {

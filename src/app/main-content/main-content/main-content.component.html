@@ -1,1 +1,15 @@
+<mat-drawer-container class="content-container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side">
+    <div class="side-nav-wrapper">
+      <nav> <img src="assets/media/icons/workspace-logo.svg" alt="logo navbar" srcset=""> </nav>
 
+    </div>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <button type="button-sidenav-toggle" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+  </div>
+
+</mat-drawer-container>
