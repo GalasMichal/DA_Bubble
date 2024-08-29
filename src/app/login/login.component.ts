@@ -7,7 +7,10 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: [
+    './login.component.scss',
+    './login.component.media.scss'
+  ]
 })
 export class LoginComponent {
 
