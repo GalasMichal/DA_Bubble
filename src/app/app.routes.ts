@@ -3,6 +3,6 @@ import { MainContentComponent } from './main-content/main-content/main-content.c
 import { MenuSideLeftComponent } from './main-content/menu-side-left/menu-side-left/menu-side-left.component';
 
 export const routes: Routes = [
-  { path: 'main', component: MainContentComponent },
-  { path: '', component: MenuSideLeftComponent },
+  { path: '', component: MainContentComponent },
+  
 ];
