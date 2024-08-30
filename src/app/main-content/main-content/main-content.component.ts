@@ -8,6 +8,7 @@ import {
   MatTreeModule,
 } from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -21,11 +22,15 @@ interface ExampleFlatNode {
 @Component({
   selector: 'app-main-content',
   standalone: true,
-  imports: [MatSidenavModule, MatButtonModule],
+  imports: [MatSidenavModule, MatButtonModule, CommonModule],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
 export class MainContentComponent {
+  isFirstDropdownMenuOpen = false ;
 
+  toogleDropDown1(){
+    this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
+  }
 }
 

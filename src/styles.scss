@@ -128,9 +128,13 @@ h6 {
   isolation: isolate;
 }
 
+ul {
+  list-style-type: none;
+}
 
 $b-radius-1: 1.875rem; //30px
 $b-radius-2: 3.125rem; //50px
+$b-radius-3: 1.25rem;  // 20px
 
 html,
 body {
