@@ -1,5 +1,6 @@
 @import '../../colors.scss';
 
+
 @font-face {
   font-family: 'Nunito', sans-serif;
   font-style: normal;
@@ -41,6 +42,7 @@ h2 {
   width: 100%;
   height: 100vh;
   background-color: $bg-color;
+  margin-top: -30px;
 }
 
 .form-title {
