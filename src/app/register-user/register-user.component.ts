@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { MaterialModule } from '../shared/component/material/material.module';
+
 
 @Component({
   selector: 'app-register-user',
