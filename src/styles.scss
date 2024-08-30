@@ -36,6 +36,7 @@ $DA_Bubble-theme: mat.define-light-theme(
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($DA_Bubble-theme);
+
 @import './colors.scss';
 
 @font-face {
