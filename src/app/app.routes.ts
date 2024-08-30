@@ -5,6 +5,7 @@ import { LegalComponent } from './legal/legal.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { LoginComponent } from './login/login.component';
+import { CreateAvatarComponent } from './create-avatar/create-avatar.component';
 
 export const routes: Routes = [
 
@@ -21,4 +22,5 @@ export const routes: Routes = [
   { path: 'login/legal', component: LegalComponent },
   { path: 'login/register/legal', component: LegalComponent },
   { path: 'login/imprint', component: ImprintComponent },
+  { path: 'create', component: CreateAvatarComponent },
 ];

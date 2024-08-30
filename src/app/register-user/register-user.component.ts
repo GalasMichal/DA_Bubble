@@ -8,13 +8,14 @@ import { MaterialModule } from '../shared/component/material/material.module';
 @Component({
   selector: 'app-register-user',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, MaterialModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './register-user.component.html',
   styleUrls: [
     './register-user.component.scss',
     './register-user.component.media.scss',
   ]
 })
+
 export class RegisterUserComponent {
 
 }
