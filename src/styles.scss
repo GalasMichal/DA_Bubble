@@ -69,6 +69,10 @@ $DA_Bubble-theme: mat.define-light-theme(
     3. Add accessible line-height
     4. Improve text rendering
   */
+app-main-content{
+  flex: 1;
+}
+
 body {
   font-family: "Nunito", sans-serif;
   line-height: 1.5;
@@ -137,3 +141,6 @@ body {
 body {
   margin: 0;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

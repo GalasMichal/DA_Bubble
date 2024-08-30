@@ -14,6 +14,12 @@ export const routes: Routes = [
   { path: 'imprint/legal', component: LegalComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'legal/imprint', component: ImprintComponent },
-  { path: 'register', component: RegisterUserComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterUserComponent },
+  { path: 'login/register', component: RegisterUserComponent },
+  { path: 'login/register/login', component: LoginComponent },
+  { path: 'login/register/legal', component: LegalComponent },
+  { path: 'login/register/imprint', component: ImprintComponent },
+  { path: 'login/legal', component: LegalComponent },
+  { path: 'login/imprint', component: ImprintComponent },
 ];
