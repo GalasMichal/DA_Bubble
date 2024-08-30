@@ -9,16 +9,17 @@ import { LoginComponent } from './login/login.component';
 export const routes: Routes = [
 
   { path: '', component: MainContentComponent },
-  { path: 'login/', component: MainContentComponent },
-  { path: 'login/register/', component: MainContentComponent },
   { path: 'menu', component: MenuSideLeftComponent },
   { path: 'legal', component: LegalComponent },
   { path: 'imprint/legal', component: LegalComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'legal/imprint', component: ImprintComponent },
-  { path: 'login/register', component: RegisterUserComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'login/legal', component: LegalComponent },
+  { path: 'register', component: RegisterUserComponent },
+  { path: 'login/register', component: RegisterUserComponent },
+  { path: 'login/register/login', component: LoginComponent },
   { path: 'login/register/legal', component: LegalComponent },
+  { path: 'login/register/imprint', component: ImprintComponent },
+  { path: 'login/legal', component: LegalComponent },
   { path: 'login/imprint', component: ImprintComponent },
 ];

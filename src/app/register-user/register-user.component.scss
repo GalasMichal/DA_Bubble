@@ -158,14 +158,18 @@ h2 {
 }
 
 .login-btn {
-  color: white;
-  background-color: $primary;
+  background-color: $primary !important;
+  >a {
+    color: $white !important;
+  }  
   &:hover {
-    background-color: $primary-hover;
-    color: #313ae6;
+    background-color: $primary-hover !important;
   }
 }
 
+.login-a {
+  text-decoration: none;
+}
 
 /* LEGAL IMPRINT -LINKS*/
 
