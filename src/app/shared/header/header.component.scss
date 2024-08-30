@@ -38,6 +38,14 @@ header {
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
+    .user-avatar {
+      position: relative;
+      .online {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+    }
     span {
         font-weight: 700;
     }
