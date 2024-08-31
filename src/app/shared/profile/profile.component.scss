@@ -1,0 +1,62 @@
+@import "./../../../colors.scss";
+@import "./../../../styles.scss";
+
+.profile-card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  width: 300px;
+  height: 600px;
+  text-align: center;
+  position: relative;
+  .profil {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+      color: $black;
+    }
+    button {
+      background-color: transparent;
+      cursor: pointer;
+      border-radius: $b-radius-2;
+      &:hover {
+        background-color: $bg-color;
+      }
+      &:hover svg path {
+        fill: $primary-hover;
+      }
+    }
+  }
+
+  img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+  }
+
+  .status {
+    color: green;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .email {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+  }
+
+  .edit {
+    font-size: 14px;
+    color: #3b82f6;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+  }
+}
