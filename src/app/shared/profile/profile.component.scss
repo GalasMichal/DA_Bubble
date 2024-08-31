@@ -6,8 +6,8 @@
   flex-direction: column;
   gap: 2rem;
   padding: 35px;
-  width: 500px;
-  height: 600px;
+  // width: 500px;
+  // height: 600px;
   .profil {
     display: flex;
     justify-content: space-between;
@@ -61,15 +61,18 @@
   
   .e-mail {
     display: flex;
+    align-items: flex-start;
     gap: 1rem;
     div {
       display: flex;
       flex-direction: column;
+      gap: 1rem;
       span {
         color: $black;
       }
       a {
         text-decoration: none;
+        color: $e-mail;
       }
     }
   }
@@ -81,10 +84,10 @@
   .mat-mdc-dialog-container
   .mdc-dialog__container
   .mat-mdc-dialog-surface {
-  border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
-  height: 9rem;
-  width: 13rem;
-  position: absolute;
-  top: 6.25rem;
-  right: 2.5rem;
+    border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
+    position: absolute;
+    width: 500px;
+    height: 600px;
+    top: 6.25rem;
+    right: 2.5rem;
 }

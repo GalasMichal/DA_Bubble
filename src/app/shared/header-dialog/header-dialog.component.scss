@@ -51,7 +51,8 @@ mat-dialog-content {
   .custom-container
   .mat-mdc-dialog-container
   .mdc-dialog__container
-  .mat-mdc-dialog-surface {
+  .mat-mdc-dialog-surface
+  {
   border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
   height: 9rem;
   width: 13rem;
