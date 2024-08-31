@@ -17,7 +17,6 @@ mat-dialog-content {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    color: $black;
     width: 100%;
     li {
       display: flex;
@@ -29,9 +28,17 @@ mat-dialog-content {
       height: 2.1875rem;
       border-radius: $b-radius-1;
       &:hover {
-        color: $primary;
-        background-color: $bg-color;
-        transform: scale(1.01);
+          background-color: $bg-color;
+          transform: scale(1.01);
+        }
+        &:hover a{
+          color: $primary;
+
+      }
+      a {
+        color: $black;
+        text-decoration: none;
+        border: none;
       }
     }
   }
