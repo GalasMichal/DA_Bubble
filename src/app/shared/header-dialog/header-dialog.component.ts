@@ -20,7 +20,7 @@ export class HeaderDialogComponent {
 
   openDialog() {
     this.dialog.open(ProfileComponent), {
-      panelClass: 'customContainer',
+      panelClass: 'profile-container',
     }
   }
 

@@ -2,13 +2,12 @@
 @import "./../../../styles.scss";
 
 .profile-card {
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 35px;
+  width: 500px;
   height: 600px;
-  text-align: center;
-  position: relative;
   .profil {
     display: flex;
     justify-content: space-between;
@@ -29,34 +28,63 @@
     }
   }
 
-  img {
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
+  .avatar {
+    display: flex;
+    justify-content: center;
+    img {
+      height: 200px;
+    }
   }
 
-  h2 {
-    font-size: 1.5em;
-    margin: 10px 0;
+  .name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 {
+      margin: 0;
+    }
+    a {
+      text-decoration: none;
+      color: $primary;
+    }
   }
 
-  .status {
-    color: green;
-    font-size: 14px;
-    margin-bottom: 10px;
+  .active {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    span {
+      color: $active;
+    }
   }
+  
+  .e-mail {
+    display: flex;
+    gap: 1rem;
+    div {
+      display: flex;
+      flex-direction: column;
+      span {
+        color: $black;
+      }
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
 
-  .email {
-    font-size: 14px;
-    color: #666;
-    text-decoration: none;
-  }
 
-  .edit {
-    font-size: 14px;
-    color: #3b82f6;
-    text-decoration: none;
-    margin-top: 10px;
-    display: inline-block;
-  }
+::ng-deep
+  .profile-container
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
+  height: 9rem;
+  width: 13rem;
+  position: absolute;
+  top: 6.25rem;
+  right: 2.5rem;
 }
