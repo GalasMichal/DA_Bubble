@@ -39,6 +39,9 @@ mat-dialog-content {
         color: $black;
         text-decoration: none;
         border: none;
+        &:focus-visible {
+            outline: none;
+        }
       }
     }
   }
