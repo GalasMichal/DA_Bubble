@@ -13,11 +13,6 @@ import { HeaderComponent } from '../../shared/header/header.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 
-
-
-
-
-
 @Component({
   selector: 'app-main-content',
   standalone: true,
