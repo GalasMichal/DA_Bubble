@@ -1,19 +1,5 @@
 @import '../../colors.scss';
 
-@font-face {
-  font-family: 'Nunito', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  src: local(''), url('../../assets/fonts/Nunito/Nunito-VariableFont_wght.ttf') format('ttf');
-} 
-
-@font-face {
-  font-family: 'Figtree', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  src: local(''), url('../../assets/fonts/Figtree/Figtree-VariableFont_wght.ttf') format('ttf');
-} 
-
 body {
   font-family: 'Nunito', sans-serif;
   margin: 0;
