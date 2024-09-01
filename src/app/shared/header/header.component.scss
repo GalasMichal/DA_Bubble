@@ -59,6 +59,12 @@ header {
   }
 }
 
+app-header-dialog{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 @media (max-width: 900px) {
   header {
     .user {
