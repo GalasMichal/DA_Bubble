@@ -1,0 +1,139 @@
+@import "./../../../colors.scss";
+@import "./../../../styles.scss";
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 35px;
+  .profil {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+      font-size: 1.5rem;
+      color: $black;
+    }
+    button {
+      background-color: transparent;
+      cursor: pointer;
+      border: none;
+      border-radius: $b-radius-2;
+      &:hover {
+        background-color: $bg-color;
+      }
+      &:hover svg path {
+        fill: $primary-hover;
+      }
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+
+  .avatar {
+    display: flex;
+    justify-content: center;
+    img {
+      height: 200px;
+    }
+  }
+
+  .name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    button {
+      background-color: transparent;
+      cursor: pointer;
+      &:hover span {
+        transform: scale(1.02);
+      }
+      span {
+        display: block;
+        text-decoration: none;
+        color: $primary;
+        transform: scale(1);
+        transition: transform 175ms ease-in-out;
+      }
+      img {
+        display: none;
+      }
+    }
+  }
+
+  .active {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    span {
+      color: $active;
+    }
+  }
+
+  .e-mail {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      span {
+        font-size: 1.25rem;
+        color: $black;
+      }
+      a {
+        font-size: 1.125rem;
+        text-decoration: none;
+        color: $e-mail;
+      }
+    }
+  }
+}
+
+::ng-deep
+  .profile-container
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
+  position: absolute;
+  width: 500px;
+  height: 600px;
+  top: 6.25rem;
+  right: 2.5rem;
+}
+
+@media (max-width: 500px) {
+  .profile-card {
+    .name {
+      button {
+        span {
+          display: none;
+        }
+        img {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  ::ng-deep
+    .profile-container
+    .mat-mdc-dialog-container
+    .mdc-dialog__container
+    .mat-mdc-dialog-surface {
+    border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
+    position: absolute;
+    width: 500px;
+    height: 600px;
+    top: auto;
+    right: auto;
+  }
+}
