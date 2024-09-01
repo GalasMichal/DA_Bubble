@@ -27,7 +27,7 @@ mat-dialog-content {
       height: 2.1875rem;
       border-radius: $b-radius-1;
       &:hover {
-        background-color: $bg-color;
+        background: $bg-color;
         transform: scale(1.05);
       }
       &:hover a {
@@ -40,7 +40,7 @@ mat-dialog-content {
         color: $black;
         width: 100%;
         height: 100%;
-        background-color: transparent;
+        background: none;
         cursor: pointer;
         &:focus-visible {
           outline: none;

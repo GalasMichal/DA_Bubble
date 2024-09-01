@@ -20,7 +20,7 @@ export class ProfileComponent {
 
   openDialogEdit() {
     this.editDialog.open(EditProfileComponent, {
-      panelClass: 'profile-container', // Custom class for profile dialog
+      panelClass: 'edit-profile-container', // Custom class for profile dialog
     });
   }
 

@@ -10,17 +10,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    span {
+    h1 {
       font-size: 1.5rem;
+      font-weight: 500;
       color: $black;
+      margin: 0;
     }
     button {
-      background-color: transparent;
+      background: none;
       cursor: pointer;
       border: none;
       border-radius: $b-radius-2;
       &:hover {
-        background-color: $bg-color;
+        background: $bg-color;
       }
       &:hover svg path {
         fill: $primary-hover;
@@ -46,9 +48,10 @@
     h2 {
       margin: 0;
       font-size: 2rem;
+      font-weight: 500;
     }
     button {
-      background-color: transparent;
+      background: none;
       cursor: pointer;
       &:hover span {
         transform: scale(1.02);

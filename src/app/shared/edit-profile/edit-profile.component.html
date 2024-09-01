@@ -1,6 +1,6 @@
 <mat-dialog-content class="profile-card">
     <div class="profil">
-        <span>Profil</span>
+        <h1>Dein Profil bearbeiten</h1>
         <button (click)="closeDialogEdit()">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
                 <mask id="mask0_422_2036" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
@@ -17,24 +17,33 @@
         <img src="./assets/media/icons/profile-icons/user-3-frederick.svg" alt="Profile Picture">
     </div>
 
-    <div class="name">
-        <h2>Frederik TEST</h2>
-        <button>
-            <span>Bearbeiten</span>
-            <img src="./assets/media/icons/edit.svg" alt="edit">
-        </button>
-    </div>
 
-    <div class="active">
-        <img src="./assets/media/icons/online-without-circle.svg" alt="active">
-        <span class="status">Aktive</span>
-    </div>
-
-    <div class="e-mail">
-        <img src="./assets/media/icons/mail.svg" alt="email" srcset="">
-        <div>
-            <span>E-Mail-Adresse</span>
-            <a href="mailto:" class="email">fred.beckemail.com</a>
+    <div class="edit">
+        <div class="edit-title">
+            <img src="./assets/media/icons/account-profil.svg" alt="email" srcset="">
+            <span>Vollständiger Name</span>
         </div>
+
+        <input type="text" placeholder="Name">
+
+    </div>
+
+    <div class="edit">
+        <div class="edit-title">
+            <img src="./assets/media/icons/mail.svg" alt="email" srcset="">
+            <span>E-Mail-Adresse</span>
+        </div>
+
+        <input type="text" placeholder="E-Mail">
+
+    </div>
+
+    <div class="buttons">
+        <button (click)="closeDialogEdit()">
+            Abbrechen
+        </button>
+        <button (click)="saveDialogEdit()">
+            Speichern
+        </button>
     </div>
 </mat-dialog-content>

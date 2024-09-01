@@ -21,4 +21,9 @@ export class EditProfileComponent {
   closeDialogEdit() {
     this.dialog.close()
   }
+
+  saveDialogEdit() {
+    this.closeDialogEdit()
+  }
+
 }
