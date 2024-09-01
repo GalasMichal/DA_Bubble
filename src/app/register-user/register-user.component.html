@@ -1,16 +1,15 @@
 <section class="login-section">
 
     <div class="logo-container">
-      <a routerLink="main">
+      <a routerLink="">
         <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
       </a>
     </div>
 
- 
   <div class="form-container ml-mr-auto">
     <div style="padding-top: 2%;">
       <div class="arrow-back-container">
-        <a routerLink="main">
+        <a href="login">
           <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
         </a>
         <h2>Konto erstellen</h2>
@@ -22,7 +21,6 @@
     <form >
       <div class="input-container ml-mr-auto"> 
         <input id="name" name="name" class="input-field input-field-user-icon" minlength="3" type="text" placeholder="Name und Nachname" required>
-        <!--  <span *ngIf="!name.valid && name.touched" class="span-warning">Bitte Feld ausfüllen.</span> -->
         <input class="input-field input-field-mail-icon" type="text" placeholder="beispielname@email.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" required />
         <input class="input-field input-field-pwd-icon" minlength="8" type="password" placeholder="Passwort"  required />
       </div>
@@ -34,13 +32,13 @@
       <label for="checkbox">Ich stimme der <a href="legal">Datenschutzerklärung</a> zu.</label>
     </div>
     <div class="btn-container ml-mr-auto">
-      <a class="login-btn" href="#">Weiter</a>
+      <a class="login-btn" href="create">Weiter</a>
     </div>
 
   </div>
   
   <div class="legal-imprint-container ml-mr-auto">
-    <a routerLink="imprint">Impressum</a>
-    <a routerLink="legal">Datenschutz</a>
+    <a href="imprint">Impressum</a>
+    <a href="legal">Datenschutz</a>
   </div>
 </section>

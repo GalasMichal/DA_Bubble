@@ -2,10 +2,11 @@
 @import "./../../../styles.scss";
 
 header {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: .5rem;
+  gap: 0.5rem;
   width: 100%;
   a {
     width: 22.875rem; //366px
@@ -47,13 +48,33 @@ header {
       }
     }
     span {
-        font-weight: 700;
+      font-weight: 700;
     }
-    &:hover span{
+    &:hover span {
       color: $primary-hover;
     }
-    &:hover svg path{
+    &:hover svg path {
       fill: $primary-hover;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  header {
+    .user {
+      width: 6.375rem;
+      height: 4rem;
+      span {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  header {
+    .search-container {
+      display: none;
     }
   }
 }
