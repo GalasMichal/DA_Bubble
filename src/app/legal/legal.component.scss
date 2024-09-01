@@ -1,5 +1,4 @@
 body {
-  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,6 +6,7 @@ body {
   margin: 0;
 
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -21,9 +21,11 @@ body {
   text-align: center;
   margin-bottom: 8%;
 }
+
 h1, h2 {
   color: #333;
 }
+
 p {
   color: #666;
   line-height: 1.6;
