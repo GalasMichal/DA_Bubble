@@ -15,16 +15,21 @@
           <div class="channels">
             <div class="channels-navbar">
               <div class="channels-navbar-left-container">
-                <img (click)="toogleDropDown1()" class="drop-down" src="assets/media/icons/arrow-drop-down.svg" alt="drop-down-menu" srcset="">
+                <img (click)="toogleDropDown1()" class="drop-down" src="assets/media/icons/arrow-drop-down.svg"
+                  alt="drop-down-menu" srcset="">
                 <img src="assets/media/icons/workspaces.svg" alt="" srcset="">
                 <div>Channels</div>
               </div>
               <img src="assets/media/icons/add-black.svg" alt="" srcset="">
             </div>
-              <div [ngStyle]="{'display': isFirstDropdownMenuOpen? 'flex' : 'none'}" class="channels-content">
+            <div class="channels-content" [class.animate]="isFirstDropdownMenuOpen">
+              <div>
                 <div># channel 1</div>
                 <div># channel 2</div>
               </div>
+
+
+            </div>
           </div>
         </div>
       </div>
