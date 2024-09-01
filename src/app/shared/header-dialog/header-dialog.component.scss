@@ -71,7 +71,7 @@ mat-dialog-content {
   border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
   height: 9rem;
   width: 13rem;
-  position: absolute;
+  position: fixed;
   top: 6.25rem;
   right: 2.5rem;
 }
@@ -86,6 +86,17 @@ mat-dialog-content {
     height: 9rem;
     width: 13rem;
     position: absolute;
+    top: auto;
+    right: auto;
+  }
+}
+
+@media (min-width: 1920px) {
+  ::ng-deep
+    .custom-container
+    .mat-mdc-dialog-container
+    .mdc-dialog__container
+    .mat-mdc-dialog-surface {
     top: auto;
     right: auto;
   }

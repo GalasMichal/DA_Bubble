@@ -140,3 +140,15 @@
     right: auto;
   }
 }
+
+
+@media (min-width: 1920px) {
+  ::ng-deep
+    .profile-container
+    .mat-mdc-dialog-container
+    .mdc-dialog__container
+    .mat-mdc-dialog-surface {
+    top: auto;
+    right: auto;
+  }
+}
