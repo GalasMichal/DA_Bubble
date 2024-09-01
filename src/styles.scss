@@ -47,12 +47,13 @@
 
 @import './colors.scss';
 
-@font-face {
+
+.font-nunito {
   font-family: "Nunito", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  src: local(""),
-    url("./assets/fonts/Nunito/Nunito-VariableFont_wght.ttf") format("ttf");
+}
+
+.font-figtree {
+  font-family: "Figtree", sans-serif;
 }
 
 /*
@@ -86,7 +87,12 @@ body {
   font-family: "Nunito", sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
 
+html,
+body {
+  height: 100%;
 }
 
 html {
@@ -144,16 +150,3 @@ ul {
 $b-radius-1: 1.875rem; //30px
 $b-radius-2: 3.125rem; //50px
 $b-radius-3: 1.25rem;  // 20px
-
-html,
-body {
-  height: 100%;
-
-}
-
-body {
-  margin: 0;
-}
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
