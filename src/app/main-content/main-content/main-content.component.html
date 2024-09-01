@@ -1,36 +1,42 @@
-<mat-drawer-container class="content-container" autosize>
-  <mat-drawer #drawer class="sidenav" mode="side">
-    <div class="side-nav-wrapper">
-      <nav>
-        <div>
-          <img src="assets/media/icons/workspace-logo.svg" alt="logo navbar" srcset="">
-          <h2>Devspace</h2>
-        </div>
-        <img src="assets/media/icons/edit-square.svg" alt="" srcset="">
-      </nav>
-      <div class="content-wrapper">
-        <div class="channels">
-          <div class="channels-navbar">
-            <div class="channels-navbar-left-container">
-              <img (click)="toogleDropDown1()" class="drop-down" src="assets/media/icons/arrow-drop-down.svg" alt="drop-down-menu" srcset="">
-              <img src="assets/media/icons/workspaces.svg" alt="" srcset="">
-              <div>Channels</div>
-            </div>
-            <img src="assets/media/icons/add-black.svg" alt="" srcset="">
+<div class="wrapper">
+  <app-header></app-header>
+
+  <mat-drawer-container class="content-container" autosize>
+    <mat-drawer #drawer class="sidenav" mode="side">
+      <div class="side-nav-wrapper">
+        <nav>
+          <div>
+            <img src="assets/media/icons/workspace-logo.svg" alt="logo navbar" srcset="">
+            <h2>Devspace</h2>
           </div>
-            <div [ngStyle]="{'display': isFirstDropdownMenuOpen? 'flex' : 'none'}" class="channels-content">
-              <div># channel 1</div>
-              <div># channel 2</div>
+          <img src="assets/media/icons/edit-square.svg" alt="" srcset="">
+        </nav>
+        <div class="content-wrapper">
+          <div class="channels">
+            <div class="channels-navbar">
+              <div class="channels-navbar-left-container">
+                <img (click)="toogleDropDown1()" class="drop-down" src="assets/media/icons/arrow-drop-down.svg" alt="drop-down-menu" srcset="">
+                <img src="assets/media/icons/workspaces.svg" alt="" srcset="">
+                <div>Channels</div>
+              </div>
+              <img src="assets/media/icons/add-black.svg" alt="" srcset="">
             </div>
+              <div [ngStyle]="{'display': isFirstDropdownMenuOpen? 'flex' : 'none'}" class="channels-content">
+                <div># channel 1</div>
+                <div># channel 2</div>
+              </div>
+          </div>
         </div>
       </div>
+    </mat-drawer>
+
+    <div class="sidenav-content">
+      <button type="button-sidenav-toggle" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </button>
     </div>
-  </mat-drawer>
 
-  <div class="sidenav-content">
-    <button type="button-sidenav-toggle" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
-    </button>
-  </div>
+  </mat-drawer-container>
 
-</mat-drawer-container>
+
+</div>
