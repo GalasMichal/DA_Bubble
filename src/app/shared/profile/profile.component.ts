@@ -10,7 +10,7 @@ import {MatButtonModule} from '@angular/material/button';
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
-  dialog = inject(MatDialogRef <ProfileComponent>)
+  readonly dialog = inject(MatDialogRef <ProfileComponent>)
 
   closeDialogProfile() {
     this.dialog.close()
