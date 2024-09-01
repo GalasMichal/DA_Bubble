@@ -5,14 +5,13 @@
   background-color: $bg-color;
   width: 100%;
   height: 100%;
+  
 }
 
 .sidenav-content {
   display: flex;
-  height: 100%;
   width: 100%;
-  align-items: center;
-  justify-content: center;
+  height: 100%;
 
 }
 
@@ -59,7 +58,7 @@
 
 
 .sidenav {
-  margin: .9375rem .9375rem;
+  margin: 1.5625rem 0;
   border-radius: $b-radius-1;
 }
 
@@ -68,6 +67,10 @@
   flex-direction: column;
   padding: 0 .625rem ;
   gap: 1.5625rem;
+}
+
+.drop-down{
+  transform: rotate(-90deg);
 }
 
 .channels-navbar {
@@ -89,6 +92,13 @@
   }
 }
 
+.main-render-content{
+  display: flex;
+  width: 100%;
+
+  background-color: $white;
+}
+
 .content-wrapper{
   height: 100%;
 }
@@ -97,7 +107,6 @@
   display: grid;
   grid-template-rows: 0fr;
   padding-left: 10px;
-  
   transition: grid-template-rows 500ms;
    >div {
     overflow: hidden;

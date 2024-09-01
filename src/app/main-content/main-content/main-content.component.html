@@ -2,7 +2,7 @@
   <app-header></app-header>
 
   <mat-drawer-container class="content-container" autosize>
-    <mat-drawer #drawer class="sidenav" mode="side">
+    <mat-drawer #drawer class="sidenav padding-r-1" mode="side">
       <div class="side-nav-wrapper">
         <nav>
           <div>
@@ -15,7 +15,7 @@
           <div class="channels">
             <div class="channels-navbar">
               <div class="channels-navbar-left-container">
-                <img (click)="toogleDropDown1()" class="drop-down" src="assets/media/icons/arrow-drop-down.svg"
+                <img (click)="toogleDropDown1()"  [ngClass]="{'drop-down': isFirstDropdownMenuOpen}" src="assets/media/icons/arrow-drop-down.svg"
                   alt="drop-down-menu" srcset="">
                 <img src="assets/media/icons/workspaces.svg" alt="" srcset="">
                 <div>Channels</div>
@@ -36,9 +36,11 @@
     </mat-drawer>
 
     <div class="sidenav-content">
-      <button type="button-sidenav-toggle" mat-button (click)="drawer.toggle()">
-        Toggle sidenav
-      </button>
+      <div class="sidenav main-render-content">
+        <button type="button-sidenav-toggle" mat-button (click)="drawer.toggle()">
+          Toggle sidenav
+        </button>
+      </div>
     </div>
 
   </mat-drawer-container>
