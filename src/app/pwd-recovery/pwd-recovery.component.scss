@@ -1,0 +1,203 @@
+@import '../../colors.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h2 {
+  color: $primary;
+  font-size: 2.875rem;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.ml-mr-auto {
+  margin-left: auto;
+  margin-right: auto;  
+}
+
+/* CONTENT */
+
+.arrow-back-container {
+  height: 40px;
+  display: flex;
+  /* gap: 15%; */
+  margin-left: 1%;
+  align-items: center;
+  margin-top: 7%;
+  /* width: 9%; */
+  word-break: break-word;
+  text-align: center;
+  padding-top: 2%;
+  >a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.login-section {
+  width: 100%;
+  height: 100vh;
+  background-color: $bg-color;
+  margin-left: 50%;
+}
+
+.form-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 17%;
+  gap: 8px;
+  width: 27.75rem;
+  text-align: center;
+  margin-bottom: 35px;
+  >p {
+    font-size: 20px;
+  }
+}
+
+.form-container {
+  scale: 0.8;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 37.875rem;
+  height: 34.8125rem;
+  background-color: $white; 
+  border-radius: 4%;
+}
+
+.input-container {
+  margin-top: -2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 31.25rem;
+  height: 13.875rem;
+  margin-top: 31px;
+  >a {
+    color: $primary-hover;
+    text-decoration: none;
+    &:hover {
+      color: #313ae6;
+    }
+  }
+}
+
+.input-field-mail-icon {
+  background-image: url('../../assets/media/icons/mail-icon-input-field.svg');
+}
+
+.input-field-pwd-icon {
+  background-image: url('../../assets/media/icons/pwd-lock-icon-input-field.svg');
+}
+
+.input-field-user-icon {
+  background-image: url('../../assets/media/icons/user-icon.svg');
+}
+
+.input-field {
+  background-repeat: no-repeat;
+  background-position: left 30px top 50%;
+  padding-left: 85px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  width: 31.25rem;
+  height: 3.07rem;
+  background-color: $bg-color;
+  border-radius: 50px;
+  margin-bottom: 35px;
+}
+
+.icon-input {
+  width: 24px;
+  height: 24px;
+}
+
+/* LOGIN BUTTONS */
+
+.btn-container {
+  width: 21rem;
+  height: 3.0625rem;
+  display: flex;
+  justify-content: end;
+  margin-top: 9%;
+  margin-left: 34%;
+  >a {
+    text-decoration: none;
+    justify-content: center;
+  }
+} 
+
+.login-btn {
+  font-weight: 700;
+  font-size: 1.125rem;
+  cursor: pointer;
+  width: 8.5625rem;
+  height: 3.0625rem;
+  display: flex;
+  gap: 10px;
+  padding: 12px 25px 12px 25px;
+  border-radius: 25px;
+}
+
+.login-btn {
+  color: white;
+  background-color: $primary;
+  margin-right: 4%;
+  &:hover {
+    background-color: $primary-hover;
+    color: #313ae6;
+  }
+}
+
+
+/* LEGAL IMPRINT -LINKS*/
+
+.legal-imprint-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: -10px;
+  >a {
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      color: $primary-hover;
+      border: $primary-hover 1px solid;
+      border-radius: 30px;
+    }
+  }
+}
+
+/**/
+
+.logo-container {
+  padding-top: 45px;
+}
+
+.logo {
+  cursor: pointer;
+  width: 242.11px;
+  height: 70px;
+  // padding-left: 75px;
+}
+
+/**/
+
+.check-container {
+  display: flex;
+  gap: 8px;
+  // margin-left: -29%;
+  flex-direction: column;
+  text-align: center;
+}
+
+.input-field-mail-icon {
+  background-image: url('../../assets/media/icons/mail-icon-input-field.svg');
+}
