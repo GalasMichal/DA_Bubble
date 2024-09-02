@@ -22,9 +22,12 @@ export const routes: Routes = [
   { path: 'login/register/login', component: LoginComponent },
   { path: 'login/legal', component: LegalComponent },
   { path: 'login/register/legal', component: LegalComponent },
+  { path: 'login/register/create/legal', component: LegalComponent },
   { path: 'login/register/imprint', component: ImprintComponent },
+  { path: 'login/register/create/imprint', component: ImprintComponent },
   { path: 'login/imprint', component: ImprintComponent },
   { path: 'login/register/create', component: CreateAvatarComponent },
+  { path: 'login/register/create/login', component: LoginComponent },
 ];
 
 // { path: '', component: MainContentComponent },
