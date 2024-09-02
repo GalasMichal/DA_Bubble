@@ -20,11 +20,18 @@ h2 {
   margin-right: auto;  
 }
 
+.app-login {
+  max-width: 1920px;
+  width: 100%;
+  height: 100vh;
+}
+
 /* CONTENT */
 
 .login-section {
-  width: 100%;
-  height: 100vh;
+  width: 100% !important;
+  // width: 112.1875rem;
+  height: 100vh !important;
   background-color: $bg-color;
 }
 
@@ -48,6 +55,8 @@ h2 {
   height: 48.0625rem;
   background-color: $white; 
   border-radius: 4%;
+  // scale: 0.5;
+  margin-top: -2%;
 }
 
 .input-container {
@@ -194,7 +203,8 @@ h2 {
   display: flex;
   justify-content: center;
   gap: 30px;
-  margin-top: -10px;
+  margin-top: 21px;
+  // padding-bottom: 9%;
   >a {
     text-decoration: none;
     cursor: pointer;
