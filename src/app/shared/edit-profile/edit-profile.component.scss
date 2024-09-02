@@ -36,7 +36,7 @@
     display: flex;
     justify-content: center;
     img {
-        height: 200px;
+      height: 200px;
     }
   }
   .edit {
@@ -95,6 +95,14 @@
   }
 }
 
+::ng-deep .cdk-global-overlay-wrapper {
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
 ::ng-deep
   .edit-profile-container
   .mat-mdc-dialog-container
@@ -122,17 +130,6 @@
     }
   }
 
-  ::ng-deep
-    .edit-profile-container
-    .mat-mdc-dialog-container
-    .mdc-dialog__container
-    .mat-mdc-dialog-surface {
-    top: auto;
-    right: auto;
-  }
-}
-
-@media (min-width: 1920px) {
   ::ng-deep
     .edit-profile-container
     .mat-mdc-dialog-container
