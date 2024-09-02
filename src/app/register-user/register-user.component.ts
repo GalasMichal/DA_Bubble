@@ -1,8 +1,8 @@
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { MaterialModule } from '../material/material.module';
+import { MaterialModule } from '../shared/component/material/material.module';
 
 
 @Component({
@@ -15,6 +15,7 @@ import { MaterialModule } from '../material/material.module';
     './register-user.component.media.scss',
   ]
 })
+
 export class RegisterUserComponent {
 
 }

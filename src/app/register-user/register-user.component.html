@@ -24,7 +24,6 @@
     <form >
       <div class="input-container ml-mr-auto"> 
         <input id="name" name="name" class="input-field input-field-user-icon" minlength="3" type="text" placeholder="Name und Nachname" required>
-        <!--  <span *ngIf="!name.valid && name.touched" class="span-warning">Bitte Feld ausfüllen.</span> -->
         <input class="input-field input-field-mail-icon" type="text" placeholder="beispielname@email.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" required />
         <input class="input-field input-field-pwd-icon" minlength="8" type="password" placeholder="Passwort"  required />
       </div>
@@ -36,6 +35,9 @@
       <label for="checkbox">Ich stimme der <a href="legal">Datenschutzerklärung</a> zu.</label>
     </div>
     <div class="btn-container ml-mr-auto">
+
+      <a class="login-btn" href="create">Weiter</a>
+
       <!-- <button class="login-btn" mat-raised-button>
         <a class="login-a" href="#">Weiter</a>
       </button> -->
@@ -43,7 +45,6 @@
       <a class="login-a" href="#" title="Weiter - Registrierung">
         <button class="login-btn" mat-raised-button>Weiter</button>
       </a>
-
     </div>
 
   </div>

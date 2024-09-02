@@ -1,0 +1,30 @@
+/*
+IMPORTANTE
+
+always import what you need
+(at top of *.scss)
+-> @import '../../colors.scss';
+-> @import './fonts-global.scss';
+*/
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/Nunito/Nunito-VariableFont_wght.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/Figtree/Figtree-VariableFont_wght.ttf") format("ttf");
+}
+
+.fontNunito, .font-nunito {
+  font-family: "Nunito";
+}
+
+.font-figtree {
+  font-family: "Figtree";
+}
