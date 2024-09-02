@@ -18,7 +18,6 @@
     }
     button {
       background: none;
-      cursor: pointer;
       border: none;
       border-radius: $b-radius-2;
       &:hover {
@@ -37,7 +36,7 @@
     display: flex;
     justify-content: center;
     img {
-        height: 200px;
+      height: 200px;
     }
   }
   .edit {
@@ -81,7 +80,6 @@
         color: $primary;
         border: solid 0.0625rem $secondary;
         outline: $secondary;
-        cursor: pointer;
         &:hover {
             color: $white;
             background: $primary;
@@ -90,12 +88,19 @@
     button:nth-of-type(2) {
         background: $primary;
         color: $white;
-        cursor: pointer;
         &:hover {
             background: $primary-hover;
         }
     }
   }
+}
+
+::ng-deep .cdk-global-overlay-wrapper {
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
 }
 
 ::ng-deep
@@ -125,17 +130,6 @@
     }
   }
 
-  ::ng-deep
-    .edit-profile-container
-    .mat-mdc-dialog-container
-    .mdc-dialog__container
-    .mat-mdc-dialog-surface {
-    top: auto;
-    right: auto;
-  }
-}
-
-@media (min-width: 1920px) {
   ::ng-deep
     .edit-profile-container
     .mat-mdc-dialog-container
