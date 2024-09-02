@@ -19,10 +19,12 @@ export const routes: Routes = [
   { path: 'legal/imprint', component: ImprintComponent },
   { path: 'login/register', component: RegisterUserComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'login/register/login', component: LoginComponent },
   { path: 'login/legal', component: LegalComponent },
   { path: 'login/register/legal', component: LegalComponent },
+  { path: 'login/register/imprint', component: ImprintComponent },
   { path: 'login/imprint', component: ImprintComponent },
-  { path: 'create', component: CreateAvatarComponent },
+  { path: 'login/register/create', component: CreateAvatarComponent },
 ];
 
 // { path: '', component: MainContentComponent },
