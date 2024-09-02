@@ -1,21 +1,6 @@
 @import '../../colors.scss';
 
-@font-face {
-  font-family: 'Nunito', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  src: local(''), url('../../assets/fonts/Nunito/Nunito-VariableFont_wght.ttf') format('ttf');
-} 
-
-@font-face {
-  font-family: 'Figtree', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  src: local(''), url('../../assets/fonts/Figtree/Figtree-VariableFont_wght.ttf') format('ttf');
-} 
-
 body {
-  font-family: 'Nunito', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -85,7 +70,6 @@ h2 {
   padding-left: 85px;
   padding-top: 18px;
   padding-bottom: 18px;
-  font-family: 'Nunito', sans-serif;
   width: 25rem;
   height: 3.625rem;
   background-color: $bg-color;
