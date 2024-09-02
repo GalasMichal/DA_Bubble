@@ -18,7 +18,6 @@
     }
     button {
       background: none;
-      cursor: pointer;
       border: none;
       border-radius: $b-radius-2;
       &:hover {
@@ -81,7 +80,6 @@
         color: $primary;
         border: solid 0.0625rem $secondary;
         outline: $secondary;
-        cursor: pointer;
         &:hover {
             color: $white;
             background: $primary;
@@ -90,7 +88,6 @@
     button:nth-of-type(2) {
         background: $primary;
         color: $white;
-        cursor: pointer;
         &:hover {
             background: $primary-hover;
         }

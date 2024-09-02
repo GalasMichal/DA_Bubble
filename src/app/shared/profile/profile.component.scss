@@ -18,7 +18,6 @@
     }
     button {
       background: none;
-      cursor: pointer;
       border: none;
       border-radius: $b-radius-2;
       &:hover {
@@ -52,7 +51,6 @@
     }
     button {
       background: none;
-      cursor: pointer;
       &:hover span {
         transform: scale(1.02);
       }
