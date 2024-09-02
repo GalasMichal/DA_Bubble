@@ -1,33 +1,56 @@
-<mat-drawer-container class="content-container" autosize>
-  <mat-drawer #drawer class="sidenav" mode="side">
-    <div class="side-nav-wrapper">
-      <nav>
-        <div>
-          <img src="assets/media/icons/workspace-logo.svg" alt="logo navbar" srcset="">
-          <h2>Devspace</h2>
-        </div>
-        <img src="assets/media/icons/edit-square.svg" alt="" srcset="">
-      </nav>
-      <div class="content wrapper">
-        <div class="channels">
-          <div class="channels-navbar">
-            <div class="channels-navbar-left-container">
-              <img src="assets/media/icons/arrow-drop-down.svg" alt="drop-down-menu" srcset="">
-              <img src="assets/media/icons/workspaces.svg" alt="" srcset="">
-              <div>Channels</div>
+<div class="wrapper">
+  <app-header></app-header>
+
+  <div class="main-content-container">
+    <div class="sidenav" [class.animate]="isMenuOpen">
+      <div class="side-nav-wrapper">
+        <nav>
+          <div>
+            <img src="assets/media/icons/workspace-logo.svg" alt="logo navbar" srcset="">
+            <h2>Devspace</h2>
+          </div>
+          <img src="assets/media/icons/edit-square.svg" alt="" srcset="">
+        </nav>
+        <div class="content-wrapper">
+          <div class="channels">
+            <div class="channels-navbar">
+              <div class="channels-navbar-left-container">
+                <img (click)="toogleDropDown1()" [ngClass]="{'drop-down': isFirstDropdownMenuOpen}"
+                  src="assets/media/icons/arrow-drop-down.svg" alt="drop-down-menu" srcset="">
+                <img src="assets/media/icons/workspaces.svg" alt="" srcset="">
+                <div class="font-nunito">Channels</div>
+              </div>
+              <img src="assets/media/icons/add-black.svg" alt="" srcset="">
             </div>
-            <img src="" alt="" srcset="">
+            <div class="channels-content" [class.animate]="isFirstDropdownMenuOpen">
+              <div>
+                <div># channel 1</div>
+                <div># channel 2</div>
+              </div>
+
+
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </mat-drawer>
 
-  <div class="sidenav-content">
-    <button type="button-sidenav-toggle" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
-    </button>
+    <div class="main-content">
+      <div class="main-render-content">
+
+
+
+
+        <button (click)="openUserProfile()">
+          Open Dialog User
+        </button>
+
+      </div>
+    </div>
+
+
+
   </div>
 
-
-</mat-drawer-container>
+  <button class="side-menu-btn" (click)="isMenuOpen = !isMenuOpen">Side Menu</button>
+</div>

@@ -28,11 +28,14 @@
             "assets": [
               "src/favicon.ico",
               "src/assets"
+
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss",
-              "src/colors.scss"
+              "src/colors.scss",
+              "src/fonts.scss",
+              "@angular/material/prebuilt-themes/deeppurple-amber.css"
+
             ],
             "scripts": []
           },
@@ -92,14 +95,18 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss",
-              "src/colors.scss"
+              "src/colors.scss",
+              "src/fonts.scss",
+              "@angular/material/prebuilt-themes/deeppurple-amber.css"
             ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

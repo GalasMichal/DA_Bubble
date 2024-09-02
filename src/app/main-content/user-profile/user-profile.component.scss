@@ -1,0 +1,152 @@
+@import "./../../../colors.scss";
+@import "./../../../styles.scss";
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 35px;
+  .profil {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: $black;
+      margin: 0;
+    }
+    button {
+      background: none;
+      cursor: pointer;
+      border: none;
+      border-radius: $b-radius-2;
+      &:hover {
+        background: $bg-color;
+      }
+      &:hover svg path {
+        fill: $primary-hover;
+      }
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+
+  .avatar {
+    display: flex;
+    justify-content: center;
+    img {
+      height: 200px;
+    }
+  }
+
+  .name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 500;
+    }
+    button {
+      background: none;
+      cursor: pointer;
+      &:hover span {
+        transform: scale(1.02);
+      }
+      span {
+        display: block;
+        text-decoration: none;
+        color: $primary;
+        transform: scale(1);
+        transition: transform 175ms ease-in-out;
+      }
+      img {
+        display: none;
+      }
+    }
+  }
+
+  .active {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    span {
+      color: $active;
+    }
+  }
+
+  .e-mail {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      span {
+        font-size: 1.25rem;
+        color: $black;
+      }
+      a {
+        font-size: 1.125rem;
+        text-decoration: none;
+        color: $e-mail;
+      }
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: auto;
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      background: $primary;
+      border-radius: $b-radius-1;
+      max-width: 10.625rem;
+      width: 100%;
+      height: 3.125rem;
+      color: $white;
+      border: solid 0.0625rem $primary;
+      outline: $secondary;
+      cursor: pointer;
+      &:hover {
+        color: $white;
+        background: $secondary;
+      }
+    }
+  }
+}
+
+::ng-deep
+  .user-profile-container
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  border-radius: $b-radius-1;
+  position: absolute;
+  width: 500px;
+  height: 700px;
+}
+
+@media (max-width: 500px) {
+  .profile-card {
+    .name {
+      button {
+        span {
+          display: none;
+        }
+        img {
+          display: flex;
+        }
+      }
+    }
+  }
+}

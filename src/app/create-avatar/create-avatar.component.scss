@@ -1,21 +1,6 @@
 @import '../../colors.scss';
 
-@font-face {
-  font-family: 'Nunito', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  src: local(''), url('../../assets/fonts/Nunito/Nunito-VariableFont_wght.ttf') format('ttf');
-} 
-
-@font-face {
-  font-family: 'Figtree', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  src: local(''), url('../../assets/fonts/Figtree/Figtree-VariableFont_wght.ttf') format('ttf');
-} 
-
 body {
-  font-family: 'Nunito', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -28,7 +13,6 @@ h2 {
   color: $primary;
   font-size: 2.875rem;
   font-weight: 700;
-  font-family: 'Nunito', sans-serif;
   margin-left: -5%;
 }
 
@@ -101,7 +85,6 @@ h2 {
 }
 
 .profile-name {
-  font-family: 'Nunito', sans-serif;
   font-weight: 700;
   font-size: 2rem;
   color: $black;
@@ -110,7 +93,6 @@ h2 {
 }
 
 .profile-name-span {
-  font-family: 'Nunito', sans-serif;
   font-weight: 400;
   font-size: 1.25rem;
   color: $black;
@@ -134,7 +116,6 @@ h2 {
 }
 
 .upload-text {
-  font-family: 'Nunito', sans-serif;
   font-weight: 400;
   font-size: 1.25rem;
   color: $black;
