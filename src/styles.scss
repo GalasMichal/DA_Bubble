@@ -46,9 +46,6 @@
 
 @import './colors.scss';
 
-
-
-
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -81,7 +78,7 @@ app-main-content {
 }
 
 body {
-  // font-family: sans-serif;
+  font-family: sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   margin: 0;

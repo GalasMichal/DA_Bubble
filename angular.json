@@ -35,6 +35,7 @@
               "src/colors.scss",
               "src/fonts.scss",
               "@angular/material/prebuilt-themes/deeppurple-amber.css"
+
             ],
             "scripts": []
           },
@@ -96,6 +97,7 @@
             "styles": [
               "src/styles.scss",
               "src/colors.scss",
+              "src/fonts.scss",
               "@angular/material/prebuilt-themes/deeppurple-amber.css"
             ],
             "scripts": []
