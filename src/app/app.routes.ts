@@ -9,8 +9,8 @@ import { CreateAvatarComponent } from './create-avatar/create-avatar.component';
 
 export const routes: Routes = [
 
-  { path: '', component: MainContentComponent },
-  { path: 'login/', component: MainContentComponent },
+  { path: '', component: LoginComponent },
+  { path: 'main', component: MainContentComponent },
   { path: 'login/register/', component: MainContentComponent },
   { path: 'menu', component: MenuSideLeftComponent },
   { path: 'legal', component: LegalComponent },
@@ -24,3 +24,18 @@ export const routes: Routes = [
   { path: 'login/imprint', component: ImprintComponent },
   { path: 'create', component: CreateAvatarComponent },
 ];
+
+// { path: '', component: MainContentComponent },
+//   { path: 'login/', component: MainContentComponent },
+//   { path: 'login/register/', component: MainContentComponent },
+//   { path: 'menu', component: MenuSideLeftComponent },
+//   { path: 'legal', component: LegalComponent },
+//   { path: 'imprint/legal', component: LegalComponent },
+//   { path: 'imprint', component: ImprintComponent },
+//   { path: 'legal/imprint', component: ImprintComponent },
+//   { path: 'login/register', component: RegisterUserComponent },
+//   { path: 'login', component: LoginComponent },
+//   { path: 'login/legal', component: LegalComponent },
+//   { path: 'login/register/legal', component: LegalComponent },
+//   { path: 'login/imprint', component: ImprintComponent },
+//   { path: 'create', component: CreateAvatarComponent },
