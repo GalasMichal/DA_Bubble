@@ -47,13 +47,7 @@
 @import './colors.scss';
 
 
-.font-nunito {
-  font-family: "Nunito", sans-serif;
-}
 
-.font-figtree {
-  font-family: "Figtree", sans-serif;
-}
 
 /*
   1. Use a more-intuitive box-sizing model.
@@ -87,7 +81,7 @@ app-main-content {
 }
 
 body {
-  font-family: "Nunito", sans-serif;
+  // font-family: sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   margin: 0;

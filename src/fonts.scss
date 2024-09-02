@@ -7,12 +7,20 @@ always import what you need
 -> @import './fonts-global.scss';
 */
 
+.font-nunito {
+  font-family: "Nunito";
+}
+
+.font-figtree {
+  font-family: "Figtree", sans-serif;
+}
+
 @font-face {
-  font-family: "Nunito", sans-serif;
+  font-display: swap;
+  font-family: "Nunito";
   font-style: normal;
   font-weight: 400;
-  src: local(""),
-    url("./assets/fonts/Nunito/Nunito-VariableFont_wght.ttf") format("ttf");
+  src: url("./assets/fonts/Nunito/Nunito-Italic-VariableFont_wght.ttf") format("ttf");
 }
 
 @font-face {
