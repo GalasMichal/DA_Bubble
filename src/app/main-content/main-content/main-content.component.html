@@ -1,8 +1,8 @@
 <div class="wrapper">
   <app-header></app-header>
 
-  <mat-drawer-container class="content-container" autosize>
-    <mat-drawer #drawer class="sidenav" mode="side">
+  <div class="main-content-container">
+    <div class="sidenav" [class.animate]="isMenuOpen">
       <div class="side-nav-wrapper">
         <nav>
           <div>
@@ -15,8 +15,8 @@
           <div class="channels">
             <div class="channels-navbar">
               <div class="channels-navbar-left-container">
-                <img (click)="toogleDropDown1()"  [ngClass]="{'drop-down': isFirstDropdownMenuOpen}" src="assets/media/icons/arrow-drop-down.svg"
-                  alt="drop-down-menu" srcset="">
+                <img (click)="toogleDropDown1()" [ngClass]="{'drop-down': isFirstDropdownMenuOpen}"
+                  src="assets/media/icons/arrow-drop-down.svg" alt="drop-down-menu" srcset="">
                 <img src="assets/media/icons/workspaces.svg" alt="" srcset="">
                 <div class="font-nunito">Channels</div>
               </div>
@@ -33,21 +33,24 @@
           </div>
         </div>
       </div>
-    </mat-drawer>
+    </div>
 
-    <div class="sidenav-content">
-      <div class="sidenav main-render-content">
-        <button type="button-sidenav-toggle" mat-button (click)="drawer.toggle()">
-          Toggle sidenav
+    <div class="main-content">
+      <div class="main-render-content">
+
+
+
+
+        <button (click)="openUserProfile()">
+          Open Dialog User
         </button>
+
       </div>
     </div>
 
-    <button (click)="openUserProfile()">
-      Open Dialog User
-    </button>
-
-  </mat-drawer-container>
 
 
+  </div>
+
+  <button class="side-menu-btn" (click)="isMenuOpen = !isMenuOpen">Side Menu</button>
 </div>
