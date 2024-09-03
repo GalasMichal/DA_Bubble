@@ -43,19 +43,30 @@ p {
   margin-right: auto;  
 }
 
+/* CLOSE BTN */
+
+.close-btn {
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  &:hover {
+    background-color: lightgray;
+  }
+}
+
 /* CONTENT */
 
 .arrow-back-container {
   height: 40px;
   display: flex;
-  /* gap: 15%; */
   margin-left: 1%;
-  align-items: center;
+  // align-items: center;
   margin-top: 7%;
-  /* width: 9%; */
   word-break: break-word;
   text-align: center;
   padding-top: 2%;
+  justify-content: space-between;
   >a {
     text-decoration: none;
     cursor: pointer;
