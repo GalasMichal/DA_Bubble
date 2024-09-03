@@ -13,7 +13,7 @@ import { ChannelCreateComponent } from './shared/component/channel-create/channe
 
 export const routes: Routes = [
 
-  { path: '', component: LoginComponent },
+  { path: 'dummy', component: LoginComponent },
   { path: 'main', component: MainContentComponent },
   { path: 'login/main', component: MainContentComponent },
   { path: 'login/register/', component: MainContentComponent },
@@ -49,7 +49,7 @@ export const routes: Routes = [
   { path: 'recovery/login/main', component: MainContentComponent },
   { path: 'login/register/create', component: CreateAvatarComponent },
   { path: 'login/register/create/login', component: LoginComponent },
-  { path: 'channel', component: ChannelCreateComponent },
+  { path: '', component: ChannelCreateComponent },
   { path: 'channel/main', component: MainContentComponent },
 ];
 
