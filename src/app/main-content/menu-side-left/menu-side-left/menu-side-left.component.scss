@@ -1,0 +1,151 @@
+@import './../../../../colors.scss';
+@import './../../../../styles.scss';
+@import './../../../../fonts.scss';
+
+
+.fontNunito {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 27px;
+}
+
+
+.side-nav-wrapper {
+
+  padding: 2rem 1.875rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5625rem;
+
+  & nav {
+    display: flex;
+    align-items: center;
+    width: 19.125rem;
+    justify-content: space-between;
+
+    & div {
+      display: flex;
+      align-items: center;
+      padding-right: 1.25rem;
+      gap: .9375rem;
+
+      & h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 32.7px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.channels {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5625rem;
+}
+
+.drop-down {
+  transform: rotate(-90deg);
+}
+
+
+.channels-navbar {
+  display: flex;
+  width: 100%;
+
+  padding: .1875rem 0;
+  align-items: center;
+  justify-content: space-between;
+
+  & .channels-navbar-left-container {
+    display: flex;
+    padding: 0.25rem;
+    gap: 1.5625rem;
+    align-items: center;
+
+    >div {
+      margin-top: 3px;
+    }
+
+    & .drop-down {
+      width: .6875rem;
+    }
+  }
+}
+
+.channels-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  padding-left: 10px;
+  transition: grid-template-rows 500ms;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+
+  >div {
+    overflow: hidden;
+    display: flex;
+    gap: 1.5625rem;
+    flex-direction: column;
+    margin-bottom: 1.5625rem;
+  }
+}
+
+.pm-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5625rem;
+
+  >div {
+    >span {
+      margin-top: 3px;
+    }
+  }
+
+  & .user-img {
+    width: 3.125rem;
+    position: relative;
+  }
+}
+
+.padding-l-35 {
+  padding-left: 35px;
+}
+
+.channels-inner-position {
+  display: flex;
+  padding: .25rem 1.75rem;
+  min-width: 12.875rem;
+  gap: 1.5625rem;
+}
+
+.menu-title {
+  display: flex;
+  padding: .25rem;
+  min-width: 12.875rem;
+  gap: 1.3125rem;
+}
+
+.bg-channels {
+  border-radius: $b-radius-3;
+  background-color: $bg-color;
+}
+
+.channels-content.animate {
+  grid-template-rows: 1fr;
+}
+
+.single-user{
+  display: flex;
+  align-items: center;
+  gap: .9375rem;
+}
+
+.online {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+}

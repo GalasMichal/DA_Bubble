@@ -3,36 +3,7 @@
 
   <div class="main-content-container">
     <div class="sidenav" [class.animate]="isMenuOpen">
-      <div class="side-nav-wrapper">
-        <nav>
-          <div>
-            <img src="assets/media/icons/workspace-logo.svg" alt="logo navbar" srcset="">
-            <h2>Devspace</h2>
-          </div>
-          <img src="assets/media/icons/edit-square.svg" alt="" srcset="">
-        </nav>
-        <div class="content-wrapper">
-          <div class="channels">
-            <div class="channels-navbar">
-              <div class="channels-navbar-left-container">
-                <img (click)="toogleDropDown1()" [ngClass]="{'drop-down': isFirstDropdownMenuOpen}"
-                  src="assets/media/icons/arrow-drop-down.svg" alt="drop-down-menu" srcset="">
-                <img src="assets/media/icons/workspaces.svg" alt="" srcset="">
-                <div class="font-nunito">Channels</div>
-              </div>
-              <img src="assets/media/icons/add-black.svg" alt="" srcset="">
-            </div>
-            <div class="channels-content" [class.animate]="isFirstDropdownMenuOpen">
-              <div>
-                <div># channel 1</div>
-                <div># channel 2</div>
-              </div>
-
-
-            </div>
-          </div>
-        </div>
-      </div>
+      <app-menu-side-left></app-menu-side-left>
     </div>
 
     <div class="main-content">
@@ -49,8 +20,8 @@
     </div>
 
 
-
+    <button class="side-menu-btn fontNunito" (click)="isMenuOpen = !isMenuOpen">Side Menu <img src="assets/media/icons/show-menu.svg" alt="" srcset=""></button>
   </div>
 
-  <button class="side-menu-btn" (click)="isMenuOpen = !isMenuOpen">Side Menu</button>
+
 </div>
