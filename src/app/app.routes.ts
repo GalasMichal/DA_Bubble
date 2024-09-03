@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { CreateAvatarComponent } from './create-avatar/create-avatar.component';
 import { PwdResetComponent } from './pwd-reset/pwd-reset.component';
 import { PwdRecoveryComponent } from './pwd-recovery/pwd-recovery.component';
+import { ChannelEditComponent } from './shared/component/channel-edit/channel-edit.component';
 
 
 export const routes: Routes = [
@@ -47,6 +48,8 @@ export const routes: Routes = [
   { path: 'recovery/login/main', component: MainContentComponent },
   { path: 'login/register/create', component: CreateAvatarComponent },
   { path: 'login/register/create/login', component: LoginComponent },
+  { path: 'edit', component: ChannelEditComponent },
+
 ];
 
 // { path: '', component: MainContentComponent },

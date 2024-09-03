@@ -1,0 +1,271 @@
+@import '../../../../colors.scss';
+@import '../../../../fonts.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h2 {
+  color: $black;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2.0463rem;
+}
+
+h3, p {
+  color: $black;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.5344rem;
+  margin-top: -14%;
+  >span {
+    color: $black;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.5344rem;
+  }
+}
+
+p {
+  color: $black;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.5344rem;
+}
+
+.ml-mr-auto {
+  margin-left: auto;
+  margin-right: auto;  
+}
+
+/* CLOSE BTN */
+
+.close-btn {
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  &:hover {
+    background-color: lightgray;
+  }
+}
+
+/* CONTENT */
+
+.arrow-back-container {
+  height: 40px;
+  display: flex;
+  margin-left: -2%;
+  margin-top: 0%;
+  word-break: break-word;
+  text-align: center;
+  padding-top: 2%;
+  justify-content: space-between;
+  >a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.form-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 17%;
+  gap: 8px;
+  width: 27.75rem;
+  text-align: center;
+  margin-bottom: 75px;
+  >p {
+    font-size: 20px;
+  }
+}
+
+.container {
+  scale: 0.8;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 55.875rem;
+  height: 47.8125rem;
+  background-color: $white; 
+  border-radius: 4%;
+}
+
+.channel-info-container, .channel-name-container {
+  border: #adb0d9 1px solid;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 84px;
+  margin-top: 60px;
+  margin-left: -2%;
+  >p {
+    margin-top: 3%;
+    margin-left: 0%;
+  }
+}
+
+.channel-name-container {
+  width: 49.5rem;
+  height: 7.125rem;
+}
+
+.channel-info-container {
+  width: 49.5rem;
+  height: 22.125rem;
+  margin-top: -54px !important;
+}
+
+.hash-sign {
+
+}
+
+.edit-name-container {
+  display: flex;
+  justify-content: space-between;
+  /* align-content: center; */
+  align-items: baseline;
+  >a {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5344rem;
+    color: #535af1;
+    text-decoration: none;
+    cursor: pointer
+  }
+  a:hover {
+    color: red; 
+  }
+}
+
+.edit-info-container {
+  display: flex;
+  justify-content: space-between;
+  /* align-content: center; */
+  align-items: baseline;
+  margin-top: -23%;
+  >a {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5344rem;
+    color: #535af1;
+    text-decoration: none;
+    cursor: pointer
+  }
+  a:hover {
+    color: red; 
+  }
+}
+
+.user-link {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 2.0463rem;
+  color: #535af1;
+  cursor: pointer;
+}
+
+.input-field {
+  background-repeat: no-repeat;
+  background-position: left 30px top 50%;
+  padding-left: 85px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  width: 31.25rem;
+  height: 3.07rem;
+  background-color: $white;
+  border-radius: 50px;
+  margin-bottom: 35px;
+  border: #adb0d9 1px solid;
+}
+
+.mt {
+  margin-top: -32%;
+}
+
+/* LOGIN BUTTONS */
+
+.btn-container {
+  width: 21rem;
+  height: 3.0625rem;
+  display: flex;
+  justify-content: end;
+  margin-top: 39%;
+  margin-left: 65%;
+  >a {
+    text-decoration: none;
+    justify-content: center;
+  }
+} 
+
+.login-btn {
+  font-weight: 700;
+  font-size: 1.125rem;
+  cursor: pointer;
+  width: 13rem;
+  height: 3.0625rem;
+  display: flex;
+  gap: 10px;
+  padding: 12px 25px 12px 25px;
+  border-radius: 25px;
+}
+
+.login-btn {
+  color: white;
+  background-color: $primary;
+  margin-right: 4%;
+  &:hover {
+    background-color: $primary-hover;
+    color: #313ae6;
+  }
+}
+
+
+/* LEGAL IMPRINT -LINKS*/
+
+.legal-imprint-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: -10px;
+  >a {
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      color: $primary-hover;
+      border: $primary-hover 1px solid;
+      border-radius: 30px;
+    }
+  }
+}
+
+/**/
+
+.logo-container {
+  padding-top: 45px;
+}
+
+.logo {
+  cursor: pointer;
+  width: 242.11px;
+  height: 70px;
+  // padding-left: 75px;
+}
+
+/**/
+
+.check-container {
+  display: flex;
+  gap: 8px;
+  // margin-left: -29%;
+  flex-direction: column;
+  text-align: center;
+}
