@@ -1,0 +1,43 @@
+<section class="login-section">
+
+  <div class="logo-container">
+    <a routerLink="login">
+      <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
+    </a>
+  </div>
+
+<div class="form-container">
+  <div style="padding-top: 2%;">
+    <div class="arrow-back-container">
+      <a routerLink="login">
+        <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
+      </a>
+      <h2 class="fontNunito">Passwort zurücksetzen</h2>
+    </div>
+  </div>  
+  <form >
+    <div class="input-container"> 
+    <!-- 
+      PWD-CHECK: min-length-8, max-length-32, chars A-Z, a-z, excl ÖöÄäÜü, all special-characters, no wing-dings, at least one from each category, no doubles
+    -->
+      <input class="input-field input-field-mail-icon fontNunito" type="password" placeholder="Neues Passwort" 
+       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+\-=\[\]{};:'&quot;\\|,.<>/?])(?=.*[öÖäÄüÜ]).{8,32}$" 
+       required />
+      <input class="input-field input-field-mail-icon fontNunito" type="password" placeholder="Neues Passwort" 
+      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+\-=\[\]{};:'&quot;\\|,.<>/?])(?=.*[öÖäÄüÜ]).{8,32}$" 
+      required />
+    </div>
+  </form>
+
+  <div class="btn-container">
+    <a class="login-btn fontNunito" routerLink="login">Passwort ändern</a>
+  </div>
+
+</div>
+
+<div class="legal-imprint-container ml-mr-auto">
+  <a routerLink="imprint">Impressum</a>
+  <a routerLink="legal">Datenschutz</a>
+</div>
+</section>
+

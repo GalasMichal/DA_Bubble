@@ -1,0 +1,154 @@
+@import '../../colors.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h2 {
+  color: $primary;
+  font-size: 2.875rem;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.ml-mr-auto {
+  margin-left: auto;
+  margin-right: auto;  
+}
+
+/* CONTENT */
+
+.arrow-back-container {
+  height: 40px;
+  display: flex;
+  gap: 8%;
+  margin-left: -3%;
+  align-items: center;
+  margin-top: 11%;
+  text-align: center;
+  >a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.login-section {
+  width: 100%;
+  height: 100vh;
+  background-color: $bg-color;
+}
+
+.form-container {
+  scale: 0.8;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 37.875rem;
+  height: 35.8125rem;
+  background-color: $white; 
+  border-radius: 4%;
+}
+
+.input-container {
+  margin-top: -2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 31.25rem;
+  height: 13.875rem;
+  margin-top: 55px;
+}
+
+.input-field {
+  background-repeat: no-repeat;
+  background-position: left 30px top 50%;
+  padding-left: 85px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  width: 25rem;
+  height: 3.625rem;
+  background-color: $bg-color;
+  border-radius: 50px;
+  margin-bottom: 35px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.icon-input {
+  width: 24px;
+  height: 24px;
+}
+
+/* LOGIN BUTTONS */
+
+.btn-container {
+  width: 21rem;
+  height: 3.0625rem;
+  display: flex;
+  justify-content: end;
+  margin-top: 9%;
+  margin-left: 10%;
+  >a {
+    text-decoration: none;
+    justify-content: center;
+  }
+} 
+
+.login-btn {
+  font-weight: 700;
+  font-size: 1.125rem;
+  cursor: pointer;
+  width: 12.5625rem;
+  height: 3.0625rem;
+  display: flex;
+  gap: 10px;
+  padding: 12px 25px 12px 25px;
+  border-radius: 25px;
+  text-align: center;
+  align-items: center;
+}
+
+.login-btn {
+  color: white;
+  background-color: $primary;
+  &:hover {
+    background-color: $primary-hover;
+    color: green;
+  }
+}
+
+
+/* LEGAL IMPRINT -LINKS*/
+
+.legal-imprint-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: -10px;
+  >a {
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      color: $primary-hover;
+      border: $primary-hover 1px solid;
+      border-radius: 30px;
+    }
+  }
+}
+
+/**/
+
+.logo-container {
+  padding-top: 45px;
+}
+
+.logo {
+  width: 242.1104px;
+  height: 70px;
+  // padding-left: 75px;
+}

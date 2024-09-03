@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterLink, RouterModule } from '@angular/router';
+import { LogoComponent } from '../logo/logo.component';
 
 
 @Component({
   selector: 'app-legal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, RouterLink, LogoComponent],
   templateUrl: './legal.component.html',
   styleUrl: './legal.component.scss'
 })
