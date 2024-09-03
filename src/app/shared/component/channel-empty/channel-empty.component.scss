@@ -1,0 +1,277 @@
+@import '../../../../colors.scss';
+@import '../../../../fonts.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h2 {
+  color: $black;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32.7408px;
+}
+
+h3, p {
+  color: $black;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24.5504px;
+  margin-top: -14%;
+  >span {
+    color: $black;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24.5504px;
+  }
+}
+
+p {
+  color: $black;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24.5504px;
+}
+
+.ml-mr-auto {
+  margin-left: auto;
+  margin-right: auto;  
+}
+
+/* CLOSE BTN */
+
+.close-btn {
+  border-radius: 2.5rem;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  &:hover {
+    background-color: lightgray;
+  }
+}
+
+/* CONTENT */
+
+.arrow-back-container {
+  height: 2.5rem;
+  display: flex;
+  margin-left: -2%;
+  margin-top: 0%;
+  word-break: break-word;
+  text-align: center;
+  padding-top: 2%;
+  justify-content: space-between;
+  >a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.form-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 17%;
+  gap: .5rem;
+  width: 444px;
+  text-align: center;
+  margin-bottom: 4.6875rem;
+  >p {
+    font-size: 1.25rem;
+  }
+}
+
+.container {
+  scale: 0.8;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 894px;
+  height: 765px;
+  background-color: $white; 
+  border-radius: 4%;
+}
+
+.channel-info-container, .channel-name-container {
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 5.25rem;
+  margin-top: 3.75rem;
+  margin-left: -2%;
+  >p {
+    margin-top: 3%;
+    margin-left: 0%;
+  }
+}
+
+.channel-name-container {
+  width: 792px;
+  height: 114px;
+}
+
+.channel-info-container {
+  width: 792px;
+  height: 354px;
+  margin-top: -3.375rem !important;
+}
+
+.title {
+
+}
+
+.edit-name-container {
+  display: flex;
+  // gap: 63%;
+  // justify-content: space-between;
+  align-items: baseline;
+  width: 110%;
+  >a {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24.5504px;
+    color: #535af1;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 69%;
+  }
+  a:hover {
+    color: red; 
+  }
+}
+
+.edit-info-container {
+  display: flex;
+  gap: 78%;
+  justify-content: space-between;
+  /* align-content: center; */
+  align-items: baseline;
+  margin-top: -23%;
+  >a {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24.5504px;
+    color: #535af1;
+    text-decoration: none;
+    cursor: pointer
+  }
+  a:hover {
+    color: red; 
+  }
+}
+
+.user-link {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32.7408px;
+  color: #535af1;
+  cursor: pointer;
+}
+
+.input-field {
+  background-repeat: no-repeat;
+  background-position: left 1.875rem top 50%;
+  padding-left: 5.3125rem;
+  padding-top: 1.125rem;
+  padding-bottom: 1.125rem;
+  width: 49.25rem;
+  height: 3.07rem;
+  background-color: $white;
+  border-radius: 3.125rem;
+  margin-bottom: 2.1875rem;
+  border: #adb0d9 .0625rem solid;
+}
+
+.input-icon {
+  background-image: url('../../../../assets/media/icons/hashtag.svg');
+}
+
+.mt {
+  margin-top: -32%;
+}
+
+/* LOGIN BUTTONS */
+
+.btn-container {
+  width: 336px;
+  height: 49px;
+  display: flex;
+  justify-content: end;
+  margin-top: 39%;
+  margin-left: 65%;
+  >a {
+    text-decoration: none;
+    justify-content: center;
+  }
+} 
+
+.login-btn {
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  width: 208px;
+  height: 49px;
+  display: flex;
+  gap: .625rem;
+  padding: .75rem 1.5625rem .75rem 1.5625rem;
+  border-radius: 1.5625rem;
+}
+
+.login-btn {
+  color: white;
+  background-color: $primary;
+  margin-right: 4%;
+  &:hover {
+    background-color: $primary-hover;
+    color: #313ae6;
+  }
+}
+
+
+/* LEGAL IMPRINT -LINKS*/
+
+.legal-imprint-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.875rem;
+  margin-top: -0.625rem;
+  >a {
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      color: $primary-hover;
+      border: $primary-hover .0625rem solid;
+      border-radius: 1.875rem;
+    }
+  }
+}
+
+/**/
+
+.logo-container {
+  padding-top: 2.8125rem;
+}
+
+.logo {
+  cursor: pointer;
+  width: 15.1319rem;
+  height: 4.375rem;
+  // padding-left: 4.6875rem;
+}
+
+/**/
+
+.check-container {
+  display: flex;
+  gap: .5rem;
+  // margin-left: -29%;
+  flex-direction: column;
+  text-align: center;
+}
