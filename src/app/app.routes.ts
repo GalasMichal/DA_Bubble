@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { CreateAvatarComponent } from './create-avatar/create-avatar.component';
 import { PwdResetComponent } from './pwd-reset/pwd-reset.component';
 import { PwdRecoveryComponent } from './pwd-recovery/pwd-recovery.component';
+import { ChannelCreateComponent } from './shared/component/channel-create/channel-create.component';
 
 
 export const routes: Routes = [
@@ -41,12 +42,15 @@ export const routes: Routes = [
   { path: 'create', component: CreateAvatarComponent },
   { path: 'reset', component: PwdResetComponent },
   { path: 'reset/login', component: LoginComponent },
+  { path: 'channel/login', component: LoginComponent },
   { path: 'recovery', component: PwdRecoveryComponent },
   { path: 'recovery/login', component: LoginComponent },
   { path: 'recovery/login/register', component: RegisterUserComponent },
   { path: 'recovery/login/main', component: MainContentComponent },
   { path: 'login/register/create', component: CreateAvatarComponent },
   { path: 'login/register/create/login', component: LoginComponent },
+  { path: 'channel', component: ChannelCreateComponent },
+  { path: 'channel/main', component: MainContentComponent },
 ];
 
 // { path: '', component: MainContentComponent },
