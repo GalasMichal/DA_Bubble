@@ -7,6 +7,14 @@ always import what you need
 -> @import '../../fonts.scss';
 */
 
+.fontNunito, .font-nunito  {
+  font-family: "Nunito";
+}
+
+.font-figtree {
+  font-family: "Figtree";
+}
+
 /* nunito-regular - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
@@ -204,11 +212,5 @@ always import what you need
 }
 
 
-.fontNunito, .font-nunito  {
-  font-family: "Nunito";
-}
 
-.font-figtree {
-  font-family: "Figtree";
-}
 
