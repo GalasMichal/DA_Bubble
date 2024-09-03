@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { HeaderDialogComponent } from '../header-dialog/header-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { LogoComponent } from '../../logo/logo.component';
+import { LogoComponent } from '../logo/logo.component';
 
 @Component({
   selector: 'app-header',
