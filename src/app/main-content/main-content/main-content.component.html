@@ -7,30 +7,42 @@
         <nav>
           <div>
             <img src="assets/media/icons/workspace-logo.svg" alt="logo navbar" srcset="">
-            <h2>Devspace</h2>
+            <h2 class="fontNunito">Devspace</h2>
           </div>
           <img src="assets/media/icons/edit-square.svg" alt="" srcset="">
         </nav>
         <div class="content-wrapper">
           <div class="channels">
             <div class="channels-navbar">
-              <div class="channels-navbar-left-container">
-                <img (click)="toogleDropDown1()" [ngClass]="{'drop-down': isFirstDropdownMenuOpen}"
+              <div class="channels-navbar-left-container" (click)="toogleDropDown1()">
+                <img  [ngClass]="{'drop-down': isFirstDropdownMenuOpen}"
                   src="assets/media/icons/arrow-drop-down.svg" alt="drop-down-menu" srcset="">
                 <img src="assets/media/icons/workspaces.svg" alt="" srcset="">
-                <div class="font-nunito">Channels</div>
+                <div class="fontNunito">Channels</div>
               </div>
               <img src="assets/media/icons/add-black.svg" alt="" srcset="">
             </div>
-            <div class="channels-content" [class.animate]="isFirstDropdownMenuOpen">
+            <div class="channels-content fontNunito" [class.animate]="isFirstDropdownMenuOpen">
               <div>
-                <div># channel 1</div>
-                <div># channel 2</div>
+                <div class="bg-channels channels-inner-position"><img src="assets/media/icons/tag.svg" alt="tag-icon" srcset=""> channel 1</div>
+                <div class="bg-channels channels-inner-position"> <img src="assets/media/icons/tag.svg" alt="tag-icon" srcset=""> channel 2</div>
+                <div class="channels-inner-position">
+                  <img src="assets/media/icons/add-circle.svg" alt="" srcset="">
+                  <span>Channel hinzufügen</span>
+                </div>
               </div>
 
 
             </div>
           </div>
+
+          <div class="pm-wrapper">
+            <div class="channels-inner-position">
+              <img src="assets/media/icons/account-profil.svg" alt="account-profil" srcset="">
+              <span class="fontNunito">Direktnachrichten</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -49,8 +61,8 @@
     </div>
 
 
-
+    <button class="side-menu-btn" (click)="isMenuOpen = !isMenuOpen">Side Menu</button>
   </div>
 
-  <button class="side-menu-btn" (click)="isMenuOpen = !isMenuOpen">Side Menu</button>
+
 </div>

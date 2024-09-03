@@ -7,18 +7,19 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { LogoComponent } from '../../logo/logo.component';
 
 @Component({
   selector: 'app-main-content',
   standalone: true,
-  imports: [CommonModule, HeaderComponent],
+  imports: [CommonModule, HeaderComponent, LogoComponent],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
 export class MainContentComponent {
   readonly userDialog = inject(MatDialog)
 
-  isMenuOpen= false;
+  isMenuOpen= true;
   isFirstDropdownMenuOpen = false ;
 
 
