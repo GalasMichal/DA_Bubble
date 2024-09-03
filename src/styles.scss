@@ -47,14 +47,6 @@ $DA_Bubble-theme: mat.define-light-theme((
 
 @import './colors.scss';
 
-@font-face {
-  font-family: "Nunito", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  src: local(""),
-    url("./assets/fonts/Nunito/Nunito-VariableFont_wght.ttf") format("ttf");
-}
-
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -83,7 +75,7 @@ app-main-content{
 }
 
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 
@@ -91,6 +83,12 @@ body {
 
 html {
   scroll-behavior: smooth;
+}
+
+html,
+body {
+  height: 100%;
+
 }
 
 /*
@@ -140,16 +138,3 @@ h6 {
 
 $b-radius-1: 1.875rem; //30px
 $b-radius-2: 3.125rem; //50px
-
-html,
-body {
-  height: 100%;
-
-}
-
-body {
-  margin: 0;
-}
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

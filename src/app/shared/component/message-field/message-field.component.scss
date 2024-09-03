@@ -1,8 +1,8 @@
-@import '../../colors.scss';
-@import '../../styles.scss';
-@import '../../fonts-global.scss';
+@import '../../../../colors.scss';
+@import '../../../../fonts.scss';
 
 .message-field-container {
+  position: absolute;
   width: 57.4375rem;
   height: 9.0625rem;
   >textarea {
@@ -44,9 +44,9 @@
 }
 
 .textarea-btn-container {
-  width: 63%;
-  position: absolute;
-  top: 25%;
+  width: 99%;
+  position: relative;
+  top: -33%;
   display: flex;
   align-items: center;
   justify-content: space-between;

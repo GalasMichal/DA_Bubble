@@ -23,10 +23,10 @@ always import what you need
     url("./assets/fonts/Figtree/Figtree-VariableFont_wght.ttf") format("ttf");
 }
 
-.font-nunito {
-  font-family: "Nunito", sans-serif;
+.fontNunito, .font-nunito {
+  font-family: "Nunito";
 }
 
 .font-figtree {
-  font-family: "Figtree", sans-serif;
+  font-family: "Figtree";
 }
