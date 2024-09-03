@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ComponentFactoryResolver, inject, ViewChild, ViewContainerRef } from '@angular/core';
 
 
 
@@ -8,6 +8,7 @@ import { HeaderComponent } from '../../shared/header/header.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { LogoComponent } from '../../logo/logo.component';
+import { CreateAvatarComponent } from '../../create-avatar/create-avatar.component';
 
 @Component({
   selector: 'app-main-content',
@@ -21,10 +22,15 @@ export class MainContentComponent {
 
   isMenuOpen= true;
   isFirstDropdownMenuOpen = false ;
+  isSecondDropdownMenuOpen = true;
 
 
   toogleDropDown1(){
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
+  }
+
+  toogleDropDown2(){
+    this.isSecondDropdownMenuOpen = !this.isSecondDropdownMenuOpen
   }
 
   openUserProfile() {
@@ -32,5 +38,6 @@ export class MainContentComponent {
       panelClass: 'user-profile-container'
     })
   }
+
 }
 
