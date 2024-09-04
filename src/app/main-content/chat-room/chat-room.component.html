@@ -1,0 +1,19 @@
+<section>
+  <header class="fontNunito">
+    <div class="header-left-container">
+      <img src="assets/media/icons/tag-black.svg" alt="hash-tag" srcset="">
+      <h1>Entwicklerteam</h1>
+      <img src="assets/media/icons/arrow-down.svg" alt="" srcset="">
+    </div>
+    <div class="header-right-container">
+      <div>
+        @for (user of usersInChat; track $index) {
+          <img src="{{ user }}" alt="userProfilPhoto" srcset="">
+        }
+        <div> {{ usersInChat.length }}</div>
+      </div>
+
+      <img src="assets/media/icons/Add-members-button.svg" alt="add-member" srcset="">
+    </div>
+  </header>
+</section>
