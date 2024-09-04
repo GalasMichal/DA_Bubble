@@ -1,7 +1,7 @@
 <section class="login-section">
 
     <div class="logo-container">
-      <a routerLink="login">
+      <a [routerLink]="['/']">
         <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
       </a>
     </div>
@@ -9,7 +9,7 @@
   <div class="form-container ml-mr-auto">
     <div style="padding-top: 2%;">
       <div class="arrow-back-container">
-        <a href="login">
+        <a [routerLink]="['/']">
           <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
         </a>
         <h2 class="fontNunito">Konto erstellen</h2>
@@ -32,13 +32,13 @@
       <label for="checkbox" class="fontNunito">Ich stimme der <a class="font-nunito" href="legal">Datenschutzerklärung</a> zu.</label>
     </div>
     <div class="btn-container ml-mr-auto">
-      <a class="login-btn fontNunito" routerLink="create">Weiter</a>
+      <a class="login-btn fontNunito" [routerLink]="['/create']">Weiter</a>
     </div>
 
   </div>
   
   <div class="legal-imprint-container ml-mr-auto">
-    <a class="fontNunito" href="imprint">Impressum</a>
-    <a class="fontNunito" href="legal">Datenschutz</a>
+    <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
+    <a class="fontNunito" [routerLink]="['/legal']">Datenschutz</a>
   </div>
 </section>
