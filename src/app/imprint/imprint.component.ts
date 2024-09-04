@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
-import { LogoComponent } from '../logo/logo.component';
+import { LogoComponent } from '../shared/logo/logo.component';
 
 
 @Component({
