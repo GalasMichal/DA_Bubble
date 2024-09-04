@@ -6,7 +6,7 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 @Component({
   selector: 'app-profil',
   standalone: true,
-  imports: [MatDialogContent, MatButtonModule, EditProfileComponent],
+  imports: [MatDialogContent, EditProfileComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })

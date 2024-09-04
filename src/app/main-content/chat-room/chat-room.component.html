@@ -1,5 +1,5 @@
 <section>
-  <header>
+  <header class="fontNunito">
     <div class="header-left-container">
       <img src="assets/media/icons/tag-black.svg" alt="hash-tag" srcset="">
       <h1>Entwicklerteam</h1>
@@ -10,8 +10,9 @@
         @for (user of usersInChat; track $index) {
           <img src="{{ user }}" alt="userProfilPhoto" srcset="">
         }
+        <div> {{ usersInChat.length }}</div>
       </div>
-      <div> {{ usersInChat.length }}</div>
+
       <img src="assets/media/icons/Add-members-button.svg" alt="add-member" srcset="">
     </div>
   </header>
