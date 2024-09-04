@@ -31,10 +31,11 @@
 
             ],
             "styles": [
+              
               "src/styles.scss",
               "src/colors.scss",
-              "src/fonts.scss",
-              "@angular/material/prebuilt-themes/deeppurple-amber.css"
+              "src/fonts.scss"
+
 
             ],
             "scripts": []
@@ -95,10 +96,11 @@
               "src/assets"
             ],
             "styles": [
+
               "src/styles.scss",
               "src/colors.scss",
-              "src/fonts.scss",
-              "@angular/material/prebuilt-themes/deeppurple-amber.css"
+              "src/fonts.scss"
+
             ],
             "scripts": []
           }
