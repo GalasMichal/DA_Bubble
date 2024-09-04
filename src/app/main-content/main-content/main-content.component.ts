@@ -7,6 +7,7 @@ import { LogoComponent } from '../../logo/logo.component';
 import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-side-left.component';
 import { ChatRoomComponent } from '../chat-room/chat-room.component';
 
+
 @Component({
   selector: 'app-main-content',
   standalone: true,
