@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
-import { LogoComponent } from '../../logo/logo.component';
+import { LogoComponent } from '../../shared/logo/logo.component';
 import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-side-left.component';
 import { ChatRoomComponent } from '../chat-room/chat-room.component';
 
