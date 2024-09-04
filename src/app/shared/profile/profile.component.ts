@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { MatDialog, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 
 @Component({
