@@ -4,8 +4,8 @@ import { HeaderComponent } from '../../shared/header/header.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { LogoComponent } from '../../logo/logo.component';
-
 import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-side-left.component';
+import { ChatRoomComponent } from '../chat-room/chat-room.component';
 
 @Component({
   selector: 'app-main-content',
@@ -15,6 +15,7 @@ import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-sid
     HeaderComponent,
     LogoComponent,
     MenuSideLeftComponent,
+    ChatRoomComponent
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',

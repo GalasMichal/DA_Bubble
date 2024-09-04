@@ -1,4 +1,37 @@
+@import './../../../fonts.scss';
+
+section{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 header{
   padding: 1.5625rem 2.8125rem;
+  display: flex;
+  justify-content: space-between;
+  height: 6rem;
+
+
+}
+
+.header-left-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .625rem;
+  >h1{
+    margin: 0;
+  }
+}
+
+.header-right-container{
+  display: flex;
+  >div {
+    display: flex;
+    align-items: center;
+
+  }
 }
 
