@@ -3,12 +3,13 @@ import {
   MatDialogContent,
   MatDialogRef
 } from '@angular/material/dialog';
+import { AvatarComponent } from '../avatar/avatar.component';
 
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [MatDialogContent],
+  imports: [MatDialogContent, AvatarComponent],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss',
 })

@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { MatDialog, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
+import { AvatarComponent } from '../avatar/avatar.component';
 
 @Component({
   selector: 'app-profil',
   standalone: true,
-  imports: [MatDialogContent, EditProfileComponent],
+  imports: [MatDialogContent, EditProfileComponent, AvatarComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
