@@ -1,5 +1,7 @@
 @import './../../../fonts.scss';
 @import './../../../colors.scss';
+@import './../../../styles.scss';
+
 
 section {
   width: 100%;
@@ -46,6 +48,14 @@ header {
       margin-left: -20px;
       border: 2px solid $white;
       border-radius: 30px;
+    }
+  }
+  button {
+    background: none;
+    border-radius: $b-radius-1;
+    img {
+      width: 2.5rem;
+      height: 2.5rem;
     }
   }
 }

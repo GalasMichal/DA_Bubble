@@ -1,0 +1,110 @@
+@import "./../../../colors.scss";
+@import "./../../../styles.scss";
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 35px;
+  .profil {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: $black;
+      margin: 0;
+    }
+    button {
+      background: none;
+      border: none;
+      border-radius: $b-radius-2;
+      &:hover {
+        background: $bg-color;
+      }
+      &:hover svg path {
+        fill: $primary-hover;
+      }
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+}
+
+.name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 500;
+  }
+  button {
+    background: none;
+    &:hover span {
+      transform: scale(1.02);
+    }
+    span {
+      display: block;
+      text-decoration: none;
+      color: $primary;
+      transform: scale(1);
+      transition: transform 175ms ease-in-out;
+    }
+    img {
+      display: none;
+    }
+  }
+}
+
+::ng-deep .cdk-global-overlay-wrapper {
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+::ng-deep
+  .add-users-container
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  top: 13.50rem;
+  right: 8.25rem;
+}
+
+@media (max-width: 500px) {
+  .profile-card {
+    .name {
+      button {
+        span {
+          display: none;
+        }
+        img {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  ::ng-deep
+    .add-users-container
+    .mat-mdc-dialog-container
+    .mdc-dialog__container
+    .mat-mdc-dialog-surface {
+    border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
+    position: absolute;
+    width: 500px;
+    height: 600px;
+    top: auto;
+    right: auto;
+  }
+}
