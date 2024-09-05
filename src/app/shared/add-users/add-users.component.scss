@@ -42,9 +42,12 @@
       align-items: center;
       font-weight: 500;
       gap: 1rem;
+      svg path {
+        fill: $primary-hover;
+      }
       label {
+        color: $primary-hover;
         font-size: 1.25rem;
-        color: $black;
       }
     }
     input {
@@ -80,7 +83,7 @@
   width: 500px;
   height: 300px;
   top: 13.50rem;
-  right: 8.25rem;
+  right: 7.25rem;
 }
 
 @media (max-width: 500px) {
