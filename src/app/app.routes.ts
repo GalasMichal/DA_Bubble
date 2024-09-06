@@ -11,7 +11,7 @@ import { PwdRecoveryComponent } from './pwd-recovery/pwd-recovery.component';
 
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', component: MainContentComponent },
   { path: 'main', component: MainContentComponent },
   { path: 'menu', component: MenuSideLeftComponent },
   { path: 'register', component: RegisterUserComponent },
