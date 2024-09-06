@@ -177,6 +177,14 @@ h2 {
   }
 }
 
+.login-section {
+  width: 100%;
+  // width: 112.1875rem;
+  width: 50%;
+  height: 100vh;
+  background-color: $bg-color;
+  margin: auto;
+}
 
 /* LEGAL IMPRINT -LINKS*/
 
@@ -198,8 +206,15 @@ h2 {
 
 /**/
 
+.logo-create-avatar-page{
+  padding-top: 3rem;
+  padding-left: 4%;
+}
+
 .logo-container {
-  padding-top: 45px;
+  // padding-top: 65px;
+  padding-top: 4.0625rem;
+  padding-left: 5.5%;
 }
 
 .logo {
