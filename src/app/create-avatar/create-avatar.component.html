@@ -1,6 +1,8 @@
-<section class="create-avatar-section">
+<div class="logo-container">
+  <app-logo [routerLink]="['/']" />
+</div>
 
-  <app-logo [routerLink]="['/']"></app-logo>
+<section class="create-avatar-section">
 
   <div class="content-container ml-mr-auto">
     <div style="padding-top: 2%;margin-left: 5%;">
@@ -35,11 +37,9 @@
     </div>
   </div>
 
-
   <div class="legal-imprint-container ml-mr-auto">
     <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
     <a class="fontNunito" [routerLink]="['/legal']">Datenschutz</a>
   </div>
 
 </section>
-
