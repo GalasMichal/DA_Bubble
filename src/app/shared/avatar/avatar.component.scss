@@ -1,0 +1,44 @@
+.user-avatar {
+  position: relative;
+  .online {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+::ng-deep {
+  .profile-card app-avatar {
+    .user-avatar {
+      display: flex;
+      justify-content: center;
+      img {
+        height: 12.5rem;
+      }
+      .online {
+        display: none;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .single-user {
+    display: flex;
+    align-items: center;
+    gap: 0.9375rem;
+      app-avatar {
+      .user-avatar {
+        display: flex;
+        justify-content: center;
+        img {
+          height: 3.125rem;
+        }
+        .online {
+          height: 17px;
+          width: 17px;
+        }
+      }
+    }
+  }
+}

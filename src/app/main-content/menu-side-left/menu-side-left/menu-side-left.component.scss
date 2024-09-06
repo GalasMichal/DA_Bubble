@@ -104,10 +104,10 @@
     }
   }
 
-  & .user-img {
-    width: 3.125rem;
-    position: relative;
-  }
+  // & .user-img {
+  //   width: 3.125rem;
+  //   position: relative;
+  // }
 }
 
 .padding-l-35 {
@@ -137,15 +137,15 @@
   grid-template-rows: 1fr;
 }
 
-.single-user{
-  display: flex;
-  align-items: center;
-  gap: .9375rem;
-}
+// .single-user{
+//   display: flex;
+//   align-items: center;
+//   gap: .9375rem;
+// }
 
-.online {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 1;
-}
+// .online {
+//   position: absolute;
+//   bottom: 0;
+//   right: 0;
+//   z-index: 1;
+// }

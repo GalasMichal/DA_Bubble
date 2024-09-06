@@ -29,9 +29,9 @@ h2 {
 /* CONTENT */
 
 .login-section {
-  width: 100% !important;
+  width: 100%;
   // width: 112.1875rem;
-  height: 100vh !important;
+  height: 100vh;
   background-color: $bg-color;
 }
 
@@ -52,7 +52,7 @@ h2 {
   align-items: center;
   flex-direction: column;
   width: 37.875rem;
-  height: 48.0625rem;
+  height: 46rem;
   background-color: $white; 
   border-radius: 4%;
   // scale: 0.5;
@@ -234,7 +234,9 @@ h2 {
   display: flex;
   justify-content: space-around;
   align-items: end;
-  gap: 62%;
+  gap: 57%;
+  padding-top: 65px;
+  /* padding-left: 75px; */
 }
 
 .new-user-link {
