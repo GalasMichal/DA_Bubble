@@ -42,3 +42,22 @@
     }
   }
 }
+
+::ng-deep {
+  .add-user-card {
+      app-avatar {
+      .user-avatar {
+        display: flex;
+        justify-content: center;
+        img {
+          height: 3.125rem;
+        }
+        .online {
+          height: 17px;
+          width: 17px;
+        }
+      }
+    }
+  }
+}
+

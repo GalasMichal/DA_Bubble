@@ -1,18 +1,20 @@
 @import "./../../../colors.scss";
 @import "./../../../styles.scss";
 
-.profile-card {
+.add-user-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   padding: 35px;
-  .profil {
+  overflow: unset;
+  .user {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    .profile-title {
-        display: flex;
-        justify-content: space-between;
+    .user-title {
+      display: flex;
+      justify-content: space-between;
       h1 {
         font-size: 1.5rem;
         font-weight: 600;
@@ -35,36 +37,37 @@
       }
     }
     .team-title {
-        display: flex;
-        align-items: center;
-        font-weight: 500;
-        gap: 1rem;
-        svg path {
-          fill: $primary-hover;
-        }
-        span {
-          color: $primary-hover;
-          font-size: 1.125rem;
-        }
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      gap: 1rem;
+      svg path {
+        fill: $primary-hover;
       }
+      span {
+        color: $primary-hover;
+        font-size: 1.125rem;
+      }
+    }
   }
   .team {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        margin: -1px;
-        border: 0;
-        padding: 0;
-        
-        white-space: nowrap;
-        clip-path: inset(100%);
-        clip: rect(0 0 0 0);
-        overflow: hidden;
-      }
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      border: 0;
+      padding: 0;
+
+      white-space: nowrap;
+      clip-path: inset(100%);
+      clip: rect(0 0 0 0);
+      overflow: hidden;
+    }
     input {
       max-width: 26.25rem;
       width: 100%;
@@ -77,6 +80,34 @@
         outline: $secondary;
       }
     }
+    ul {
+      position: absolute;
+      top: 45px;
+      left: 20px;
+      z-index: 90000;
+      max-width: 300px;
+      width: 100%;
+      max-height: 300px;
+      border-radius: 0 $b-radius-1 $b-radius-1 $b-radius-1;
+      padding: 0.9375rem;
+      box-shadow: $shadow;
+      background: $white;
+      font-weight: 400;
+      font-size: 1.125rem;
+      line-height: 24.55px;
+      
+      li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        &:hover {
+          background: $primary-light;
+        }
+      }
+      span {
+        color: $black
+      };
+    }
   }
   .add {
     max-width: 9.375rem;
@@ -87,15 +118,14 @@
     color: $white;
     border-radius: $b-radius-1;
     &:hover {
-        background: $primary-hover;
+      background: $primary-hover;
     }
     &[disabled] {
-        cursor: auto;
-        background-color: $gray;
+      cursor: auto;
+      background-color: $gray;
     }
   }
 }
-
 
 ::ng-deep .cdk-global-overlay-wrapper {
   max-width: 1920px;
@@ -116,6 +146,7 @@
   height: 300px;
   top: 13.5rem;
   right: 7.25rem;
+  overflow-y: unset;
 }
 
 @media (max-width: 500px) {

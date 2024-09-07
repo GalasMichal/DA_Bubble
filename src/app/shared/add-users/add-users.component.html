@@ -1,6 +1,6 @@
-<mat-dialog-content class="profile-card">
-  <div class="profil">
-    <div class="profile-title">
+<mat-dialog-content class="add-user-card">
+  <div class="user">
+    <div class="user-title">
 
       <h1>Leute hinzufügen</h1>
       <button (click)="closeAddUsers()">
@@ -31,9 +31,33 @@
   <div class="team">
     <label for="name-input" class="visually-hidden" >Name:</label>
     <input type="text" id="name-input" placeholder="Name eingeben"/>
+    
+    <ul>
+      <li>
+        <app-avatar></app-avatar>
+        <span>User name</span>
+      </li>
+      <li>
+        <app-avatar></app-avatar>
+        <span>User name</span>
+
+      </li>
+      <li>
+        <app-avatar></app-avatar>
+        <span>User name</span>
+
+      </li>
+      <li>
+        <app-avatar></app-avatar>
+        <span>User name</span>
+
+      </li>
+    </ul>
   </div>
+
 
   <button class="add" [disabled]="false">
     Hinzüfugen
   </button>
 </mat-dialog-content>
+
