@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
 
 @Component({
   selector: 'app-chat-room',
   standalone: true,
-  imports: [CommonModule, AddUsersComponent],
+  imports: [CommonModule, AddUsersComponent, MessageFieldComponent],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss'
 })

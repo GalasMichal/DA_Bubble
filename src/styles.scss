@@ -34,8 +34,16 @@ app-main-content {
   flex: 1;
 }
 
-app-login, 
-app-pwd-reset, 
+app-chat-room{
+  flex: 1;
+}
+
+app-message-field {
+width: 100%;
+}
+
+app-login,
+app-pwd-reset,
 app-pwd-recovery,
 app-register-user,
 app-create-avatar,
@@ -46,7 +54,7 @@ app-legal {
   height: 100%;
 }
 
-app-imprint, 
+app-imprint,
 app-legal {
   overflow: hidden;
 }

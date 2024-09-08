@@ -2,9 +2,14 @@
 @import '../../../../fonts.scss';
 
 .message-field-container {
-  position: absolute;
-  width: 57.4375rem;
-  height: 9.0625rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 20px;
+  border: $primary-light 1px solid;
+  padding: 20px;
+
+
   >textarea {
     width: 100%;
     height: 100%;
@@ -16,10 +21,6 @@
   width: 100%;
   height: 100%;
   display: flex;
-  gap: 40px;
-  padding: 20px;
-  border-radius: 20px;
-  border: $primary-light 1px solid;
 }
 
 .txt {
@@ -30,8 +31,8 @@
 
 .icons-container {
   display: flex;
-  position: relative;
-  // top: 25%;
+
+
 }
 
 .icons {
@@ -44,9 +45,7 @@
 }
 
 .textarea-btn-container {
-  width: 99%;
-  position: relative;
-  top: -33%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
