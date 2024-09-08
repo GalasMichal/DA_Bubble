@@ -1,0 +1,52 @@
+@import '../../../../colors.scss';
+@import '../../../../fonts.scss';
+
+.message-field-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 20px;
+  border: $primary-light 1px solid;
+  padding: 20px;
+
+
+  >textarea {
+    width: 100%;
+    height: 100%;
+    resize: vertical;
+  }
+}
+
+.input-field {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.txt {
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.5344rem;
+}
+
+.icons-container {
+  display: flex;
+
+
+}
+
+.icons {
+  cursor: pointer;
+}
+
+.vector-container {
+  height: 40px;
+  border-right: 1px solid $primary-light;
+}
+
+.textarea-btn-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

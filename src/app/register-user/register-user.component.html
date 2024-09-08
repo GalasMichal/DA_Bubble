@@ -1,15 +1,18 @@
 <section class="login-section">
 
     <div class="logo-container">
-      <a [routerLink]="['/']">
+      <a routerLink="">
         <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
       </a>
     </div>
 
   <div class="form-container ml-mr-auto">
     <div style="padding-top: 2%;">
+      <!-- <a href="login">
+        <mat-icon>Arrow Back</mat-icon>
+      </a> -->
       <div class="arrow-back-container">
-        <a [routerLink]="['/']">
+        <a routerLink="">
           <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
         </a>
         <h2 class="fontNunito">Konto erstellen</h2>
@@ -17,9 +20,9 @@
       <div class="form-title ml-mr-auto">
         <p class="fontNunito">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
       </div>
-    </div>  
+    </div>
     <form >
-      <div class="input-container ml-mr-auto"> 
+      <div class="input-container ml-mr-auto">
         <input id="name" name="name" class="input-field input-field-user-icon fontNunito" minlength="3" type="text" placeholder="Name und Nachname" required>
         <input class="input-field input-field-mail-icon fontNunito" type="text" placeholder="beispielname@email.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" required />
         <input class="input-field input-field-pwd-icon fontNunito" minlength="8" type="password" placeholder="Passwort"  required />
@@ -32,11 +35,11 @@
       <label for="checkbox" class="fontNunito">Ich stimme der <a class="font-nunito" [routerLink]="['/legal']">Datenschutzerklärung</a> zu.</label>
     </div>
     <div class="btn-container ml-mr-auto">
-      <a class="login-btn fontNunito" [routerLink]="['/create']">Weiter</a>
+      <a routerLink="/create" class="login-btn fontNunito" >Weiter</a>
     </div>
 
   </div>
-  
+
   <div class="legal-imprint-container ml-mr-auto">
     <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
     <a class="fontNunito" [routerLink]="['/legal']">Datenschutz</a>
