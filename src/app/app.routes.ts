@@ -10,10 +10,14 @@ import { CreateAvatarComponent } from './create-avatar/create-avatar.component';
 import { PwdResetComponent } from './pwd-reset/pwd-reset.component';
 import { PwdRecoveryComponent } from './pwd-recovery/pwd-recovery.component';
 
-
+/*
+IMPORTANTE
+wenn ihr die route zum arbeiten ändert -> auch bitte wieder zurück setzen
+Merci :)
+*/
 
 export const routes: Routes = [
-  { path: '', component: MainContentComponent },
+  { path: '', component: LoginComponent },
   { path: 'main', component: MainContentComponent },
   { path: 'menu', component: MenuSideLeftComponent },
   { path: 'register', component: RegisterUserComponent },
@@ -24,3 +28,19 @@ export const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'legal', component: LegalComponent },
 ]
+
+
+/*
+orig-copy
+
+  { path: '', component: LoginComponent },
+  { path: 'main', component: MainContentComponent },
+  { path: 'menu', component: MenuSideLeftComponent },
+  { path: 'register', component: RegisterUserComponent },
+  { path: 'create', component: CreateAvatarComponent },
+
+  { path: 'recovery', component: PwdRecoveryComponent },
+  { path: 'reset', component: PwdResetComponent },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'legal', component: LegalComponent },
+*/
