@@ -4,6 +4,7 @@ IMPORTANTE
 always import what you need
 (at top of *.scss)
 -> @import '../../colors.scss';
+
 -> @import '../../fonts.scss';
 */
 
@@ -210,6 +211,7 @@ always import what you need
   font-weight: 900;
   src: url('./assets/fonts/Figtree/figtree-v5-latin-900italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
 
 
 

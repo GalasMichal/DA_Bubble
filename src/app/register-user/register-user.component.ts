@@ -8,7 +8,11 @@ import { RouterLink, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-register-user',
   standalone: true,
+
   imports: [CommonModule, FormsModule, RouterModule, RouterLink],
+
+  imports: [CommonModule, FormsModule,],
+
   templateUrl: './register-user.component.html',
   styleUrls: [
     './register-user.component.scss',

@@ -2,7 +2,6 @@
 @import './colors.scss';
 @import '@angular/cdk/overlay-prebuilt.css';
 
-
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -58,7 +57,9 @@ app-legal {
 
 body {
   font-family: sans-serif;
+
   background-color: $bg-color;
+
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   margin: 0;
@@ -71,6 +72,12 @@ body {
 
 html {
   scroll-behavior: smooth;
+}
+
+html,
+body {
+  height: 100%;
+
 }
 
 /*
@@ -136,3 +143,4 @@ $b-radius-3: 1.25rem;  // 20px
 app-search {
   display: contents;
 }
+
