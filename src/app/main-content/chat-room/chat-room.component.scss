@@ -8,7 +8,11 @@ section {
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+}
 
+app-message-field{
+  padding: 0 25px 25px 25px ;
 }
 
 header {
@@ -74,8 +78,9 @@ header {
 .chat-main-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
   justify-content: flex-end;
+  overflow-y: scroll;
 }
 
 .chat-content {
