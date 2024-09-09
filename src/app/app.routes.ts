@@ -9,60 +9,40 @@ import { CreateAvatarComponent } from './create-avatar/create-avatar.component';
 import { PwdResetComponent } from './pwd-reset/pwd-reset.component';
 import { PwdRecoveryComponent } from './pwd-recovery/pwd-recovery.component';
 import { ChannelEditComponent } from './shared/component/channel-edit/channel-edit.component';
+import { ChannelCreateComponent } from './shared/component/channel-create/channel-create.component';
 
+
+/*
+IMPORTANTE
+wenn ihr die route zum arbeiten ändert -> auch bitte wieder zurück setzen
+Merci :)
+*/
 
 export const routes: Routes = [
-
   { path: '', component: LoginComponent },
   { path: 'main', component: MainContentComponent },
-  { path: 'login/main', component: MainContentComponent },
-  { path: 'login/register/', component: MainContentComponent },
   { path: 'menu', component: MenuSideLeftComponent },
-  { path: 'legal', component: LegalComponent },
-  { path: 'imprint/legal', component: LegalComponent },
-  { path: 'legal/imprint/legal', component: LegalComponent },
-  { path: 'recovery/legal', component: LegalComponent },
-  { path: 'reset/legal', component: LegalComponent },
-  { path: 'imprint', component: ImprintComponent },
-  { path: 'legal/imprint', component: ImprintComponent },
-  { path: 'reset/imprint', component: ImprintComponent },
-  { path: 'recovery/imprint', component: ImprintComponent },
-  { path: 'login/register', component: RegisterUserComponent },
   { path: 'register', component: RegisterUserComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'legal/login', component: LoginComponent },
-  { path: 'login/register/login', component: LoginComponent },
-  { path: 'imprint/login', component: LoginComponent },
-  { path: 'login/legal', component: LegalComponent },
-  { path: 'login/register/legal', component: LegalComponent },
-  { path: 'login/register/create/legal', component: LegalComponent },
-  { path: 'login/register/imprint', component: ImprintComponent },
-  { path: 'login/register/create/imprint', component: ImprintComponent },
-  { path: 'login/imprint', component: ImprintComponent },
   { path: 'create', component: CreateAvatarComponent },
   { path: 'reset', component: PwdResetComponent },
-  { path: 'reset/login', component: LoginComponent },
   { path: 'recovery', component: PwdRecoveryComponent },
-  { path: 'recovery/login', component: LoginComponent },
-  { path: 'recovery/login/register', component: RegisterUserComponent },
-  { path: 'recovery/login/main', component: MainContentComponent },
-  { path: 'login/register/create', component: CreateAvatarComponent },
-  { path: 'login/register/create/login', component: LoginComponent },
   { path: 'edit', component: ChannelEditComponent },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'legal', component: LegalComponent },
 
 ];
 
-// { path: '', component: MainContentComponent },
-//   { path: 'login/', component: MainContentComponent },
-//   { path: 'login/register/', component: MainContentComponent },
-//   { path: 'menu', component: MenuSideLeftComponent },
-//   { path: 'legal', component: LegalComponent },
-//   { path: 'imprint/legal', component: LegalComponent },
-//   { path: 'imprint', component: ImprintComponent },
-//   { path: 'legal/imprint', component: ImprintComponent },
-//   { path: 'login/register', component: RegisterUserComponent },
-//   { path: 'login', component: LoginComponent },
-//   { path: 'login/legal', component: LegalComponent },
-//   { path: 'login/register/legal', component: LegalComponent },
-//   { path: 'login/imprint', component: ImprintComponent },
-//   { path: 'create', component: CreateAvatarComponent },
+
+/*
+orig-copy
+
+  { path: '', component: LoginComponent },
+  { path: 'main', component: MainContentComponent },
+  { path: 'menu', component: MenuSideLeftComponent },
+  { path: 'register', component: RegisterUserComponent },
+  { path: 'create', component: CreateAvatarComponent },
+  { path: 'recovery', component: PwdRecoveryComponent },
+  { path: 'reset', component: PwdResetComponent },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'legal', component: LegalComponent },
+*/

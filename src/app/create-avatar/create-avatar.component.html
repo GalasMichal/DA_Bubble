@@ -1,11 +1,13 @@
-<section class="create-avatar-section">
+<div class="logo-container">
+  <app-logo [routerLink]="['/']" />
+</div>
 
-  <app-logo></app-logo>
+<section class="create-avatar-section">
 
   <div class="content-container ml-mr-auto">
     <div style="padding-top: 2%;margin-left: 5%;">
       <div class="arrow-back-container">
-        <a href="login">
+        <a [routerLink]="['/']">
           <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
         </a>
         <h2 class="fontNunito">Wähle deinen Avatar</h2>
@@ -31,15 +33,13 @@
     </div>  
 
     <div class="btn-container ml-mr-auto">
-      <a class="login-btn fontNunito" routerLink="login">Weiter</a>
+      <a class="login-btn fontNunito" [routerLink]="['/']">Weiter</a>
     </div>
   </div>
 
-
   <div class="legal-imprint-container ml-mr-auto">
-    <a class="fontNunito" routerLink="imprint">Impressum</a>
-    <a class="fontNunito" routerLink="legal">Datenschutz</a>
+    <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
+    <a class="fontNunito" [routerLink]="['/legal']">Datenschutz</a>
   </div>
 
 </section>
-

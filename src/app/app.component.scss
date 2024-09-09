@@ -1,10 +1,16 @@
 @import "./../colors.scss";
 @import "./../styles.scss";
 
-
+.wrapper{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
 .router-outlet{
   display: flex;
   flex: 1;
   min-width: 100%;
+  min-height: 100%;
 }

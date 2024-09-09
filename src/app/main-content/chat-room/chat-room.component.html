@@ -1,0 +1,73 @@
+<section>
+  <header class="fontNunito">
+    <div class="header-left-container">
+      <img src="assets/media/icons/tag-black.svg" alt="hash-tag" srcset="">
+      <h1>Entwicklerteam</h1>
+      <img src="assets/media/icons/arrow-down.svg" alt="" srcset="">
+    </div>
+    <div class="header-right-container">
+      <div>
+        @for (user of usersInChat; track $index) {
+        <img src="{{ user }}" alt="userProfilPhoto" srcset="">
+        }
+        <div class="font-nunito"> {{ usersInChat.length }}</div>
+      </div>
+      <button (click)="openAddUsers()">
+        <img src="assets/media/icons/Add-members-button.svg" alt="add-member" srcset="">
+      </button>
+    </div>
+  </header>
+  <div class="chat-main-container">
+    <div class="chat-content">
+      <div class="time-separator">
+        <div class="day-time">Dienstag, 14 Januar</div>
+        <div class="middle-line"></div>
+      </div>
+      <div class="user-message-container">
+        <img src="assets/media/icons/profile-icons/user-6-noah.svg" alt="profil-image" srcset="">
+        <div>
+          <div class="font-nunito">
+            <h2>User Name</h2>
+            <div class="time-stamp">time stamp</div>
+          </div>
+          <div class="messages-main-chat font-nunito">
+            Welche Version ist aktuell von Angular?
+          </div>
+          <div class="answer-container">
+            <div class="answer">2 Antworten</div>
+            <div class="time-stamp"> Time stamp from last answer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-content">
+      <div class="time-separator">
+        <div class="day-time">Dienstag, 14 Januar</div>
+        <div class="middle-line"></div>
+      </div>
+      <div class="user-message-container">
+        <img src="assets/media/icons/profile-icons/user-6-noah.svg" alt="profil-image" srcset="">
+        <div>
+          <div class="font-nunito">
+            <h2>User Name</h2>
+            <div class="time-stamp">time stamp</div>
+          </div>
+          <div class="messages-main-chat font-nunito">
+            Welche Version ist aktuell von Angular?
+          </div>
+          <div class="answer-container">
+            <div class="answer">2 Antworten</div>
+            <div class="time-stamp"> Time stamp from last answer</div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+  <app-message-field></app-message-field>
+</section>

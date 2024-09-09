@@ -37,14 +37,6 @@ header {
     gap: 0.5rem;
     margin-left: 1.25rem;
     cursor: pointer;
-    .user-avatar {
-      position: relative;
-      .online {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      }
-    }
     span {
       font-weight: 700;
     }
