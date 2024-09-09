@@ -13,12 +13,20 @@ body {
 .form-container {
   background-color: $white;
   border-radius: 30px;
-  margin-left: 50%;
   width: 100%;
   height: 70vh;
   text-align: center;
   overflow: hidden;
   overflow-y: scroll;
+}
+
+.login-section {
+  width: 100%;
+  // width: 112.1875rem;
+  width: 50%;
+  height: 100vh;
+  background-color: $bg-color;
+  margin: auto;
 }
 
 .container {
@@ -78,7 +86,7 @@ h2 {
 }
 
 .legal-imprint-container {
-  margin-left: 90%;
+  margin: auto;
   gap: 16px;
   display: flex;
   width: 140px;
@@ -90,6 +98,12 @@ h2 {
 
 .logo {
   cursor: pointer;
+}
+
+.logo-container {
+  // padding-top: 65px;
+  padding-top: 4.0625rem;
+  padding-left: 5.5%;
 }
 
 /* MEDIA */

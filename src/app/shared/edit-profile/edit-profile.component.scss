@@ -32,13 +32,6 @@
     }
   }
 
-  .avatar {
-    display: flex;
-    justify-content: center;
-    img {
-      height: 200px;
-    }
-  }
   .edit {
     display: flex;
     flex-direction: column;
@@ -48,7 +41,7 @@
       align-items: center;
       font-weight: 500;
       gap: 1rem;
-      span {
+      label {
         font-size: 1.25rem;
         color: $black;
       }
