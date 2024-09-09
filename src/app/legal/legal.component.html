@@ -1,42 +1,44 @@
+<div class="logo-container">
+  <app-logo [routerLink]="['/']"></app-logo>
+</div>
 
 <section id="legal" class="login-section">
 
-  <app-logo></app-logo>
-
-<div class="form-container ml-mr-auto">
-  <div style="padding-top: 2%;">
-    <div class="arrow-back-container">
-      <a href="login">
-        <img class="arrow-img" src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
-        <h2 class="fontNunito">Datenschutz</h2>
-      </a>
+  <div class="form-container ml-mr-auto">
+    <div style="padding-top: 2%;">
+      <div class="arrow-back-container">
+        <a [routerLink]="['/']">
+          <img class="arrow-img" src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
+          <h2 class="fontNunito">Datenschutz</h2>
+        </a>
+      </div>
     </div>
-  </div>
-  <div class="form-title ml-mr-auto fontNunito">
-    <h2 class="fontNunito" id="m46">Diensteanbieter</h2>
-    <br>
-    <p>-DSGVO in ARBEIT-</p>
-    <br>
-    <p>65451 Kelsterbach</p>
-    <p>Hessen - Germany</p>
-    <br>
-    <h2 id="m56">Kontaktmöglichkeiten</h2>
-    <br>
-    <p>E-Mail-Adresse: contact&#64;weiß-nicht.gov</p>
-    <p>Kontaktformular: <a href="https://www.end-of-light.com" target="_blank">End of light</a></p>
-    <br>
-    <h2 id="m172">Social Media und andere Onlinepräsenzen</h2>
-    <br>
-    <p>Diese DSGVO gilt auch für folgenden Unterseiten und/oder Onlineprofile:</p>
+    <div class="form-title ml-mr-auto fontNunito">
+      <h2 class="fontNunito" id="m46">Diensteanbieter</h2>
+      <br>
+      <p>-DSGVO in ARBEIT-</p>
+      <br>
+      <p>65451 Kelsterbach</p>
+      <p>Hessen - Germany</p>
+      <br>
+      <h2 id="m56">Kontaktmöglichkeiten</h2>
+      <br>
+      <p>E-Mail-Adresse: contact&#64;weiß-nicht.gov</p>
+      <p>Kontaktformular: <a href="https://www.end-of-light.com" target="_blank">End of light</a></p>
+      <br>
+      <h2 id="m172">Social Media und andere Onlinepräsenzen</h2>
+      <br>
+      <p>Diese DSGVO gilt auch für folgenden Unterseiten und/oder Onlineprofile:</p>
+      
     
-   
 
+    </div>
+  </div>  
+
+  <div class="legal-imprint-container ml-mr-auto">
+    <a class="fontNunito" [routerLink]="['/']">Start</a>
+    <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
   </div>
-</div>  
 
-<div class="legal-imprint-container ml-mr-auto">
-  <a class="fontNunito" href="login">Start</a>
-  <a class="fontNunito" href="imprint">Impressum</a>
-</div>
 </section>
 

@@ -1,12 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { HeaderDialogComponent } from '../header-dialog/header-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { LogoComponent } from '../../logo/logo.component';
+import { LogoComponent } from '../logo/logo.component';
+import { SearchComponent } from '../search/search.component';
+import { AvatarComponent } from '../avatar/avatar.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [HeaderDialogComponent, LogoComponent],
+  imports: [HeaderDialogComponent, LogoComponent, SearchComponent, AvatarComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
