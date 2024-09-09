@@ -12,12 +12,14 @@ section {
 }
 
 app-message-field{
+  flex-shrink: 0;
   padding: 0 25px 25px 25px ;
 }
 
 header {
   padding: 1.5625rem 2.8125rem;
   display: flex;
+  flex-shrink: 0;
   justify-content: space-between;
   height: 6rem;
   box-shadow: 0px 11px 20px -23px rgba(0, 0, 0, 0.45);
@@ -76,120 +78,14 @@ header {
 }
 
 .chat-main-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: flex-end;
-  overflow-y: scroll;
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 100%;
 }
 
-.chat-content {
-  display: flex;
-  flex-direction: column;
-  margin: 1.5625rem 0;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
 
-  >.time-separator {
-    display: flex;
-    height: 2.1875rem;
-    position: relative;
-    width: 100%;
-    justify-content: center;
-  }
 
-}
 
-.day-time {
-  display: flex;
-  justify-content: center;
-  z-index: 99;
-  background-color: $white;
-  padding: .3125rem .9375rem;
-  gap: .625rem;
-  border: 1px solid $primary-light;
-  border-radius: 1.875rem;
-}
 
-.middle-line {
-  background-color: $primary-light;
-  height: .0625rem;
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  z-index: 0;
-}
 
-.user-message-container {
-  display: flex;
-  width: 100%;
-  min-height: 8.8125rem;
-  padding: .625rem 0rem .625rem 2.8125rem;
-  gap: 1.875rem;
 
-  &:hover {
-    background-color: $bg-color;
-    width: 100%;
-
-    & .messages-main-chat {
-      background-color: $white;
-    }
-  }
-
-    >img {
-      width: 4.375rem;
-      height: 4.375rem;
-      border-radius: 2.5rem
-    }
-
-    >div {
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
-
-      >div {
-        display: flex;
-        align-items: center;
-        gap: 1.25rem;
-
-        >h2 {
-          font-weight: 700;
-          font-size: 1.125rem;
-          line-height: 24.55px;
-        }
-
-      }
-    }
-
-  }
-
-  .time-stamp {
-    font-weight: 400;
-    font-size: .875rem;
-    line-height: 19.1px;
-  }
-
-  .messages-main-chat {
-    border-radius: 0 1.875rem 1.875rem 1.875rem;
-    padding: .9375rem;
-    gap: .5rem;
-    background-color: $bg-color;
-    font-weight: 400;
-    font-size: 1.125rem;
-    line-height: 24.55px;
-  }
-
-  .answer-container {
-    display: flex;
-    align-items: center;
-  }
-
-  .answer {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    color: $secondary;
-  }
