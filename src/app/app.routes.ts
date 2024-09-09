@@ -9,6 +9,7 @@ import { CreateAvatarComponent } from './create-avatar/create-avatar.component';
 
 import { PwdResetComponent } from './pwd-reset/pwd-reset.component';
 import { PwdRecoveryComponent } from './pwd-recovery/pwd-recovery.component';
+import { ChannelCreateComponent } from './shared/component/channel-create/channel-create.component';
 
 /*
 IMPORTANTE
@@ -22,12 +23,11 @@ export const routes: Routes = [
   { path: 'menu', component: MenuSideLeftComponent },
   { path: 'register', component: RegisterUserComponent },
   { path: 'create', component: CreateAvatarComponent },
-
-  { path: 'recovery', component: PwdRecoveryComponent },
   { path: 'reset', component: PwdResetComponent },
+  { path: 'recovery', component: PwdRecoveryComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'legal', component: LegalComponent },
-]
+];
 
 
 /*
@@ -38,7 +38,6 @@ orig-copy
   { path: 'menu', component: MenuSideLeftComponent },
   { path: 'register', component: RegisterUserComponent },
   { path: 'create', component: CreateAvatarComponent },
-
   { path: 'recovery', component: PwdRecoveryComponent },
   { path: 'reset', component: PwdResetComponent },
   { path: 'imprint', component: ImprintComponent },
