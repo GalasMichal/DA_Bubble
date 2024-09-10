@@ -155,3 +155,13 @@ app-search {
   display: contents;
 }
 
+app-reaction-bar {
+  display: flex;
+  background: $white;
+  width: 255px;
+  height: 46px;
+  padding: 3px 15px 3px 20px;
+  gap: 5px;
+  border-radius: $b-radius-3 $b-radius-3 0px $b-radius-3;
+  border: 1px solid #ADB0D9
+}
