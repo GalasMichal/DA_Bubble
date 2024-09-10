@@ -34,16 +34,16 @@
     <app-avatar></app-avatar>
   </div>
 
-  <form action="" [formGroup]="userForm">
+  <form [formGroup]="userForm" (submit)=" saveDialogEdit()">
     <div class="edit">
       <div class="edit-title">
         <img
           src="./assets/media/icons/account-profil.svg"
           alt="Vollständiger Name"
         />
-        <label for="fullyName">Vollständiger Name</label>
+        <label for="name">Vollständiger Name</label>
       </div>
-      <input type="text" id="fullyName" placeholder="Name" formControlName="userName"/>
+      <input type="text" id="name" placeholder="Name" formControlName="userName" [(ngModel)]="user.userName" name="userName"/>
       @if (userForm.controls['userName'].invalid && (userForm.controls['userName'].touched || userForm.controls['userName'].dirty)) {
         @if(userForm.controls['userName'].errors?.['required']) {
             <span>Ihr Name ist erforderlich.</span>
@@ -59,19 +59,21 @@
         <img src="./assets/media/icons/mail.svg" alt="E-Mail-Adresse" />
         <label for="email">E-Mail-Adresse</label>
       </div>
-      <input type="text" id="eMailName" placeholder="E-Mail" formControlName="eMailName" ngModel="" />
-      @if (userForm.controls['eMailName'].invalid && (userForm.controls['eMailName'].touched || userForm.controls['eMailName'].dirty)) {
-        @if(userForm.controls['eMailName'].errors?.['required']) {
+      <input type="email" id="email" placeholder="E-Mail" formControlName="userEmail" [(ngModel)]="user.userEmail" name="userEmail" />
+      @if (userForm.controls['userEmail'].invalid && (userForm.controls['userEmail'].touched || userForm.controls['userEmail'].dirty)) {
+        @if(userForm.controls['userEmail'].errors?.['required']) {
             <span>Ihre E-Mail ist erforderlich.</span>
         }
-        @else if(userForm.controls['eMailName'].errors?.['email']) {
+        @else if(userForm.controls['userEmail'].errors?.['email']) {
             <span>Ihr E-Mail is not correct.</span>
         }
       }
     </div>
+
+    {{user | json}}
     <div class="buttons">
       <button type="button" (click)="closeDialogEdit()">Abbrechen</button>
-      <button type="submit" (click)="saveDialogEdit()" [disabled]="!userForm.valid">Speichern</button>
+      <button type="submit" [disabled]="!userForm.valid">Speichern</button>
     </div>
   </form>
 

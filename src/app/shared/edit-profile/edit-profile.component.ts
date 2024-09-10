@@ -21,21 +21,28 @@ export class EditProfileComponent {
   userForm: FormGroup;
   isFormSubmited: boolean = false
 
-  userName: string = "";
-  eMailName: string = "";
+  user = {
+    userName: '',
+    userEmail: '',
+  }
+
 
   constructor() {
     this.userForm = new FormGroup({
       userName: new FormControl('',[Validators.required, Validators.minLength(3)]),
-      eMailName: new FormControl('',[Validators.required, Validators.email])
+      userEmail: new FormControl('',[Validators.required, Validators.email])
     })
   }
 
   closeDialogEdit() {
+    console.log(this.user);
+
     this.dialog.close()
   }
 
   saveDialogEdit() {
+    console.log(this.user);
+    
   }
 
 }
