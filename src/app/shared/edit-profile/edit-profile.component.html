@@ -70,7 +70,6 @@
       }
     </div>
     <div class="buttons">
-        {{!userForm.valid}}
       <button type="button" (click)="closeDialogEdit()">Abbrechen</button>
       <button type="submit" (click)="saveDialogEdit()" [disabled]="!userForm.valid">Speichern</button>
     </div>
