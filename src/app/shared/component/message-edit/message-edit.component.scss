@@ -1,0 +1,17 @@
+@import '../../../../colors.scss';
+@import '../../../../styles.scss';
+
+button {
+    width: 210px;
+    height: 35px;
+    background: none;
+    font-size: 1.25rem;
+    // margin: 10px 15px 10px 15px;
+
+    &:hover {
+        border-radius: $b-radius-3;
+        transform: scale(1.01);
+        background: $bg-color;
+        color: $primary;
+    }
+}
