@@ -1,0 +1,28 @@
+@import '../../../../colors.scss';
+@import '../../../../fonts.scss';
+
+.icons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: none;
+    border-radius: 50%;
+    &:hover {
+      background: $bg-color;
+    }
+  }
+  button:nth-of-type(3),
+  button:nth-of-type(4),
+  button:nth-of-type(5) {
+    &:hover svg path{
+      fill: $secondary
+    }
+  }
+}
