@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactionBarComponent } from '../reaction-bar/reaction-bar.component';
 
 @Component({
@@ -9,5 +9,21 @@ import { ReactionBarComponent } from '../reaction-bar/reaction-bar.component';
   styleUrl: './message-answer.component.scss'
 })
 export class MessageAnswerComponent {
-
+  @Input() userMessage = {
+    userDetails: {
+      userName: "User Name",
+      timeStamp: "time stamp",
+    },
+    userMessage: "Welche Version ist aktuell von Angular?",
+    profileImage: {
+      src: "assets/media/icons/profile-icons/user-6-noah.svg",
+      alt: "profile-image",
+    },
+    messageContent: "Welche Version ist aktuell von Angular?",
+    answerDetails: {
+      answers: "2 Antworten",
+      lastAnswerTimeStamp: "Time stamp from last answer",
+    },
+  }
 }
+

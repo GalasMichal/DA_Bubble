@@ -23,4 +23,87 @@ export class ChatRoomComponent {
     });
   }
 
+  allUserMessages = [ 
+      {
+        userDetails: {
+          userName: "User Name",
+          timeStamp: "time stamp",
+        },
+        userMessage: "Welche Version ist aktuell von Angular?",
+        profileImage: {
+          src: "assets/media/icons/profile-icons/user-6-noah.svg",
+          alt: "profile-image",
+        },
+        messageContent: "Welche Version ist aktuell von Angular?",
+        answerDetails: {
+          answers: "2 Antworten",
+          lastAnswerTimeStamp: "Time stamp from last answer",
+        },
+      },
+      {
+        userDetails: {
+          userName: "User Name",
+          timeStamp: "time stamp",
+        },
+        userMessage: "Welche Version ist aktuell von Angular?",
+        profileImage: {
+          src: "assets/media/icons/profile-icons/user-6-noah.svg",
+          alt: "profile-image",
+        },
+        messageContent: "Welche Version ist aktuell von Angular?",
+        answerDetails: {
+          answers: "2 Antworten",
+          lastAnswerTimeStamp: "Time stamp from last answer",
+        },
+      },
+      {
+        userDetails: {
+          userName: "User Name",
+          timeStamp: "time stamp",
+        },
+        userMessage: "Welche Version ist aktuell von Angular?",
+        profileImage: {
+          src: "assets/media/icons/profile-icons/user-6-noah.svg",
+          alt: "profile-image",
+        },
+        messageContent: "Welche Version ist aktuell von Angular?",
+        answerDetails: {
+          answers: "2 Antworten",
+          lastAnswerTimeStamp: "Time stamp from last answer",
+        },
+      },
+      {
+        userDetails: {
+          userName: "User Name",
+          timeStamp: "time stamp",
+        },
+        userMessage: "Welche Version ist aktuell von Angular?",
+        profileImage: {
+          src: "assets/media/icons/profile-icons/user-6-noah.svg",
+          alt: "profile-image",
+        },
+        messageContent: "Welche Version ist aktuell von Angular?",
+        answerDetails: {
+          answers: "2 Antworten",
+          lastAnswerTimeStamp: "Time stamp from last answer",
+        },
+      },
+      {
+        userDetails: {
+          userName: "User Name",
+          timeStamp: "time stamp",
+        },
+        userMessage: "Welche Version ist aktuell von Angular?",
+        profileImage: {
+          src: "assets/media/icons/profile-icons/user-6-noah.svg",
+          alt: "profile-image",
+        },
+        messageContent: "Welche Version ist aktuell von Angular?",
+        answerDetails: {
+          answers: "2 Antworten",
+          lastAnswerTimeStamp: "Time stamp from last answer",
+        },
+      }
+  ];
+
 }
