@@ -7,6 +7,7 @@ import { LogoComponent } from '../../shared/logo/logo.component';
 import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-side-left.component';
 import { ChatRoomComponent } from '../chat-room/chat-room.component';
 import { ThreadAnswerComponent } from '../../shared/component/thread-answer/thread-answer.component';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -25,11 +26,15 @@ import { ThreadAnswerComponent } from '../../shared/component/thread-answer/thre
 })
 export class MainContentComponent {
   readonly userDialog = inject(MatDialog);
+  user = inject(UserService)
   isMenuOpen = true;
+
 
   openUserProfile() {
     this.userDialog.open(UserProfileComponent, {
       panelClass: 'user-profile-container',
     });
   }
+
+  
 }

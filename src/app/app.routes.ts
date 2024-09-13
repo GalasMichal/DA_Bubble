@@ -21,8 +21,8 @@ Merci :)
 
 export const routes: Routes = [
 
-  { path: '', component: LoginComponent },
-  { path: 'main', component: MainContentComponent },
+  { path: 'log', component: LoginComponent },
+  { path: '', component: MainContentComponent },
   { path: 'login', component: LoginComponent },
   { path: 'menu', component: MenuSideLeftComponent },
   { path: 'register', component: RegisterUserComponent },

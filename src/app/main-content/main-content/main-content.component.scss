@@ -98,6 +98,11 @@
 .thread-container{
   border-radius: $b-radius-1;
   background-color: $white;
+  width: 0;
+  transition: width 500ms;
+}
+
+.thread-container.animate{
   max-width: 30.3125rem;
   width: 100%;
 }

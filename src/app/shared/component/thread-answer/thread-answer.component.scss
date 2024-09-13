@@ -17,7 +17,25 @@ header {
   flex-shrink: 0;
   justify-content: space-between;
   height: 6rem;
+  align-items: center;
   box-shadow: 0px 11px 20px -23px rgba(0, 0, 0, 0.45);
+
+}
+
+.close-button{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: none;
+    border-radius: 50%;
+  &:hover svg path{
+    fill: $secondary
+  }
+  &:hover {
+    background: $bg-color;
+  }
 }
 
 .header-left-container {
@@ -40,5 +58,12 @@ header {
   }
 }
 
+.thread-content{
+ flex-grow: 1;
+}
+
+app-message-field{
+  flex-shrink: 0;
+}
 
 
