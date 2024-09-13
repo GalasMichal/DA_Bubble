@@ -23,6 +23,7 @@ export const routes: Routes = [
 
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'main', component: MainContentComponent },
   { path: 'menu', component: MenuSideLeftComponent },
   { path: 'register', component: RegisterUserComponent },
   { path: 'avatar', component: CreateAvatarComponent },
