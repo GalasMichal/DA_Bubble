@@ -11,7 +11,7 @@
   max-height: 100%;
   position: relative;
   flex-grow: 1;
-  overflow-y: hiddengit ;
+  overflow-y: hidden;
 }
 
 
@@ -93,4 +93,16 @@
   border-color: rgb(204, 0, 105);
   border-width: 0px;
   border-style: solid;
+}
+
+.thread-container{
+  border-radius: $b-radius-1;
+  background-color: $white;
+  width: 0;
+  transition: width 500ms;
+}
+
+.thread-container.animate{
+  max-width: 30.3125rem;
+  width: 100%;
 }
