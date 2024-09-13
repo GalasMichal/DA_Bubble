@@ -1,8 +1,7 @@
 <div class="chat-content">
-  <div class="time-separator">
-    <div class="day-time">Dienstag, 14 Januar</div>
-    <div class="middle-line"></div>
-  </div>
+ @if(!hideDetails){
+  <app-time-separator class="full-width"></app-time-separator>
+ }
   <div class="user-message-container">
     <app-reaction-bar></app-reaction-bar>
     <img
@@ -17,8 +16,12 @@
       <div class="messages-main-chat font-nunito">{{userMessage.messageContent}}
       </div>
       <div class="answer-container">
-        <div class="answer">{{userMessage.answerDetails.answers}}</div>
-        <div class="time-stamp">{{userMessage.answerDetails.lastAnswerTimeStamp}}</div>
+        <div (click)="openThread()" class="answer">{{userMessage.answerDetails.answers}}</div>
+        @if (!hideDetails) {
+          <div class="time-stamp">{{userMessage.answerDetails.lastAnswerTimeStamp}}</div>
+        } @else {
+          <div class="line-separator"></div>
+        }
       </div>
     </div>
   </div>

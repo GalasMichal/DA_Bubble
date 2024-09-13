@@ -103,7 +103,7 @@ export class RegisterUserComponent {
 
     if (this.myForm.valid) {
       console.log('current (valid) form is: ', this.myForm.value);
-      this.router.navigate(['create']);
+      this.router.navigate(['avatar']);
     } else {
       console.log('Form is invalid, go home! .. or else ..');
     }

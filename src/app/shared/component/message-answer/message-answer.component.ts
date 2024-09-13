@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactionBarComponent } from '../reaction-bar/reaction-bar.component';
+import { TimeSeparatorComponent } from './time-separator/time-separator.component';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-message-answer',
   standalone: true,
-  imports: [ReactionBarComponent],
+  imports: [ReactionBarComponent, TimeSeparatorComponent],
   templateUrl: './message-answer.component.html',
   styleUrl: './message-answer.component.scss'
 })
@@ -24,6 +26,12 @@ export class MessageAnswerComponent {
       answers: "2 Antworten",
       lastAnswerTimeStamp: "Time stamp from last answer",
     },
+  }
+  user = inject(UserService);
+  @Input() hideDetails: boolean = false;
+
+  openThread(){
+    this.user.isThreadOpen = true;
   }
 }
 

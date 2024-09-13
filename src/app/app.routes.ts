@@ -22,11 +22,11 @@ Merci :)
 export const routes: Routes = [
 
   { path: '', component: LoginComponent },
-  { path: 'main', component: MainContentComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'main', component: MainContentComponent },
   { path: 'menu', component: MenuSideLeftComponent },
   { path: 'register', component: RegisterUserComponent },
-  { path: 'create', component: CreateAvatarComponent },
+  { path: 'avatar', component: CreateAvatarComponent },
   { path: 'reset', component: PwdResetComponent },
   { path: 'recovery', component: PwdRecoveryComponent },
   { path: 'empty', component: ChannelEmptyComponent },

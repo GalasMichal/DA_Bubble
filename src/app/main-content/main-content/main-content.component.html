@@ -7,17 +7,20 @@
     </div>
 
     <div class="main-content">
-<app-chat-room></app-chat-room>
+      <app-chat-room></app-chat-room>
 
-        <!-- <button (click)="openUserProfile()">
+      <!-- <button (click)="openUserProfile()">
           Open Dialog User
 
         </button> -->
 
     </div>
+    <div [ngClass]="user.isThreadOpen ? 'thread-container' : 'd-none'" [class.animate]="user.isThreadOpen">
+      <app-thread-answer></app-thread-answer>
+    </div>
 
-
-    <button class="side-menu-btn fontNunito" (click)="isMenuOpen = !isMenuOpen">Side Menu <img src="assets/media/icons/show-menu.svg" alt="" srcset=""></button>
+    <button class="side-menu-btn fontNunito" (click)="isMenuOpen = !isMenuOpen">Side Menu <img
+        src="assets/media/icons/show-menu.svg" alt="" srcset=""></button>
   </div>
 
 
