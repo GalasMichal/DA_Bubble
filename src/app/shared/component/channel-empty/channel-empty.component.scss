@@ -43,6 +43,8 @@ p {
   margin-right: auto;  
 }
 
+
+
 /* CLOSE BTN */
 
 .close-btn {
@@ -91,10 +93,13 @@ p {
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 894px;
-  height: 765px;
+  // width: 894px;
+  // height: 765px;
+  width: 724px;
+  height: 589px;
   background-color: $white; 
-  border-radius: 4%;
+  border-radius: 44px !important;
+  margin-top: -7%;
 }
 
 .channel-info-container, .channel-name-container {
@@ -123,9 +128,6 @@ p {
   margin-top: -3.375rem !important;
 }
 
-.title {
-
-}
 
 .edit-name-container {
   display: flex;
@@ -222,6 +224,7 @@ p {
   gap: .625rem;
   padding: .75rem 1.5625rem .75rem 1.5625rem;
   border-radius: 1.5625rem;
+  margin-top: -19%;
 }
 
 .login-btn {

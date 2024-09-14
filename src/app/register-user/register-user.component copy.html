@@ -1,4 +1,3 @@
-
 <!-- <section class="login-section">
 
     <div class="logo-container">
@@ -8,36 +7,60 @@
     </div>
 
   <div class="form-container ml-mr-auto">
-    <div style="padding-top: 2%;">
-      1<!1-- <a href="login">
+    <div style="padding-top: 2%;"> -->
+      <!-- <a href="login">
         <mat-icon>Arrow Back</mat-icon>
-      </a> --1>
-      <div class="arrow-back-container">
+      </a> -->
+    <!--   <div class="arrow-back-container">
         <a routerLink="">
           <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
         </a>
         <h2 class="fontNunito">Konto erstellen</h2>
+        <div class="info-container">
+          <img title="How to -registrieren" (click)="openInfoBox()" class="info-icon" src="../../assets/media/icons/info_symbol-icon.png" alt="">
+        </div>
       </div>
       <div class="form-title ml-mr-auto">
         <p class="fontNunito">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
       </div>
     </div>
-    <form >
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
       <div class="input-container ml-mr-auto">
-        <input id="name" name="name" class="input-field input-field-user-icon fontNunito" minlength="3" type="text" placeholder="Name und Nachname" required>
-        <input class="input-field input-field-mail-icon fontNunito" type="email" placeholder="beispielname@email.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" required />
-        <input class="input-field input-field-pwd-icon fontNunito" minlength="8" type="password" placeholder="Passwort"  required />
+        <div class="name-container">
+          <input name="name" id="name" autocomplete="off" formControlName="name" class="input-field input-field-user-icon fontNunito" type="text" placeholder="Name und Nachname"  required/>
+          <div class="warn-txt" *ngIf="myForm.controls['name'].invalid && myForm.controls['name'].touched">
+            <span  *ngIf="myForm.controls['name'].errors && myForm.controls['name'].errors['required']" >Name ist ein Pflichtfeld.</span>
+          </div>
+        </div>
+        <div class="email-container">
+          <input #email name="name" autocomplete="off" formControlName="email" class="input-field input-field-mail-icon fontNunito" type="email" placeholder="beispielname@email.com"/>
+          <div class="warn-txt" *ngIf="myForm.controls['email'].invalid && myForm.controls['email'].touched">
+            <span  *ngIf="myForm.controls['email'].errors && myForm.controls['email'].errors['required']" >eMail ist ein Pflichtfeld.</span>
+          </div>
+        </div>
+        <div class="pwd-container">
+          <input #name id="password" name="password" type="password" formControlName="password" class="input-field input-field-pwd-icon fontNunito" placeholder="Passwort" />
+          <div class="warn-txt" *ngIf="myForm.controls['password'].invalid && myForm.controls['password'].touched">
+            <span  *ngIf="myForm.controls['password'].errors && myForm.controls['password'].errors['required']" >Password ist ein Pflichtfeld.</span>
+          </div>
+        </div>
+      </div>
+      <div class="check-container">
+        <input type="checkbox" id="checkbox" formControlName="terms">
+        <br>
+        <div class="label-container">
+          <span id="terms" name="terms" class="fontNunito">Ich stimme der <a class="font-nunito" [routerLink]="['/legal']">Datenschutzerklärung</a> zu.</span>
+          <div *ngIf="myForm.controls['terms'].invalid && myForm.controls['terms'].touched"></div>
+            <span style="color: red;"  *ngIf="myForm.controls['terms'].errors && myForm.controls['terms'].errors['required']" >Bitte klicken.</span>
+        </div>
+          
+      </div>
+      <div class="btn-container ml-mr-auto">
+        <button  id="submit" type="submit" class="login-btn fontNunito"  [disabled]="myForm.invalid">Weiter</button>
       </div>
     </form>
-
-    <div class="check-container">
-      <input type="checkbox" required>
-      <br>
-      <label for="checkbox" class="fontNunito">Ich stimme der <a class="font-nunito" [routerLink]="['/legal']">Datenschutzerklärung</a> zu.</label>
-    </div>
-    <div class="btn-container ml-mr-auto">
-      <a routerLink="/create" class="login-btn fontNunito" >Weiter</a>
-    </div>
+   
+   
 
   </div>
 
