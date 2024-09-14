@@ -27,6 +27,7 @@ export class MessageAnswerComponent {
       lastAnswerTimeStamp: "Time stamp from last answer",
     },
   }
+  
   user = inject(UserService);
   @Input() hideDetails: boolean = false;
 
