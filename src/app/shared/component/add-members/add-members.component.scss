@@ -1,0 +1,63 @@
+@import "./../../../../colors.scss";
+@import "./../../../../styles.scss";
+
+
+.add-members {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 35px;
+    overflow: unset;
+    .profil {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: $black;
+        margin: 0;
+      }
+      button {
+        background: none;
+        border: none;
+        border-radius: $b-radius-2;
+        &:hover {
+          background: $bg-color;
+        }
+        &:hover svg path {
+          fill: $primary-hover;
+        }
+        &:focus-visible {
+          outline: none;
+        }
+      }
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      color: $black;
+      div {
+        display: flex;
+        gap: 1rem;
+        input, label {
+          cursor: pointer;
+          span {
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep
+  .add-members-container
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  border-radius: $b-radius-1;
+  width: 700px;
+  height: 400px;
+  overflow: unset;
+}

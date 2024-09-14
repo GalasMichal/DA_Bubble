@@ -1,25 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AddMembersComponent } from '../add-members/add-members.component';
 
 @Component({
   selector: 'app-channel-create',
   standalone: true,
-  imports: [
-    CommonModule, 
-    RouterModule, 
-    RouterLink,
-    
-  ],
+  imports: [CommonModule, RouterModule, RouterLink, AddMembersComponent],
   templateUrl: './channel-create.component.html',
-  styleUrl: './channel-create.component.scss'
+  styleUrl: './channel-create.component.scss',
 })
 export class ChannelCreateComponent {
+  readonly dialogAddMembers = inject(MatDialog);
 
-  constructor(private dialogRef: MatDialogRef<ChannelCreateComponent>) { }
+  constructor(private dialogRef: MatDialogRef<ChannelCreateComponent>) {}
 
   closeModal() {
     this.dialogRef.close();
+  }
+
+  openAddMembers() {
+    this.dialogAddMembers.open(AddMembersComponent, {
+      panelClass: 'add-members-container', // Custom class for profile dialog
+    });
   }
 }
