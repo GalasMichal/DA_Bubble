@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { InfoBoxComponent } from './info-box/info-box.component';
@@ -27,12 +27,15 @@ import { InfoBoxComponent } from './info-box/info-box.component';
 
 export class RegisterUserComponent {
   
+  // public fb = Inject(FormBuilder);
+  // public router = Inject(Router);
+  // public dialog = Inject(MatDialog);
 
   myForm: FormGroup; // name - just for now
 
 
-  constructor(public fb: FormBuilder, public dialog: MatDialog, private router: Router) {
-
+  constructor(public fb: FormBuilder, public dialog: MatDialog, public router: Router) {
+    
     /*
     age-validator - IF NEEDED
     function ageValidator(control: FormControl): { [key: string]: boolean } | null {
@@ -96,9 +99,9 @@ export class RegisterUserComponent {
   onSubmit() {
     console.log('Submit button clicked.');
     
-    console.log('Form Status:', this.myForm.status);
-    console.log('Password Control Status:', this.myForm.controls['password'].status);
-    console.log('Password Control Errors:', this.myForm.controls['password'].errors);
+    // console.log('Form Status:', this.myForm.status);
+    // console.log('Password Control Status:', this.myForm.controls['password'].status);
+    // console.log('Password Control Errors:', this.myForm.controls['password'].errors);
   
 
     if (this.myForm.valid) {
