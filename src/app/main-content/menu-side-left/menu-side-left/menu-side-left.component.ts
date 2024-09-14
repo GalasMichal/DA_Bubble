@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ChannelCreateComponent } from '../../../shared/component/channel-create/channel-create.component';
 
 @Component({
   selector: 'app-menu-side-left',
@@ -20,5 +22,15 @@ export class MenuSideLeftComponent {
 
   toogleDropDown2(){
     this.isSecondDropdownMenuOpen = !this.isSecondDropdownMenuOpen
+  }
+
+
+  constructor(private dialog: MatDialog) {}
+
+  addChannel (){
+    this.dialog.open(ChannelCreateComponent, {
+      width: '520px',
+      height: '440px',
+    })
   }
 }

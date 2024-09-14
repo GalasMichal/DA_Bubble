@@ -93,6 +93,18 @@
   }
 }
 
+/* start - hover-state add-channel-icon*/
+.add-channel-icon {
+  cursor: pointer;
+  &:hover {
+    color: $primary;
+    .add-black-hover {
+      fill: $primary;
+    }
+  }
+}
+/* end - */
+
 .pm-wrapper {
   display: flex;
   flex-direction: column;
@@ -119,6 +131,14 @@
   padding: .25rem 1.75rem;
   min-width: 12.875rem;
   gap: 1.5625rem;
+  &:hover {
+    span {
+      color: $primary;
+    }
+    .svg-path {
+      fill: $primary;
+    }
+  }
 }
 
 .menu-title {
