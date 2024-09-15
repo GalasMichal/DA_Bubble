@@ -2,11 +2,8 @@ import { Component, inject } from '@angular/core';
 import { MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { InputAddUsersComponent } from '../input-add-users/input-add-users.component';
 import {
-  FormControl,
-  FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

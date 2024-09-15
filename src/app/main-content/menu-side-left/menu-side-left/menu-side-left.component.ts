@@ -29,8 +29,7 @@ export class MenuSideLeftComponent {
 
   addChannel (){
     this.dialog.open(ChannelCreateComponent, {
-      width: '520px',
-      height: '440px',
+      panelClass: 'channel-creat-container',
     })
   }
 }

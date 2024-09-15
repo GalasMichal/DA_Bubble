@@ -74,6 +74,6 @@
   .mat-mdc-dialog-surface {
   border-radius: $b-radius-1;
   width: 700px;
-  height: 400px;
+  max-height: 400px;
   overflow: unset;
 }
