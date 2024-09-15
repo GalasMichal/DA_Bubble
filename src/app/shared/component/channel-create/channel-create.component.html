@@ -1,6 +1,8 @@
 <mat-dialog-content class="form-container">
 
-  <div class="arrow-back-container">
+  @if(!member.addMembers) {
+
+    <div class="arrow-back-container">
       <h2 class="fontNunito">Channel erstellen</h2>
       <button  class="close-btn" (click)="closeModal()" >
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
@@ -29,9 +31,11 @@
     </div>
     
     <div class="check-container">
-        <a class="fontNunito" routerLink="main" (click)="openAddMembers()">Erstellen</a>
+      <a class="fontNunito" routerLink="main" (click)="openAddMembers()">Erstellen</a>
     </div>
-    
+  }
 </mat-dialog-content>
+
+<app-add-members></app-add-members>
 
 
