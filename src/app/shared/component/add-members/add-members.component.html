@@ -13,21 +13,23 @@
         </button>
     </div>
 
-    <form>
+    <form >
         <div>
 
-            <input type="radio" id="allMembers" name="member" value="allMembers">
+            <input type="radio" id="allMembers" name="member"(change)="choosenOption()" [(ngModel)]="selectedOption" value="allMembers">
             <label for="allMembers">Alle Mitglieder von <span>OfficeTeam</span> hinzufügen.</label>
         </div>
             
         <div>
-            <input type="radio" id="specificPeople" name="member" value="specificPeople">
+            <input type="radio" id="specificPeople" name="member" (change)="choosenOption()" [(ngModel)]="selectedOption" value="specificPeople">
             <label for="specificPeople"> Bestimmte Leute hinzufügen.</label>
         </div>
-            
-        <app-input-add-users></app-input-add-users>
 
-        <button class="add" type="submit">Erstellen</button>
+        @if(specificPeople){
+            <app-input-add-users></app-input-add-users>
+        }
+
+        <button class="add" type="submit" [disabled]="!(specificPeople || allMembers)">Erstellen</button>
     </form>
 
 
