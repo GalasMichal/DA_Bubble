@@ -1,4 +1,4 @@
-<div class="add-members">
+<mat-dialog-content class="add-members">
     <div class="profil">
         <h1>Leute hinzüfugen</h1>
         <button (click)="closeDialogAddMembers()">
@@ -13,7 +13,7 @@
         </button>
     </div>
 
-    <form >
+    <div class="radio-input" >
         <div>
 
             <input type="radio" id="allMembers" name="member"(change)="choosenOption()" [(ngModel)]="selectedOption" value="allMembers">
@@ -30,5 +30,5 @@
         }
 
         <button class="add" type="submit" [disabled]="!(specificPeople || allMembers)">Erstellen</button>
-    </form>
-</div>
+    </div>
+</mat-dialog-content>
