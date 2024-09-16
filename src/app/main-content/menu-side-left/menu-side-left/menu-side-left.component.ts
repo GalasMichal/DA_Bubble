@@ -29,9 +29,7 @@ export class MenuSideLeftComponent {
 
 
   constructor(private dialog: MatDialog) {}
-
   addChannel (){
-    this.member.addMembers = false;
     this.dialog.open(ChannelCreateComponent, {
       panelClass: 'channel-create-container',
     })

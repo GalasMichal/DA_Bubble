@@ -5,6 +5,5 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
   isThreadOpen = false;
-  addMembers = false;
   constructor() { }
 }
