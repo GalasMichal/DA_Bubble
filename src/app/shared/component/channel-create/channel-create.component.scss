@@ -2,15 +2,10 @@
 @import "../../../../fonts.scss";
 @import "../../../../styles.scss";
 
-app-add-members {
-    width: 100%;
-  }
-
-mat-dialog-content {
+.form-container {
   display: flex;
-  align-items: center;
   flex-direction: column;
-  padding: 35px;
+  padding: 2.1875rem;
   background-color: $white;
   gap: 1.25rem;
   .arrow-back-container {

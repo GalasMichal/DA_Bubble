@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 35px;
+  padding: 2.1875rem;
   overflow: unset;
   .profil {
     display: flex;
@@ -67,15 +67,6 @@
   }
 }
 
-::ng-deep
-  .add-members-container
-  .mat-mdc-dialog-container
-  .mdc-dialog__container
-  .mat-mdc-dialog-surface {
-  border-radius: $b-radius-1;
-  max-height: 400px;
-  overflow: unset;
-}
 
 ::ng-deep 
 .add-members-container {
@@ -94,4 +85,14 @@
 .mdc-dialog__container {
   max-width: 600px;
   width: 100%;
+}
+
+::ng-deep
+  .add-members-container
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  border-radius: $b-radius-1;
+  max-height: 400px;
+  overflow: unset;
 }
