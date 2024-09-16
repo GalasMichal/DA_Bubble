@@ -23,5 +23,5 @@ import { Firestore } from '@angular/fire/firestore';
 })
 export class AppComponent {
   title = 'dabubble';
-  firestore: Firestore = inject(Firestore)
+  
 }

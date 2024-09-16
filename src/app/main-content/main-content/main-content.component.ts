@@ -7,8 +7,7 @@ import { LogoComponent } from '../../shared/logo/logo.component';
 import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-side-left.component';
 import { ChatRoomComponent } from '../chat-room/chat-room.component';
 import { ThreadAnswerComponent } from '../../shared/component/thread-answer/thread-answer.component';
-import { UserService } from '../../services/user.service';
-
+import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-main-content',
@@ -19,22 +18,19 @@ import { UserService } from '../../services/user.service';
     LogoComponent,
     MenuSideLeftComponent,
     ChatRoomComponent,
-    ThreadAnswerComponent
+    ThreadAnswerComponent,
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
 export class MainContentComponent {
   readonly userDialog = inject(MatDialog);
-  user = inject(UserService)
+  state: StateControlService = inject(StateControlService);
   isMenuOpen = true;
-
 
   openUserProfile() {
     this.userDialog.open(UserProfileComponent, {
       panelClass: 'user-profile-container',
     });
   }
-
-  
 }
