@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelCreateComponent } from '../../../shared/component/channel-create/channel-create.component';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-menu-side-left',
@@ -14,6 +15,8 @@ import { ChannelCreateComponent } from '../../../shared/component/channel-create
 export class MenuSideLeftComponent {
   isFirstDropdownMenuOpen = false ;
   isSecondDropdownMenuOpen = true;
+  member = inject(UserService)
+
 
 
   toogleDropDown1(){
@@ -28,9 +31,9 @@ export class MenuSideLeftComponent {
   constructor(private dialog: MatDialog) {}
 
   addChannel (){
+    this.member.addMembers = false;
     this.dialog.open(ChannelCreateComponent, {
-      width: '620px',
-      height: '510px',
+      panelClass: 'channel-create-container',
     })
   }
 }
