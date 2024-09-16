@@ -36,17 +36,3 @@ export const routes: Routes = [
 
 ];
 
-
-/*
-orig-copy
-
-  { path: '', component: LoginComponent },
-  { path: 'main', component: MainContentComponent },
-  { path: 'menu', component: MenuSideLeftComponent },
-  { path: 'register', component: RegisterUserComponent },
-  { path: 'create', component: CreateAvatarComponent },
-  { path: 'recovery', component: PwdRecoveryComponent },
-  { path: 'reset', component: PwdResetComponent },
-  { path: 'imprint', component: ImprintComponent },
-  { path: 'legal', component: LegalComponent },
-*/
