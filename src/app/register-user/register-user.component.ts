@@ -78,17 +78,20 @@ export class RegisterUserComponent {
     // const isFormValid = this.myForm.valid;
     // console.log('form is valid: ',isFormValid);
     // debugger;
-    // this.isFormSubmitted = true;
     
     // console.log('Form Status:', this.myForm.status);
     // console.log('Password Control Status:', this.myForm.controls['password'].status);
     // console.log('Password Control Errors:', this.myForm.controls['password'].errors);
-  
-
+    
+    // needed - requirement-check
+    this.isFormSubmitted = true;
+    
     if (this.myForm.valid) {
+      // TODO: später auskommentieren !
       console.log('current (valid) form is: ', this.myForm.value);
       this.router.navigate(['avatar']);
     } else {
+      // TODO: was zu tun?
       console.log('Form is invalid, go home! .. or else ..');
     }
   }
