@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../../services/user.service';
+
 
 @Component({
   selector: 'app-add-members',
@@ -27,7 +27,7 @@ export class AddMembersComponent {
   selectedOption: string = '';
   specificPeople: boolean = false;
   allMembers: boolean = false
-  member = inject(UserService)
+ 
 
   closeDialogAddMembers() {
     this.dialog.close();

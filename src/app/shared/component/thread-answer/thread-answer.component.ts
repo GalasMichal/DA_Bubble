@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { MessageAnswerComponent } from '../message-answer/message-answer.component';
 import { MessageFieldComponent } from '../message-field/message-field.component';
-import { UserService } from '../../../services/state-control/user.service';
+
+import { StateControlService } from '../../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-thread-answer',
@@ -11,9 +12,9 @@ import { UserService } from '../../../services/state-control/user.service';
   styleUrl: './thread-answer.component.scss',
 })
 export class ThreadAnswerComponent {
-  user = inject(UserService);
+  state = inject(StateControlService);
 
   closeThread() {
-    this.user.isThreadOpen = false;
+    this.state.isThreadOpen = false;
   }
 }
