@@ -9,7 +9,10 @@ import { LogoComponent } from '../shared/logo/logo.component';
   standalone: true,
   imports: [CommonModule, RouterModule, RouterLink, LogoComponent],
   templateUrl: './imprint.component.html',
-  styleUrl: './imprint.component.scss'
+  styleUrls: [
+    './imprint.component.scss',
+    './imprint.component.media.scss'
+  ]
 })
 export class ImprintComponent {
 

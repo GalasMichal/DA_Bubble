@@ -1,13 +1,5 @@
 @import '../../colors.scss';
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+@import '../../styles.scss';
 
 h2 {
   color: $primary;
@@ -18,213 +10,188 @@ h2 {
 
 .ml-mr-auto {
   margin-left: auto;
-  margin-right: auto;  
+  margin-right: auto;
 }
 
-/* CONTENT */
-
-.arrow-back-container {
-  width: 120%;
-  height: 40px;
-  display: flex;
-  gap: 15%;
-  margin-left: -14%;
-  align-items: center;
-  margin-top: 7%;
-  >a {
-    text-decoration: none;
-    cursor: pointer;
-  }
-}
-
-.create-avatar-section {
-  width: 100%;
-  height: 100vh;
-  background-color: $bg-color;
-}
-
-.form-title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 9.5%;
-  gap: 8px;
-  width: 27.75rem;
-  text-align: center;
-  margin-bottom: 35px;
-  >p {
-    font-size: 20px;
-  }
-}
-
-.content-container {
-  scale: 0.8;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 37.875rem;
-  height: 41.8125rem;
-  background-color: $white; 
-  border-radius: 4%;
-}
-
-/* avatar container */
-
-.avatar-container {
-  width: 29.5rem;
-  height: 28rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
-  margin-left: 2%;
-}
-
-.profile-icon {
-  margin-top: 16px;
-}
-
-.profile-name {
-  font-weight: 700;
-  font-size: 2rem;
-  color: $black;
-  line-height: 43.65px;
-  margin-bottom: 0px;
-}
-
-.profile-name-span {
-  font-weight: 400;
-  font-size: 1.25rem;
-  color: $black;
-  line-height: 27.28px;
-  margin-top: -27px;
-  margin-left: -48%;
-}
-
-.profile-avatars {
-  display: flex;
-  gap: 8px;
-}
-
-.upload-container {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  width: 29.5rem;
-  height: 3.0625rem;
-  margin-left: 8%;
-}
-
-.upload-text {
-  font-weight: 400;
-  font-size: 1.25rem;
-  color: $black;
-  line-height: 1.705rem;
-}
-
-.upload-btn {
-  width: 11.6875rem;
-  height: 3.0625rem;
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 44px;
-  border: $primary 1px solid;
-  cursor: pointer;
-  padding: 12px 25px 12px 25px;
-  box-shadow: 0px 2px 10px 0px #00000014;
-  &:hover {
-    background-color: green;
-    color: #1d1e20;
-    font-weight: bold;
-  }
-}
-
-/* LOGIN BUTTONS */
-
-.btn-container {
-  width: 21rem;
-  height: 3.0625rem;
-  display: flex;
-  justify-content: end;
-  margin-top: 9%;
-  margin-left: 34%;
-  >a {
-    text-decoration: none;
-    justify-content: center;
-  }
-} 
-
-.login-btn {
-  font-weight: 700;
-  font-size: 1.125rem;
-  cursor: pointer;
-  width: 8.5625rem;
-  height: 3.0625rem;
-  display: flex;
-  gap: 10px;
-  padding: 12px 25px 12px 25px;
-  border-radius: 25px;
-}
-
-.login-btn {
-  color: white;
-  background-color: $primary;
-  &:hover {
-    background-color: $primary-hover;
-    color: #313ae6;
-  }
-}
-
-.login-section {
-  width: 100%;
-  // width: 112.1875rem;
-  width: 50%;
-  height: 100vh;
-  background-color: $bg-color;
-  margin: auto;
-}
-
-/* LEGAL IMPRINT -LINKS*/
-
-.legal-imprint-container {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: -10px;
-  >a {
-    text-decoration: none;
-    cursor: pointer;
-    &:hover {
-      color: $primary-hover;
-      border: $primary-hover 1px solid;
-      border-radius: 30px;
-    }
-  }
-}
-
-/**/
-
-.logo-create-avatar-page{
+/* LOGO CONTAINER */
+.logo-create-avatar-page {
   padding-top: 3rem;
   padding-left: 4%;
 }
 
 .logo-container {
-  // padding-top: 65px;
   padding-top: 4.0625rem;
   padding-left: 5.5%;
+  .logo {
+    width: 242.11px;
+    height: 70px;
+  }
 }
 
-.logo {
-  width: 242.11px;
-  height: 70px;
-  // padding-left: 75px;
+/* CREATE AVATAR SECTION */
+.create-avatar-section {
+  width: 100%;
+  height: 100vh;
+  background-color: $bg-color;
+
+  .content-container {
+    scale: 0.8;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 37.875rem;
+    height: 41.8125rem;
+    background-color: $white;
+    border-radius: 4%;
+    padding-top: 2%;
+    margin-left: 5%;
+
+    .arrow-back-container {
+      width: 120%;
+      height: 40px;
+      display: flex;
+      gap: 15%;
+      margin-left: -14%;
+      align-items: center;
+      margin-top: 7%;
+
+      a {
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      h2 {
+        color: $primary;
+        font-size: 2.875rem;
+        font-weight: 700;
+        margin-left: -5%;
+      }
+    }
+
+    .avatar-container {
+      width: 29.5rem;
+      height: 28rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      margin-left: 2%;
+
+      .profile-icon {
+        margin-top: 16px;
+      }
+
+      .profile-name {
+        font-weight: 700;
+        font-size: 2rem;
+        color: $black;
+        line-height: 43.65px;
+        margin-bottom: 0px;
+      }
+
+      .profile-name-span {
+        font-weight: 400;
+        font-size: 1.25rem;
+        color: $black;
+        line-height: 27.28px;
+        margin-top: -27px;
+        margin-left: -48%;
+      }
+
+      .profile-avatars {
+        display: flex;
+        gap: 8px;
+      }
+
+      .upload-container {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        width: 29.5rem;
+        height: 3.0625rem;
+        margin-left: 8%;
+
+        .upload-text {
+          font-weight: 400;
+          font-size: 1.25rem;
+          color: $black;
+          line-height: 1.705rem;
+        }
+
+        .upload-btn {
+          width: 11.6875rem;
+          height: 3.0625rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 44px;
+          border: 1px solid $primary;
+          cursor: pointer;
+          padding: 12px 25px;
+          box-shadow: 0px 2px 10px 0px #00000014;
+
+          &:hover {
+            background-color: green;
+            color: #1d1e20;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  .btn-container {
+    width: 21rem;
+    height: 3.0625rem;
+    display: flex;
+    justify-content: end;
+    margin-top: 9%;
+    margin-left: 34%;
+
+    a {
+      text-decoration: none;
+      justify-content: center;
+    }
+
+    .login-btn {
+      font-weight: 700;
+      font-size: 1.125rem;
+      cursor: pointer;
+      width: 8.5625rem;
+      height: 3.0625rem;
+      display: flex;
+      padding: 12px 25px;
+      border-radius: 25px;
+      color: white;
+      background-color: $primary;
+
+      &:hover {
+        background-color: $primary-hover;
+        color: #313ae6;
+      }
+    }
+  }
+
+  .legal-imprint-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: -10px;
+
+    a {
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        color: $primary-hover;
+        border: 1px solid $primary-hover;
+        border-radius: 30px;
+      }
+    }
+  }
 }
 
-/**/
-
+/* CHECK CONTAINER */
 .check-container {
   display: flex;
   gap: 8px;

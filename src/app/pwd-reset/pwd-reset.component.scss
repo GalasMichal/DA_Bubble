@@ -1,13 +1,5 @@
 @import '../../colors.scss';
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+@import '../../styles.scss';
 
 h2 {
   color: $primary;

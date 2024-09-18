@@ -9,7 +9,10 @@ import { LogoComponent } from '../shared/logo/logo.component';
   standalone: true,
   imports: [CommonModule, RouterModule, RouterLink, LogoComponent],
   templateUrl: './legal.component.html',
-  styleUrl: './legal.component.scss'
+  styleUrls: [
+    './legal.component.scss',
+    './legal.component.media.scss'
+  ]
 })
 export class LegalComponent {
 
