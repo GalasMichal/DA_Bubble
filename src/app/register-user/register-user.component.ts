@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { InfoBoxComponent } from './info-box/info-box.component';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 
 @Component({
@@ -15,7 +15,8 @@ import { InfoBoxComponent } from './info-box/info-box.component';
     RouterModule, 
     RouterLink, 
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    InfoBoxComponent
   ],
   templateUrl: './register-user.component.html',
   styleUrls: [
@@ -25,24 +26,25 @@ import { InfoBoxComponent } from './info-box/info-box.component';
 })
 
 export class RegisterUserComponent {
-  
-  // public router = Inject(Router);
-  // public dialog = Inject(MatDialog);
-  /* 
-  In Angular, the @Inject decorator is used to inject a token into a component or service. However, you are using it to assign a value to a property.
-  */
+
+  readonly dialogAddMembers = inject(MatDialog);
+  readonly router = inject(Router);
 
   myForm: FormGroup; // name - just for now
   isFormSubmitted:boolean = false;
 
-  constructor(private dialog: MatDialog, public router: Router) {
+  constructor() {
 
-    // const passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%+-/*?&])[A-Za-z\\d@$!%*?&]$';
+    // const upper_req = '(?=.*[A-Z])';
+    // const special_char_req = '(?=.*[!@#$%^&*()])';
+    // const lower_req = '(?=.*[a-z])';
+    // const number_req = '(?=.*[0-9])';
   
     this.myForm = new FormGroup({
       name: new FormControl('',[
         Validators.required, 
         Validators.minLength(4), 
+        // checks if name contains only letters
         Validators.pattern('^[a-zA-Z ]*$')]),
       email: new FormControl('',[
         Validators.required, 
@@ -50,39 +52,16 @@ export class RegisterUserComponent {
       password: new FormControl('',[
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*+\\-/*?&])[A-Za-z\\d@$!%*+\\-/*?&]{8,}$')
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@\$!%+\-/\*\?&])[A-Za-z0-9@$!%+\-/\*\?&]+$'),
       ]),
       terms: new FormControl(false, [
+        // checks, if checkbox is checked - default is set to not-checked
         Validators.requiredTrue
       ]),
     })
-    
-
-    /*
-    IMPORTANTE
-      -> pwd - reg-ex:
-        at least one uppercase letter,
-        at least one lowercase letter,
-        at least one number,
-        at least one special character,
-        a minimum length of 8 characters.
-      -> anti-sql - reg-ex:
-        no ' or " or ;   // to be checked - may be edited
-    */
-
   }
 
   onSubmit() {
-    // werden später gelöscht - 
-    // console.log('Submit button clicked.');
-    // const isFormValid = this.myForm.valid;
-    // console.log('form is valid: ',isFormValid);
-    // debugger;
-    
-    // console.log('Form Status:', this.myForm.status);
-    // console.log('Password Control Status:', this.myForm.controls['password'].status);
-    // console.log('Password Control Errors:', this.myForm.controls['password'].errors);
-    
     // needed - requirement-check
     this.isFormSubmitted = true;
     
@@ -97,7 +76,7 @@ export class RegisterUserComponent {
   }
 
   openInfoBox() {
-    this.dialog.open(InfoBoxComponent);
+    this.dialogAddMembers.open(InfoBoxComponent);
   }
 
     /*
