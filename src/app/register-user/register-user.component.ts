@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, RouterLink, RouterModule } from '@angular/router';
@@ -10,14 +10,13 @@ import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModu
   selector: 'app-register-user',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    RouterModule, 
-    RouterLink, 
+    FormsModule,
+    RouterModule,
+    RouterLink,
     ReactiveFormsModule,
     MatDialogModule,
     InfoBoxComponent
-  ],
+],
   templateUrl: './register-user.component.html',
   styleUrls: [
     './register-user.component.scss',

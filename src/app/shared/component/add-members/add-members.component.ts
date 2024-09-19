@@ -5,7 +5,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -13,11 +13,10 @@ import { UserService } from '../../../services/user.service';
   standalone: true,
   imports: [
     MatDialogContent,
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    InputAddUsersComponent,
-  ],
+    InputAddUsersComponent
+],
   templateUrl: './add-members.component.html',
   styleUrl: './add-members.component.scss',
 })

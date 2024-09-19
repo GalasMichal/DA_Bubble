@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { MatDialog, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import { UserService } from '../../../services/user.service';
 @Component({
   selector: 'app-channel-create',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, AddMembersComponent, MatDialogContent, AddMembersComponent],
+  imports: [RouterModule, RouterLink, AddMembersComponent, MatDialogContent, AddMembersComponent],
   templateUrl: './channel-create.component.html',
   styleUrl: './channel-create.component.scss',
 })

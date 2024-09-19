@@ -1,0 +1,73 @@
+<!-- <section class="login-section">
+
+    <div class="logo-container">
+      <a routerLink="">
+        <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
+      </a>
+    </div>
+
+  <div class="form-container ml-mr-auto">
+    <div style="padding-top: 2%;">
+      <div class="arrow-back-container">
+        <a routerLink="">
+          <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
+        </a>
+        <h2 class="fontNunito">Konto erstellen</h2>
+        <div class="info-container">
+          <img id="info-icon" title="How to -registrieren" (click)="openInfoBox()" class="pulse info-icon" src="../../assets/media/icons/info_symbol-icon.png" alt="">
+        </div>
+      </div>
+      <div class="form-title ml-mr-auto">
+        <p class="fontNunito">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
+      </div>
+    </div>
+    <form [formGroup]="myForm">
+      <div class="input-container ml-mr-auto">
+        <div class="name-container">
+          <input name="name" id="name" autocomplete="off" formControlName="name" class="input-field input-field-user-icon fontNunito" type="text" placeholder="Dein Name" aria-label="Name" aria-required="true" aria-describedby="name-length-error"/>
+          <div class="warn-txt" 
+          *ngIf="myForm.controls['name'].invalid && (isFormSubmitted || myForm.controls['name'].dirty || myForm.controls['name'].touched)">
+            <span  *ngIf="myForm.controls['name'].errors?.['required']" >Name ist ein Pflichtfeld.</span>
+            <span id="name-length-error"  *ngIf="myForm.controls['name'].errors?.['minlength']" >Mindestens 4 Buchstaben.</span>
+          </div>
+        </div>
+        <div class="email-container">
+          <input #email name="name" autocomplete="off" formControlName="email" class="input-field input-field-mail-icon fontNunito" type="email" placeholder="beispielname@email.com" aria-label="Email" aria-required="true" aria-describedby="email-error"/>
+          <div class="warn-txt" *ngIf="myForm.controls['email'].invalid && (isFormSubmitted || myForm.controls['email'].touched || myForm.controls['email'].dirty)">
+            <span  *ngIf="myForm.controls['email'].errors?.['required']" >eMail ist ein Pflichtfeld.</span>
+            <span id="email-error"  *ngIf="myForm.controls['email'].errors?.['email']" >eMail ist unvollständig/inkorrekt.</span>
+          </div>
+        </div>
+        <div class="pwd-container">
+          <input #name id="password" name="password" type="password" formControlName="password" class="input-field input-field-pwd-icon fontNunito" placeholder="Passwort" aria-label="Passwort" aria-required="true" aria-describedby="password-error"/>
+          <div class="warn-txt warn-txt-2" *ngIf="myForm.controls['password'].invalid && (isFormSubmitted || myForm.controls['password'].touched || myForm.controls['password'].dirty)">
+            <span  *ngIf="myForm.controls['password'].errors?.['required']" >Password ist ein Pflichtfeld.</span>
+            <span id="password-error" class="warn-txt-2" *ngIf="myForm.controls['password'].errors?.['minlength']">Mindestens 8 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen, siehe Info-box.</span><br>
+            <span class="warn-txt-2" *ngIf="myForm.controls['password'].errors?.['pattern']">Mindestanforderungen nicht erfüllt, siehe Info-box.</span><br>
+          </div>
+        </div>
+      </div>
+      <div class="check-container">
+        <input  id="terms" name="terms" type="checkbox" id="checkbox" formControlName="terms" aria-label="Terms" aria-required="true" aria-describedby="terms-error">
+        <br>
+        <div class="label-container">
+          <span class="fontNunito">Ich stimme der <a class="font-nunito" [routerLink]="['/legal']">Datenschutzerklärung</a> zu.</span>
+          <div *ngIf="myForm.controls['terms'].invalid && myForm.controls['terms'].touched"></div>
+            <span id="terms-error" class="warn-term" *ngIf="myForm.controls['terms'].errors?.['required']" >Bitte klicken.</span>
+        </div>
+          
+      </div>
+      <div class="btn-container ml-mr-auto">
+        <button  id="submit" type="submit" class="login-btn fontNunito" (click)="onSubmit()"  >Weiter</button> -->
+        <!-- [disabled]="!myForm.valid" => MUST NOT BE THERE, require-check, when empty form wont work with it -->
+     <!-- </div>
+    </form>
+
+  </div>
+
+  <div class="legal-imprint-container ml-mr-auto">
+    <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
+    <a class="fontNunito" [routerLink]="['/legal']">Datenschutz</a>
+  </div>
+</section>
+ -->

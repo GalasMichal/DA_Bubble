@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterOutlet } from '@angular/router';
 import { MainContentComponent } from './main-content/main-content/main-content.component';
 import { LoginComponent } from "./login/login.component";
@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MainContentComponent, LoginComponent, HeaderComponent, ReactiveFormsModule],
+  imports: [RouterOutlet, MainContentComponent, LoginComponent, HeaderComponent, ReactiveFormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
