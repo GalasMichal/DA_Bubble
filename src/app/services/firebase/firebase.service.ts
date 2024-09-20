@@ -46,9 +46,7 @@ export class FirebaseService {
             displayName: firebaseUser.displayName || '', // Nun wird der displayName korrekt gesetzt
           };
           console.log('Registrierter User ist', user);
-
-          this.userSignal.set(user);
-          return user;
+          this.addUserToFirestore(user);
         });
       })
       .catch((error) => {
@@ -58,8 +56,8 @@ export class FirebaseService {
       });
   }
 
-  createGoogleUser(): Promise<User> {
-    return signInWithPopup(this.auth, this.provider)
+  createGoogleUser(): Promise<any> {
+   return signInWithPopup(this.auth, this.provider)
       .then((result) => {
         // Zugriff auf Google Access Token
         const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -85,17 +83,10 @@ export class FirebaseService {
           email: googleUser.email ?? '',
           displayName: displayName,
         };
+        this.addUserToFirestore(user);
 
-        // Benutzerdaten in Firestore speichern
-        const userCollectionRef = collection(this.firestore, 'users'); // Referenz zur 'users'-Collection
-        const userDocRef = doc(userCollectionRef, user.uId); // Dokumentreferenz zum Benutzer-Dokument
 
-        // Speichern des Benutzers in Firestore und Rückgabe des Benutzers
-        return setDoc(userDocRef, user).then(() => {
-          this.userSignal.set(user); // Angular Signal setzen
-          return user; // Benutzer zurückgeben
-        });
-      })
+  })
       .catch((error) => {
         // Fehlerbehandlung
         const errorCode = error.code;
@@ -110,6 +101,16 @@ export class FirebaseService {
 
         // Fehler erneut werfen, damit der Aufrufer sie behandeln kann
         throw error;
+      });
+  }
+
+  addUserToFirestore(user: User) {
+    const userCollectionRef = collection(this.firestore, 'users'); // Referenz zur 'users'-Collection
+    const userDocRef = doc(userCollectionRef, user.uId);
+       // Speichern des Benutzers in Firestore und Rückgabe des Benutzers
+       setDoc(userDocRef, user).then(() => {
+        this.userSignal.set(user); // Angular Signal setzen
+        return user; // Benutzer zurückgeben
       });
   }
 }
