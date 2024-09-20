@@ -16,6 +16,10 @@ h2 {
   color: $primary !important;
 }
 
+.btn-no-bg {
+  background: unset;
+}
+
 .form-container {
   background-color: $white;
   border-radius: 30px;
@@ -47,8 +51,8 @@ h2 {
 }
 
 .arrow-img {
-  margin-top: 1%;
-  margin-left: 4%;
+  margin-top: 5%;
+  margin-left: -80%;
 }
 
 .imprint {

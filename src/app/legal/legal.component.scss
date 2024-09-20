@@ -40,8 +40,12 @@ body {
 }
 
 .arrow-img {
-  margin-top: 1%;
-  margin-left: 4%;
+  margin-top: 4%;
+  margin-left: -66%;
+}
+
+.btn-no-bg {
+  background: unset;
 }
 
 h2 {
@@ -69,7 +73,7 @@ h2 {
   margin-top: 20px;
 }
 
-.links a {
+.links button {
   text-decoration: none;
   margin: 0 10px;
   font-size: 1em;
@@ -91,7 +95,7 @@ h2 {
   display: flex;
   width: 140px;
   margin-top: 25px;
-  >a {
+  >button {
     text-decoration: none;
   }
 }

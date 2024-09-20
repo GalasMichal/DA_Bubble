@@ -101,7 +101,7 @@ p {
     justify-content: space-between;
     align-items: baseline;
 
-    a {
+    button {
       font-size: 1.125rem;
       font-weight: 600;
       line-height: 1.5344rem;
@@ -140,7 +140,7 @@ p {
       margin-top: 39%;
       margin-left: 65%;
 
-      a {
+      button {
         text-decoration: none;
         justify-content: center;
       }
@@ -171,9 +171,4 @@ p {
 /* GENERAL STYLES */
 .mt {
   margin-top: -32%;
-}
-
-.ml-mr-auto {
-  margin-left: auto;
-  margin-right: auto;
 }

@@ -29,6 +29,7 @@ export const routes: Routes = [
   { path: 'avatar', component: CreateAvatarComponent },
   { path: 'reset', component: PwdResetComponent },
   { path: 'recovery', component: PwdRecoveryComponent },
+  { path: 'create', component: ChannelCreateComponent },
   { path: 'empty', component: ChannelEmptyComponent },
   { path: 'edit', component: ChannelEditComponent },
   { path: 'imprint', component: ImprintComponent },

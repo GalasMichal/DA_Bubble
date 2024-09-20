@@ -8,11 +8,6 @@ h2 {
   margin-left: -5%;
 }
 
-.ml-mr-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /* LOGO CONTAINER */
 .logo-create-avatar-page {
   padding-top: 3rem;
@@ -44,7 +39,7 @@ h2 {
     background-color: $white;
     border-radius: 4%;
     padding-top: 2%;
-    margin-left: 5%;
+    // margin-left: 5%;
 
     .arrow-back-container {
       width: 120%;
@@ -55,8 +50,7 @@ h2 {
       align-items: center;
       margin-top: 7%;
 
-      a {
-        text-decoration: none;
+      button {
         cursor: pointer;
       }
 
@@ -148,7 +142,7 @@ h2 {
     margin-top: 9%;
     margin-left: 34%;
 
-    a {
+    button {
       text-decoration: none;
       justify-content: center;
     }
@@ -178,7 +172,7 @@ h2 {
     gap: 30px;
     margin-top: -10px;
 
-    a {
+    button {
       text-decoration: none;
       cursor: pointer;
 

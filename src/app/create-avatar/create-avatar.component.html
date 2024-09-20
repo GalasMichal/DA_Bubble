@@ -7,9 +7,9 @@
   <div class="content-container ml-mr-auto">
     <div style="padding-top: 2%;margin-left: 5%;">
       <div class="arrow-back-container">
-        <a [routerLink]="['/']">
+        <button [routerLink]="['/']" title="Zurück zum Login">
           <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
-        </a>
+        </button>
         <h2 class="fontNunito">Wähle deinen Avatar</h2>
       </div>
       <div class="avatar-container">
@@ -33,13 +33,13 @@
     </div>  
 
     <div class="btn-container ml-mr-auto">
-      <a class="login-btn fontNunito" [routerLink]="['/']">Weiter</a>
+      <button class="login-btn fontNunito" [routerLink]="['/']">Weiter</button>
     </div>
   </div>
 
   <div class="legal-imprint-container ml-mr-auto">
-    <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
-    <a class="fontNunito" [routerLink]="['/legal']">Datenschutz</a>
+    <button class="fontNunito" [routerLink]="['/imprint']">Impressum</button>
+    <button class="fontNunito" [routerLink]="['/legal']">Datenschutz</button>
   </div>
 
 </section>
