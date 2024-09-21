@@ -51,6 +51,5 @@ export class ChannelCreateComponent {
     this.openAddMembers();
     console.log(this.channel);
     return this.fb.addChannelToFirestore(this.channel)
-
   }
 }
