@@ -9,6 +9,7 @@ import {
 import { AddMembersComponent } from '../add-members/add-members.component';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { FormsModule } from '@angular/forms';
+import { Channel } from '../../../models/interfaces/channel.model';
 
 @Component({
   selector: 'app-channel-create',
@@ -30,11 +31,10 @@ export class ChannelCreateComponent {
   readonly dialogRef = inject(MatDialogRef<ChannelCreateComponent>);
   fb = inject(FirebaseService);
 
-  channel = {
+  channel: Channel = {
     channelName: '',
     channelDescription: '',
-  };
-
+  }
 
   closeModal() {
     this.dialogRef.close();
