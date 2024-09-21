@@ -84,8 +84,6 @@ export class FirebaseService {
           displayName: displayName,
         };
         this.addUserToFirestore(user);
-
-
   })
       .catch((error) => {
         // Fehlerbehandlung
@@ -112,5 +110,11 @@ export class FirebaseService {
         this.userSignal.set(user); // Angular Signal setzen
         return user; // Benutzer zurückgeben
       });
+  }
+
+  addChannelToFirestore(channel: any) {
+    const channelCollectionRef = collection(this.firestore, 'channels');
+    const channelDocRef = doc(channelCollectionRef);
+    setDoc(channelDocRef, channel)
   }
 }

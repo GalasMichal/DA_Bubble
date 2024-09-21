@@ -11,16 +11,13 @@ import { FirebaseService } from '../services/firebase/firebase.service';
   standalone: true,
   imports: [CommonModule, RouterLink, LogoComponent, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: [
-    './login.component.scss',
-    './login.component.media.scss'
-  ]
+  styleUrls: ['./login.component.scss', './login.component.media.scss'],
 })
 export class LoginComponent {
-fb = inject(FirebaseService)
+  fb = inject(FirebaseService);
 
-createNewUserWithGoogle(){
-  console.log('button clicked');
- return this.fb.createGoogleUser();
-}
+  createNewUserWithGoogle() {
+    console.log('button clicked');
+    return this.fb.createGoogleUser();
+  }
 }
