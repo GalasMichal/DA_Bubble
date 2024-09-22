@@ -10,21 +10,26 @@ import {
   updateProfile,
   user,
 } from '@angular/fire/auth';
-import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { User } from '../../models/interfaces/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
+
+
+
   firestore: Firestore = inject(Firestore);
   private auth: Auth = inject(Auth);
   provider = new GoogleAuthProvider();
-
+  channels$;
   //Signal für user
   public userSignal = signal<User | null>(null);
 
-  constructor() {}
+  constructor() {
+    this.channels$ = collectionData(this.getChannels())
+  }
 
   // Methode zum Erstellen eines neuen Benutzers
   createUser(
@@ -117,4 +122,10 @@ export class FirebaseService {
     const channelDocRef = doc(channelCollectionRef);
     setDoc(channelDocRef, channel)
   }
+
+
+   getChannels() {
+    return collection(this.firestore, 'channels')
+   }
+
 }
