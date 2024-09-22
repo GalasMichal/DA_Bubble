@@ -36,7 +36,7 @@ export class ChannelCreateComponent{
   channelForm: FormGroup;
   readonly dialogAddMembers = inject(MatDialog);
   readonly dialogRef = inject(MatDialogRef<ChannelCreateComponent>);
-  fb = inject(FirebaseService);
+  db = inject(FirebaseService);
 
   
   constructor() {
@@ -63,7 +63,11 @@ export class ChannelCreateComponent{
 
   creatNewChannel() {
     this.openAddMembers();
-    console.log(this.channelForm.value);
-    return this.fb.addChannelToFirestore(this.channelForm.value);
+    if(this.channelForm.valid) {
+      let channelName: string = this.channelForm.get('channelName')?.value
+
+      let channelDescription = this.channelForm.get('description')?.value
+      // this.db.singleGlobalChannel.push(channelName);
+    }
   }
 }

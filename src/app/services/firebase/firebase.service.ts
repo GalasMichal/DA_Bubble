@@ -18,7 +18,7 @@ import { User } from '../../models/interfaces/user.model';
 })
 export class FirebaseService {
 
-
+  singleGlobalChannel = []
 
   firestore: Firestore = inject(Firestore);
   private auth: Auth = inject(Auth);
