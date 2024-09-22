@@ -34,5 +34,10 @@ export class MenuSideLeftComponent {
     })
   }
 
+  openChannel() {
+    console.log('TEST');
+    
+  }
+
 
 }
