@@ -92,11 +92,11 @@
       &:hover {
         background: $primary-hover;
       }
-      &[disabled] {
-        cursor: auto;
-        background-color: $gray;
-        border: solid 0.0625rem $gray;
-      }
+      // &[disabled] {
+      //   cursor: auto;
+      //   background-color: $gray;
+      //   border: solid 0.0625rem $gray;
+      // }
     }
   }
 }

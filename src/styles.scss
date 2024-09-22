@@ -188,3 +188,9 @@ app-message-edit {
 .resize-none {
   resize: none;
 }
+
+[disabled] {
+  cursor: auto !important;
+  background-color: $gray !important;
+  border: solid 0.0625rem $gray !important;
+}

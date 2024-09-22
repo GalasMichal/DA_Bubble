@@ -35,19 +35,26 @@
     themenbezogen sein #marketing zum Beispiel.
   </p>
 
-  <div class="input-container">
-    <label for="channel-name" class="fontNunito">Channel-Name</label>
-    <input id="channel-name" class="input-field fontNunito input-field-hash-icon" [(ngModel)]="channel.channelName" type="text" placeholder="z.B. Kooperationsprojekte" pattern="^[a-zA-Z0-9äöüÄÖÜß\s\.,!?-]{1,}$"/>
-  </div>
+  <form [formGroup]="channelForm" (submit)="creatNewChannel()">
+
+    <div class="input-container">
+      <label for="channel-name" class="fontNunito">Channel-Name</label>
+      <input #channelName type="text" class="fontNunito input-field-hash-icon" formControlName="channelName" placeholder="z.B. Kooperationsprojekte" name="channelName" autocomplete="off"/>
+      @if (channelForm.controls['channelName'].invalid && (channelForm.controls['channelName'].touched || channelForm.controls['channelName'].dirty)) {
+        @if(channelForm.controls['channelName'].errors?.['minlength']) {
+            <span>Minimum 3 Buchstaben.</span>
+        }
+      }
+    </div>
   
   <div class="input-container">
     <label for="description" class="fontNunito">Beschreibung <span class="fontNunito">(optional)</span></label>
-    <input id="description" class="input-field fontNunito" type="text" [(ngModel)]="channel.channelDescription" placeholder="Dein Text hier" pattern="^[a-zA-Z0-9äöüÄÖÜß\s\.,!?-]{1,}$"/>
+    <input id="description" class="fontNunito" type="text" formControlName="channelDescription" placeholder="Dein Text hier" autocomplete="off"/>
   </div>
-
+  
   <div class="check-container">
-    <a class="fontNunito" routerLink="main" (click)="creatNewChannel()"
-      >Erstellen</a
-    >
+    <button class="fontNunito" routerLink="main" [disabled]="!channelForm.valid">Erstellen</button>
   </div>
+</form>
+  
 </mat-dialog-content>
