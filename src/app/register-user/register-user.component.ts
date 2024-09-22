@@ -82,7 +82,7 @@ export class RegisterUserComponent {
   }
 
   onSubmit() {
-
+    
     this.isFormSubmitted = true;
 
     if (this.myForm.valid) {

@@ -34,6 +34,7 @@ export class FirebaseService {
   ): Promise<any> {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
+        console.log('user is', userCredential)
         const firebaseUser = userCredential.user;
         // Setze den displayName nach der erfolgreichen Registrierung
         return updateProfile(firebaseUser, {
