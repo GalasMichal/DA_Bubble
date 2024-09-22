@@ -1,7 +1,6 @@
-@import './../../../../colors.scss';
-@import './../../../../styles.scss';
-@import './../../../../fonts.scss';
-
+@import "./../../../../colors.scss";
+@import "./../../../../styles.scss";
+@import "./../../../../fonts.scss";
 
 .fontNunito {
   font-weight: 700;
@@ -9,14 +8,13 @@
   line-height: 27px;
 }
 
-
 .side-nav-wrapper {
-
   padding: 2rem 1.875rem;
   height: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5625rem;
+  overflow: hidden auto;
 
   & nav {
     display: flex;
@@ -28,7 +26,7 @@
       display: flex;
       align-items: center;
       padding-right: 1.25rem;
-      gap: .9375rem;
+      gap: 0.9375rem;
 
       & h2 {
         font-size: 1.5rem;
@@ -50,27 +48,28 @@
   transform: rotate(-90deg);
 }
 
-
 .channels-navbar {
   display: flex;
   width: 100%;
-
-  padding: .1875rem 0;
+  padding: 0.1875rem 0;
   align-items: center;
   justify-content: space-between;
-
-  & .channels-navbar-left-container {
+  .channels-navbar-left-container {
     display: flex;
     padding: 0.25rem;
     gap: 1.5625rem;
     align-items: center;
-
-    >div {
-      margin-top: 3px;
+    background: none;
+    cursor: pointer;
+    &:hover svg path {
+      fill: $primary-hover;
+    }
+    &:hover div {
+      color: $primary-hover;
     }
 
     & .drop-down {
-      width: .6875rem;
+      width: 0.6875rem;
     }
   }
 }
@@ -83,24 +82,37 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 24px;
-
-  >div {
+  ul {
     overflow: hidden;
     display: flex;
     gap: 1.5625rem;
     flex-direction: column;
     margin-bottom: 1.5625rem;
+    li {
+      button {
+        gap: .625rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background: none;
+      }
+    }
   }
 }
 
 /* start - hover-state add-channel-icon*/
 .add-channel-icon {
-  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: $b-radius-2;
   &:hover {
-    color: $primary;
-    .add-black-hover {
-      fill: $primary;
-    }
+    background: $bg-color;
+  }
+  &:hover svg path {
+    fill: $primary-hover;
+  }
+  &:focus-visible {
+    outline: none;
   }
 }
 /* end - */
@@ -110,8 +122,8 @@
   flex-direction: column;
   gap: 1.5625rem;
 
-  >div {
-    >span {
+  > div {
+    > span {
       margin-top: 3px;
     }
   }
@@ -128,24 +140,31 @@
 
 .channels-inner-position {
   display: flex;
-  padding: .25rem 1.75rem;
-  min-width: 12.875rem;
+  width: fit-content;
   gap: 1.5625rem;
+  border-radius: $b-radius-3;
   &:hover {
+    background-color: $bg-color;
     span {
       color: $primary;
     }
-    .svg-path {
+    svg path {
       fill: $primary;
     }
+  }
+  button {
+    padding: 0.25rem 1.75rem;
+    width: 100%;
+    height: 100%;
   }
 }
 
 .menu-title {
   display: flex;
-  padding: .25rem;
+  padding: 0.25rem;
   min-width: 12.875rem;
   gap: 1.3125rem;
+  cursor: pointer;
 }
 
 .bg-channels {
@@ -169,4 +188,3 @@
 //   right: 0;
 //   z-index: 1;
 // }
-

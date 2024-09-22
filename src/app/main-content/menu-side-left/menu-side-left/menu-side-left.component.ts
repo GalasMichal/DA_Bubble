@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelCreateComponent } from '../../../shared/component/channel-create/channel-create.component';
+import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 
 @Component({
@@ -15,6 +16,8 @@ import { ChannelCreateComponent } from '../../../shared/component/channel-create
 export class MenuSideLeftComponent {
   isFirstDropdownMenuOpen = false ;
   isSecondDropdownMenuOpen = true;
+  dialog = inject(MatDialog);
+  db = inject(FirebaseService)
 
   
   toogleDropDown1(){
@@ -25,11 +28,16 @@ export class MenuSideLeftComponent {
     this.isSecondDropdownMenuOpen = !this.isSecondDropdownMenuOpen
   }
 
-
-  constructor(private dialog: MatDialog) {}
   addChannel (){
     this.dialog.open(ChannelCreateComponent, {
       panelClass: 'channel-create-container',
     })
   }
+
+  openChannel() {
+    console.log('TEST');
+    
+  }
+
+
 }
