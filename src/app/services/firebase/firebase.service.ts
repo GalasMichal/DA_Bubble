@@ -12,13 +12,14 @@ import {
 } from '@angular/fire/auth';
 import { collection, collectionData, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { User } from '../../models/interfaces/user.model';
+import { Channel } from '../../models/interfaces/channel.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
 
-  singleGlobalChannel = []
+  singleGlobalChannel: Channel[] = []
 
   firestore: Firestore = inject(Firestore);
   private auth: Auth = inject(Auth);
@@ -32,11 +33,7 @@ export class FirebaseService {
   }
 
   // Methode zum Erstellen eines neuen Benutzers
-  createUser(
-    email: string,
-    password: string,
-    displayName: string
-  ): Promise<any> {
+  createUser(email: string, password: string, displayName: string): Promise<any> {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         const firebaseUser = userCredential.user;

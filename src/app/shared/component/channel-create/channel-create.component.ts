@@ -16,6 +16,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 
+import { Channel } from './../../../models/interfaces/channel.model'
+
 @Component({
   selector: 'app-channel-create',
   standalone: true,
@@ -27,7 +29,7 @@ import {
     AddMembersComponent,
     MatDialogContent,
     AddMembersComponent,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './channel-create.component.html',
   styleUrl: './channel-create.component.scss',
@@ -37,9 +39,10 @@ export class ChannelCreateComponent{
   readonly dialogAddMembers = inject(MatDialog);
   readonly dialogRef = inject(MatDialogRef<ChannelCreateComponent>);
   db = inject(FirebaseService);
-
   
-  constructor() {
+  // channelName: string | '';
+  
+  constructor() { 
     this.channelForm = new FormGroup({
       channelName: new FormControl('', [
         Validators.required,
@@ -64,10 +67,15 @@ export class ChannelCreateComponent{
   creatNewChannel() {
     this.openAddMembers();
     if(this.channelForm.valid) {
-      let channelName: string = this.channelForm.get('channelName')?.value
-
-      let channelDescription = this.channelForm.get('description')?.value
-      // this.db.singleGlobalChannel.push(channelName);
+      
+      const channelData: Channel = {
+        channelName: this.channelForm.get('channelName')?.value,
+        channelDescription: this.channelForm.get('channelDescription')?.value  
+      }
+      this.db.singleGlobalChannel.push(channelData);
+      console.log(this.db.singleGlobalChannel);
+      
+  
     }
   }
 }
