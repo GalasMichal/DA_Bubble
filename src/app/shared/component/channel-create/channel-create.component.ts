@@ -1,3 +1,4 @@
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
@@ -8,6 +9,9 @@ import {
 } from '@angular/material/dialog';
 import { AddMembersComponent } from '../add-members/add-members.component';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
+import { FormsModule } from '@angular/forms';
+import { Channel } from '../../../models/interfaces/channel.model';
+import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,

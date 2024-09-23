@@ -1,23 +1,55 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { LogoComponent } from '../shared/logo/logo.component';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../services/firebase/firebase.service';
+import { LogoComponent } from "../shared/logo/logo.component";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterLink, LogoComponent, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './login.component.media.scss'],
+  imports: [LogoComponent, RouterModule,ReactiveFormsModule, FormsModule],
 })
 export class LoginComponent {
   fb = inject(FirebaseService);
+  formBuilder = inject(FormBuilder);
+
+  // FormGroup für die Anmeldeform
+  loginForm: FormGroup;
+  isFormSubmitted:boolean = false;
+
+
+  constructor() {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [
+        Validators.required, 
+        Validators.email
+      ]],
+      password: new FormControl('',[
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@\$!%+\-/\*\?&])[A-Za-z0-9@$!%+\-/\*\?&]+$'),
+      ]),
+    });
+  }
 
   createNewUserWithGoogle() {
-    console.log('button clicked');
+    console.log('Google Anmeldung gestartet');
     return this.fb.createGoogleUser();
+  }
+
+  loginWithEmailAndPassword() {
+    this.isFormSubmitted = true;
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
+    if (this.loginForm.valid) {
+      if(!this.fb.userExist(email)){
+        this.fb.loginWithEmailAndPassword(email, password);
+      }else
+      console.log('Benutzer existiert nicht');
+    } else {
+      console.log('Formular ist ungültig');
+    }
   }
 }

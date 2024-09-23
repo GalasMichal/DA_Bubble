@@ -9,7 +9,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  /* border: solid 1px */
+
 }
 
 /*
@@ -29,6 +29,11 @@
     3. Add accessible line-height
     4. Improve text rendering
   */
+app-root{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 app-main-content {
   flex: 1;
@@ -187,6 +192,32 @@ app-message-edit {
 
 .resize-none {
   resize: none;
+}
+
+.ml-mr-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ml-5 {
+  margin-left: -5%;
+}
+
+.ml-15 {
+  margin-left: 15%;
+}
+
+.warn-txt {
+	color: $red;
+	margin-top: -5%;
+}
+
+.warn-txt-2 {
+	width: 89%;
+	display: flex;
+	align-items: baseline;
+	text-align: center;
+	// border: tomato 1px solid;
 }
 
 [disabled] {

@@ -1,0 +1,55 @@
+<section class="login-section">
+
+  <div class="logo-container">
+    <button [routerLink]="['/']">
+      <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
+    </button>
+  </div>
+
+<div class="form-container ml-mr-auto">
+  <div style="padding-top: 2%;">
+    <div class="arrow-back-container">
+      <button [routerLink]="['/']">
+        <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
+      </button>
+      <h2 class="fontNunito">Passwort zurücksetzen</h2>
+    </div>
+    <div class="form-title ml-mr-auto fontNunito">
+      <p class="fontNunito">Bitte gib deine eMail ein:</p>
+    </div>
+  </div>  
+
+
+  <div class="check-container">
+    <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
+      <input class="input-field input-field-mail-icon  fontNunito" type="email" placeholder="beispielname@email.com" formControlName="email" aria-label="email" aria-required="true" aria-describedby="email-error"/>
+
+      @if (recoveryForm.controls['email'].invalid && (isFormValid || recoveryForm.controls['email'].dirty || recoveryForm.controls['email'].touched)) {
+        <div class="warn-txt"
+          >
+          @if (recoveryForm.controls['email'].errors?.['required']) {
+            <span  >eMail ist ein Pflichtfeld.</span>
+          }
+          @if (recoveryForm.controls['email'].errors?.['email']) {
+            <span id="email-error"  >eMail ist unvollständig/inkorrekt.</span>
+          }
+        </div>
+        }
+      <p class="fontNunito">
+        Wir senden Ihnen eine E-Mail, über die 
+        Sie Ihr Passwort ändern können.
+      </p>
+      <div class="btn-container ml-mr-auto">
+        <button class="login-btn fontNunito" [routerLink]="['/login']">eMail senden</button>
+      </div>
+    </form>
+    
+  </div>
+
+</div>
+
+<div class="legal-imprint-container ml-mr-auto">
+  <button class="fontNunito" [routerLink]="['/imprint']">Impressum</button>
+  <button class="fontNunito" [routerLink]="['/legal']">Datenschutz</button>
+</div>
+</section>

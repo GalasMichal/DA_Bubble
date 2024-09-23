@@ -7,10 +7,10 @@
   <div class="form-container ml-mr-auto">
     <div style="padding-top: 2%;">
       <div class="arrow-back-container">
-        <a [routerLink]="['/']">
+        <button class="btn-no-bg" [routerLink]="['/']">
           <img class="arrow-img" src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
           <h2 class="fontNunito">Datenschutz</h2>
-        </a>
+        </button>
       </div>
     </div>
     <div class="form-title ml-mr-auto fontNunito">
@@ -24,7 +24,7 @@
       <h2 id="m56">Kontaktmöglichkeiten</h2>
       <br>
       <p>E-Mail-Adresse: contact&#64;weiß-nicht.gov</p>
-      <p>Kontaktformular: <a href="https://www.end-of-light.com" target="_blank">End of light</a></p>
+      <p>Kontaktformular: <a href="https://www.end-of-light.com" target="_blank" rel="noopener noreferrer nofollow">End of light</a></p>
       <br>
       <h2 id="m172">Social Media und andere Onlinepräsenzen</h2>
       <br>
@@ -36,8 +36,8 @@
   </div>  
 
   <div class="legal-imprint-container ml-mr-auto">
-    <a class="fontNunito" [routerLink]="['/']">Start</a>
-    <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
+    <button class="fontNunito" [routerLink]="['/']">Start</button>
+    <button class="fontNunito" [routerLink]="['/imprint']">Impressum</button>
   </div>
 
 </section>
