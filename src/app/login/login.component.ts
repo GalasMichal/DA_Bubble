@@ -31,10 +31,13 @@ export class LoginComponent {
   }
 
   loginWithEmailAndPassword() {
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
     if (this.loginForm.valid) {
-      const email = this.loginForm.get('email')?.value;
-      const password = this.loginForm.get('password')?.value;
-     this.fb.loginWithEmailAndPassword(email, password);
+      if(!this.fb.userExist(email)){
+        this.fb.loginWithEmailAndPassword(email, password);
+      }else
+      console.log('Benutzer existiert nicht');
     } else {
       console.log('Formular ist ungültig');
     }
