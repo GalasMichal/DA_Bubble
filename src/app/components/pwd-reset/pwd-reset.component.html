@@ -32,19 +32,19 @@
         <div class="warn-txt ml-15"
           >
           @if (resetForm.controls['password'].errors?.['required']) {
-            <span id="password-error"  >Password ist ein Pflichtfeld.</span>
+            <span >Password ist ein Pflichtfeld.</span>
           }
           @if (resetForm.controls['password'].errors?.['password']) {
             <span id="password-error"  >Password ist unvollständig/inkorrekt, siehe Info-box.</span>
           }
         </div>
         }
-      <input class="input-field input-field-mail-icon fontNunito" type="password" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby=""/>
+      <input class="input-field input-field-mail-icon fontNunito" type="password" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby="password-error"/>
       @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
         <div class="warn-txt warn-txt-2 ml-15"
           >
           @if (resetForm.controls['password'].errors?.['required']) {
-            <span id="password-error"  >Password ist ein Pflichtfeld.</span>
+            <span >Password ist ein Pflichtfeld.</span>
           }
           @if (resetForm.controls['password'].errors?.['pattern']) {
             <span id="password-error"  >Password ist unvollständig/inkorrekt.</span>

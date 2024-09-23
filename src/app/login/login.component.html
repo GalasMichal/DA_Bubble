@@ -15,9 +15,32 @@
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="loginWithEmailAndPassword()">
       <div class="input-container ml-mr-auto">
-        <input class="input-field input-field-mail-icon fontNunito" type="text" formControlName="email" placeholder="beispielname@email.com" />
-        <input class="input-field input-field-pwd-icon fontNunito" type="password" formControlName="password" placeholder="Passwort" />
-        <button class="ml-mr-auto fontNunito" routerLink="recovery">Passwort vergessen?</button>
+        <input class="input-field input-field-mail-icon fontNunito" type="email" formControlName="email" placeholder="beispielname@email.com" aria-label="email" aria-required="true" aria-describedby="email-error"/>
+        @if (loginForm.controls['email'].invalid && (isFormSubmitted || loginForm.controls['email'].touched || loginForm.controls['email'].dirty)) {
+          <div class="warn-txt">
+            @if (loginForm.controls['email'].errors?.['required']) {
+              <span  >eMail ist ein Pflichtfeld.</span>
+            }
+            @if (loginForm.controls['email'].errors?.['email']) {
+              <span id="email-error"  >eMail ist unvollständig/inkorrekt.</span>
+            }
+          </div>
+        }
+        <input class="input-field input-field-pwd-icon fontNunito" type="password" formControlName="password" placeholder="Passwort" aria-label="password" aria-required="true" aria-describedby="password-error"/>
+        @if (loginForm.controls['password'].invalid && (isFormSubmitted || loginForm.controls['password'].touched || loginForm.controls['password'].dirty)) {
+          <div class="warn-txt warn-txt-2">
+            @if (loginForm.controls['password'].errors?.['required']) {
+              <span  >Password ist ein Pflichtfeld.</span>
+            }
+            @if (loginForm.controls['password'].errors?.['minlength']) {
+              <span id="password-error" class="warn-txt-2">Mindestens 8 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen, siehe Info-box.</span>
+              }<br>
+              @if (loginForm.controls['password'].errors?.['pattern']) {
+                <span class="warn-txt-2">Mindestanforderungen nicht erfüllt, siehe Info-box.</span>
+                }<br>
+              </div>
+            }
+        <button class="ml-mr-auto fontNunito" [routerLink]="['/recovery']">Passwort vergessen?</button>
       </div>
 
     <div class="seperator-container">
@@ -25,7 +48,7 @@
     </div>
     <div class="google-btn-container ml-mr-auto">
       <button class="ml-mr-auto fontNunito" (click)="createNewUserWithGoogle()">
-        <img class="google-logo" src="../../assets/media/icons/google-logo-icon.svg" alt="google logo">
+        <img class="google-logo" src="../../../assets/media/icons/google-logo-icon.svg" alt="google logo">
         Anmeldung mit Google</button>
     </div>
     <div class="btn-container ml-mr-auto">
