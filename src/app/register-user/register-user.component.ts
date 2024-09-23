@@ -53,8 +53,8 @@ export class RegisterUserComponent {
     // const number_req = '(?=.*[0-9])';
     this.myForm = new FormGroup({
       name: new FormControl('',[
-        Validators.required, 
-        Validators.minLength(4), 
+        Validators.required,
+        Validators.minLength(4),
         // checks if name contains only letters
         Validators.pattern('^[a-zA-Z ]*$')]),
       email: new FormControl('',[
@@ -74,7 +74,6 @@ export class RegisterUserComponent {
   }
 
   onSubmit() {
-    // needed - requirement-check
 
     this.isFormSubmitted = true;
 

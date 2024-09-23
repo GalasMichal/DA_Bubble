@@ -9,7 +9,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  /* border: solid 1px */
+
 }
 
 /*
@@ -29,6 +29,11 @@
     3. Add accessible line-height
     4. Improve text rendering
   */
+app-root{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 app-main-content {
   flex: 1;

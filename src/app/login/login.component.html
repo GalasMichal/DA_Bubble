@@ -1,6 +1,6 @@
-<section class="login-section">
+<section>
   <div class="header-icons">
-    <app-logo routerLink=""></app-logo>
+    <app-logo [routerLink]="['/']"></app-logo>
     <div class="new-user-link">
       <p class="fontNunito">Neu bei DABubble?</p>
       <button class="font-figtree" routerLink="register">Konto erstellen</button>
@@ -13,13 +13,12 @@
       <h2 class="fontNunito">Anmeldung</h2>
       <p class="fontNunito">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
     </div>
-    <form >
+    <form [formGroup]="loginForm" (ngSubmit)="loginWithEmailAndPassword()">
       <div class="input-container ml-mr-auto">
-        <input class="input-field input-field-mail-icon fontNunito" type="text" placeholder="beispielname@email.com" />
-        <input class="input-field input-field-pwd-icon fontNunito" type="password" placeholder="Passwort" />
+        <input class="input-field input-field-mail-icon fontNunito" type="text" formControlName="email" placeholder="beispielname@email.com" />
+        <input class="input-field input-field-pwd-icon fontNunito" type="password" formControlName="password" placeholder="Passwort" />
         <button class="ml-mr-auto fontNunito" routerLink="recovery">Passwort vergessen?</button>
       </div>
-    </form>
 
     <div class="seperator-container">
       <p class="sep-line-txt fontNunito">ODER</p>
@@ -30,10 +29,10 @@
         Anmeldung mit Google</button>
     </div>
     <div class="btn-container ml-mr-auto">
-      <button class="login-btn fontNunito" routerLink="main">Anmelden</button>
+      <button class="login-btn fontNunito" type="submit">Anmelden</button>
       <button class="guest-btn fontNunito" routerLink="main">Gäste-Login</button>
     </div>
-
+    </form>
   </div>
 
   <div class="legal-imprint-container ml-mr-auto">
