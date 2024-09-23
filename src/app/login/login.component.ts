@@ -1,3 +1,4 @@
+
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -9,7 +10,7 @@ import { FirebaseService } from '../services/firebase/firebase.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterLink, LogoComponent, ReactiveFormsModule],
+  imports: [RouterLink, LogoComponent, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './login.component.media.scss'],
 })

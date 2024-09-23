@@ -1,17 +1,17 @@
 <section class="login-section">
 
   <div class="logo-container">
-    <a [routerLink]="['/']">
+    <button [routerLink]="['/']">
       <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
-    </a>
+    </button>
   </div>
 
 <div class="form-container">
   <div style="padding-top: 2%;">
     <div class="arrow-back-container">
-      <a [routerLink]="['/']">
+      <button [routerLink]="['/']">
         <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
-      </a>
+      </button>
       <h2 class="fontNunito ml-5">Passwort zurücksetzen</h2>
     </div>
   </div>  
@@ -30,14 +30,14 @@
   </form>
 
   <div class="btn-container">
-    <a class="login-btn fontNunito" [routerLink]="['/']">Passwort ändern</a>
+    <button class="login-btn fontNunito" [routerLink]="['/']">Passwort ändern</button>
   </div>
 
 </div>
 
 <div class="legal-imprint-container ml-mr-auto">
-  <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
-  <a class="fontNunito" [routerLink]="['/legal']">Datenschutz</a>
+  <button class="fontNunito" [routerLink]="['/imprint']">Impressum</button>
+  <button class="fontNunito" [routerLink]="['/legal']">Datenschutz</button>
 </div>
 </section>
 

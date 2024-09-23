@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MainContentComponent } from './main-content/main-content/main-content.component';
 import { LoginComponent } from './login/login.component';
@@ -10,14 +10,9 @@ import { Firestore } from '@angular/fire/firestore';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    MainContentComponent,
-    LoginComponent,
-    HeaderComponent,
-    ReactiveFormsModule,
-  ],
+
+  imports: [RouterOutlet, MainContentComponent, LoginComponent, HeaderComponent, ReactiveFormsModule],
+
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
