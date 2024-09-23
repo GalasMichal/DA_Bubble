@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "DA_Bubble": {
+    "dabubble": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -31,7 +31,7 @@
 
             ],
             "styles": [
-              
+
               "src/styles.scss",
               "src/colors.scss",
               "src/fonts.scss"
@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "DA_Bubble:build:production"
+              "buildTarget": "dabubble:build:production"
             },
             "development": {
-              "buildTarget": "DA_Bubble:build:development"
+              "buildTarget": "dabubble:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "DA_Bubble:build"
+            "buildTarget": "dabubble:build"
           }
         },
         "test": {

@@ -1,15 +1,19 @@
-
-import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, effect, inject, Inject } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { InfoBoxComponent } from './info-box/info-box.component';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FirebaseService } from '../services/firebase/firebase.service';
+
+
 
 
 @Component({
   selector: 'app-register-user',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     RouterModule,
     RouterLink,
@@ -17,6 +21,7 @@ import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModu
     MatDialogModule,
     InfoBoxComponent
 ],
+
   templateUrl: './register-user.component.html',
   styleUrls: [
     './register-user.component.scss',
@@ -26,19 +31,26 @@ import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModu
 
 export class RegisterUserComponent {
 
+
   readonly dialogAddMembers = inject(MatDialog);
-  readonly router = inject(Router);
+  readonly router = inject(Router)
+  public fb = inject(FirebaseService)
 
   myForm: FormGroup; // name - just for now
   isFormSubmitted:boolean = false;
 
-  constructor() {
 
+  constructor() {
+  effect(() => {
+      const user = this.fb.userSignal();
+      if(user) {
+        console.log('user created via Signal', user);
+      }
+    })
     // const upper_req = '(?=.*[A-Z])';
     // const special_char_req = '(?=.*[!@#$%^&*()])';
     // const lower_req = '(?=.*[a-z])';
     // const number_req = '(?=.*[0-9])';
-  
     this.myForm = new FormGroup({
       name: new FormControl('',[
         Validators.required, 
@@ -46,7 +58,7 @@ export class RegisterUserComponent {
         // checks if name contains only letters
         Validators.pattern('^[a-zA-Z ]*$')]),
       email: new FormControl('',[
-        Validators.required, 
+        Validators.required,
         Validators.email]),
       password: new FormControl('',[
         Validators.required,
@@ -58,16 +70,25 @@ export class RegisterUserComponent {
         Validators.requiredTrue
       ]),
     })
+
   }
 
   onSubmit() {
     // needed - requirement-check
+
     this.isFormSubmitted = true;
-    
+
     if (this.myForm.valid) {
-      // TODO: später auskommentieren !
-      console.log('current (valid) form is: ', this.myForm.value);
-      this.router.navigate(['avatar']);
+         // Extrahiere die Werte aus dem Formular
+    const email = this.myForm.get('email')?.value;  // Hole den Email-Wert
+    const password = this.myForm.get('password')?.value;
+    const displayName = this.myForm.get('name')?.value;
+      // Hole den Passwort-Wert
+      this.fb.createUser(email, password, displayName ).then((user) => {
+        console.log('User successfully registered:', user);
+      });
+
+      // this.router.navigate(['avatar']);
     } else {
       // TODO: was zu tun?
       console.log('Form is invalid, go home! .. or else ..');
@@ -82,7 +103,7 @@ export class RegisterUserComponent {
   age-validator - IF NEEDED
   function ageValidator(control: FormControl): { [key: string]: boolean } | null {
     if (control.value !== null && control.value < 18) {
-      return { 'ageInvalid': true }; 
+      return { 'ageInvalid': true };
     }
     return null;
   }
@@ -91,5 +112,5 @@ export class RegisterUserComponent {
   });
   */
 
-  
+
 }

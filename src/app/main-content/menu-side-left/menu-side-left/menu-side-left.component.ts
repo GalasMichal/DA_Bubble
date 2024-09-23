@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelCreateComponent } from '../../../shared/component/channel-create/channel-create.component';
-import { UserService } from '../../../services/user.service';
+import { FirebaseService } from '../../../services/firebase/firebase.service';
+
 
 @Component({
   selector: 'app-menu-side-left',
@@ -15,10 +16,10 @@ import { UserService } from '../../../services/user.service';
 export class MenuSideLeftComponent {
   isFirstDropdownMenuOpen = false ;
   isSecondDropdownMenuOpen = true;
-  member = inject(UserService)
+  dialog = inject(MatDialog);
+  db = inject(FirebaseService)
 
-
-
+  
   toogleDropDown1(){
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
   }
@@ -27,11 +28,16 @@ export class MenuSideLeftComponent {
     this.isSecondDropdownMenuOpen = !this.isSecondDropdownMenuOpen
   }
 
-
-  constructor(private dialog: MatDialog) {}
   addChannel (){
     this.dialog.open(ChannelCreateComponent, {
       panelClass: 'channel-create-container',
     })
   }
+
+  openChannel() {
+    console.log('TEST');
+    
+  }
+
+
 }

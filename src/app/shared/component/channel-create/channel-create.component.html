@@ -37,17 +37,17 @@
 
   <div class="input-container">
     <label for="channel-name" class="fontNunito">Channel-Name</label>
-    <input id="channel-name" class="input-field fontNunito input-field-hash-icon" type="text" placeholder="z.B. Kooperationsprojekte" pattern="^[a-zA-Z0-9äöüÄÖÜß\s\.,!?-]{1,}$"/>
+    <input id="channel-name" class="input-field fontNunito input-field-hash-icon" [(ngModel)]="channel.channelName" type="text" placeholder="z.B. Kooperationsprojekte" pattern="^[a-zA-Z0-9äöüÄÖÜß\s\.,!?-]{1,}$"/>
   </div>
   
   <div class="input-container">
     <label for="description" class="fontNunito">Beschreibung <span class="fontNunito">(optional)</span></label>
-    <input id="description" class="input-field fontNunito" type="text" placeholder="Dein Text hier" pattern="^[a-zA-Z0-9äöüÄÖÜß\s\.,!?-]{1,}$"/>
+    <input id="description" class="input-field fontNunito" type="text" [(ngModel)]="channel.channelDescription" placeholder="Dein Text hier" pattern="^[a-zA-Z0-9äöüÄÖÜß\s\.,!?-]{1,}$"/>
   </div>
 
   <div class="check-container">
-    <button class="fontNunito" routerLink="main" (click)="openAddMembers()"
-      >Erstellen</button
-    >
+
+    <button class="fontNunito" routerLink="main" (click)="creatNewChannel()"
+      >Erstellen</button>
   </div>
 </mat-dialog-content>
