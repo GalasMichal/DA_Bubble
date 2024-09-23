@@ -20,23 +20,23 @@ import { CommonModule } from '@angular/common';
   styleUrl: './add-members.component.scss',
 })
 export class AddMembersComponent {
-  dialog = inject(MatDialogRef<AddMembersComponent>);
+  // dialog = inject(MatDialogRef<AddMembersComponent>);
 
-  selectedOption: string = '';
-  specificPeople: boolean = false;
-  allMembers: boolean = false
+  // selectedOption: string = '';
+  // specificPeople: boolean = false;
+  // allMembers: boolean = false
  
 
-  closeDialogAddMembers() {
-    this.dialog.close();
-  }
+  // closeDialogAddMembers() {
+  //   this.dialog.close();
+  // }
 
-  choosenOption() {
-    if (this.selectedOption === 'specificPeople') {
-      this.specificPeople = true;
-    } else {
-      this.specificPeople = false
-      this.allMembers = true
-    }
-  }
+  // choosenOption() {
+  //   if (this.selectedOption === 'specificPeople') {
+  //     this.specificPeople = true;
+  //   } else {
+  //     this.specificPeople = false
+  //     this.allMembers = true
+  //   }
+  // }
 }
