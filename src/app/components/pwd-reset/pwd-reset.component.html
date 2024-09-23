@@ -12,20 +12,45 @@
       <button [routerLink]="['/']">
         <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
       </button>
-      <h2 class="fontNunito ml-5">Passwort zurücksetzen</h2>
+      <div class="title-icon-container">
+        <div class="title-container">
+          <h2 class="fontNunito ml-5">Passwort zurücksetzen</h2>
+        </div>
+        <div class="info-container">
+          <img id="info-icon" title="How to -registrieren" (click)="openInfoBox()" class="pulse info-icon" src="../../assets/media/icons/info_symbol-icon.png" alt="">
+        </div>
+      </div>
     </div>
   </div>  
-  <form >
+  <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
     <div class="input-container"> 
     <!-- 
       PWD-CHECK: min-length-8, max-length-32, chars A-Z, a-z, excl ÖöÄäÜü, all special-characters, no wing-dings, at least one from each category, no doubles
     -->
-      <input class="input-field input-field-mail-icon fontNunito" type="password" placeholder="Neues Passwort" 
-       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+\-=\[\]{};:'&quot;\\|,.<>/?])(?=.*[öÖäÄüÜ]).{8,32}$" 
-       required />
-      <input class="input-field input-field-mail-icon fontNunito" type="password" placeholder="Neues Passwort" 
-      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+\-=\[\]{};:'&quot;\\|,.<>/?])(?=.*[öÖäÄüÜ]).{8,32}$" 
-      required />
+      <input class="input-field input-field-mail-icon fontNunito" type="password" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby="password-error"/>
+      @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
+        <div class="warn-txt ml-15"
+          >
+          @if (resetForm.controls['password'].errors?.['required']) {
+            <span id="password-error"  >Password ist ein Pflichtfeld.</span>
+          }
+          @if (resetForm.controls['password'].errors?.['password']) {
+            <span id="password-error"  >Password ist unvollständig/inkorrekt, siehe Info-box.</span>
+          }
+        </div>
+        }
+      <input class="input-field input-field-mail-icon fontNunito" type="password" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby=""/>
+      @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
+        <div class="warn-txt warn-txt-2 ml-15"
+          >
+          @if (resetForm.controls['password'].errors?.['required']) {
+            <span id="password-error"  >Password ist ein Pflichtfeld.</span>
+          }
+          @if (resetForm.controls['password'].errors?.['pattern']) {
+            <span id="password-error"  >Password ist unvollständig/inkorrekt.</span>
+          }
+        </div>
+        }
     </div>
   </form>
 

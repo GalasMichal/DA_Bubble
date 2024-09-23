@@ -1,5 +1,5 @@
-@import '../../colors.scss';
-@import '../../styles.scss';
+@import '../../../colors.scss';
+@import '../../../styles.scss';
 
 h2 {
   color: $primary;
@@ -85,7 +85,7 @@ h2 {
         margin-bottom: 35px;
 
         &.input-field-mail-icon {
-          background-image: url('../../assets/media/icons/mail-icon-input-field.svg');
+          background-image: url('../../../assets/media/icons/mail-icon-input-field.svg');
         }
       }
 

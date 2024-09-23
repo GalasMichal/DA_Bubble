@@ -198,3 +198,24 @@ app-message-edit {
   margin-left: auto;
   margin-right: auto;
 }
+
+.ml-5 {
+  margin-left: -5%;
+}
+
+.ml-15 {
+  margin-left: 15%;
+}
+
+.warn-txt {
+	color: $red;
+	margin-top: -5%;
+}
+
+.warn-txt-2 {
+	width: 89%;
+	display: flex;
+	align-items: baseline;
+	text-align: center;
+	// border: tomato 1px solid;
+}

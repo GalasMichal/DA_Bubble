@@ -21,14 +21,29 @@
 
 
   <div class="check-container">
-    <input class="input-field input-field-mail-icon  fontNunito" type="email" placeholder="beispielname@email.com" />
-    <p class="fontNunito">
-      Wir senden Ihnen eine E-Mail, über die 
-      Sie Ihr Passwort ändern können.
-    </p>
-    <div class="btn-container ml-mr-auto">
-      <button class="login-btn fontNunito" routerLink="login">eMail senden</button>
-    </div>
+    <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
+      <input class="input-field input-field-mail-icon  fontNunito" type="email" placeholder="beispielname@email.com" formControlName="email" aria-label="email" aria-required="true" aria-describedby="email-error"/>
+
+      @if (recoveryForm.controls['email'].invalid && (isFormValid || recoveryForm.controls['email'].dirty || recoveryForm.controls['email'].touched)) {
+        <div class="warn-txt"
+          >
+          @if (recoveryForm.controls['email'].errors?.['required']) {
+            <span id="email-error"  >eMail ist ein Pflichtfeld.</span>
+          }
+          @if (recoveryForm.controls['email'].errors?.['email']) {
+            <span id="email-error"  >eMail ist unvollständig/inkorrekt.</span>
+          }
+        </div>
+        }
+      <p class="fontNunito">
+        Wir senden Ihnen eine E-Mail, über die 
+        Sie Ihr Passwort ändern können.
+      </p>
+      <div class="btn-container ml-mr-auto">
+        <button class="login-btn fontNunito" [routerLink]="['/login']">eMail senden</button>
+      </div>
+    </form>
+    
   </div>
 
 </div>
