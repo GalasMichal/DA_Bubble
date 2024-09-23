@@ -1,4 +1,3 @@
-
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import {
@@ -10,6 +9,7 @@ import { AddMembersComponent } from '../add-members/add-members.component';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { FormsModule } from '@angular/forms';
 import { Channel } from '../../../models/interfaces/channel.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-channel-create',

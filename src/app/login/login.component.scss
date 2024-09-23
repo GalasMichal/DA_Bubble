@@ -1,7 +1,7 @@
 @import '../../colors.scss';
 @import '../../styles.scss';
 
-.app-login {
+app-login {
   max-width: 1920px;
   width: 100%;
   height: 100vh;
@@ -13,7 +13,7 @@ h2 {
   font-weight: 700;
 }
 
-.login-section {
+section {
   width: 100%;
   height: 100vh;
   background-color: $bg-color;
