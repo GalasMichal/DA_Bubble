@@ -2,22 +2,24 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../services/firebase/firebase.service';
 import { LogoComponent } from "../shared/logo/logo.component";
-import { RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './login.component.media.scss'],
-  imports: [LogoComponent, RouterModule,ReactiveFormsModule, FormsModule],
+  imports: [LogoComponent, RouterModule,ReactiveFormsModule, FormsModule, RouterModule, RouterOutlet, RouterLink],
 })
 export class LoginComponent {
   fb = inject(FirebaseService);
   formBuilder = inject(FormBuilder);
+  private router = inject(Router);
 
   // FormGroup für die Anmeldeform
   loginForm: FormGroup;
   isFormSubmitted:boolean = false;
+
 
 
   constructor() {
@@ -44,12 +46,13 @@ export class LoginComponent {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
     if (this.loginForm.valid) {
-      // if(!this.fb.userExist(email)){
-        this.fb.loginWithEmailAndPassword(email, password);
-      // }else
-      // console.log('Benutzer existiert nicht');
-    } else {
+        this.fb.loginWithEmailAndPassword(email, password).then(() => {
+          // Weiterleitung nach erfolgreicher Anmeldung
+          this.router.navigate(['/avatar']);
+    })} else {
       console.log('Formular ist ungültig');
     }
   }
+
 }
+

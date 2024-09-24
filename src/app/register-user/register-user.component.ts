@@ -41,12 +41,7 @@ export class RegisterUserComponent {
 
 
   constructor() {
-  effect(() => {
-      const user = this.fb.userSignal();
-      if(user) {
-        console.log('user created via Signal', user);
-      }
-    })
+ 
     // const upper_req = '(?=.*[A-Z])';
     // const special_char_req = '(?=.*[!@#$%^&*()])';
     // const lower_req = '(?=.*[a-z])';
@@ -85,7 +80,7 @@ export class RegisterUserComponent {
         const user = await this.fb.createUser(email, password, displayName);
         if (user) {
           console.log('User successfully registered:', user);
-          // this.router.navigate(['avatar']); // Navigation nach der Registrierung
+           this.router.navigate(['avatar']); // Navigation nach der Registrierung
         }
       } catch (error) {
         // Hier kannst du eine spezifische Fehlerbehandlung vornehmen
