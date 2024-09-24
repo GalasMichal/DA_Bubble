@@ -40,6 +40,10 @@ import { InputAddUsersComponent } from '../input-add-users/input-add-users.compo
 export class ChannelCreateComponent{
   hiddenChannel: boolean = true;
   channelForm: FormGroup;
+  selectedOption: string = '';
+  isSpecificPeople: boolean = true;
+  allMembers: boolean = false
+
   dialog = inject(MatDialogRef<ChannelCreateComponent>);
   readonly dialogAddMembers = inject(MatDialog);
   readonly dialogRef = inject(MatDialogRef<ChannelCreateComponent>);
@@ -47,23 +51,31 @@ export class ChannelCreateComponent{
   
   // channelName: string | '';
   
+  onRadioChange(event: any) {
+    this.isSpecificPeople = event.target.value === 'specificPeople'
+  }
+
   constructor() { 
     this.channelForm = new FormGroup({
       channelName: new FormControl('', [Validators.required, Validators.minLength(3),]),
       channelDescription: new FormControl(['']),
+      member: new FormControl(false)
     });
   }
   
 
-  closeModal() {
+  closeDialogAddChannel() {
     this.dialogRef.close();
   }
 
+  closeDialogAddMembers() {
+    this.dialog.close();
+  }
   openAddMembers() {
     this.dialogAddMembers.open(AddMembersComponent, {
       panelClass: 'add-members-container', // Custom class for profile dialog
     });
-    this.closeModal();
+    this.closeDialogAddChannel();
   }
 
   creatNewChannel() {
@@ -81,23 +93,15 @@ export class ChannelCreateComponent{
     }
   }
 
-
-
-  selectedOption: string = '';
-  specificPeople: boolean = false;
-  allMembers: boolean = false
+  isChecked = false
  
+  // choosenOption() {
 
-  closeDialogAddMembers() {
-    this.dialog.close();
-  }
-
-  choosenOption() {
-    if (this.selectedOption === 'specificPeople') {
-      this.specificPeople = true;
-    } else {
-      this.specificPeople = false
-      this.allMembers = true
-    }
-  }
+  //   if (this.selectedOption === 'specificPeople') {
+  //     this.specificPeople = true;
+  //   } else {
+  //     this.specificPeople = false
+  //     this.allMembers = true
+  //   }
+  // }
 }
