@@ -41,7 +41,7 @@ export class ChannelCreateComponent{
   hiddenChannel: boolean = true;
   channelForm: FormGroup;
   selectedOption: string = '';
-  isSpecificPeople: boolean = true;
+  isSpecificPeople: boolean = false;
   allMembers: boolean = false
 
   dialog = inject(MatDialogRef<ChannelCreateComponent>);
@@ -52,7 +52,13 @@ export class ChannelCreateComponent{
   // channelName: string | '';
   
   onRadioChange(event: any) {
-    this.isSpecificPeople = event.target.value === 'specificPeople'
+    if (event.target.value === 'specificPeople') {
+      this.isSpecificPeople = true;
+      this.allMembers = false;
+    } else if (event.target.value === 'allMembers') {
+      this.allMembers = true;
+      this.isSpecificPeople = false;
+    }
   }
 
   constructor() { 

@@ -92,7 +92,7 @@
             <app-input-add-users></app-input-add-users>
         }
     
-        <button class="add" type="submit" [disabled]="!allMembers">Erstellen</button>
+        <button class="add" type="submit" [disabled]="!(allMembers || isSpecificPeople)">Erstellen</button>
     </div>
 
   </div>
