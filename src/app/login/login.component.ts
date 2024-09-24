@@ -17,11 +17,20 @@ export class LoginComponent {
 
   // FormGroup für die Anmeldeform
   loginForm: FormGroup;
+  isFormSubmitted:boolean = false;
+
 
   constructor() {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      email: ['', [
+        Validators.required, 
+        Validators.email
+      ]],
+      password: new FormControl('',[
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@\$!%+\-/\*\?&])[A-Za-z0-9@$!%+\-/\*\?&]+$'),
+      ]),
     });
   }
 
@@ -31,6 +40,7 @@ export class LoginComponent {
   }
 
   loginWithEmailAndPassword() {
+    this.isFormSubmitted = true;
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
     if (this.loginForm.valid) {
