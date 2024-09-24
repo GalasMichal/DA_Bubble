@@ -99,15 +99,4 @@ export class ChannelCreateComponent{
     }
   }
 
-  isChecked = false
- 
-  // choosenOption() {
-
-  //   if (this.selectedOption === 'specificPeople') {
-  //     this.specificPeople = true;
-  //   } else {
-  //     this.specificPeople = false
-  //     this.allMembers = true
-  //   }
-  // }
 }
