@@ -9,6 +9,7 @@ import {
   signInWithPopup,
   updateProfile,
   User as FirebaseUser,
+  fetchSignInMethodsForEmail,
 
 } from '@angular/fire/auth';
 import {
@@ -34,65 +35,86 @@ export class FirebaseService {
 
   currentUser: AppUser | null = null;
   public userSignal = signal<AppUser | null>(null);
+  public errorMessageLogin = signal('')
 
   constructor() {
     this.channels$ = collectionData(this.getChannels());
   }
 
   // Methode zum Erstellen eines neuen Benutzers
-  createUser(
-    email: string,
-    password: string,
-    displayName: string
-  ): Promise<any> {
-    return createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        console.log('user is', userCredential);
-        const firebaseUser = userCredential.user;
-        // Setze den displayName nach der erfolgreichen Registrierung
-        return updateProfile(firebaseUser, {
-          displayName: displayName,
-        }).then(() => {
-          // Benutzerprofil aktualisiert
-          const user: AppUser = {
-            uId: firebaseUser.uid,
-            email: firebaseUser.email || '',
-            displayName: firebaseUser.displayName || '', // Nun wird der displayName korrekt gesetzt
-          };
-          console.log('Registrierter User ist', user);
-          this.addUserToFirestore(user);
-        });
-      })
-      .catch((error) => {
-        // Fehlerbehandlung
-        console.error('Error creating user:', error);
-        throw error;
-      });
+  createUser(email: string, password: string, displayName: string): Promise<any> {
+
+        return createUserWithEmailAndPassword(this.auth, email, password)
+          .then((userCredential) => {
+            const firebaseUser = userCredential.user;
+            // Setze den displayName nach der erfolgreichen Registrierung
+            return updateProfile(firebaseUser, {
+              displayName: displayName,
+            }).then(() => {
+              const user: AppUser = {
+                uId: firebaseUser.uid,
+                email: firebaseUser.email || '',
+                displayName: firebaseUser.displayName || '',
+              };
+              console.log('Registrierter User ist', user);
+              // Hier kannst du den Benutzer zu Firestore hinzufügen, wenn nötig
+              this.addUserToFirestore(user);
+            });
+          })
+          .catch((error) => {
+            switch (error.code) {
+              case 'auth/email-already-in-use':
+                this.errorMessageLogin.set('Diese E-Mail-Adresse wird bereits verwendet.');
+                break;
+              case 'auth/invalid-email':
+                this.errorMessageLogin.set('Die E-Mail-Adresse ist ungültig.');
+                break;
+              case 'auth/operation-not-allowed':
+                this.errorMessageLogin.set('Die Anmeldung mit E-Mail und Passwort ist nicht erlaubt.');
+                break;
+              case 'auth/weak-password':
+                this.errorMessageLogin.set('Das Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.');
+                break;
+              default:
+                this.errorMessageLogin.set('Ein unbekannter Fehler ist aufgetreten.'); // Standardfehlermeldung
+            }
+          });
+
+
   }
 
   loginWithEmailAndPassword(email: string, password: string): Promise<any> {
-    
-    return signInWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user as FirebaseUser;
-        this.currentUser = {
-          uId: user.uid,
-          email: user.email || '',
-          displayName: user.displayName || ''
-        };
-        console.log('User is logged in:', user);
-        return user; // Optional: Benutzerobjekt zurückgeben
-      })
-      .catch((error) => {
-        if (error.code === 'auth/user-not-found') {
-          console.log('Kein Benutzer mit dieser E-Mail-Adresse gefunden.');
-        } else if (error.code === 'auth/wrong-password') {
-          console.log('Falsches Passwort.');
-        } else {
-          console.log('Fehler beim Anmelden:', error.message);
-        }
-        throw error; // Optional: Fehler weitergeben, wenn gewünscht
-      });
+    return this.userExists(email).then(exists => {
+      if (!exists) {
+        this.errorMessageLogin.set('Kein Benutzer mit dieser E-Mail-Adresse gefunden.');
+        return; // Beende die Methode, wenn der Benutzer nicht existiert
+      }
+
+      // Wenn der Benutzer existiert, führe die Anmeldung durch
+      return signInWithEmailAndPassword(this.auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user as FirebaseUser;
+          this.currentUser = {
+            uId: user.uid,
+            email: user.email || '',
+            displayName: user.displayName || ''
+          };
+          console.log('User is logged in:', user);
+          this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
+        })
+        .catch((error) => {
+          switch (error.code) {
+            case 'auth/wrong-password':
+              this.errorMessageLogin.set('Falsches Passwort.');
+              break;
+            default:
+              this.errorMessageLogin.set('Fehler beim Anmelden: ' + error.message);
+          }
+        });
+    }).catch((error) => {
+      // Fehler bei der Benutzerabfrage
+      console.error('Fehler beim Überprüfen des Benutzers:', error);
+    });
   }
 
   createGoogleUser(): Promise<any> {
@@ -141,16 +163,28 @@ export class FirebaseService {
       });
   }
 
-  userExist(email: string): Promise<boolean> {
-    const userCollectionRef = collection(this.firestore, 'users');
-    const q = query(userCollectionRef, where('email', '==', email));
-    return getDocs(q).then((querySnapshot) => {
-      return !querySnapshot.empty; // Gibt true zurück, wenn der Benutzer existiert, andernfalls false
-    }).catch((error) => {
-      console.error('Fehler beim Überprüfen des Benutzers:', error);
-      throw error;
-    });
+  userExists(email: string): Promise<boolean> {
+    return fetchSignInMethodsForEmail(this.auth, email)
+      .then((methods) => {
+        return methods.length > 0; // Gibt true zurück, wenn der Benutzer existiert, andernfalls false
+      })
+      .catch((error) => {
+        console.error('Fehler beim Überprüfen des Benutzers:', error);
+        this.errorMessageLogin.set('Fehler beim Überprüfen des Benutzers.'); // Setze eine generische Fehlermeldung
+        return false
+      });
   }
+
+  // userExist(email: string): Promise<boolean> {
+  //   const userCollectionRef = collection(this.firestore, 'users');
+  //   const q = query(userCollectionRef, where('email', '==', email));
+  //   return getDocs(q).then((querySnapshot) => {
+  //     return !querySnapshot.empty; // Gibt true zurück, wenn der Benutzer existiert, andernfalls false
+  //   }).catch((error) => {
+  //     console.error('Fehler beim Überprüfen des Benutzers:', error);
+  //     throw error;
+  //   });
+  // }
 
   addUserToFirestore(user: AppUser) {
     const userCollectionRef = collection(this.firestore, 'users'); // Referenz zur 'users'-Collection

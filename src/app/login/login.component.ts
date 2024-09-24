@@ -23,7 +23,7 @@ export class LoginComponent {
   constructor() {
     this.loginForm = this.formBuilder.group({
       email: ['', [
-        Validators.required, 
+        Validators.required,
         Validators.email
       ]],
       password: new FormControl('',[
@@ -44,10 +44,10 @@ export class LoginComponent {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
     if (this.loginForm.valid) {
-      if(!this.fb.userExist(email)){
+      // if(!this.fb.userExist(email)){
         this.fb.loginWithEmailAndPassword(email, password);
-      }else
-      console.log('Benutzer existiert nicht');
+      // }else
+      // console.log('Benutzer existiert nicht');
     } else {
       console.log('Formular ist ungültig');
     }
