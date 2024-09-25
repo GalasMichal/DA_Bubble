@@ -11,6 +11,7 @@ import { PwdRecoveryComponent } from './components/pwd-recovery/pwd-recovery.com
 import { ChannelEmptyComponent } from './shared/component/channel-empty/channel-empty.component';
 import { ChannelEditComponent } from './shared/component/channel-edit/channel-edit.component';
 import { ChannelCreateComponent } from './shared/component/channel-create/channel-create.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 /*
@@ -21,19 +22,20 @@ Merci :)
 
 export const routes: Routes = [
 
-  { path: '', component: LoginComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'main', component: MainContentComponent },
-  { path: 'menu', component: MenuSideLeftComponent },
-  { path: 'register', component: RegisterUserComponent },
-  { path: 'avatar', component: CreateAvatarComponent },
+  { path: '', redirectTo: 'start', pathMatch: 'full' },
+  { path: 'start', component: LoginComponent },
+  { path: 'start/register', component: RegisterUserComponent },
+  { path: 'start/main', component: MainContentComponent },
+  { path: 'start/menu', component: MenuSideLeftComponent },
+  { path: 'start/avatar', component: CreateAvatarComponent },
   { path: 'reset', component: PwdResetComponent },
   { path: 'recovery', component: PwdRecoveryComponent },
-  { path: 'create', component: ChannelCreateComponent },
-  { path: 'empty', component: ChannelEmptyComponent },
-  { path: 'edit', component: ChannelEditComponent },
-  { path: 'imprint', component: ImprintComponent },
-  { path: 'legal', component: LegalComponent },
+  { path: 'start/create', component: ChannelCreateComponent },
+  { path: 'start/empty', component: ChannelEmptyComponent },
+  { path: 'start/edit', component: ChannelEditComponent },
+  { path: 'start/imprint', component: ImprintComponent },
+  { path: 'start/legal', component: LegalComponent },
+  { path: '**', component: PageNotFoundComponent } 
 
 ];
 

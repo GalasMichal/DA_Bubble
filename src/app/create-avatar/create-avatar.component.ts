@@ -2,11 +2,12 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { LogoComponent } from '../shared/logo/logo.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-avatar',
   standalone: true,
-  imports: [RouterLink, RouterModule, LogoComponent],
+  imports: [CommonModule, RouterLink, RouterModule, LogoComponent],
   templateUrl: './create-avatar.component.html',
   styleUrls: [
     './create-avatar.component.scss',
