@@ -2,14 +2,22 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../services/firebase/firebase.service';
 import { LogoComponent } from "../shared/logo/logo.component";
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './login.component.media.scss'],
-  imports: [LogoComponent, RouterModule,ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    RouterModule, 
+    RouterLink,
+    LogoComponent, 
+    ReactiveFormsModule, 
+    FormsModule
+  ],
 })
 export class LoginComponent {
   fb = inject(FirebaseService);
