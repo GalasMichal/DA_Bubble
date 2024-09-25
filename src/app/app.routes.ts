@@ -28,7 +28,7 @@ export const routes: Routes = [
   { path: 'start/main', component: MainContentComponent },
   { path: 'start/menu', component: MenuSideLeftComponent },
   { path: 'start/avatar', component: CreateAvatarComponent },
-  { path: 'start/reset', component: PwdResetComponent },
+  { path: 'reset', component: PwdResetComponent },
   { path: 'recovery', component: PwdRecoveryComponent },
   { path: 'start/create', component: ChannelCreateComponent },
   { path: 'start/empty', component: ChannelEmptyComponent },
