@@ -19,6 +19,7 @@ import {
 
 import { Channel } from './../../../models/interfaces/channel.model'
 import { InputAddUsersComponent } from '../input-add-users/input-add-users.component';
+import { AvatarComponent } from '../../avatar/avatar.component';
 
 @Component({
   selector: 'app-channel-create',
@@ -32,7 +33,7 @@ import { InputAddUsersComponent } from '../input-add-users/input-add-users.compo
     MatDialogContent,
     AddMembersComponent,
     ReactiveFormsModule,
-    InputAddUsersComponent
+    InputAddUsersComponent, AvatarComponent
   ],
   templateUrl: './channel-create.component.html',
   styleUrl: './channel-create.component.scss',
@@ -48,55 +49,58 @@ export class ChannelCreateComponent{
   readonly dialogAddMembers = inject(MatDialog);
   readonly dialogRef = inject(MatDialogRef<ChannelCreateComponent>);
   db = inject(FirebaseService);
-  
-  // channelName: string | '';
+
   
   onRadioChange(event: any) {
     if (event.target.value === 'specificPeople') {
-      this.isSpecificPeople = true;
-      this.allMembers = false;
+      this.isSpecificPeople = true
+      this.allMembers = true
+
     } else if (event.target.value === 'allMembers') {
-      this.allMembers = true;
-      this.isSpecificPeople = false;
+      this.isSpecificPeople = false
+      this.allMembers = true
     }
+  }
+
+  isChannelNameValid() {
+    return this.channelForm.controls['channelName'].valid;
+  }
+
+  isSpecificPeopleValid() {
+    return this.channelForm.controls['specificPeople'].valid;
   }
 
   constructor() { 
     this.channelForm = new FormGroup({
       channelName: new FormControl('', [Validators.required, Validators.minLength(3),]),
       channelDescription: new FormControl(['']),
-      member: new FormControl(false)
+      member: new FormControl(false),
+      specificPeople:  new FormControl('', [Validators.required, Validators.minLength(3),]),
     });
   }
-  
 
-  closeDialogAddChannel() {
+  closeDialogAddChannel(event: Event) {
+    event.preventDefault();
     this.dialogRef.close();
   }
 
-  closeDialogAddMembers() {
+  closeDialogAddMembers(event: Event) {
+    event.preventDefault()
     this.dialog.close();
   }
-  openAddMembers() {
+
+
+  openAddMembers(event: Event) {
     this.dialogAddMembers.open(AddMembersComponent, {
       panelClass: 'add-members-container', // Custom class for profile dialog
     });
-    this.closeDialogAddChannel();
+    this.closeDialogAddChannel(event);
   }
 
-  creatNewChannel() {
-    this.openAddMembers();
-    if(this.channelForm.valid) {
-      
-      const channelData: Channel = {
-        channelName: this.channelForm.get('channelName')?.value,
-        channelDescription: this.channelForm.get('channelDescription')?.value  
-      }
-      // this.db.singleGlobalChannel.push(channelData);
-      // console.log(this.db.singleGlobalChannel);
-      
-  
-    }
+  createChannel(event: Event) {
+    this.db.addChannelToFirestore(this.channelForm.value);
+    this.channelForm.reset();
+    this.closeDialogAddMembers(event)
   }
 
 }

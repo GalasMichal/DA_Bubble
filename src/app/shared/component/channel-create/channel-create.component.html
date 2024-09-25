@@ -1,12 +1,12 @@
 <mat-dialog-content>
   
-<form [formGroup]="channelForm">
+<form [formGroup]="channelForm" (submit)="createChannel($event)">
   <div [hidden]="!hiddenChannel">
 
     <div class="channel-container">
     <div class="arrow-back-container">
       <h2 class="fontNunito">Channel erstellen</h2>
-      <button class="close-btn" (click)="closeDialogAddChannel()">
+      <button class="close-btn" (click)="closeDialogAddChannel($event)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="40" height="40" viewBox="0 0 40 40" fill="none">
@@ -43,12 +43,11 @@
       <div class="input-container">
         <label for="description" class="fontNunito">Beschreibung <span class="fontNunito">(optional)</span></label>
         <input #description class="fontNunito" type="text" formControlName="channelDescription"
-          placeholder="Dein Text hier" name="description" autocomplete="off"
-          />
+          placeholder="Dein Text hier" name="description" autocomplete="off"/>
       </div>
       
       <div class="check-container">
-        <button class="fontNunito" routerLink="main" [disabled]="!channelForm.valid" (click)="hiddenChannel = false">
+        <button class="fontNunito" routerLink="main" [disabled]="!isChannelNameValid()" (click)="hiddenChannel = false" >
         Weiter
       </button>
     </div>
@@ -62,7 +61,7 @@
     <div class="members-container">
     <div class="profil">
         <h1>Leute hinzüfugen</h1>
-        <button (click)="closeDialogAddMembers()">
+        <button (click)="closeDialogAddMembers($event)">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
             <mask id="mask0_422_2036" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
             <rect x="8" y="8" width="24" height="24" fill="#D9D9D9"/>
@@ -84,17 +83,40 @@
             <label for="specificPeople"> Bestimmte Leute hinzufügen.</label>
         </div>
       </div>
-
-      {{isSpecificPeople}}
-      {{allMembers}}
       
       @if(isSpecificPeople){
-            <app-input-add-users></app-input-add-users>
+        <div class="team">
+          <label for="name-input" class="visually-hidden" autocomplete="off">Name:</label>
+          <input type="text" id="name-input" formControlName="specificPeople" name="specificPeople" placeholder="Name eingeben" autocomplete="off" />
+        
+          <ul>
+            <li>
+              <app-avatar></app-avatar>
+              <span>User name</span>
+            </li>
+            <li>
+              <app-avatar></app-avatar>
+              <span>User name</span>
+            </li>
+            <li>
+              <app-avatar></app-avatar>
+              <span>User name</span>
+            </li>
+            <li>
+              <app-avatar></app-avatar>
+              <span>User name</span>
+            </li>
+          </ul>
+        </div>
         }
-    
-        <button class="add" type="submit" [disabled]="!(allMembers || isSpecificPeople)">Erstellen</button>
-    </div>
 
+        {{!allMembers}}
+        {{isSpecificPeople}}
+        {{!isSpecificPeopleValid()}}
+        
+        <button class="add" type="submit" [disabled]="!allMembers || isSpecificPeople && !isSpecificPeopleValid()">Erstellen</button>
+        {{!allMembers || isSpecificPeople && !isSpecificPeopleValid()}}
+    </div>
   </div>
 
 
