@@ -20,6 +20,8 @@ import {
 import { Channel } from './../../../models/interfaces/channel.model'
 import { InputAddUsersComponent } from '../input-add-users/input-add-users.component';
 import { AvatarComponent } from '../../avatar/avatar.component';
+import { Auth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-channel-create',
@@ -63,6 +65,7 @@ export class ChannelCreateComponent{
   }
 
   isChannelNameValid() {
+
     return this.channelForm.controls['channelName'].valid;
   }
 
@@ -73,7 +76,7 @@ export class ChannelCreateComponent{
   constructor() { 
     this.channelForm = new FormGroup({
       channelName: new FormControl('', [Validators.required, Validators.minLength(3),]),
-      channelDescription: new FormControl(['']),
+      channelDescription: new FormControl(''),
       member: new FormControl(false),
       specificPeople:  new FormControl('', [Validators.required, Validators.minLength(3),]),
     });
@@ -89,7 +92,6 @@ export class ChannelCreateComponent{
     this.dialog.close();
   }
 
-
   openAddMembers(event: Event) {
     this.dialogAddMembers.open(AddMembersComponent, {
       panelClass: 'add-members-container', // Custom class for profile dialog
@@ -97,10 +99,29 @@ export class ChannelCreateComponent{
     this.closeDialogAddChannel(event);
   }
 
-  createChannel(event: Event) {
-    this.db.addChannelToFirestore(this.channelForm.value);
-    this.channelForm.reset();
-    this.closeDialogAddMembers(event)
+
+
+  createChannelModel(event: Event) {
+    // debugger
+      const formValues = this.channelForm.value;
+      const newChannel: Channel = {
+        chanId: '', 
+        channelName: formValues.channelName,
+        channelDescription: formValues.channelDescription || '',
+        allMembers: formValues.member,
+        specificPeople: formValues.specificPeople ? formValues.specificPeople.split(',') : [],
+        createdAt: new Date().toISOString(),
+        createdBy: 'user-id', 
+       }
+
+      // this.createChannel(event, newChannel)
   }
 
+  createChannel(event: Event, newChannel: Observable<Channel>) {
+    console.log(newChannel);
+    
+    this.db.addChannelToFirestore(newChannel);
+    // this.channelForm.reset();
+    this.closeDialogAddMembers(event)
+  }
 }

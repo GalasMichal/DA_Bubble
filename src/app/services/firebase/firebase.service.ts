@@ -22,6 +22,8 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
+import { Observable } from 'rxjs';
+import { Channel } from '../../models/interfaces/channel.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +38,7 @@ export class FirebaseService {
   public userSignal = signal<AppUser | null>(null);
 
   constructor() {
+
     this.channels$ = collectionData(this.getChannels());
   }
 
@@ -158,10 +161,15 @@ export class FirebaseService {
     });
   }
 
-  addChannelToFirestore(channel: any) {
+  addChannelToFirestore(channel: Observable<Channel>) {
     const channelCollectionRef = collection(this.firestore, 'channels');
     const channelDocRef = doc(channelCollectionRef);
+    const chanId = channelDocRef.id
+    console.log(chanId);
+    
     setDoc(channelDocRef, channel);
+
+
   }
 
   getChannels() {

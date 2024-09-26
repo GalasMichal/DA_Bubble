@@ -1,6 +1,6 @@
 <mat-dialog-content>
   
-<form [formGroup]="channelForm" (submit)="createChannel($event)">
+<form [formGroup]="channelForm" (submit)="createChannelModel($event)">
   <div [hidden]="!hiddenChannel">
 
     <div class="channel-container">
@@ -47,7 +47,7 @@
       </div>
       
       <div class="check-container">
-        <button class="fontNunito" routerLink="main" [disabled]="!isChannelNameValid()" (click)="hiddenChannel = false" >
+        <button class="fontNunito" [disabled]="!isChannelNameValid()" (click)="hiddenChannel = false" >
         Weiter
       </button>
     </div>
