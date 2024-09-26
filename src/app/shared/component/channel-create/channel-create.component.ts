@@ -113,11 +113,10 @@ export class ChannelCreateComponent{
         createdAt: new Date().toISOString(),
         createdBy: 'user-id', 
        }
-
-      // this.createChannel(event, newChannel)
+      this.createChannel(event, newChannel)
   }
 
-  createChannel(event: Event, newChannel: Observable<Channel>) {
+  createChannel(event: Event, newChannel: Channel) {
     console.log(newChannel);
     
     this.db.addChannelToFirestore(newChannel);

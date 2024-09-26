@@ -161,7 +161,7 @@ export class FirebaseService {
     });
   }
 
-  addChannelToFirestore(channel: Observable<Channel>) {
+  addChannelToFirestore(channel: Channel) {
     const channelCollectionRef = collection(this.firestore, 'channels');
     const channelDocRef = doc(channelCollectionRef);
     const chanId = channelDocRef.id
