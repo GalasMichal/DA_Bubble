@@ -9,37 +9,38 @@
 
 section {
   background-color: $bg-color;
-  >div {
+  >div>img {
     position: relative;
-    background-image: url('../../assets/media/bg_404.png');
+    // background-image: url('../../assets/media/bg_404.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     margin-left: auto;
     margin-right: auto;
     width: 70%;
-    height: 70vh;
+    height: 80vh;
     border-radius: 41px 4px 41px 41px;
     >h1 {
       color: red;
     }
-    >button {
-      width: 12%;
-      height: 5%;
-      position: absolute;
-      top: 77%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border: none;
-      background: transparent;
-      cursor: pointer;
-    }
+  }
+  >div>button {
+    width: 9%;
+    height: 4%;
+    position: absolute;
+    top: 73%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: red;
   }
 }
 
-.btn {
-  margin-top: 42%;
-  margin-left: 44%;
-  padding: 10px 25px;
-  width: 12%;
-}
+// .btn {
+//   margin-top: 42%;
+//   margin-left: 44%;
+//   padding: 10px 25px;
+//   width: 12%;
+// }
