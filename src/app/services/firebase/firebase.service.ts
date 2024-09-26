@@ -164,8 +164,7 @@ export class FirebaseService {
   addChannelToFirestore(channel: Channel) {
     const channelCollectionRef = collection(this.firestore, 'channels');
     const channelDocRef = doc(channelCollectionRef);
-    const chanId = channelDocRef.id
-    console.log(chanId);
+    channel.chanId = channelDocRef.id
     
     setDoc(channelDocRef, channel);
 
