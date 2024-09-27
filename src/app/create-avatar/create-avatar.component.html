@@ -17,12 +17,9 @@
         <p class="profile-name fontNunito">Frederik Becks</p>
         <span class="profile-name-span fontNunito">Aus der Liste wählen</span>
         <div class="profile-avatars ml-mr-auto">
-          <img src="../../assets/media/icons/profile-icons/user-1-elise.svg" alt="user-profile icon - default">
-          <img src="../../assets/media/icons/profile-icons/user-2-elias.svg" alt="user-profile icon - default">
-          <img src="../../assets/media/icons/profile-icons/user-3-frederick.svg" alt="user-profile icon - default">
-          <img src="../../assets/media/icons/profile-icons/user-4-steffen.svg" alt="user-profile icon - default">
-          <img src="../../assets/media/icons/profile-icons/user-5-sofia.svg" alt="user-profile icon - default">
-          <img src="../../assets/media/icons/profile-icons/user-6-noah.svg" alt="user-profile icon - default">
+          @for ( avatar of profileAvatars; track avatar) {
+            <img src="/assets/media/icons/profile-icons/{{avatar}}.svg" alt="user-profile icon - default {{avatar}}">
+          }
         </div>
 
         <div class="upload-container"> 

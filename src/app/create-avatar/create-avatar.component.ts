@@ -16,5 +16,12 @@ import { CommonModule } from '@angular/common';
 })
 
 export class CreateAvatarComponent {
-
+  profileAvatars: string[] = [
+    "user-1-elise",
+    "user-2-elias",
+    "user-3-frederick",
+    "user-4-steffen",
+    "user-5-sofia",
+    "user-6-noah"
+  ];
 }

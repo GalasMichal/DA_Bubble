@@ -35,7 +35,7 @@ export const routes: Routes = [
   { path: 'start/edit', component: ChannelEditComponent },
   { path: 'start/imprint', component: ImprintComponent },
   { path: 'start/legal', component: LegalComponent },
-  // { path: '**', component: PageNotFoundComponent } 
+  { path: '**', component: PageNotFoundComponent } 
 
 ];
 
