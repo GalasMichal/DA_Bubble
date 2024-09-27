@@ -118,9 +118,7 @@ export class ChannelCreateComponent{
 
   createChannel(event: Event, newChannel: Channel) {
     console.log(newChannel);
-    
     this.db.addChannelToFirestore(newChannel);
-    // this.channelForm.reset();
     this.closeDialogAddMembers(event)
   }
 }

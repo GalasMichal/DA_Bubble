@@ -166,8 +166,6 @@ export class FirebaseService {
     const channelDocRef = doc(channelCollectionRef);
     channel.chanId = channelDocRef.id
     setDoc(channelDocRef, channel);
-
-
   }
 
   getChannels() {
