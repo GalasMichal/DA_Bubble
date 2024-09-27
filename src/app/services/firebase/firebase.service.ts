@@ -33,6 +33,7 @@ export class FirebaseService {
   private auth: Auth = inject(Auth);
   provider = new GoogleAuthProvider();
   channels$;
+  users$;
 
   currentUser: AppUser | null = null;
   public userSignal = signal<AppUser | null>(null);
@@ -40,6 +41,8 @@ export class FirebaseService {
   constructor() {
 
     this.channels$ = collectionData(this.getChannels());
+    this.users$ = collectionData(this.getUsers());
+
   }
 
   // Methode zum Erstellen eines neuen Benutzers
@@ -170,5 +173,9 @@ export class FirebaseService {
 
   getChannels() {
     return collection(this.firestore, 'channels');
+  }
+
+  getUsers() {
+    return collection(this.firestore, 'users')
   }
 }
