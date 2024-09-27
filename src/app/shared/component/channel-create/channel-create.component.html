@@ -109,13 +109,7 @@
           </ul>
         </div>
         }
-
-        {{!allMembers}}
-        {{isSpecificPeople}}
-        {{!isSpecificPeopleValid()}}
-        
         <button class="add" type="submit" [disabled]="!allMembers || isSpecificPeople && !isSpecificPeopleValid()">Erstellen</button>
-        {{!allMembers || isSpecificPeople && !isSpecificPeopleValid()}}
     </div>
   </div>
 
@@ -123,7 +117,3 @@
 </form>
 
 </mat-dialog-content>
-
-<!-- [ngStyle]="{'display': hiddenChannel ? 'flex': 'none'}" -->
-
-<!-- [ngStyle]="{'display': !hiddenChannel ? 'flex': 'none'}" -->
