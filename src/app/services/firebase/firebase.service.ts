@@ -16,9 +16,9 @@ import {
   doc,
   Firestore,
   setDoc,
+  onSnapshot,
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
-import { Observable } from 'rxjs';
 import { Channel } from '../../models/interfaces/channel.model';
 import { Router } from '@angular/router';
 
@@ -31,20 +31,54 @@ export class FirebaseService {
   provider = new GoogleAuthProvider();
   router = inject(Router);
   channels$;
-  users$;
+
+  public userList: any[] = [];
+
+  unsubUserList: any;
+  // unsubSingle;
 
   currentUser: AppUser | null = null;
   public errorMessageLogin = signal('');
 
   constructor() {
-
+    this.unsubUserList = this.subUserList();
     this.channels$ = collectionData(this.getChannels());
-    this.users$ = collectionData(this.getUsers());
+  }
 
+  ngOnDestroy(): void {
+    this.unsubUserList();
+  }
+
+  subUserList() {
+    return onSnapshot(this.getUsers(), (list) => {
+      this.userList = [];
+      list.forEach((element) => {
+        const userData = element.data();
+        const userId = element.id;
+        const userObject = this.setUserObject(userData, userId);
+        this.userList.push(userObject); // Benutzer zur Liste hinzufügen
+      });
+    });
+  }
+
+
+  setUserObject(obj: any, id: string): AppUser {
+    return {
+      uId: id || '',
+      email: obj.email || '',
+      status: obj.status || false,
+      displayName: obj.displayName || '',
+      avatarUrl: obj.avatarUrl || '',
+      birthdate: obj.birthdate || '',
+    };
   }
 
   // Methode zum Erstellen eines neuen Benutzers
-  createUser(email: string, password: string, displayName: string): Promise<any> {
+  createUser(
+    email: string,
+    password: string,
+    displayName: string
+  ): Promise<any> {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         const firebaseUser = userCredential.user;
@@ -64,54 +98,68 @@ export class FirebaseService {
       .catch((error) => {
         switch (error.code) {
           case 'auth/email-already-in-use':
-            this.errorMessageLogin.set('Diese E-Mail-Adresse wird bereits verwendet.');
+            this.errorMessageLogin.set(
+              'Diese E-Mail-Adresse wird bereits verwendet.'
+            );
             break;
           case 'auth/invalid-email':
             this.errorMessageLogin.set('Die E-Mail-Adresse ist ungültig.');
             break;
           case 'auth/operation-not-allowed':
-            this.errorMessageLogin.set('Die Anmeldung mit E-Mail und Passwort ist nicht erlaubt.');
+            this.errorMessageLogin.set(
+              'Die Anmeldung mit E-Mail und Passwort ist nicht erlaubt.'
+            );
             break;
           case 'auth/weak-password':
-            this.errorMessageLogin.set('Das Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.');
+            this.errorMessageLogin.set(
+              'Das Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.'
+            );
             break;
           default:
-            this.errorMessageLogin.set('Ein unbekannter Fehler ist aufgetreten.'); // Standardfehlermeldung
+            this.errorMessageLogin.set(
+              'Ein unbekannter Fehler ist aufgetreten.'
+            ); // Standardfehlermeldung
         }
       });
   }
 
   loginWithEmailAndPassword(email: string, password: string): Promise<any> {
-    return this.userExists(email).then(exists => {
-      if (!exists) {
-        this.errorMessageLogin.set('Kein Benutzer mit dieser E-Mail-Adresse gefunden.');
-        return; // Beende die Methode, wenn der Benutzer nicht existiert
-      }
-      // Wenn der Benutzer existiert, führe die Anmeldung durch
-      return signInWithEmailAndPassword(this.auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user as FirebaseUser;
-          this.currentUser = {
-            uId: user.uid,
-            email: user.email || '',
-            displayName: user.displayName || ''
-          };
-          console.log('User is logged in:', user);
-          this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
-        })
-        .catch((error) => {
-          switch (error.code) {
-            case 'auth/wrong-password':
-              this.errorMessageLogin.set('Falsches Passwort.');
-              break;
-            default:
-              this.errorMessageLogin.set('Fehler beim Anmelden: ' + error.message);
-          }
-        });
-    }).catch((error) => {
-      // Fehler bei der Benutzerabfrage
-      console.error('Fehler beim Überprüfen des Benutzers:', error);
-    });
+    return this.userExists(email)
+      .then((exists) => {
+        if (!exists) {
+          this.errorMessageLogin.set(
+            'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
+          );
+          return; // Beende die Methode, wenn der Benutzer nicht existiert
+        }
+        // Wenn der Benutzer existiert, führe die Anmeldung durch
+        return signInWithEmailAndPassword(this.auth, email, password)
+          .then((userCredential) => {
+            const user = userCredential.user as FirebaseUser;
+            this.currentUser = {
+              uId: user.uid,
+              email: user.email || '',
+              displayName: user.displayName || '',
+            };
+            console.log('User is logged in:', user);
+            this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
+          })
+          .catch((error) => {
+            switch (error.code) {
+              case 'auth/wrong-password':
+                this.errorMessageLogin.set('Falsches Passwort.');
+                break;
+              default:
+                this.errorMessageLogin.set(
+                  'Fehler beim Anmelden: ' + error.message
+                );
+            }
+          });
+      })
+      .catch((error) => {
+        // Fehler bei der Benutzerabfrage
+        console.error('Fehler beim Überprüfen des Benutzers:', error);
+      });
   }
 
   createGoogleUser(): Promise<any> {
@@ -181,7 +229,7 @@ export class FirebaseService {
   addChannelToFirestore(channel: Channel) {
     const channelCollectionRef = collection(this.firestore, 'channels');
     const channelDocRef = doc(channelCollectionRef);
-    channel.chanId = channelDocRef.id
+    channel.chanId = channelDocRef.id;
     setDoc(channelDocRef, channel);
   }
 
@@ -190,6 +238,6 @@ export class FirebaseService {
   }
 
   getUsers() {
-    return collection(this.firestore, 'users')
+    return collection(this.firestore, 'users');
   }
 }

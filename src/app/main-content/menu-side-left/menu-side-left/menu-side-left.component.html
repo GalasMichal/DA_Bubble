@@ -70,14 +70,16 @@
         <div>
 
           @if(isSecondDropdownMenuOpen){
-            @for (user of this.db.users$ | async; track $index) {
+
+            @for(user of this.db.userList; track $index) {
               <div class="single-user">
                 <div class="user-img">
                   <app-avatar></app-avatar>
                 </div>
-                <div>{{user['displayName']}}</div>
+                <div>{{user.displayName}}</div>
               </div>
             }
+
           }
         </div>
       </div>
