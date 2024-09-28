@@ -90,22 +90,12 @@
           <input type="text" id="name-input" formControlName="specificPeople" name="specificPeople" placeholder="Name eingeben" autocomplete="off" />
         
           <ul>
-            <li>
-              <app-avatar></app-avatar>
-              <span>User name</span>
-            </li>
-            <li>
-              <app-avatar></app-avatar>
-              <span>User name</span>
-            </li>
-            <li>
-              <app-avatar></app-avatar>
-              <span>User name</span>
-            </li>
-            <li>
-              <app-avatar></app-avatar>
-              <span>User name</span>
-            </li>
+            @for (user of this.db.users$ | async; track $index) {
+              <li>
+                <app-avatar></app-avatar>
+                <span>{{user['displayName']}}</span>
+              </li>
+            }
           </ul>
         </div>
         }

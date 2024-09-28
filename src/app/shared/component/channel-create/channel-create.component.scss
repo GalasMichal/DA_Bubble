@@ -213,7 +213,6 @@ form {
     z-index: 900;
     max-width: 300px;
     width: 100%;
-    max-height: 300px;
     border-radius: 0 $b-radius-1 $b-radius-1 $b-radius-1;
     padding: 0.9375rem;
     box-shadow: $shadow;
@@ -251,33 +250,45 @@ form {
   max-width: 850px;
   width: 100%;
   min-height: 500px;
-}
-
-::ng-deep .add-members-container {
-  width: 100%;
-}
-
-::ng-deep .add-members-container .mat-mdc-dialog-container {
-  display: flex;
+  overflow: visible;
 }
 
 ::ng-deep
-  .add-members-container
-  .mat-mdc-dialog-container
-  .mdc-dialog__container {
-  max-width: 600px;
-  width: 100%;
-}
-
-::ng-deep
-  .add-members-container
+  .channel-create-container
   .mat-mdc-dialog-container
   .mdc-dialog__container
-  .mat-mdc-dialog-surface {
-  border-radius: $b-radius-1;
-  max-height: 400px;
-  overflow: unset;
+  .mat-mdc-dialog-surface
+  .mat-mdc-dialog-component-host
+  .mat-mdc-dialog-content {
+  overflow: visible;
 }
+
+
+// ::ng-deep .add-members-container {
+//   width: 100%;
+// }
+
+// ::ng-deep .add-members-container .mat-mdc-dialog-container {
+//   display: flex;
+// }
+
+// ::ng-deep
+//   .add-members-container
+//   .mat-mdc-dialog-container
+//   .mdc-dialog__container {
+//   max-width: 600px;
+//   width: 100%;
+// }
+
+// ::ng-deep
+//   .add-members-container
+//   .mat-mdc-dialog-container
+//   .mdc-dialog__container
+//   .mat-mdc-dialog-surface {
+//   border-radius: $b-radius-1;
+//   max-height: 400px;
+//   overflow: unset;
+// }
 
 // [hidden] {
 //   display: none !important;

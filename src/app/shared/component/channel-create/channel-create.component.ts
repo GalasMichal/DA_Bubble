@@ -94,7 +94,8 @@ export class ChannelCreateComponent{
 
   openAddMembers(event: Event) {
     this.dialogAddMembers.open(AddMembersComponent, {
-      panelClass: 'add-members-container', // Custom class for profile dialog
+      panelClass: 'add-members-container',
+       // Custom class for profile dialog
     });
     this.closeDialogAddChannel(event);
   }
