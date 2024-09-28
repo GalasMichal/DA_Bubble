@@ -32,21 +32,39 @@ export class FirebaseService {
   router = inject(Router);
   channels$;
 
-  public userList: any[] = [];
+  public userList: AppUser[] = [];
+  public channelList: Channel[] = [];
+
 
   unsubUserList: any;
+  unsubChannelList: any;
 
   currentUser: AppUser | null = null;
   public errorMessageLogin = signal('');
 
   constructor() {
+    this.unsubChannelList = this.subChannelList();
     this.unsubUserList = this.subUserList();
     this.channels$ = collectionData(this.getChannels());
   }
 
   ngOnDestroy(): void {
     this.unsubUserList();
+    this.unsubChannelList();
   }
+
+  subChannelList() {
+    return onSnapshot(this.getChannels(), (list) => {
+      this.channelList = [];
+      list.forEach((element) => {
+        const channelData = element.data();
+        const channelId = element.id;
+        const channelObject = this.setChannelObject(channelData, channelId);
+        this.channelList.push(channelObject); // Benutzer zur Liste hinzufügen
+      });
+    });
+  }
+
 
   subUserList() {
     return onSnapshot(this.getUsers(), (list) => {
@@ -69,6 +87,18 @@ export class FirebaseService {
       displayName: obj.displayName || '',
       avatarUrl: obj.avatarUrl || '',
       birthdate: obj.birthdate || '',
+    };
+  }
+
+  setChannelObject(obj: any, id: string): Channel {
+    return {
+      chanId: id || '',
+      channelName: obj.channelName || '',
+      channelDescription: obj.channelDescription || '',
+      allMembers: obj.allMembers || '',
+      specificPeople: obj.specificPeople || [],
+      createdAt: obj.createdAt || '',
+      createdBy: obj.createdBy || ''
     };
   }
 

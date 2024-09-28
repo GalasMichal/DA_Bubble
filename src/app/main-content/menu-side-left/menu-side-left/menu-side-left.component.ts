@@ -22,6 +22,8 @@ export class MenuSideLeftComponent {
   
   toogleDropDown1(){
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
+    this.db.unsubUserList = this.db.subChannelList();
+
   }
 
   toogleDropDown2(){
