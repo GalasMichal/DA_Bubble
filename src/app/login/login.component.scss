@@ -210,9 +210,13 @@ section {
     gap: 30px;
     margin-top: 21px;
 
-    > button {
+    a {
+      font-size: 18px;
+      background: none;
       text-decoration: none;
-      cursor: pointer;
+      color: $primary-hover;
+      border: transparent 1px solid;
+      padding: .625rem .9375rem;
 
       &:hover {
         color: $primary-hover;
