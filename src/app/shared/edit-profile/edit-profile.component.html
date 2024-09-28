@@ -43,7 +43,7 @@
         />
         <label for="name">Vollständiger Name</label>
       </div>
-      <input type="text" id="name" placeholder="Name" formControlName="userName" [(ngModel)]="user.userName" name="userName"/>
+      <input type="text" id="name" placeholder="Name" formControlName="userName" name="userName"/>
       @if (userForm.controls['userName'].invalid && (userForm.controls['userName'].touched || userForm.controls['userName'].dirty)) {
         @if(userForm.controls['userName'].errors?.['required']) {
             <span>Ihr Name ist erforderlich.</span>
@@ -59,7 +59,7 @@
         <img src="./assets/media/icons/mail.svg" alt="E-Mail-Adresse" />
         <label for="email">E-Mail-Adresse</label>
       </div>
-      <input type="email" id="email" placeholder="E-Mail" formControlName="userEmail" [(ngModel)]="user.userEmail" name="userEmail" />
+      <input type="email" id="email" placeholder="E-Mail" formControlName="userEmail" name="userEmail" />
       @if (userForm.controls['userEmail'].invalid && (userForm.controls['userEmail'].touched || userForm.controls['userEmail'].dirty)) {
         @if(userForm.controls['userEmail'].errors?.['required']) {
             <span>Ihre E-Mail ist erforderlich.</span>

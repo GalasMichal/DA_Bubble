@@ -4,14 +4,14 @@ import {
   MatDialogRef
 } from '@angular/material/dialog';
 import { AvatarComponent } from '../avatar/avatar.component';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule, MatDialogContent, AvatarComponent, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, MatDialogContent, AvatarComponent, ReactiveFormsModule],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss',
 })
@@ -19,13 +19,6 @@ export class EditProfileComponent {
   readonly dialog = inject(MatDialogRef <EditProfileComponent>)
 
   userForm: FormGroup;
-  isFormSubmited: boolean = false
-
-  user = {
-    userName: '',
-    userEmail: '',
-  }
-
 
   constructor() {
     this.userForm = new FormGroup({
@@ -35,14 +28,13 @@ export class EditProfileComponent {
   }
 
   closeDialogEdit() {
-    console.log(this.user);
+    console.log(this.userForm.valid);
 
     this.dialog.close()
   }
 
   saveDialogEdit() {
-    console.log(this.user);
-    
+    console.log(this.userForm.value);
+    this.userForm.reset();
   }
-
 }

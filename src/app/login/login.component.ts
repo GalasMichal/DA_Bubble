@@ -10,6 +10,7 @@ import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './login.component.media.scss'],
   imports: [LogoComponent, RouterModule,ReactiveFormsModule, FormsModule, RouterModule, RouterOutlet, RouterLink],
+
 })
 export class LoginComponent {
   fb = inject(FirebaseService);

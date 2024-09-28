@@ -18,6 +18,8 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
+import { Observable } from 'rxjs';
+import { Channel } from '../../models/interfaces/channel.model';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -29,11 +31,16 @@ export class FirebaseService {
   provider = new GoogleAuthProvider();
   router = inject(Router);
   channels$;
+  users$;
+
   currentUser: AppUser | null = null;
   public errorMessageLogin = signal('');
 
   constructor() {
+
     this.channels$ = collectionData(this.getChannels());
+    this.users$ = collectionData(this.getUsers());
+
   }
 
   // Methode zum Erstellen eines neuen Benutzers
@@ -171,13 +178,18 @@ export class FirebaseService {
     });
   }
 
-  addChannelToFirestore(channel: any) {
+  addChannelToFirestore(channel: Channel) {
     const channelCollectionRef = collection(this.firestore, 'channels');
     const channelDocRef = doc(channelCollectionRef);
+    channel.chanId = channelDocRef.id
     setDoc(channelDocRef, channel);
   }
 
   getChannels() {
     return collection(this.firestore, 'channels');
+  }
+
+  getUsers() {
+    return collection(this.firestore, 'users')
   }
 }
