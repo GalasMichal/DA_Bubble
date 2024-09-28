@@ -35,7 +35,6 @@ export class FirebaseService {
   public userList: any[] = [];
 
   unsubUserList: any;
-  // unsubSingle;
 
   currentUser: AppUser | null = null;
   public errorMessageLogin = signal('');
