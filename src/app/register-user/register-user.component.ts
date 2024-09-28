@@ -41,12 +41,7 @@ export class RegisterUserComponent {
 
 
   constructor() {
-  effect(() => {
-      const user = this.fb.userSignal();
-      if(user) {
-        console.log('user created via Signal', user);
-      }
-    })
+ 
     // const upper_req = '(?=.*[A-Z])';
     // const special_char_req = '(?=.*[!@#$%^&*()])';
     // const lower_req = '(?=.*[a-z])';
@@ -73,23 +68,25 @@ export class RegisterUserComponent {
 
   }
 
-  onSubmit() {
-
+  async onSubmit() {
     this.isFormSubmitted = true;
 
     if (this.myForm.valid) {
-         // Extrahiere die Werte aus dem Formular
-    const email = this.myForm.get('email')?.value;  // Hole den Email-Wert
-    const password = this.myForm.get('password')?.value;
-    const displayName = this.myForm.get('name')?.value;
-      // Hole den Passwort-Wert
-      this.fb.createUser(email, password, displayName ).then((user) => {
-        console.log('User successfully registered:', user);
-      });
+      const email = this.myForm.get('email')?.value;  // Hole den Email-Wert
+      const password = this.myForm.get('password')?.value;
+      const displayName = this.myForm.get('name')?.value;
 
-      // this.router.navigate(['avatar']);
+      try {
+        const user = await this.fb.createUser(email, password, displayName);
+        if (user) {
+          console.log('User successfully registered:', user);
+           this.router.navigate(['avatar']); // Navigation nach der Registrierung
+        }
+      } catch (error) {
+        // Hier kannst du eine spezifische Fehlerbehandlung vornehmen
+        console.error('Error during user registration:', error);
+      }
     } else {
-      // TODO: was zu tun?
       console.log('Form is invalid, go home! .. or else ..');
     }
   }
