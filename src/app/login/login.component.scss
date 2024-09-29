@@ -12,11 +12,11 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   width: 100%;
   height: 100vh;
   background-color: $bg-color;
-  padding-inline: 10px;
+  padding: 10px;
 
   .header-icons {
     display: flex;
@@ -162,15 +162,24 @@ section {
     width: 100%;
     height: 3.75rem;
     background-color: $bg-color;
-    border-radius: 40px;
+    border-radius: $b-radius-2;
     cursor: pointer;
     margin-bottom: 1.875rem;
-
+    &:hover {
+      border: solid 0.0625rem $secondary !important;
+      outline: $secondary !important;
+      scale: 1.01;
+      font-weight: 600;
+    }
     .btn-google {
       display: flex;
       align-items: center;
+      justify-content: center;
       background: none;
       color: $primary;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
       img {
         width: 38px;
         height: 38px;
@@ -193,7 +202,7 @@ section {
       font-size: 1.125rem;
       gap: 10px;
       padding: 12px 25px;
-      border-radius: $b-radius-3;
+      border-radius: $b-radius-2;
       color: $white;
     }
     .login-btn {
@@ -227,6 +236,7 @@ section {
       text-decoration: none;
       color: $primary-hover;
       border: transparent 1px solid;
+      border-radius: $b-radius-2;
       padding: 0.625rem 0.9375rem;
       scale: 1;
       transition: scale 175ms ease-in-out;
