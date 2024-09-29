@@ -1,5 +1,5 @@
-@import '../../colors.scss';
-@import '../../styles.scss';
+@import "../../colors.scss";
+@import "../../styles.scss";
 
 app-login {
   max-width: 1920px;
@@ -14,17 +14,20 @@ h2 {
 }
 
 section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
   width: 100%;
   height: 100vh;
   background-color: $bg-color;
+  padding-inline: 10px;
 
   .header-icons {
     display: flex;
-    justify-content: space-around;
-    align-items: end;
-    gap: 57%;
-    padding-top: 65px;
-
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     .logo-container {
       padding-top: 45px;
 
@@ -33,8 +36,10 @@ section {
         height: 70px;
       }
     }
-
     .new-user-link {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
       p {
         font-weight: 400;
         font-size: 1.125rem;
@@ -42,7 +47,7 @@ section {
         color: $black;
       }
 
-      button {
+      a {
         font-size: 1.125rem;
         font-weight: 400;
         line-height: 21.6px;
@@ -51,155 +56,159 @@ section {
       }
     }
   }
-
-
-  .form-container {
+  form {
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 37.875rem;
-    height: 46rem;
+    justify-content: center;
+    max-width: 37.875rem;
+    width: 100%;
+    max-height: 46rem;
+    height: 100%;
     background-color: $white;
-    border-radius: 4%;
-    margin-top: -2%;
-    scale: 0.8;
+    border-radius: $b-radius-3;
+    padding: 40px;
+    margin: 10px;
+    // gap: 30px;
 
     .form-title {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 9.5%;
-      gap: 8px;
-      width: 27.75rem;
       text-align: center;
-      margin-bottom: 35px;
+      max-width: 27.75rem;
+      width: 100%;
+      margin-bottom: 1.875rem;
     }
-
     .input-container {
-      margin-top: -2%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 31.25rem;
-      height: 13.875rem;
-
-      > button {
-        color: $primary-hover;
-        text-decoration: none;
-
-        &:hover {
-          color: #313ae6;
-        }
-      }
-
+      align-items: center;
+      max-width: 31.25rem;
+      width: 100%;
+    }
+    
       .input-field {
         background-repeat: no-repeat;
         background-position: left 30px top 50%;
         padding-left: 85px;
         padding-top: 18px;
         padding-bottom: 18px;
-        width: 31.25rem;
+        max-width: 31.25rem;
+        width: 100%;
         height: 3.07rem;
         background-color: $bg-color;
-        border-radius: 50px;
-        margin-bottom: 35px;
+        border-radius: $b-radius-2;
 
         &.input-field-mail-icon {
-          background-image: url('../../assets/media/icons/mail-icon-input-field.svg');
+          background-image: url("../../assets/media/icons/mail-icon-input-field.svg");
         }
 
         &.input-field-pwd-icon {
-          background-image: url('../../assets/media/icons/pwd-lock-icon-input-field.svg');
+          background-image: url("../../assets/media/icons/pwd-lock-icon-input-field.svg");
         }
       }
+  }
+
+  .btn-password {
+    display: flex;
+    justify-content: center;
+    background: none;
+    color: $primary-hover;
+    text-decoration: none;
+    width: fit-content;
+    padding: 0.3125rem 0.9375rem;
+    border-radius: $b-radius-2;
+    margin-bottom: 30px;
+    &:hover {
+      color: $primary;
+      background: $bg-color;
     }
+  }
 
-
-    .seperator-container {
-      width: 31.25rem;
-      height: 1.875rem;
-      display: flex;
-      margin-top: 30px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-      justify-content: center;
-      border-bottom: 1px solid $primary-light;
-
-      .sep-line-txt {
-        border-radius: 30px;
-        padding: 5px 15px;
-        display: flex;
-        gap: 10px;
-        margin-top: 3%;
-        background-color: $white;
-        height: 35px;
-      }
-    }
-
-    .google-btn-container {
-      width: 31.25rem;
-      height: 3.75rem;
-      display: flex;
-      gap: 10px;
+  .seperator-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 30px;
+    &::before {
+      content: "";
+      position: absolute;
       background-color: $bg-color;
-      border-radius: 40px;
-      margin-top: 4.5%;
-      cursor: pointer;
-
-      > button {
-        display: flex;
-        align-items: center;
-
-        .google-logo {
-          width: 38px;
-          height: 38px;
-          margin-right: 16px;
-        }
-      }
+      height: 2px;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
-    .btn-container {
-      width: 21rem;
-      height: 3.0625rem;
+    .sep-line-txt {
       display: flex;
-      gap: 30px;
-      margin-top: 9%;
+      border-radius: $b-radius-1;
+      padding-inline: 15px;
+      background-color: $white;
+      z-index: 1;
+    }
+  }
 
-      > button {
-        text-decoration: none;
+  .google-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 31.25rem;
+    width: 100%;
+    height: 3.75rem;
+    background-color: $bg-color;
+    border-radius: 40px;
+    cursor: pointer;
+    margin-bottom: 1.875rem;
+
+    .btn-google {
+      display: flex;
+      align-items: center;
+      background: none;
+      color: $primary;
+      img {
+        width: 38px;
+        height: 38px;
+        margin-right: 16px;
       }
+    }
+  }
 
-      .login-btn,
-      .guest-btn {
-        font-weight: 700;
-        font-size: 1.125rem;
-        cursor: pointer;
-        display: flex;
-        gap: 10px;
-        padding: 12px 25px;
-        border-radius: 25px;
+  .btn-container {
+    display: flex;
+    gap: 1.875rem;
 
-        &.login-btn {
-          color: white;
-          background-color: $primary;
-          &:hover {
-            background-color: $primary-hover;
-            color: #313ae6;
-          }
-        }
-
-        &.guest-btn {
-          width: 10.5625rem;
-          border: 1px solid $primary;
-          color: $primary;
-          background-color: $white;
-          justify-content: center;
-          &:hover {
-            background-color: $primary-hover;
-            color: $black;
-          }
-        }
+    .login-btn,
+    .guest-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 10.375rem;
+      font-weight: 700;
+      font-size: 1.125rem;
+      gap: 10px;
+      padding: 12px 25px;
+      border-radius: $b-radius-3;
+      color: $white;
+    }
+    .login-btn {
+      background-color: $primary;
+      &:hover {
+        background-color: $primary-hover;
+      }
+    }
+    .guest-btn {
+      border: 1px solid $primary;
+      color: $primary;
+      background-color: $white;
+      &:hover {
+        background-color: $primary-hover;
+        color: $white;
+        border: solid 1px $primary-hover;
       }
     }
   }
@@ -207,6 +216,7 @@ section {
   .legal-imprint-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 30px;
     margin-top: 21px;
 
@@ -216,14 +226,44 @@ section {
       text-decoration: none;
       color: $primary-hover;
       border: transparent 1px solid;
-      padding: .625rem .9375rem;
+      padding: 0.625rem 0.9375rem;
+      scale: 1;
+      transition: scale 175ms ease-in-out;
 
       &:hover {
         color: $primary-hover;
         border: $primary-hover 1px solid;
         border-radius: 30px;
+        scale: 1.01;
       }
     }
   }
 }
 
+
+@media (max-width: 500px) {
+  section {
+    .header-icons {
+      justify-content: center;
+      .new-user-link {
+        display: none;
+      }
+    }
+    form {
+      padding: 0;
+      margin: 0;
+      .input-container {
+        padding-inline: 10px;
+      }
+    }
+    .btn-container {
+      flex-direction: column;
+      gap: .875rem;
+
+    }
+    .legal-imprint-container {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+}
