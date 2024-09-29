@@ -87,8 +87,6 @@ section {
     border-radius: $b-radius-3;
     padding: 40px;
     margin: 10px;
-    // gap: 30px;
-
     .form-title {
       display: flex;
       flex-direction: column;
@@ -125,6 +123,7 @@ section {
       background-color: $bg-color;
       border-radius: $b-radius-2;
       transition: border 175ms ease-in-out;
+      cursor: pointer;
       &:hover {
         border: solid 0.0625rem $black;
       }
