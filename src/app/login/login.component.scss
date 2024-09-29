@@ -7,11 +7,6 @@ app-login {
   height: 100vh;
 }
 
-h2 {
-  color: $primary;
-  font-size: 2.875rem;
-  font-weight: 700;
-}
 
 section {
   display: flex;
@@ -31,7 +26,7 @@ section {
     padding: 1.25rem;
     .logo-container {
       padding-top: 45px;
-
+      
       .logo {
         width: 242.11px;
         height: 70px;
@@ -47,7 +42,7 @@ section {
         line-height: 24.55px;
         color: $black;
       }
-
+      
       a {
         font-size: 1.125rem;
         font-weight: 400;
@@ -80,6 +75,11 @@ section {
       max-width: 27.75rem;
       width: 100%;
       margin-bottom: 1.875rem;
+      h2 {
+        color: $primary;
+        font-size: 2.875rem;
+        font-weight: 700;
+      }
     }
     .input-container {
       display: flex;
