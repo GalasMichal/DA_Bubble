@@ -28,6 +28,7 @@ section {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 1.25rem;
     .logo-container {
       padding-top: 45px;
 
@@ -88,21 +89,7 @@ section {
       position: relative;
       max-width: 31.25rem;
       width: 100%;
-    }
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      margin: -1px;
-      border: 0;
-      padding: 0;
-      
-      white-space: nowrap;
-      clip-path: inset(100%);
-      clip: rect(0 0 0 0);
-      overflow: hidden;
-    }
-    
+    }    
       .input-field {
         background-repeat: no-repeat;
         background-position: left 30px top 50%;
@@ -247,7 +234,7 @@ section {
       &:hover {
         color: $primary-hover;
         border: $primary-hover 1px solid;
-        border-radius: 30px;
+        border-radius: $b-radius-2;
         scale: 1.01;
       }
     }
