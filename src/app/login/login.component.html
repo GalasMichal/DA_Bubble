@@ -16,7 +16,7 @@
       
       <div class="input-container">
         <label class="visually-hidden" for="email">E-Mail-Adresse</label>
-        <input class="input-field input-field-mail-icon fontNunito input-focus" type="email" formControlName="email"
+        <input class="input-field input-field-mail-icon fontNunito" type="email" formControlName="email"
           placeholder="beispielname@email.com" aria-label="email" aria-required="true" aria-describedby="email-error" />
         
         <div class="warn-txt warn-txt-2">
@@ -37,7 +37,7 @@
 
       <div class="input-container">
         <label class="visually-hidden" for="password">Passwort</label>
-        <input class="input-field input-field-pwd-icon fontNunito input-focus" type="password" formControlName="password"
+        <input class="input-field input-field-pwd-icon fontNunito" type="password" formControlName="password"
           placeholder="Passwort" aria-label="password" aria-required="true" aria-describedby="password-error" />
           <div class="warn-txt warn-txt-2">
         @if (loginForm.controls['password'].invalid && (isFormSubmitted || loginForm.controls['password'].touched || loginForm.controls['password'].dirty)) {
