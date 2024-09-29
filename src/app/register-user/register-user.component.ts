@@ -5,6 +5,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { InfoBoxComponent } from './info-box/info-box.component';
 import { FirebaseService } from '../services/firebase/firebase.service';
+import { LoginComponent } from '../login/login.component';
+import { LogoComponent } from "../shared/logo/logo.component";
 
 
 
@@ -19,7 +21,9 @@ import { FirebaseService } from '../services/firebase/firebase.service';
     RouterLink,
     ReactiveFormsModule,
     MatDialogModule,
-    InfoBoxComponent
+    InfoBoxComponent,
+    LoginComponent,
+    LogoComponent
 ],
 
   templateUrl: './register-user.component.html',

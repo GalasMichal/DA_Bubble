@@ -1,7 +1,6 @@
 @import "../../styles.scss";
 @import "../../colors.scss";
 
-
 section {
   display: flex;
   flex-direction: column;
@@ -12,6 +11,18 @@ section {
   background-color: $bg-color;
   padding: 10px;
 
+  .logo-container {
+    width: 100%;
+    padding: 1.25rem;
+    app-logo {
+      border: solid 0.0625rem transparent;
+      &:focus {
+        border: solid 0.0625rem $secondary;
+        outline: $secondary;
+      }
+    }
+  }
+
   form {
     display: flex;
     align-items: center;
@@ -19,7 +30,7 @@ section {
     justify-content: center;
     max-width: 37.875rem;
     width: 100%;
-    max-height: 46rem;
+    max-height: 41.875rem;
     height: 100%;
     background-color: $white;
     border-radius: $b-radius-3;
@@ -90,7 +101,61 @@ section {
       &-user-icon {
         background-image: url("../../assets/media/icons/user-icon.svg");
       }
-      .logo-container {
+    }
+  }
+  .checkbox-container {
+    display: flex;
+    max-width: 31.25rem;
+    width: 100%;
+    gap: 0.5rem;
+    label {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 16.8px;
+      text-align: left;
+      .privacy {
+        text-decoration: none;
+        color: $primary;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    span {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16.8px;
+      text-align: left;
+      display: flex;
+      color: #ff0000;
+      padding-block: 0.3125rem;
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    align-self: flex-end;
+    margin-top: auto;
+    .login-btn {
+      display: flex;
+      justify-content: center;
+      width: 10.375rem;
+      font-weight: 700;
+      font-size: 1.125rem;
+      gap: 10px;
+      padding: 12px 25px;
+      border-radius: $b-radius-2;
+      color: $white;
+
+      background-color: $primary;
+      transition: all 175ms ease-in-out;
+      &:hover {
+        background-color: $primary-hover;
+      }
+      &:focus {
+        background-color: $primary-hover;
+        outline: $primary-hover;
       }
     }
   }
@@ -101,28 +166,6 @@ section {
   height: 24px;
 }
 
-.login-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 10.375rem;
-  font-weight: 700;
-  font-size: 1.125rem;
-  gap: 10px;
-  padding: 12px 25px;
-  border-radius: $b-radius-2;
-  color: $white;
-
-  background-color: $primary;
-  transition: all 175ms ease-in-out;
-  &:hover {
-    background-color: $primary-hover;
-  }
-  &:focus {
-    background-color: $primary-hover;
-    outline: $primary-hover;
-  }
-}
 .legal-imprint-container {
   display: flex;
   justify-content: center;
@@ -150,23 +193,8 @@ section {
       outline: $secondary;
     }
   }
-  .btn-container {
-    display: flex;
-    justify-content: end;
-    > a {
-      text-decoration: none;
-      justify-content: center;
-    }
-  }
 }
 
-.logo {
-  width: 242.11px;
-  height: 70px;
-  padding-left: 63px;
-  scale: 1.4;
-  margin-top: 55px;
-}
 .check-container {
   display: flex;
   gap: 8px;
