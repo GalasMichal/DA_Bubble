@@ -150,18 +150,16 @@ section {
       outline: $secondary;
     }
   }
-}
-
-.btn-container {
-  width: 21rem;
-  height: 3.0625rem;
-  display: flex;
-  justify-content: end;
-  > a {
-    text-decoration: none;
-    justify-content: center;
+  .btn-container {
+    display: flex;
+    justify-content: end;
+    > a {
+      text-decoration: none;
+      justify-content: center;
+    }
   }
 }
+
 .logo {
   width: 242.11px;
   height: 70px;
