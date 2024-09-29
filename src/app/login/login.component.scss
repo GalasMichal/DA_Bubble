@@ -36,6 +36,7 @@ section {
       display: flex;
       flex-direction: column;
       gap: 0.625rem;
+      width: 11.25rem;
       p {
         font-weight: 400;
         font-size: 1.125rem;
@@ -44,11 +45,22 @@ section {
       }
       
       a {
+        text-align: center;
+        padding: 0.625rem 0.9375rem;
         font-size: 1.125rem;
         font-weight: 400;
         line-height: 21.6px;
         color: $primary-hover;
+        border: solid 1px transparent;
+        border-radius: $b-radius-2;
         text-decoration: none;
+        transition: all 175ms ease-in-out;
+        &:hover {
+          border: $primary-hover 1px solid;
+          border-radius: $b-radius-2;
+          scale: 1.01;
+          font-weight: 600;
+        }
       }
     }
   }
@@ -93,6 +105,7 @@ section {
       .input-field {
         background-repeat: no-repeat;
         background-position: left 30px top 50%;
+        border: solid 0.0625rem transparent;
         padding-left: 85px;
         padding-top: 18px;
         padding-bottom: 18px;
@@ -101,6 +114,10 @@ section {
         height: 3.07rem;
         background-color: $bg-color;
         border-radius: $b-radius-2;
+        transition: border 175ms ease-in-out;
+        &:hover {
+          border: solid 0.0625rem $black;
+        }
 
         &.input-field-mail-icon {
           background-image: url("../../assets/media/icons/mail-icon-input-field.svg");
@@ -122,6 +139,7 @@ section {
     padding: 0.3125rem 0.9375rem;
     border-radius: $b-radius-2;
     margin-bottom: 30px;
+    transition: all 175ms ease-in-out;
     &:hover {
       color: $primary;
       background: $bg-color;
@@ -165,9 +183,10 @@ section {
     border-radius: $b-radius-2;
     cursor: pointer;
     margin-bottom: 1.875rem;
+    transition: all 175ms ease-in-out;
     &:hover {
-      border: solid 0.0625rem $secondary !important;
-      outline: $secondary !important;
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
       scale: 1.01;
       font-weight: 600;
     }
@@ -207,6 +226,7 @@ section {
     }
     .login-btn {
       background-color: $primary;
+      transition: all 175ms ease-in-out;
       &:hover {
         background-color: $primary-hover;
       }
@@ -215,6 +235,7 @@ section {
       border: 1px solid $primary;
       color: $primary;
       background-color: $white;
+      transition: all 175ms ease-in-out;
       &:hover {
         background-color: $primary-hover;
         color: $white;
@@ -240,13 +261,12 @@ section {
       padding: 0.625rem 0.9375rem;
       scale: 1;
       transition: scale 175ms ease-in-out;
-
-      &:hover {
-        color: $primary-hover;
-        border: $primary-hover 1px solid;
-        border-radius: $b-radius-2;
-        scale: 1.01;
-      }
+        &:hover {
+          border: $primary-hover 1px solid;
+          border-radius: $b-radius-2;
+          scale: 1.01;
+          font-weight: 600;
+        }
     }
   }
 }
