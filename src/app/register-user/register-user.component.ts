@@ -66,10 +66,9 @@ export class RegisterUserComponent {
         Validators.minLength(8),
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@\$!%+\-/\*\?&])[A-Za-z0-9@$!%+\-/\*\?&]+$'),
       ]),
-      terms: new FormControl(false, [
-        // checks, if checkbox is checked - default is set to not-checked
-        Validators.requiredTrue
-      ]),
+      term: new FormControl(false, [
+        Validators.requiredTrue // Checkbox must be checked (i.e., true) to be valid
+      ])
     })
 
   }
