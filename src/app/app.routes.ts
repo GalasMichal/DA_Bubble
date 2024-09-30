@@ -12,7 +12,7 @@ import { ChannelEmptyComponent } from './shared/component/channel-empty/channel-
 import { ChannelEditComponent } from './shared/component/channel-edit/channel-edit.component';
 import { ChannelCreateComponent } from './shared/component/channel-create/channel-create.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { IndexPageComponent } from './index-page/index-page.component';
+import { OpenCloseChildComponent } from './open-close/index-page.component';
 
 
 /*
@@ -24,7 +24,7 @@ Merci :)
 export const routes: Routes = [
 
   { path: '', redirectTo: 'start', pathMatch: 'full' },
-  { path: 'index', component: IndexPageComponent },
+  { path: 'index', component: OpenCloseChildComponent },
   { path: 'start', component: LoginComponent },
   { path: 'start/register', component: RegisterUserComponent },
   { path: 'start/main', component: MainContentComponent },

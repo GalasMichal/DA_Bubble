@@ -1,4 +1,4 @@
-<section>
+<!-- <section>
   <div  class="logo-container">
  
     <svg #logo class="logo" width="696" height="184" viewBox="0 0 696 184" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,4 +26,15 @@
       </defs>
     </svg>
   </div>
-</section>
+</section> -->
+
+<!-- <nav>
+  <button type="button" (click)="toggleAnimations()">Toggle Animations</button>
+  <button type="button" (click)="toggle()">Toggle Open/Closed</button>
+</nav> -->
+  <div [@.disabled]="isDisabled" class="logo-container">
+    <div [@childAnimation]="isOpen ? 'open' : 'closed'"
+      class="logo open-close-container">
+      <p></p>
+    </div>
+  </div>
