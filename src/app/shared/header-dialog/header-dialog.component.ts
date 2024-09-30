@@ -4,11 +4,12 @@ import {
   MatDialogContent,
 } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header-dialog',
   standalone: true,
-  imports: [MatDialogContent, ProfileComponent ],
+  imports: [MatDialogContent, ProfileComponent, RouterLink ],
   templateUrl: './header-dialog.component.html',
   styleUrl: './header-dialog.component.scss'
 })

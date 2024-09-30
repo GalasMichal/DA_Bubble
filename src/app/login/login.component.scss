@@ -216,8 +216,7 @@ section {
       &:hover {
         border: solid 0.0625rem $secondary;
         outline: $secondary;
-        scale: 1.01;
-        font-weight: 600;
+        font-weight: 500;
       }
       &:focus {
         border: solid 0.0625rem $secondary;
