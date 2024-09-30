@@ -2,9 +2,10 @@ import { Component, inject } from '@angular/core';
 import {
   MatDialog,
   MatDialogContent,
+  MatDialogRef,
 } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header-dialog',
@@ -14,7 +15,13 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header-dialog.component.scss'
 })
 export class HeaderDialogComponent {
-  dialog = inject(MatDialog)
+  readonly dialog = inject(MatDialog)
+  readonly closeDialog = inject(MatDialogRef <ProfileComponent>)
+  router = inject(Router)
+
+  // constructor(private router: Router) {
+
+  // }
 
   openDialogProfile() {
     this.dialog.open(ProfileComponent, {
@@ -22,4 +29,8 @@ export class HeaderDialogComponent {
     });
   }
 
+  logOut() {
+    this.closeDialog.close()
+    this.router.navigateByUrl('/start')
+  }
 }
