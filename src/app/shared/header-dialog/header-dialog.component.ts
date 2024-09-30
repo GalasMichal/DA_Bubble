@@ -19,10 +19,6 @@ export class HeaderDialogComponent {
   readonly closeDialog = inject(MatDialogRef <ProfileComponent>)
   router = inject(Router)
 
-  // constructor(private router: Router) {
-
-  // }
-
   openDialogProfile() {
     this.dialog.open(ProfileComponent, {
       panelClass: 'profile-container', // Custom class for profile dialog
