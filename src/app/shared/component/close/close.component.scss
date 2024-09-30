@@ -1,0 +1,21 @@
+@import "../../../../colors.scss";
+@import "../../../../fonts.scss";
+@import "../../../../styles.scss";
+
+::ng-deep
+.close-btn {
+  background: none;
+  border: none;
+  border-radius: $b-radius-2;
+  &:hover {
+    background: $bg-color;
+  }
+  app-close {
+    &:hover svg path {
+      fill: $primary-hover;
+    }
+    &:focus-visible {
+      outline: none;
+    }
+  }
+}
