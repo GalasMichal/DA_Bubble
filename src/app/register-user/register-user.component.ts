@@ -7,6 +7,7 @@ import { InfoBoxComponent } from './info-box/info-box.component';
 import { FirebaseService } from '../services/firebase/firebase.service';
 import { LoginComponent } from '../login/login.component';
 import { LogoComponent } from "../shared/logo/logo.component";
+import { BackComponent } from '../shared/component/back/back.component';
 
 
 
@@ -23,7 +24,8 @@ import { LogoComponent } from "../shared/logo/logo.component";
     MatDialogModule,
     InfoBoxComponent,
     LoginComponent,
-    LogoComponent
+    LogoComponent,
+    BackComponent
 ],
 
   templateUrl: './register-user.component.html',
