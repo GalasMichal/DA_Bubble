@@ -107,6 +107,7 @@ section {
       }
     }
     .input-container {
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -128,7 +129,6 @@ section {
       background-color: $bg-color;
       border-radius: $b-radius-2;
       transition: border 175ms ease-in-out;
-      cursor: pointer;
       &:hover {
         border: solid 0.0625rem $black;
       }
@@ -144,9 +144,38 @@ section {
       &.input-field-pwd-icon {
         background-image: url("../../assets/media/icons/pwd-lock-icon-input-field.svg");
       }
+     
     }
   }
 
+  .eye-icon {
+    position: absolute;
+    top: 14%;
+    left: 90%;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+  }
+
+  .fa {
+    width: 32px;
+    top: 13%;
+    position: absolute;
+    height: 30px;
+    left: 89%;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .eye-open {
+    background-image: url('../../assets/media/icons/pwd-visible_eye-open.png');
+  }
+  .eye-closed {
+    background-image: url('../../assets/media/icons/pwd-not-visible_eye-close.png');
+  }
+  
+ 
   .btn-password {
     display: flex;
     justify-content: center;

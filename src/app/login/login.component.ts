@@ -1,15 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FirebaseService } from '../services/firebase/firebase.service';
 import { LogoComponent } from "../shared/logo/logo.component";
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './login.component.media.scss'],
-  imports: [LogoComponent, RouterModule,ReactiveFormsModule, FormsModule, RouterModule, RouterOutlet, RouterLink],
+  imports: [CommonModule, LogoComponent, RouterModule,ReactiveFormsModule, FormsModule, RouterModule, RouterOutlet, RouterLink],
 
 })
 export class LoginComponent {
@@ -53,6 +54,12 @@ export class LoginComponent {
     })} else {
       console.log('Formular ist ungültig');
     }
+  }
+
+  isPasswordVisible = false;
+  
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }

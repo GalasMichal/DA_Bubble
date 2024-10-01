@@ -37,23 +37,26 @@
 
       <div class="input-container">
         <label class="visually-hidden" for="password">Passwort</label>
-        <input class="input-field input-field-pwd-icon fontNunito" type="password" formControlName="password"
+        <input class="input-field input-field-pwd-icon fontNunito input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
           placeholder="Passwort" aria-label="password" aria-required="true" aria-describedby="password-error" />
+          <i class="fa" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
           <div class="warn-txt warn-txt-2">
-        @if (loginForm.controls['password'].invalid && (isFormSubmitted || loginForm.controls['password'].touched || loginForm.controls['password'].dirty)) {
-          @if (loginForm.controls['password'].errors?.['required']) {
-          <span>Password ist ein Pflichtfeld.</span>
-          }
-          @if (loginForm.controls['password'].errors?.['minlength']) {
-          <span id="password-error">
-            Mindestens 8 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen, siehe Info-box.</span>
-          }
-          @if ((loginForm.controls['password'].errors?.['pattern']) && !(loginForm.controls['password'].errors?.['minlength'])) {
-          <span>Mindestanforderungen nicht erfüllt, siehe Info-box.</span>
-          }
-        }
+          
+            @if (loginForm.controls['password'].invalid && (isFormSubmitted || loginForm.controls['password'].touched || loginForm.controls['password'].dirty)) {
+              @if (loginForm.controls['password'].errors?.['required']) {
+              <span>Password ist ein Pflichtfeld.</span>
+              }
+              @if (loginForm.controls['password'].errors?.['minlength']) {
+              <span id="password-error">
+                Mindestens 8 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen.</span>
+              }
+              @if ((loginForm.controls['password'].errors?.['pattern']) && !(loginForm.controls['password'].errors?.['minlength'])) {
+              <span>Mindestanforderungen nicht erfüllt.</span>
+              }
+            }
+          </div>
       </div>
-    </div>
+   
     
     <button class="btn-password fontNunito" [routerLink]="['/recovery']">Passwort vergessen?</button>
     
