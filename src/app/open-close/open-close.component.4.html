@@ -33,8 +33,12 @@
   <button type="button" (click)="toggle()">Toggle Open/Closed</button>
 </nav> -->
   <div [@.disabled]="isDisabled" class="logo-container">
-    <div [@childAnimation]="isOpen ? 'open' : 'closed'"
+    <!-- <div [@childAnimation]="isOpen ? 'open' : 'closed'"
       class="logo open-close-container">
       <p></p>
+    </div> -->
+    <div [@childAnimation]="isOpen ? 'open' : 'closed'"
+    class="logo open-close-container">
+      <svg src='../../assets/media/icons/logo-animation.svg'></svg>
     </div>
   </div>

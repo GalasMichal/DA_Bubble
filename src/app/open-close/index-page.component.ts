@@ -22,8 +22,8 @@ import {
           width: '60px',
           opacity: 1.0,
           backgroundColor: 'yellow',
-          marginLeft: '-215%',
-          marginTop: '-99%',
+          marginLeft: '-175%',
+          marginTop: '-89%',
           transition: 'all 2s ease-in-out',
         })
       ),
@@ -40,7 +40,7 @@ import {
        transition('closed => open', [
         animate('1s ease-in-out', keyframes([
           style({ marginLeft: '-20%', offset: 0 }),   // Start at -50%
-          style({ marginLeft: '-40%', offset: 0.33 }), 
+          // style({ marginLeft: '-40%', offset: 0.33 }), 
           //style({ marginLeft: '-50%', offset: 0.66 }), 
          // style({ marginLeft: '-80%', offset: 1.0 })  
           // style({ transform: 'translateX(-50%)', offset: 0 }),  
