@@ -1,0 +1,25 @@
+@import "../../../../colors.scss";
+@import "../../../../fonts.scss";
+@import "../../../../styles.scss";
+
+::ng-deep .arrow-back {
+  background: none;
+  border: solid 1px transparent;
+  border-radius: $b-radius-2;
+  transition: all 175ms ease-in-out;
+  &:hover {
+    background: $bg-color;
+  }
+  &:focus {
+    border: solid 1px $primary;
+  }
+  &:focus-visible {
+    border: solid 1px none;
+    outline: transparent;
+  }
+  app-back {
+    &:hover svg path {
+      fill: $primary-hover;
+    }
+  }
+}

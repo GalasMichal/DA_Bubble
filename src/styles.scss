@@ -209,20 +209,39 @@ app-message-edit {
 }
 
 .warn-txt {
+  display: flex;
+  flex-direction: column;
 	color: $red;
-	margin-top: -5%;
+  height: 30px;
+  font-size: .75rem;
 }
 
 .warn-txt-2 {
-	width: 89%;
-	display: flex;
-	align-items: baseline;
-	text-align: center;
-	// border: tomato 1px solid;
+	width: 100%;
+  padding-left: 1.5625rem;
 }
 
 [disabled] {
   cursor: auto !important;
   background-color: $gray !important;
   border: solid 0.0625rem $gray !important;
+}
+
+.input-focus:focus {
+    border: solid 0.0625rem $secondary;
+    outline: $secondary;
+}
+
+//Label is hidden
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }

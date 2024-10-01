@@ -5,6 +5,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { InfoBoxComponent } from './info-box/info-box.component';
 import { FirebaseService } from '../services/firebase/firebase.service';
+import { LoginComponent } from '../login/login.component';
+import { LogoComponent } from "../shared/logo/logo.component";
+import { BackComponent } from '../shared/component/back/back.component';
 
 
 
@@ -19,7 +22,10 @@ import { FirebaseService } from '../services/firebase/firebase.service';
     RouterLink,
     ReactiveFormsModule,
     MatDialogModule,
-    InfoBoxComponent
+    InfoBoxComponent,
+    LoginComponent,
+    LogoComponent,
+    BackComponent
 ],
 
   templateUrl: './register-user.component.html',
@@ -60,10 +66,9 @@ export class RegisterUserComponent {
         Validators.minLength(8),
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@\$!%+\-/\*\?&])[A-Za-z0-9@$!%+\-/\*\?&]+$'),
       ]),
-      terms: new FormControl(false, [
-        // checks, if checkbox is checked - default is set to not-checked
-        Validators.requiredTrue
-      ]),
+      term: new FormControl(false, [
+        Validators.requiredTrue // Checkbox must be checked (i.e., true) to be valid
+      ])
     })
 
   }

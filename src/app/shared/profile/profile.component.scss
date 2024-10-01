@@ -16,20 +16,6 @@
       color: $black;
       margin: 0;
     }
-    button {
-      background: none;
-      border: none;
-      border-radius: $b-radius-2;
-      &:hover {
-        background: $bg-color;
-      }
-      &:hover svg path {
-        fill: $primary-hover;
-      }
-      &:focus-visible {
-        outline: none;
-      }
-    }
   }
 }
 

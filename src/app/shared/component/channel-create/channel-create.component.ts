@@ -22,6 +22,8 @@ import { InputAddUsersComponent } from '../input-add-users/input-add-users.compo
 import { AvatarComponent } from '../../avatar/avatar.component';
 import { Auth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
+import { AppComponent } from '../../../app.component';
+import { CloseComponent } from '../close/close.component';
 
 @Component({
   selector: 'app-channel-create',
@@ -35,7 +37,9 @@ import { Observable } from 'rxjs';
     MatDialogContent,
     AddMembersComponent,
     ReactiveFormsModule,
-    InputAddUsersComponent, AvatarComponent
+    InputAddUsersComponent, 
+    AvatarComponent,
+    CloseComponent
   ],
   templateUrl: './channel-create.component.html',
   styleUrl: './channel-create.component.scss',

@@ -24,20 +24,20 @@ form {
         font-weight: 700;
         line-height: 2.0463rem;
       }
-      .close-btn {
-        background: none;
-        border: none;
-        border-radius: $b-radius-2;
-        &:hover {
-          background: $bg-color;
-        }
-        &:hover svg path {
-          fill: $primary-hover;
-        }
-        &:focus-visible {
-          outline: none;
-        }
-      }
+      // .close-btn {
+      //   background: none;
+      //   border: none;
+      //   border-radius: $b-radius-2;
+      //   &:hover {
+      //     background: $bg-color;
+      //   }
+      //   &:hover svg path {
+      //     fill: $primary-hover;
+      //   }
+      //   &:focus-visible {
+      //     outline: none;
+      //   }
+      // }
     }
     p {
       color: $black;
@@ -120,20 +120,6 @@ form {
         font-weight: 500;
         color: $black;
         margin: 0;
-      }
-      button {
-        background: none;
-        border: none;
-        border-radius: $b-radius-2;
-        &:hover {
-          background: $bg-color;
-        }
-        &:hover svg path {
-          fill: $primary-hover;
-        }
-        &:focus-visible {
-          outline: none;
-        }
       }
     }
     .radio-input {
