@@ -20,7 +20,7 @@
   <div class="chat-main-container">
 
     @for (singleMessage of allUserMessages; track allUserMessages[index].userDetails.userName; let index = $index) {
-      <app-message-answer [userMessage]="singleMessage"></app-message-answer>
+      <app-message-answer [userMessage]="singleMessage" [index]="index"></app-message-answer>
     }
 
   </div>

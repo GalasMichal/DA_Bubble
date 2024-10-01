@@ -11,6 +11,7 @@ import { StateControlService } from '../../../services/state-control/state-contr
   styleUrl: './message-answer.component.scss',
 })
 export class MessageAnswerComponent {
+  @Input() index: number = 0;
   @Input() userMessage = {
     userDetails: {
       userName: 'User Name',

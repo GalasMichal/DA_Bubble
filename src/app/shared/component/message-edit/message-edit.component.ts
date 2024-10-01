@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-message-edit',
@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './message-edit.component.scss'
 })
 export class MessageEditComponent {
-
+  @Input() index: number = 0;
+  
+  editThisMessage() {
+    console.log('editThisMessage()', this.index);
+  }
 }

@@ -13,8 +13,8 @@
     border: solid 1px $primary;
   }
   &:focus-visible {
-    border: solid 1px none;
-    outline: transparent;
+    border: solid 1px $primary;
+    // outline: transparent;
   }
   app-close {
     &:hover svg path {
