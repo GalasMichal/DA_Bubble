@@ -1,6 +1,10 @@
 @import "../../colors.scss";
 @import "../../styles.scss";
 
+form {
+  scale: .9;
+}
+
 app-login {
   max-width: 1920px;
   width: 100%;
@@ -8,6 +12,7 @@ app-login {
 }
 
 section {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -170,7 +175,7 @@ section {
     display: flex;
     justify-content: center;
     position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 170px;
     &::before {
       content: "";
       position: absolute;
@@ -191,44 +196,35 @@ section {
     }
   }
 
-  .google-btn-container {
+  .btn-google {
+    position: absolute;
+    //z-index: 9;
+    top: 66%;
     display: flex;
     align-items: center;
     justify-content: center;
     max-width: 31.25rem;
-    width: 100%;
+    width: 25%;
     height: 3.75rem;
     background-color: $bg-color;
-    border-radius: $b-radius-2;
-    cursor: pointer;
+    border-radius: $b-radius-2; //3.125rem;
     margin-bottom: 1.875rem;
+    color: $primary;
     transition: all 175ms ease-in-out;
-    .btn-google {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: none;
-      color: $primary;
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-      transition: all 175ms ease-in-out;
-      &:hover {
-        border: solid 0.0625rem $secondary;
-        outline: $secondary;
-        font-weight: 500;
-      }
-      &:focus {
-        border: solid 0.0625rem $secondary;
-        outline: $secondary;
-      }
-      img {
-        width: 38px;
-        height: 38px;
-        margin-right: 16px;
-      }
+    &:hover {
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
+      font-weight: 500;
+    }
+    &:focus {
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
+    }
+    img {
+      margin-right: 16px;
     }
   }
+  
 
   .btn-container {
     display: flex;
