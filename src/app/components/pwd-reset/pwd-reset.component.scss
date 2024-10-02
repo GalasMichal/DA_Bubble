@@ -8,10 +8,6 @@ $background-color_1: $bg-color;
 $background-color_2: $white;
 $background-color_3: $primary;
 
-/* CONTENT */
-/* LOGIN BUTTONS */
-/* LEGAL IMPRINT -LINKS*/
-/**/
 h2 {
 	color: $color_1;
 	font-size: 2.875rem;
@@ -119,6 +115,7 @@ h2 {
 	margin-top: 55px;
 }
 .input-field {
+	position: relative;
 	background-repeat: no-repeat;
 	background-position: left 30px top 50%;
 	padding-left: 85px;
@@ -135,6 +132,28 @@ h2 {
 .icon-input {
 	width: 24px;
 	height: 24px;
+}
+.pwd-eye, .pwd-eye-2 {
+  width: 32px;
+  position: absolute;
+  height: 30px;
+  left: 75%;
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.pwd-eye {
+  top: 34%;
+}
+.pwd-eye-2 {
+  top: 50%;
+}
+.eye-open {
+  background-image: url('../../../assets/media/icons/pwd-visible_eye-open.png');
+}
+.eye-closed {
+  background-image: url('../../../assets/media/icons/pwd-not-visible_eye-close.png');
 }
 .btn-container {
 	width: 21rem;
