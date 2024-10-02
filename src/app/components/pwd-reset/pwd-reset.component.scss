@@ -101,7 +101,7 @@ h2 {
 	align-items: center;
 	flex-direction: column;
 	width: 37.875rem;
-	height: 35.8125rem;
+	height: 39rem; // 35.8125rem
 	background-color: $background-color_2;
 	border-radius: 4%;
 }
@@ -111,7 +111,8 @@ h2 {
 	flex-direction: column;
 	justify-content: center;
 	width: 31.25rem;
-	height: 13.875rem;
+	//height: 13.875rem;
+	height: 19rem;
 	margin-top: 55px;
 }
 .input-field {
@@ -122,10 +123,10 @@ h2 {
 	padding-top: 18px;
 	padding-bottom: 18px;
 	width: 25rem;
-	height: 3.625rem;
+	height: 3.825rem;
 	background-color: $background-color_1;
 	border-radius: 50px;
-	margin-bottom: 35px;
+	margin-bottom: 45px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -143,17 +144,11 @@ h2 {
   background-repeat: no-repeat;
   background-position: center;
 }
-.pwd-eye {
-  top: 34%;
+.eye-pos {
+  top: 36%;
 }
-.pwd-eye-2 {
-  top: 50%;
-}
-.eye-open {
-  background-image: url('../../../assets/media/icons/pwd-visible_eye-open.png');
-}
-.eye-closed {
-  background-image: url('../../../assets/media/icons/pwd-not-visible_eye-close.png');
+.eye-pos-2 {
+  top: 53%;
 }
 .btn-container {
 	width: 21rem;

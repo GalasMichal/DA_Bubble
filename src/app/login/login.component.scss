@@ -147,16 +147,6 @@ section {
      
     }
   }
-
-  .eye-icon {
-    position: absolute;
-    top: 14%;
-    left: 90%;
-    width: 26px;
-    height: 26px;
-    cursor: pointer;
-  }
-  
  
   .btn-password {
     display: flex;
@@ -236,24 +226,11 @@ section {
     }
   }
   
-  // pwd-eye used for multiple components
-.pwd-eye {
-  width: 32px;
-  top: 13%;
-  position: absolute;
-  height: 30px;
-  left: 89%;
-  cursor: pointer;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-.eye-open {
-  background-image: url('../../assets/media/icons/pwd-visible_eye-open.png');
-}
-.eye-closed {
-  background-image: url('../../assets/media/icons/pwd-not-visible_eye-close.png');
-}
+
+  .eye-pos {
+    top: 13%;
+    left: 89%;
+  }
 
   .btn-container {
     display: flex;

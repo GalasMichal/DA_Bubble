@@ -49,4 +49,10 @@ export class PwdResetComponent {
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
+
+  isPasswordCopyVisible = false;
+  
+  togglePasswordCopyVisibility() {
+    this.isPasswordCopyVisible = !this.isPasswordCopyVisible;
+  }
 }

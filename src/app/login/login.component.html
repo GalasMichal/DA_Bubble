@@ -39,7 +39,7 @@
         <label class="visually-hidden" for="password">Passwort</label>
         <input autocomplete="current-password" id="password" class="input-field input-field-pwd-icon fontNunito input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
           placeholder="Passwort" aria-label="password" aria-required="true" aria-describedby="password-error" />
-          <i class="pwd-eye" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+          <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
           <div class="warn-txt warn-txt-2">
           
             @if (loginForm.controls['password'].invalid && (isFormSubmitted || loginForm.controls['password'].touched || loginForm.controls['password'].dirty)) {
