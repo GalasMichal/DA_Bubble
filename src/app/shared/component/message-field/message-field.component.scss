@@ -1,9 +1,12 @@
 @import '../../../../colors.scss';
 @import '../../../../fonts.scss';
+@import '../../../../styles.scss';
+
 
 .message-field-container {
   display: flex;
   flex-direction: column;
+  position: relative;
   width: 100%;
   border-radius: 20px;
   border: $primary-light 1px solid;
@@ -32,8 +35,27 @@
 
 .icons-container {
   display: flex;
-
-
+  gap: .1875rem;
+  width: 100%;
+  button {
+    background: none;
+    border: solid 1px transparent;
+    border-radius: $b-radius-2;
+    &:hover {
+      background: $bg-color;
+    }
+    &:focus {
+      border: solid 1px transparent;
+      background: $bg-color;
+      outline: transparent;
+    }
+    &:hover svg path {
+        fill: $primary-hover;
+      }
+  }
+  button:nth-of-type(4) {
+    margin-left: auto;
+  }
 }
 
 .icons {
@@ -50,4 +72,32 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.emoji {
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  visibility: hidden;
+  bottom: 65px;
+  left: 0;
+  width: 355px;
+  height: 430px;
+}
+
+emoji-mart {
+  display: flex;
+  position: absolute;
+  visibility: hidden;
+  overflow: hidden;
+  bottom: 0;
+  left: 0;
+  transition-timing-function: ease-in-out;
+  transition-duration: 175ms;
+  transform: translateY(100%);
+}
+
+.show-emoji {
+  visibility: visible;
+  transform: translateY(0);
 }

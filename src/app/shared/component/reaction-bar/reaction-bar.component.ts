@@ -15,7 +15,6 @@ export class ReactionBarComponent {
 
   confirmMessage() {
     console.log('confirmMessage()', this.index);
-    
   }
 
   handsUp() {
