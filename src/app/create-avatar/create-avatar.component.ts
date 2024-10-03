@@ -4,6 +4,11 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { LogoComponent } from '../shared/logo/logo.component';
 import { CommonModule } from '@angular/common';
 
+interface ProfileAvatar {
+  name: string;
+  src: string;
+}
+
 @Component({
   selector: 'app-create-avatar',
   standalone: true,
@@ -16,12 +21,18 @@ import { CommonModule } from '@angular/common';
 })
 
 export class CreateAvatarComponent {
-  profileAvatars: string[] = [
-    "user-1-elise",
-    "user-2-elias",
-    "user-3-frederick",
-    "user-4-steffen",
-    "user-5-sofia",
-    "user-6-noah"
-  ];
+
+  baseSrc = "../../../assets/media/icons/profile-icons/";
+  
+  profileAvatars: ProfileAvatar[] = [
+    { name: "user-1-elise" },
+    { name: "user-2-elias" },
+    { name: "user-3-frederick" },
+    { name: "user-4-steffen" },
+    { name: "user-5-sofia" },
+    { name: "user-6-noah" }
+  ].map(avatar => ({
+    ...avatar,
+    src: `${this.baseSrc}${avatar.name}.svg`
+  }));
 }
