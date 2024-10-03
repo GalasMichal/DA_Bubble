@@ -1,11 +1,11 @@
 
 
-  <div class="message-field-container fontNunito">
-    <textarea title="Schreib was Nettes :)" class="input-field fontNunito txt" type="text" placeholder="Nachricht an #Entwicklerteam" wrap="hard" style="resize: none;"></textarea>
+  <div class="message-field-container fontNunito" tabindex="0">
+    <textarea (click)="closeEmojiWindow()" [(ngModel)]="server.textArea" name title="Schreib was Nettes :)" class="input-field fontNunito txt" type="text" placeholder="Nachricht an #Entwicklerteam" wrap="hard"></textarea>
     <div class="textarea-btn-container">
 
       <div class="emoji">
-        <emoji-mart (emojiClick)="addEmoji($event)" [ngClass]="{'show-emoji': showEmoji}"></emoji-mart>
+        <emoji-mart (emojiClick)="addEmoji($event)" [ngClass]="{'show-emoji': server.isEmojiPickerVisible}"></emoji-mart>
       </div>
 
 

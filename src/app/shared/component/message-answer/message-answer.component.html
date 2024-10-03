@@ -1,8 +1,13 @@
+
 <div class="chat-content">
  @if(!hideDetails){
   <app-time-separator class="full-width"></app-time-separator>
  }
   <div class="user-message-container">
+    <div class="emoji">
+      <emoji-mart (emojiClick)="addEmoji($event) "[ngClass]="{'show-emoji': state.isEmojiPickerVisibleMessage}" ></emoji-mart>
+    </div>
+
     <app-reaction-bar [index]="index"></app-reaction-bar>
     <img
       src={{userMessage.profileImage.src}}

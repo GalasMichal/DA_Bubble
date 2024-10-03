@@ -1,7 +1,6 @@
-@import '../../../../colors.scss';
-@import '../../../../fonts.scss';
-@import '../../../../styles.scss';
-
+@import "../../../../colors.scss";
+@import "../../../../fonts.scss";
+@import "../../../../styles.scss";
 
 .message-field-container {
   display: flex;
@@ -9,15 +8,22 @@
   position: relative;
   width: 100%;
   border-radius: 20px;
-  border: $primary-light 1px solid;
+  border: solid 1px $primary-light;
   padding: 20px;
   height: 170px;
-
-
-  >textarea {
+    &:focus-within {
+      border: solid 1px $primary-hover;
+      outline: $primary-hover;
+      box-shadow: 0px 0px 19px -10px $primary-hover;
+    }
+  textarea {
     width: 100%;
     height: 100%;
-    resize: vertical;
+    resize: none;
+    &:focus {
+      border: solid 1px none;
+      outline: none;
+    }
   }
 }
 
@@ -35,7 +41,7 @@
 
 .icons-container {
   display: flex;
-  gap: .1875rem;
+  gap: 0.1875rem;
   width: 100%;
   button {
     background: none;
@@ -50,8 +56,8 @@
       outline: transparent;
     }
     &:hover svg path {
-        fill: $primary-hover;
-      }
+      fill: $primary-hover;
+    }
   }
   button:nth-of-type(4) {
     margin-left: auto;

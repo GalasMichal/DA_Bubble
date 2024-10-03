@@ -4,11 +4,12 @@ import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
 import { MessageAnswerComponent } from '../../shared/component/message-answer/message-answer.component';
+import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @Component({
   selector: 'app-chat-room',
   standalone: true,
-  imports: [AddUsersComponent, MessageFieldComponent, MessageAnswerComponent],
+  imports: [AddUsersComponent, MessageFieldComponent, MessageAnswerComponent, EmojiComponent],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss'
 })
