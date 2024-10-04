@@ -6,7 +6,7 @@
   <div class="form-container ml-mr-auto">
     <div style="padding-top: 2%;">
       <div class="arrow-back-container">
-        <button class="btn-no-bg"  [routerLink]="['/']" title="Zurück zum Login">
+        <button class="btn-no-bg"  (click)="goBack()" title="Zurück zur vorigen Seite" aria-label="Button - zurück zur vorigen Seite">
           <img  class="arrow-img" src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
           <h2 class="fontNunito">Impressum</h2>
         </button>

@@ -1,8 +1,9 @@
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { LogoComponent } from '../shared/logo/logo.component';
 import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -17,4 +18,11 @@ import { CommonModule } from '@angular/common';
 })
 export class LegalComponent {
 
+  readonly location = inject(Location);
+
+  constructor() {}
+
+  goBack(): void {
+    this.location.back(); // Navigate to the previous page
+  }
 }
