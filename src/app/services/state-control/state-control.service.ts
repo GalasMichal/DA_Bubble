@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class StateControlService {
   isThreadOpen = false;
+  isEmojiPickerVisible: boolean = false
+  textArea: string = "";
+  isEmojiPickerVisibleMessage:boolean = false
 
   constructor() {
    }

@@ -27,7 +27,8 @@
     <!-- 
       PWD-CHECK: min-length-8, max-length-32, chars A-Z, a-z, excl ÖöÄäÜü, all special-characters, no wing-dings, at least one from each category, no doubles
     -->
-      <input class="input-field input-field-mail-icon fontNunito" type="password" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby="password-error"/>
+      <input id="password" class="input-field input-field-mail-icon fontNunito" [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby="password-error"/>
+      <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
       @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
         <div class="warn-txt ml-15"
           >
@@ -39,7 +40,9 @@
           }
         </div>
         }
-      <input class="input-field input-field-mail-icon fontNunito" type="password" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby="password-error"/>
+      
+      <input name="passwordCopy" class="input-field input-field-mail-icon fontNunito" [type]="isPasswordCopyVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby="password-error"/>
+      <i class="pwd-eye-2  eye-pos-2" [ngClass]="{'eye-closed': !isPasswordCopyVisible, 'eye-open': isPasswordCopyVisible}" (click)="togglePasswordCopyVisibility()" ></i>
       @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
         <div class="warn-txt warn-txt-2 ml-15"
           >

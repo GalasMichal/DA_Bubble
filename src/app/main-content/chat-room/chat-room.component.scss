@@ -79,7 +79,7 @@ header {
 
 .chat-main-container {
   flex-grow: 1;
-  overflow-y: auto;
+  overflow: hidden auto;
   max-height: 100%;
 }
 

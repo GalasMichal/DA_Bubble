@@ -1,6 +1,7 @@
 
 @import './colors.scss';
 @import '@angular/cdk/overlay-prebuilt.css';
+@import '@ctrl/ngx-emoji-mart/picker';
 
 /*
   1. Use a more-intuitive box-sizing model.
@@ -209,6 +210,7 @@ app-message-edit {
 }
 
 .warn-txt {
+	width: 70%;
   display: flex;
   flex-direction: column;
 	color: $red;
@@ -217,7 +219,7 @@ app-message-edit {
 }
 
 .warn-txt-2 {
-	width: 100%;
+	width: 70%;
   padding-left: 1.5625rem;
 }
 
@@ -244,4 +246,23 @@ app-message-edit {
   clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
+}
+
+// used in mult. comp.
+.pwd-eye {
+  width: 32px;
+  top: 13%;
+  position: absolute;
+  height: 30px;
+  left: 89%;
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.eye-open {
+  background-image: url('./assets/media/icons/pwd-visible_eye-open.png');
+}
+.eye-closed {
+  background-image: url('./assets/media/icons/pwd-not-visible_eye-close.png');
 }
