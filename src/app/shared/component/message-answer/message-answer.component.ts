@@ -19,6 +19,7 @@ export class MessageAnswerComponent {
   today: number = Date.now();
 
   @Input() index: number = 0;
+
   @Input() userMessage = {
       userName: 'User Name',
       timeStamp: 'time stamp',
@@ -29,6 +30,19 @@ export class MessageAnswerComponent {
       answers: '2 Antworten',
       lastAnswerTimeStamp: 'Time stamp from last answer',
   };
+
+  emojis: { symbol: string, count: number }[] = [];
+
+  onEmojiSelected(emoji: string) {
+    // Überprüfe, ob das Emoji bereits existiert
+    const existingEmoji = this.emojis.find(e => e.symbol === emoji);
+    
+    if (existingEmoji) {
+      existingEmoji.count++; // Erhöhe den Zähler
+    } else {
+      this.emojis.push({ symbol: emoji, count: 1 }); // Füge neues Emoji hinzu
+    }
+  }
 
   state = inject(StateControlService);
   @Input() hideDetails: boolean = false;

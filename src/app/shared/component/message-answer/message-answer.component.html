@@ -4,7 +4,7 @@
   <app-time-separator class="full-width"></app-time-separator>
  }
   <div class="user-message-container">
-    <app-reaction-bar [index]="index"></app-reaction-bar>
+    <app-reaction-bar [index]="index" (emojiSelected)="onEmojiSelected($event)"></app-reaction-bar>
     <img src={{userMessage.profileImageSrc}} alt="profil-image"/>
     <div>
       <div class="font-nunito">
@@ -19,6 +19,12 @@
         } @else {
           <div class="line-separator"></div>
         }
+      </div>
+      <div class="emoijReaction">
+        @for( emoji of emojis; track emojis[index]) {
+          <div class="singleEmoij"><span>{{emoji.symbol}} {{emoji.count}}</span></div>
+        }
+
       </div>
     </div>
   </div>

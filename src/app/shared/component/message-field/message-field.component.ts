@@ -16,18 +16,19 @@ import { StateControlService } from '../../../services/state-control/state-contr
 })
 export class MessageFieldComponent {
 
-  server = inject(StateControlService)
+  textArea: string = "";
+  isEmojiPickerVisible: boolean = false
 
   addEmoji(event: any) {
-    this.server.textArea = `${this.server.textArea}${event.emoji.native}`;
-    this.server.isEmojiPickerVisible = false;
+    this.textArea = `${this.textArea}${event.emoji.native}`;
+    this.isEmojiPickerVisible = false;
   }
 
     showEmojiWindow() {
-    this.server.isEmojiPickerVisible = !this.server.isEmojiPickerVisible;
+    this.isEmojiPickerVisible = !this.isEmojiPickerVisible;
   }
 
   closeEmojiWindow() {
-    this.server.isEmojiPickerVisible = false
+    this.isEmojiPickerVisible = false
   }
 }

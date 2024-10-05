@@ -59,6 +59,11 @@
   }
 }
 
+.singleEmoij {
+  border-radius: $b-radius-3;
+  border: solid 1px $primary;
+}
+
 .line-separator{
   height: 1px;
   width: 60%;
