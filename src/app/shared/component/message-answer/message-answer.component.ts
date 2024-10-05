@@ -39,8 +39,4 @@ export class MessageAnswerComponent {
   openThread() {
     this.state.isThreadOpen = true;
   }
-  addEmoji(event: any) {
-  //   // this.server.textArea = `${this.server.textArea}${event.emoji.native}`;
-  //   this.isEmojiPickerVisibleMessage = false;
-  }
 }

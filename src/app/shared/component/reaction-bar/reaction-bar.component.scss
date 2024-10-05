@@ -56,3 +56,19 @@ emoji-mart {
   visibility: visible;
   transform: translateY(0);
 }
+
+.emoji {
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  visibility: hidden;
+  bottom: 65px;
+  left: 0;
+  width: 355px;
+  height: 430px;
+}
+
+.show-emoji {
+  visibility: visible;
+  transform: translateY(0);
+}
