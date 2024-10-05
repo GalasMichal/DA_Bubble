@@ -182,11 +182,17 @@
   }
 }
 
-// .single-user{
-//   display: flex;
-//   align-items: center;
-//   gap: .9375rem;
-// }
+.single-user{
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding-inline: 10px;
+  gap: .9375rem;
+  border-radius: $b-radius-3;
+  &:hover {
+    background: $bg-color;
+  }
+}
 
 // .online {
 //   position: absolute;

@@ -42,6 +42,7 @@ export class MessageAnswerComponent {
     } else {
       this.emojis.push({ symbol: emoji, count: 1 }); // Füge neues Emoji hinzu
     }
+    console.log(this.emojis);
   }
 
   state = inject(StateControlService);
