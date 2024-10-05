@@ -19,7 +19,7 @@
   </header>
   <div class="chat-main-container">
 
-    @for (singleMessage of allUserMessages; track allUserMessages[index].userDetails.userName; let index = $index) {
+    @for (singleMessage of allUserMessages; track allUserMessages[index].userName; let index = $index) {
       <app-message-answer [userMessage]="singleMessage" [index]="index"></app-message-answer>
     }
 

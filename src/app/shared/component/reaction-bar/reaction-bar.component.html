@@ -25,10 +25,12 @@
             <path d="M13.0045 12.7333C14.3045 12.2667 17.0378 13.1667 16.6712 15.7667C16.6712 13.3333 14.5045 12.7667 13.3045 12.7667C13.1379 12.7667 13.0045 12.7333 13.0045 12.7333Z" fill="#EBA352"/>
             </svg>
     </button>
-
+    
+    <!-- EMOJI -->
     <div class="emoji">
         <emoji-mart #emojiContainer (emojiClick)="addEmoji($event) "[ngClass]="{'show-emoji': isEmojiPickerVisibleMessage[index]}" ></emoji-mart>
       </div>
+    <!-- EMOJI END-->
 
     <button (click)="showEmojiWindow(index)">
         <svg width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -58,5 +60,7 @@
             </svg>
     </button>
 
+    <!-- EDIT MESSAGE -->
     <app-message-edit [index]="index" [ngClass]="{'show-cloud': showCloud}"></app-message-edit>
+    <!-- EDIT MESSAGE END-->
 </div>
