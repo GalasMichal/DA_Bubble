@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
 import { MessageAnswerComponent } from '../../shared/component/message-answer/message-answer.component';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { ChannelEditComponent } from '../../shared/component/channel-edit/channel-edit.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -13,6 +14,7 @@ import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
     MessageFieldComponent,
     MessageAnswerComponent,
     EmojiComponent,
+    ChannelEditComponent
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss',
@@ -29,6 +31,12 @@ export class ChatRoomComponent {
     this.dialog.open(AddUsersComponent, {
       panelClass: 'add-users-container', // Custom class for profile dialog
     });
+  }
+
+  openTeam() {
+    this.dialog.open(ChannelEditComponent, {
+      panelClass: 'custom-container',
+    })
   }
 
   allUserMessages = [
