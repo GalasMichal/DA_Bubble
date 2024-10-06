@@ -1,47 +1,40 @@
-<section>
+<div class="container">
+  <div class="container-content">
+    <div class="title">
+      <h2 class="fontNunito"># Entwicklerteam</h2>
+      <button  class="close-btn" >
+        <app-close></app-close>
+      </button>
+    </div>
 
-  <div class="container ml-mr-auto">
-    <div style="padding-top: 2%;">
-      <div class="arrow-back-container">
-        <h2 class="fontNunito"># Entwicklerteam</h2>
-        <button  class="close-btn" >
-          <app-close></app-close>
-        </button>
+    <div class="channel-name-container">
+      <div class="edit-name-container">
+        <h3 class="fontNunito">Channel-Name</h3>
+        <button class="fontNunito" title="Channelname ändern" >Bearbeiten</button>
       </div>
+      <p class="fontNunito"><span style="font-weight: bold;">#</span> Entwicklerteam</p>
+    </div>
 
-      <div class="channel-name-container">
-        <br>
-        <div class="edit-name-container">
-          <h3 class="fontNunito">Channel-Name</h3>
-          <button class="fontNunito" title="Channelname ändern" >Bearbeiten</button>
-        </div>
-        <p class="fontNunito"><span style="font-weight: bold;">#</span> Entwicklerteam</p>
+    <div class="channel-info-container">
+      
+      <div class="edit-info-container">
+        <h3 class="fontNunito">Beschreibung</h3>
+        <button class="fontNunito" title="Channelinfo ändern">Bearbeiten</button>
       </div>
+      
+      <p>
+        Dieser Channel ist für alles rund um #dfsdf vorgesehen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen
+      </p>
 
-      <div class="channel-info-container">
-        <br>
-        <div class="edit-info-container">
-          <h3 class="fontNunito">Beschreibung</h3>
-          <button class="fontNunito" title="Channelinfo ändern">Bearbeiten</button>
-        </div>
-        <p>
-          Dieser Channel ist für alles rund um #dfsdf vorgesehen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen
-        </p>
-        <br>
-        <hr>
-        <br>
-      </div>
-      <h3 class="fontNunito mt">Erstellt von</h3>
-      <button class="fontNunito user-link" title="Chat user ändern">Noah Braun</button>
-     
-    </div>  
-  
-    <div class="check-container">
-      <div class="btn-container ml-mr-auto">
-        <button class="login-btn fontNunito" routerLink="main">Channel verlassen</button>
+      <div class="separator"></div>
+      
+      <div class="creat-user">
+        <h3 class="fontNunito">Erstellt von</h3>
+        <div class="fontNunito user-link" title="Chat user ändern">Noah Braun</div>
       </div>
     </div>
-  
-  </div>
-  
-  </section>
+    
+  </div>  
+
+  <button class="check-container ontNunito" routerLink="main">Channel verlassen</button>
+</div>
