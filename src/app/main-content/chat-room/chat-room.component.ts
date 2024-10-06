@@ -35,7 +35,7 @@ export class ChatRoomComponent {
 
   openTeam() {
     this.dialog.open(ChannelEditComponent, {
-      panelClass: 'custom-container',
+      panelClass: 'team-container',
     })
   }
 
