@@ -1,6 +1,7 @@
 
 @import './colors.scss';
 @import '@angular/cdk/overlay-prebuilt.css';
+@import '@ctrl/ngx-emoji-mart/picker';
 
 /*
   1. Use a more-intuitive box-sizing model.
@@ -264,4 +265,33 @@ app-message-edit {
 }
 .eye-closed {
   background-image: url('./assets/media/icons/pwd-not-visible_eye-close.png');
+}
+
+.chat-main-container {
+  flex-grow: 1;
+  overflow: hidden auto;
+  max-height: 100%;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $primary-light;
+  border-radius: $b-radius-3;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary;
+  border-radius: $b-radius-3;
+
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $primary-hover;
+  border-radius: $b-radius-3;
 }

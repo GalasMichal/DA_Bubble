@@ -38,19 +38,17 @@ export class LoginComponent {
     });
   }
 
-  createNewUserWithGoogle() {
-    console.log('Google Anmeldung gestartet');
-    return this.fb.createGoogleUser();
+  async createNewUserWithGoogle() {
+    await this.fb.createGoogleUser();
   }
 
-  loginWithEmailAndPassword() {
+ async loginWithEmailAndPassword() {
     this.isFormSubmitted = true;
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
     if (this.loginForm.valid) {
-        this.fb.loginWithEmailAndPassword(email, password).then(() => {
-          // Weiterleitung nach erfolgreicher Anmeldung
-          this.router.navigate(['/avatar']);
+       await this.fb.loginWithEmailAndPassword(email, password).then(() => {
+        console.log('user is eingeloggot', this.fb.currentUser?.uId);
     })} else {
       console.log('Formular ist ungültig');
     }

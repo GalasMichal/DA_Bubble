@@ -1,7 +1,8 @@
-@import '../../../../colors.scss';
-@import '../../../../fonts.scss';
+@import "../../../../colors.scss";
+@import "../../../../fonts.scss";
 
 .icons {
+  position: relative;
   width: 100%;
   display: flex;
   align-items: center;
@@ -21,16 +22,53 @@
   button:nth-of-type(3),
   button:nth-of-type(4),
   button:nth-of-type(5) {
-    &:hover svg path{
-      fill: $secondary
+    &:hover svg path {
+      fill: $secondary;
     }
   }
 }
 
 app-message-edit {
-  display: none;
+  visibility: hidden;
+  transition-timing-function: ease-in-out;
+  transition-duration: 175ms;
+  transform: translateX(5%);
 }
 
-.d-flex {
+.show-cloud {
+  visibility: visible;
+  transform: translateX(0);
+}
+
+emoji-mart {
   display: flex;
+  position: absolute;
+  visibility: visible;
+  overflow: hidden;
+  bottom: 0;
+  left: 0;
+  transition-timing-function: ease-in-out;
+  transition-duration: 175ms;
+  transform: translateY(100%);
+}
+
+.show-emoji {
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.emoji {
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  visibility: hidden;
+  bottom: 45px;
+  left: 0;
+  width: 355px;
+  height: 430px;
+}
+
+.show-emoji {
+  visibility: visible;
+  transform: translateY(0);
 }

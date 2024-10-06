@@ -17,6 +17,7 @@ import {
   Firestore,
   setDoc,
   onSnapshot,
+  getDoc,
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Channel } from '../../models/interfaces/channel.model';
@@ -81,9 +82,10 @@ export class FirebaseService {
 
   setUserObject(obj: any, id: string): AppUser {
     return {
+      status: obj.status || false,
+      channels: obj.channels || [],
       uId: id || '',
       email: obj.email || '',
-      status: obj.status || false,
       displayName: obj.displayName || '',
       avatarUrl: obj.avatarUrl || '',
       birthdate: obj.birthdate || '',
@@ -116,6 +118,8 @@ export class FirebaseService {
           displayName: displayName,
         }).then(() => {
           const user: AppUser = {
+            status: true,
+            channels: [],
             uId: firebaseUser.uid,
             email: firebaseUser.email || '',
             displayName: firebaseUser.displayName || '',
@@ -152,87 +156,95 @@ export class FirebaseService {
       });
   }
 
-  loginWithEmailAndPassword(email: string, password: string): Promise<any> {
-    return this.userExists(email)
-      .then((exists) => {
-        if (!exists) {
-          this.errorMessageLogin.set(
-            'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
-          );
-          return; // Beende die Methode, wenn der Benutzer nicht existiert
-        }
-        // Wenn der Benutzer existiert, führe die Anmeldung durch
-        return signInWithEmailAndPassword(this.auth, email, password)
-          .then((userCredential) => {
-            const user = userCredential.user as FirebaseUser;
-            this.currentUser = {
-              uId: user.uid,
-              email: user.email || '',
-              displayName: user.displayName || '',
-            };
-            console.log('User is logged in:', user);
-            this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
-          })
-          .catch((error) => {
-            switch (error.code) {
-              case 'auth/wrong-password':
-                this.errorMessageLogin.set('Falsches Passwort.');
-                break;
-              default:
-                this.errorMessageLogin.set(
-                  'Fehler beim Anmelden: ' + error.message
-                );
-            }
-          });
-      })
-      .catch((error) => {
-        // Fehler bei der Benutzerabfrage
-        console.error('Fehler beim Überprüfen des Benutzers:', error);
-      });
+  async loginWithEmailAndPassword(email: string, password: string): Promise<any> {
+    try {
+      const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
+
+      if (!exists) {
+        this.errorMessageLogin.set(
+          'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
+        );
+      }
+      // Wenn der Benutzer existiert, führe die Anmeldung durch
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      const user = await userCredential.user as FirebaseUser;
+      console.log('user is', user)
+      if (user) {
+       await this.getUserByUid(user.uid)
+        this.router.navigate(['/start/main']);
+      }
+      // getCurrentUser(){
+
+      // }
+
+      console.log('User is logged in:', user);
+      this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
+
+    } catch (error) {
+      if (error=== 'auth/wrong-password') {
+        this.errorMessageLogin.set('Falsches Passwort.');
+      } else {
+        this.errorMessageLogin.set(
+          'Fehler beim Anmelden: ' + error
+        );
+      }
+
+      // Falls es einen allgemeinen Fehler gibt (bei der Benutzerabfrage oder Anmeldung)
+      console.error('Fehler beim Login:', error);
+    }
   }
+  async getUserByUid(uid: string): Promise<AppUser | null> {
+    try {
+      const userDocRef = doc(this.firestore, `users/${uid}`); // Referenz zum Dokument
+      const userDocSnapshot = await getDoc(userDocRef); // Abrufen des Dokuments
 
-  createGoogleUser(): Promise<any> {
-    return signInWithPopup(this.auth, this.provider)
-      .then((result) => {
-        // Zugriff auf Google Access Token
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        // Der angemeldete Benutzer
-        const googleUser = result.user as FirebaseUser;
-        const additionalUserInfo = getAdditionalUserInfo(result);
-        console.log('Google Access Token:', token);
-        console.log('Google-Benutzer:', googleUser);
-        console.log('Zusätzliche Benutzerinformationen:', additionalUserInfo);
+      if (userDocSnapshot.exists()) {
+         this.currentUser = userDocSnapshot.data() as AppUser; // Cast zu deinem AppUser-Interface
+        return this.currentUser; // Benutzer-Daten zurückgeben
+      } else {
+        console.log('Kein Benutzer mit dieser UID gefunden.');
+        return null; // Falls kein Benutzer gefunden wird
+      }
+    } catch (error) {
+      console.error('Fehler beim Abrufen des Benutzers aus Firestore:', error);
+      return null; // Bei Fehler null zurückgeben
+    }
+  }
+  async createGoogleUser(): Promise<any> {
+    try {
+      const result = await signInWithPopup(this.auth, this.provider);
+      // Zugriff auf Google Access Token
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      // Der angemeldete Benutzer
+      const googleUser = result.user as FirebaseUser;
+      const additionalUserInfo = getAdditionalUserInfo(result);
+      console.log('Google Access Token:', token);
+      console.log('Google-Benutzer:', googleUser);
+      console.log('Zusätzliche Benutzerinformationen:', additionalUserInfo);
+      // Fallback für den displayName, falls er nicht verfügbar ist
+      const displayName =
+        typeof additionalUserInfo?.profile?.['name'] === 'string'
+          ? additionalUserInfo.profile['name']
+          : googleUser.displayName ?? '';
 
-        // Fallback für den displayName, falls er nicht verfügbar ist
-        const displayName =
-          typeof additionalUserInfo?.profile?.['name'] === 'string'
-            ? additionalUserInfo.profile['name']
-            : googleUser.displayName ?? '';
-        // Benutzerobjekt erstellen
-        const user: AppUser = {
-          uId: googleUser.uid,
-          email: googleUser.email ?? '',
-          displayName: displayName,
-        };
-        this.addUserToFirestore(user);
-        this.currentUser = user;
-        console.log('user ist eingeloggt', this.currentUser);
-        this.router.navigate(['avatar']);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData?.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
+      // Benutzerobjekt erstellen
+      const user: AppUser = {
+        avatarUrl: googleUser.photoURL ?? '',
+        status: true,
+        channels: [],
+        uId: googleUser.uid,
+        email: googleUser.email ?? '',
+        displayName: displayName,
+      };
+      await this.addUserToFirestore(user);
+      this.currentUser = user;
+      console.log('User ist eingeloggt', this.currentUser);
+      this.router.navigate(['/start/avatar']);
 
-        console.error('Fehlercode:', errorCode);
-        console.error('Fehlermeldung:', errorMessage);
-        console.error('Verwendete E-Mail:', email);
-        console.error('AuthCredential-Typ:', credential);
+    } catch (error) {
 
-        throw error;
-      });
+    }
   }
 
   userExists(email: string): Promise<boolean> {

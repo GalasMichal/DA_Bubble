@@ -10,11 +10,9 @@
     background: $bg-color;
   }
   &:focus {
-    border: solid 1px $primary;
-  }
-  &:focus-visible {
-    border: solid 1px $primary;
-    // outline: transparent;
+    border: solid 1px transparent;
+    background: $bg-color;
+    outline: transparent;
   }
   app-close {
     &:hover svg path {

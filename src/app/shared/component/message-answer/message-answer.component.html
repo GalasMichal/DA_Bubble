@@ -1,28 +1,39 @@
+
 <div class="chat-content">
  @if(!hideDetails){
   <app-time-separator class="full-width"></app-time-separator>
  }
   <div class="user-message-container">
-    <app-reaction-bar [index]="index"></app-reaction-bar>
-    <img
-      src={{userMessage.profileImage.src}}
-      alt="profil-image"
-    />
-    <div>
-      <div class="font-nunito">
-        <h2> {{userMessage.userDetails.userName}}</h2>
-        <div class="time-stamp">{{userMessage.userDetails.timeStamp}}</div>
+    <app-reaction-bar [index]="index" (emojiSelected)="onEmojiSelected($event)"></app-reaction-bar>
+    <img src={{userMessage.profileImageSrc}} alt="profil-image"/>
+
+    <div class="message-content">
+      <div class="message-container">
+
+        <div class="font-nunito">
+          <h2> {{userMessage.userName}}</h2> <span>{{ today | date:'H:mm' }} Uhr</span>
+        </div>
+        
+        <div class="messages-main-chat font-nunito">{{userMessage.messageContent}}
+        </div>
+
+        <div class="answer-container">
+          <div (click)="openThread()" class="answer">{{userMessage.answers}}</div>
+          @if (!hideDetails) {
+            <div class="time-stamp">{{userMessage.lastAnswerTimeStamp}}</div>
+          } @else {
+            <div class="line-separator"></div>
+          }
+        </div>
       </div>
-      <div class="messages-main-chat font-nunito">{{userMessage.messageContent}}
-      </div>
-      <div class="answer-container">
-        <div (click)="openThread()" class="answer">{{userMessage.answerDetails.answers}}</div>
-        @if (!hideDetails) {
-          <div class="time-stamp">{{userMessage.answerDetails.lastAnswerTimeStamp}}</div>
-        } @else {
-          <div class="line-separator"></div>
+
+      <div class="emoijReaction">
+        @for( emoji of emojis; track emojis[index]) {
+          <button class="singleEmoij">{{emoji.symbol}} {{emoji.count}}</button>
         }
+
       </div>
-    </div>
+  </div>
+
   </div>
 </div>
