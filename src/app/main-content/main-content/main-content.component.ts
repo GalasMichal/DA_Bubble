@@ -10,6 +10,9 @@ import { ThreadAnswerComponent } from '../../shared/component/thread-answer/thre
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import {  onAuthStateChanged } from 'firebase/auth';
+import { Auth } from '@angular/fire/auth';
+
 
 @Component({
   selector: 'app-main-content',
@@ -32,8 +35,18 @@ export class MainContentComponent {
   isMenuOpen = true;
   public db = inject(FirebaseService);
   router = inject(Router);
+  private auth = inject(Auth);
 
- 
+ ngOnInit(): void {
+  onAuthStateChanged(this.auth, (user) => {
+    if (user) {
+      this.db.getUserByUid(user.uid); // Laden des Benutzers
+    } else {
+      this.router.navigate(['/start/login']);
+    }
+  });
+
+ }
 
   openUserProfile() {
     this.userDialog.open(UserProfileComponent, {

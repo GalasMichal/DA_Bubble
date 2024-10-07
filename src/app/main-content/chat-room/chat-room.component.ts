@@ -5,6 +5,9 @@ import { MessageFieldComponent } from '../../shared/component/message-field/mess
 import { MessageAnswerComponent } from '../../shared/component/message-answer/message-answer.component';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ChannelEditComponent } from '../../shared/component/channel-edit/channel-edit.component';
+import { ChatRoomService } from '../../services/chat-room/chat-room.service';
+import { ActivatedRoute } from '@angular/router';
+import { Channel } from '../../models/interfaces/channel.model';
 
 @Component({
   selector: 'app-chat-room',
@@ -26,6 +29,26 @@ export class ChatRoomComponent {
     'assets/media/icons/profile-icons/user-4-steffen.svg',
   ];
   dialog = inject(MatDialog);
+  channelData: Channel | null = null;
+  chat = inject(ChatRoomService);
+  route = inject(ActivatedRoute);
+  private unsubscribe: (() => void) | undefined;
+
+ async ngOnInit() {
+    const channelId = this.route.snapshot.paramMap.get('id');
+    if(channelId) {
+      try {
+        this.unsubscribe = await this.chat.openChatById(channelId);
+      } catch (error) {
+        console.error(error);
+      } 
+    }
+  }
+  ngOnDestroy(): void {
+    if (this.unsubscribe) {
+      this.unsubscribe(); // Unsubscribe bei der Zerstörung
+    }
+  }
 
   openAddUsers() {
     this.dialog.open(AddUsersComponent, {

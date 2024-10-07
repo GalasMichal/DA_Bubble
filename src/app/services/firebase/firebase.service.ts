@@ -32,7 +32,7 @@ export class FirebaseService {
   private auth: Auth = inject(Auth);
   provider = new GoogleAuthProvider();
   router = inject(Router);
-  channels$;
+  // channels$;
 
   public userList: AppUser[] = [];
   public channelList: Channel[] = [];
@@ -45,16 +45,9 @@ export class FirebaseService {
   public errorMessageLogin = signal('');
 
   constructor() {
-    this.unsubChannelList = this.subChannelList();
-    this.unsubUserList = this.subUserList();
-    this.channels$ = collectionData(this.getChannels());
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        this.getUserByUid(user.uid); // Laden des Benutzers
-      } else {
-        this.router.navigate(['/start/login']);
-      }
-    });
+    // this.unsubChannelList = this.subChannelList();
+    // this.unsubUserList = this.subUserList();
+    // this.channels$ = collectionData(this.getChannels());
   }
 
   ngOnDestroy(): void {
@@ -74,7 +67,6 @@ export class FirebaseService {
         const channelId = element.id;
         const channelObject = this.setChannelObject(channelData, channelId);
         this.channelList.push(channelObject);
-        console.log('channelList', this.channelList);
          // Benutzer zur Liste hinzufügen
       });
     });

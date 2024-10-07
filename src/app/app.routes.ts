@@ -31,11 +31,11 @@ export const routes: Routes = [
   { path: 'reset', component: PwdResetComponent },
   { path: 'recovery', component: PwdRecoveryComponent },
   { path: 'start/create', component: ChannelCreateComponent },
-  { path: 'start/empty', component: ChannelEmptyComponent },
+  { path: 'start/chat/:id', component: ChannelEmptyComponent },
   { path: 'start/edit', component: ChannelEditComponent },
   { path: 'start/imprint', component: ImprintComponent },
   { path: 'start/legal', component: LegalComponent },
-  { path: '**', component: PageNotFoundComponent } 
+  { path: '**', component: PageNotFoundComponent }
 
 ];
 

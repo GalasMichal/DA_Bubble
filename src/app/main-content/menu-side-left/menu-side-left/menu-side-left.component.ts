@@ -4,6 +4,7 @@ import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelCreateComponent } from '../../../shared/component/channel-create/channel-create.component';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
+import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 
 
 @Component({
@@ -18,8 +19,9 @@ export class MenuSideLeftComponent {
   isSecondDropdownMenuOpen = true;
   dialog = inject(MatDialog);
   db = inject(FirebaseService)
+  chat = inject(ChatRoomService)
 
-  
+
   toogleDropDown1(){
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
     this.db.unsubUserList = this.db.subChannelList();
@@ -37,8 +39,8 @@ export class MenuSideLeftComponent {
     })
   }
 
-  openChannel() {
-    console.log('TEST');
+  openChannel(chanId : string) {
+    this.chat.openChatById(chanId)
     
   }
 
