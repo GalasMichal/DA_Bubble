@@ -1,9 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, effect, inject, Inject } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { InfoBoxComponent } from './info-box/info-box.component';
+import { FirebaseService } from '../services/firebase/firebase.service';
+import { LoginComponent } from '../login/login.component';
+import { LogoComponent } from "../shared/logo/logo.component";
+import { BackComponent } from '../shared/component/back/back.component';
+
 
 
 
@@ -11,13 +16,18 @@ import { InfoBoxComponent } from './info-box/info-box.component';
   selector: 'app-register-user',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    RouterModule, 
-    RouterLink, 
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    RouterLink,
     ReactiveFormsModule,
-    MatDialogModule
-  ],
+    MatDialogModule,
+    InfoBoxComponent,
+    LoginComponent,
+    LogoComponent,
+    BackComponent
+],
+
   templateUrl: './register-user.component.html',
   styleUrls: [
     './register-user.component.scss',
@@ -26,95 +36,89 @@ import { InfoBoxComponent } from './info-box/info-box.component';
 })
 
 export class RegisterUserComponent {
-  
-  // public fb = Inject(FormBuilder);
-  // public router = Inject(Router);
-  // public dialog = Inject(MatDialog);
+
+
+  readonly dialogAddMembers = inject(MatDialog);
+  readonly router = inject(Router)
+  public fb = inject(FirebaseService)
 
   myForm: FormGroup; // name - just for now
+  isFormSubmitted:boolean = false;
 
 
-  constructor(public fb: FormBuilder, public dialog: MatDialog, public router: Router) {
-    
-    /*
-    age-validator - IF NEEDED
-    function ageValidator(control: FormControl): { [key: string]: boolean } | null {
-      if (control.value !== null && control.value < 18) {
-        return { 'ageInvalid': true }; 
-      }
-      return null;
-    }
+  constructor() {
+
+    // const upper_req = '(?=.*[A-Z])';
+    // const special_char_req = '(?=.*[!@#$%^&*()])';
+    // const lower_req = '(?=.*[a-z])';
+    // const number_req = '(?=.*[0-9])';
     this.myForm = new FormGroup({
-      age: new FormControl('', [ageValidator])
-    });
-    */
-
-    const passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%+-/*?&])[A-Za-z\\d@$!%*?&]{8,}$';
-    const antiSqlPattern = '^[^\'";]*$';
-    const emailPattern = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-
-    /*
-    IMPORTANTE
-      -> pwd - reg-ex:
-        at least one uppercase letter,
-        at least one lowercase letter,
-        at least one number,
-        at least one special character,
-        a minimum length of 8 characters.
-      -> anti-sql - reg-ex:
-        no ' or " or ;   // to be checked - may be edited
-    */
-   
-
-    this.myForm = this.fb.group({
-      name: new FormControl('', [
+      name: new FormControl('',[
         Validators.required,
-        Validators.minLength(5),
-        Validators.pattern('^[a-zA-Z ]*$')
-      ]),
-      email: new FormControl('', [
+        Validators.minLength(4),
+        // checks if name contains only letters
+        Validators.pattern('^[a-zA-Z ]*$')]),
+      email: new FormControl('',[
         Validators.required,
-        Validators.email,
-        // Validators.pattern(emailPattern) // not needed due to intern check..?
-      ]),
-      password: new FormControl('', [
+        Validators.email]),
+      password: new FormControl('',[
         Validators.required,
-        Validators.minLength(8), // for this case, norm:18+
-        Validators.pattern(passwordPattern),
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@\$!%+\-/\*\?&])[A-Za-z0-9@$!%+\-/\*\?&]+$'),
       ]),
-      terms: new FormControl(false, [
-        Validators.requiredTrue // is checkbox marked or not
+      term: new FormControl(false, [
+        Validators.requiredTrue // Checkbox must be checked (i.e., true) to be valid
       ])
-    });
+    })
 
-    // another way of writing that : (causes problems when more than 1 formGroup)
-    // this.myForm = this.fb.group({ // fb - FormBuilder angular intern shortcut
-    //   name: ['', Validators.required, Validators.minLength(5)],
-    //   email: new FormControl('', [Validators.required, Validators.email]),
-    //   password: ['', [Validators.required, Validators.minLength(8)]],
-    //   terms: [false, Validators.requiredTrue]
-    // });
   }
 
-  onSubmit() {
-    console.log('Submit button clicked.');
-    
-    // console.log('Form Status:', this.myForm.status);
-    // console.log('Password Control Status:', this.myForm.controls['password'].status);
-    // console.log('Password Control Errors:', this.myForm.controls['password'].errors);
-  
+  async onSubmit() {
+    this.isFormSubmitted = true;
 
     if (this.myForm.valid) {
-      console.log('current (valid) form is: ', this.myForm.value);
-      this.router.navigate(['avatar']);
+      const email = this.myForm.get('email')?.value;  // Hole den Email-Wert
+      const password = this.myForm.get('password')?.value;
+      const displayName = this.myForm.get('name')?.value;
+
+      try {
+        const user = await this.fb.createUser(email, password, displayName);
+        if (user) {
+          console.log('User successfully registered:', user);
+           this.router.navigate(['/start/avatar']); // Navigation nach der Registrierung
+        }
+      } catch (error) {
+        // Hier kannst du eine spezifische Fehlerbehandlung vornehmen
+        console.error('Error during user registration:', error);
+      }
     } else {
       console.log('Form is invalid, go home! .. or else ..');
     }
   }
 
   openInfoBox() {
-    this.dialog.open(InfoBoxComponent);
+    this.dialogAddMembers.open(InfoBoxComponent);
   }
 
+  isPasswordVisible = false;
   
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+  
+
+    /*
+  age-validator - IF NEEDED
+  function ageValidator(control: FormControl): { [key: string]: boolean } | null {
+    if (control.value !== null && control.value < 18) {
+      return { 'ageInvalid': true };
+    }
+    return null;
+  }
+  this.myForm = new FormGroup({
+    age: new FormControl('', [ageValidator])
+  });
+  */
+
+
 }

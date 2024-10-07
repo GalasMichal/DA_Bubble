@@ -1,43 +1,92 @@
-<section class="login-section">
+<section>
+  <!-- header/logo bar -->
   <div class="header-icons">
-    <app-logo routerLink=""></app-logo>
+    <app-logo [routerLink]="['/']" 
+    title="Neuladen dieser Seite" 
+    aria-label="Neuladen dieser Seite, F5"></app-logo>
     <div class="new-user-link">
       <p class="fontNunito">Neu bei DABubble?</p>
-      <a class="font-figtree" routerLink="register">Konto erstellen</a>
+      <button 
+      class="font-figtree" 
+      title="Konto erstellen, neuer User"
+      aria-label="Konto erstellen für neue Benutzer"
+      routerLink="register">Konto erstellen</button>
     </div>
   </div>
- 
-  <div class="form-container ml-mr-auto">
-
-    <div class="form-title ml-mr-auto">
+  <!-- white container -->
+  <div class="content-container">
+    <!-- title box -->
+    <div class="form-title">
       <h2 class="fontNunito">Anmeldung</h2>
       <p class="fontNunito">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
     </div>
-    <form >
-      <div class="input-container ml-mr-auto"> 
-        <input class="input-field input-field-mail-icon fontNunito" type="text" placeholder="beispielname@email.com" />
-        <input class="input-field input-field-pwd-icon fontNunito" type="password" placeholder="Passwort" />
-        <a class="ml-mr-auto fontNunito" routerLink="recovery">Passwort vergessen?</a>
+    <!-- form container -->
+    <form [formGroup]="loginForm" (ngSubmit)="loginWithEmailAndPassword()">
+      <div class="input-container">
+        <label class="visually-hidden" for="email">E-Mail-Adresse</label>
+        <input class="input-field input-field-mail-icon fontNunito" id="email" type="email" formControlName="email"
+          placeholder="beispielname@email.com" aria-label="email input field" aria-required="true" aria-describedby="email-error" autocomplete="username"/>
+        <div class="warn-txt warn-txt-2">
+            @if(fb.errorMessageLogin()){
+            <span>{{ fb.errorMessageLogin() }}</span>
+            }
+          @if (loginForm.controls['email'].invalid && (isFormSubmitted || loginForm.controls['email'].touched ||
+            loginForm.controls['email'].dirty)) {
+          @if (loginForm.controls['email'].errors?.['required']) {
+          <span>E-Mail ist ein Pflichtfeld.</span>
+            }
+          @if (loginForm.controls['email'].errors?.['email']) {
+            <span id="email-error">E-Mail ist unvollständig/inkorrekt.</span>
+          }
+          }
+        </div>
+      </div>
+      <div class="input-container">
+        <label class="visually-hidden" for="password">Passwort</label>
+        <input autocomplete="current-password" id="password" class="input-field input-field-pwd-icon fontNunito input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+          placeholder="Passwort" aria-label="password input field" aria-required="true" aria-describedby="password-error" />
+          <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+          <div class="warn-txt warn-txt-2">
+          
+            @if (loginForm.controls['password'].invalid && (isFormSubmitted || loginForm.controls['password'].touched || loginForm.controls['password'].dirty)) {
+              @if (loginForm.controls['password'].errors?.['required']) {
+              <span>Password ist ein Pflichtfeld.</span>
+              }
+              @if (loginForm.controls['password'].errors?.['minlength']) {
+              <span id="password-error">
+                Mindestens 8 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen.</span>
+              }
+              @if ((loginForm.controls['password'].errors?.['pattern']) && !(loginForm.controls['password'].errors?.['minlength'])) {
+              <span>Mindestanforderungen nicht erfüllt.</span>
+              }
+            }
+          </div>
       </div>
     </form>
-
+    <!-- pwd recovery link -->
+    <button class="btn-password fontNunito" [routerLink]="['/recovery']" title="Passwort vergessen?" aria-label="Link zur Passwort wiederherstellung">Passwort vergessen?</button>
+    <!-- separator -->
     <div class="seperator-container">
-      <p class="sep-line-txt fontNunito">ODER</p>
+      <span class="sep-line-txt fontNunito">ODER</span>
     </div>
-    <div class="google-btn-container ml-mr-auto">
-      <a class="ml-mr-auto fontNunito" href="#">
-        <img class="google-logo" src="../../assets/media/icons/google-logo-icon.svg" alt="google logo">
-        Anmeldung mit Google</a>
+    <!-- goggle btn -->
+    <button class="input-focus btn-google fontNunito" 
+      (click)="createNewUserWithGoogle()"
+      title="Anmeldung mit Google"
+      aria-label="Button für die Anmeldung mit Google">
+      <img src="../../../assets/media/icons/google-logo-icon.svg" alt="google logo">
+      Anmeldung mit Google
+    </button>
+    <!-- login & guest btn -->
+    <div class="btn-container">
+      <button class="login-btn fontNunito" type="submit" title="Login" aria-label="Login button">Anmelden</button>
+      <button class="guest-btn fontNunito" routerLink="main">Gäste-Login</button>
     </div>
-    <div class="btn-container ml-mr-auto">
-      <a class="login-btn fontNunito" routerLink="main">Anmelden</a>
-      <a class="guest-btn fontNunito" routerLink="main">Gäste-Login</a>
-    </div>
+  </div>
+  <!-- legal & imprint btn -->
+  <div class="legal-imprint-container">
+    <button class="fontNunito" routerLink="imprint" title="Impressum" aria-label="Link zum Impressum">Impressum</button>
+    <button class="fontNunito" routerLink="legal" title="Datenschutz" aria-label="Link zum Datenschutz">Datenschutz</button>
+  </div>
 
-  </div>
-  
-  <div class="legal-imprint-container ml-mr-auto">
-    <a class="fontNunito" routerLink="imprint">Impressum</a>
-    <a class="fontNunito" routerLink="legal">Datenschutz</a>
-  </div>
 </section>

@@ -1,6 +1,7 @@
 
 @import './colors.scss';
 @import '@angular/cdk/overlay-prebuilt.css';
+@import '@ctrl/ngx-emoji-mart/picker';
 
 /*
   1. Use a more-intuitive box-sizing model.
@@ -9,7 +10,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  /* border: solid 1px */
+
 }
 
 /*
@@ -29,6 +30,11 @@
     3. Add accessible line-height
     4. Improve text rendering
   */
+app-root{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 app-main-content {
   flex: 1;
@@ -51,7 +57,8 @@ app-pwd-recovery,
 app-register-user,
 app-create-avatar,
 app-imprint,
-app-legal {
+app-legal,
+app-page-not-found {
   flex: 1;
   width: 100%;
   height: 100%;
@@ -187,4 +194,104 @@ app-message-edit {
 
 .resize-none {
   resize: none;
+}
+
+.ml-mr-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ml-5 {
+  margin-left: -5%;
+}
+
+.ml-15 {
+  margin-left: 15%;
+}
+
+.warn-txt {
+	width: 70%;
+  display: flex;
+  flex-direction: column;
+	color: $red;
+  height: 30px;
+  font-size: .75rem;
+}
+
+.warn-txt-2 {
+	width: 70%;
+  padding-left: 1.5625rem;
+}
+
+[disabled] {
+  cursor: auto !important;
+  background-color: $gray !important;
+  border: solid 0.0625rem $gray !important;
+}
+
+.input-focus:focus {
+    border: solid 0.0625rem $secondary;
+    outline: $secondary;
+}
+
+//Label is hidden
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+// used in mult. comp.
+.pwd-eye {
+  width: 32px;
+  top: 13%;
+  position: absolute;
+  height: 30px;
+  left: 89%;
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.eye-open {
+  background-image: url('./assets/media/icons/pwd-visible_eye-open.png');
+}
+.eye-closed {
+  background-image: url('./assets/media/icons/pwd-not-visible_eye-close.png');
+}
+
+.chat-main-container {
+  flex-grow: 1;
+  overflow: hidden auto;
+  max-height: 100%;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $primary-light;
+  border-radius: $b-radius-3;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary;
+  border-radius: $b-radius-3;
+
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $primary-hover;
+  border-radius: $b-radius-3;
 }

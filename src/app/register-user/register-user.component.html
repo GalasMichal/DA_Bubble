@@ -1,66 +1,113 @@
 <section class="login-section">
 
-    <div class="logo-container">
-      <a routerLink="">
-        <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
-      </a>
-    </div>
-
-  <div class="form-container ml-mr-auto">
-    <div style="padding-top: 2%;">
-      <div class="arrow-back-container">
-        <a routerLink="">
-          <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
-        </a>
-        <h2 class="fontNunito">Konto erstellen</h2>
-        <div class="info-container">
-          <img title="How to -registrieren" (click)="openInfoBox()" class="info-icon" src="../../assets/media/icons/info_symbol-icon.png" alt="">
-        </div>
-      </div>
-      <div class="form-title ml-mr-auto">
-        <p class="fontNunito">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
-      </div>
-    </div>
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-      <div class="input-container ml-mr-auto">
-        <div class="name-container">
-          <input name="name" id="name" autocomplete="off" formControlName="name" class="input-field input-field-user-icon fontNunito" type="text" placeholder="Name und Nachname"  required/>
-          <div class="warn-txt" *ngIf="myForm.controls['name'].invalid && myForm.controls['name'].touched">
-            <span  *ngIf="myForm.controls['name'].errors && myForm.controls['name'].errors['required']" >Name ist ein Pflichtfeld.</span>
-          </div>
-        </div>
-        <div class="email-container">
-          <input #email name="name" autocomplete="off" formControlName="email" class="input-field input-field-mail-icon fontNunito" type="email" placeholder="beispielname@email.com"/>
-          <div class="warn-txt" *ngIf="myForm.controls['email'].invalid && myForm.controls['email'].touched">
-            <span  *ngIf="myForm.controls['email'].errors && myForm.controls['email'].errors['required']" >eMail ist ein Pflichtfeld.</span>
-          </div>
-        </div>
-        <div class="pwd-container">
-          <input #name id="password" name="password" type="password" formControlName="password" class="input-field input-field-pwd-icon fontNunito" placeholder="Passwort" />
-          <div class="warn-txt" *ngIf="myForm.controls['password'].invalid && myForm.controls['password'].touched">
-            <span  *ngIf="myForm.controls['password'].errors && myForm.controls['password'].errors['required']" >Password ist ein Pflichtfeld.</span>
-          </div>
-        </div>
-      </div>
-      <div class="check-container">
-        <input type="checkbox" id="checkbox" formControlName="terms">
-        <br>
-        <div class="label-container">
-          <span id="terms" name="terms" class="fontNunito">Ich stimme der <a class="font-nunito" [routerLink]="['/legal']">Datenschutzerklärung</a> zu.</span>
-          <div *ngIf="myForm.controls['terms'].invalid && myForm.controls['terms'].touched"></div>
-            <span style="color: red;"  *ngIf="myForm.controls['terms'].errors && myForm.controls['terms'].errors['required']" >Bitte klicken.</span>
-        </div>
-          
-      </div>
-      <div class="btn-container ml-mr-auto">
-        <button  id="submit" type="submit" class="login-btn fontNunito"  [disabled]="myForm.invalid">Weiter</button>
-      </div>
-    </form>
-
+  <div class="logo-container" routerLink="/start">
+    <app-logo></app-logo>
   </div>
 
-  <div class="legal-imprint-container ml-mr-auto">
-    <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
-    <a class="fontNunito" [routerLink]="['/legal']">Datenschutz</a>
+
+    <form [formGroup]="myForm">
+      <div class="title-container">
+
+        <a class="arrow-back" routerLink="/start">
+          <app-back></app-back>
+        </a>
+
+        <h2 class="fontNunito">Konto erstellen</h2>
+
+        <button class="info-container">
+          <img id="info-icon" title="How to -registrieren" (click)="openInfoBox()" class="pulse info-icon"
+            src="/assets/media/icons/info_symbol-icon.png" alt="">
+        </button>
+
+      </div>
+
+          <p class="fontNunito">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
+        
+
+        <div class="input-container">
+          <label class="visually-hidden" for="name">Dein Name</label>
+          <input name="name" id="name" autocomplete="off" formControlName="name"
+            class="input-field input-field-user-icon fontNunito" type="text" placeholder="Dein Name" autocomplete="off" />
+            <div class="warn-txt warn-txt-2">
+          @if (myForm.controls['name'].invalid && (isFormSubmitted || myForm.controls['name'].dirty ||
+          myForm.controls['name'].touched)) {
+            @if (myForm.controls['name'].errors?.['required']) {
+            <span>Name ist ein Pflichtfeld.</span>
+            }
+            @if (myForm.controls['name'].errors?.['minlength']) {
+            <span>Mindestens 4 Buchstaben.</span>
+            }
+          }
+        </div>
+        </div>
+        
+        <div class="input-container">
+          <label class="visually-hidden" for="name">Dein E-Mail</label>
+          <input #email name="name" id="email" autocomplete="off" formControlName="email"
+            class="input-field input-field-mail-icon fontNunito" type="email" placeholder="beispielname@email.com"/>
+          <div class="warn-txt warn-txt-2">
+            @if(fb.errorMessageLogin()){
+              <span>{{ fb.errorMessageLogin() }}</span>
+              }
+            @if (myForm.controls['email'].invalid && (isFormSubmitted || myForm.controls['email'].touched ||
+            myForm.controls['email'].dirty)) {
+
+            @if (myForm.controls['email'].errors?.['required']) {
+            <span>E-Mail ist ein Pflichtfeld.</span>
+            }
+            @if (myForm.controls['email'].errors?.['email']) {
+            <span>E-Mail ist unvollständig/inkorrekt.</span>
+            }
+          }
+        </div>
+        </div>
+
+        <div class="input-container">
+          <label class="visually-hidden" for="name">Passwort</label>
+          <input #name id="password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+            class="input-field input-field-pwd-icon fontNunito" placeholder="Passwort"/>
+            <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+          <div class="warn-txt warn-txt-2">
+
+            @if (myForm.controls['password'].invalid && (isFormSubmitted || myForm.controls['password'].touched ||
+            myForm.controls['password'].dirty)) {
+
+            @if (myForm.controls['password'].errors?.['required']) {
+            <span>Password ist ein Pflichtfeld.</span>
+            }
+            @if (myForm.controls['password'].errors?.['minlength']) {
+            <span>Mindestens 8 Zeichen erforderlich: ein Klein- u. ein
+              Großbuchstabe, eine Zahl und ein Sonderzeichen, siehe Info-box.</span>
+            }
+            @if ((myForm.controls['password'].errors?.['pattern']) && !(myForm.controls['password'].errors?.['minlength'])) {
+            <span>Mindestanforderungen nicht erfüllt, siehe Info-box.</span>
+            }
+            }
+          </div>
+        </div>
+        <div class="checkbox-container">
+          <input id="checkbox" type="checkbox" formControlName="term" name="term">
+          <label for="checkbox">Ich stimme der <a class="privacy" href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</label>
+          
+          <div class="checkbox-description">
+            @if (myForm.controls['term'].invalid && (isFormSubmitted || myForm.controls['term'].touched ||
+            myForm.controls['term'].dirty)) {
+
+            @if (myForm.controls['term'].errors?.['required']) {
+            <span>Password ist ein Pflichtfeld.</span>
+            }
+          }
+          </div>
+      </div>
+
+        <div class="btn-container">
+          
+          <button id="submit" type="submit" class="login-btn fontNunito" [disabled]="!myForm.valid" (click)="onSubmit()">Weiter</button>
+        </div>
+    </form>
+
+  <div class="legal-imprint-container">
+    <a class="fontNunito" [routerLink]="['/start/imprint']">Impressum</a>
+    <a class="fontNunito" [routerLink]="['/start/legal']">Datenschutz</a>
   </div>
 </section>

@@ -1,20 +1,29 @@
-@import '../../../../colors.scss';
-@import '../../../../fonts.scss';
+@import "../../../../colors.scss";
+@import "../../../../fonts.scss";
+@import "../../../../styles.scss";
 
 .message-field-container {
   display: flex;
   flex-direction: column;
+  position: relative;
   width: 100%;
   border-radius: 20px;
-  border: $primary-light 1px solid;
+  border: solid 1px $primary-light;
   padding: 20px;
   height: 170px;
-
-
-  >textarea {
+    &:focus-within {
+      border: solid 1px $primary-hover;
+      outline: $primary-hover;
+      box-shadow: 0px 0px 19px -10px $primary-hover;
+    }
+  textarea {
     width: 100%;
     height: 100%;
-    resize: vertical;
+    resize: none;
+    &:focus {
+      border: solid 1px none;
+      outline: none;
+    }
   }
 }
 
@@ -32,8 +41,27 @@
 
 .icons-container {
   display: flex;
-
-
+  gap: 0.1875rem;
+  width: 100%;
+  button {
+    background: none;
+    border: solid 1px transparent;
+    border-radius: $b-radius-2;
+    &:hover {
+      background: $bg-color;
+    }
+    &:focus {
+      border: solid 1px transparent;
+      background: $bg-color;
+      outline: transparent;
+    }
+    &:hover svg path {
+      fill: $primary-hover;
+    }
+  }
+  button:nth-of-type(4) {
+    margin-left: auto;
+  }
 }
 
 .icons {
@@ -50,4 +78,32 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.emoji {
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  visibility: hidden;
+  bottom: 65px;
+  left: 0;
+  width: 355px;
+  height: 430px;
+}
+
+emoji-mart {
+  display: flex;
+  position: absolute;
+  visibility: hidden;
+  overflow: hidden;
+  bottom: 0;
+  left: 0;
+  transition-timing-function: ease-in-out;
+  transition-duration: 175ms;
+  transform: translateY(100%);
+}
+
+.show-emoji {
+  visibility: visible;
+  transform: translateY(0);
 }

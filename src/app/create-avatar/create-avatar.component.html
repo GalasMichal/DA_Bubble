@@ -7,9 +7,9 @@
   <div class="content-container ml-mr-auto">
     <div style="padding-top: 2%;margin-left: 5%;">
       <div class="arrow-back-container">
-        <a [routerLink]="['/']">
+        <button [routerLink]="['/']" title="Zurück zum Login">
           <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
-        </a>
+        </button>
         <h2 class="fontNunito">Wähle deinen Avatar</h2>
       </div>
       <div class="avatar-container">
@@ -17,12 +17,9 @@
         <p class="profile-name fontNunito">Frederik Becks</p>
         <span class="profile-name-span fontNunito">Aus der Liste wählen</span>
         <div class="profile-avatars ml-mr-auto">
-          <img src="../../assets/media/icons/profile-icons/user-1-elise.svg" alt="user-profile icon - default">
-          <img src="../../assets/media/icons/profile-icons/user-2-elias.svg" alt="user-profile icon - default">
-          <img src="../../assets/media/icons/profile-icons/user-3-frederick.svg" alt="user-profile icon - default">
-          <img src="../../assets/media/icons/profile-icons/user-4-steffen.svg" alt="user-profile icon - default">
-          <img src="../../assets/media/icons/profile-icons/user-5-sofia.svg" alt="user-profile icon - default">
-          <img src="../../assets/media/icons/profile-icons/user-6-noah.svg" alt="user-profile icon - default">
+          @for ( avatar of profileAvatars; track avatar) {
+            <img src="/assets/media/icons/profile-icons/{{avatar.name}}.svg" alt="user-profile icon - default {{avatar.name}}" title="user-icon of : {{avatar.name}}" aria-label="user-icon">
+          }
         </div>
 
         <div class="upload-container"> 
@@ -33,13 +30,13 @@
     </div>  
 
     <div class="btn-container ml-mr-auto">
-      <a class="login-btn fontNunito" [routerLink]="['/']">Weiter</a>
+      <button class="login-btn fontNunito" [routerLink]="['/']">Weiter</button>
     </div>
   </div>
 
   <div class="legal-imprint-container ml-mr-auto">
-    <a class="fontNunito" [routerLink]="['/imprint']">Impressum</a>
-    <a class="fontNunito" [routerLink]="['/legal']">Datenschutz</a>
+    <button class="fontNunito" [routerLink]="['/start/imprint']">Impressum</button>
+    <button class="fontNunito" [routerLink]="['/start/legal']">Datenschutz</button>
   </div>
 
 </section>

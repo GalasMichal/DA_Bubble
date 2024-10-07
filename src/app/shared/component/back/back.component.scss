@@ -1,0 +1,22 @@
+@import "../../../../colors.scss";
+@import "../../../../fonts.scss";
+@import "../../../../styles.scss";
+
+::ng-deep .arrow-back {
+  background: none;
+  border: solid 1px transparent;
+  border-radius: $b-radius-2;
+  &:hover {
+    background: $bg-color;
+  }
+  &:focus {
+    border: solid 1px transparent;
+    background: $bg-color;
+    outline: transparent;
+  }
+  app-back {
+    &:hover svg path {
+      fill: $primary-hover;
+    }
+  }
+}

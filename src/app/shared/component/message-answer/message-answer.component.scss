@@ -11,7 +11,6 @@
   gap: 10px;
 }
 
-
 .user-message-container {
   position: relative;
   display: flex;
@@ -19,7 +18,6 @@
   min-height: 8.8125rem;
   padding: 0.625rem 2.8125rem;
   gap: 1.875rem;
-
   &:hover {
     background-color: $bg-color;
     width: 100%;
@@ -34,32 +32,64 @@
     transform: translateX(0);
   }
 
-  > img {
+  img {
     width: 4.375rem;
     height: 4.375rem;
     border-radius: 2.5rem;
   }
-
-  > div {
+  .message-content {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-
-    > div {
+    width: 100%;
+    &:hover .message-container .messages-main-chat {
+      background: $white;
+    }
+    .message-container  {
       display: flex;
-      align-items: center;
-      gap: 1.25rem;
+      flex-direction: column;
+      max-width: 50%;
+      gap: 0.5rem;
 
-      > h2 {
-        font-weight: 700;
+      div {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+
+        h2 {
+          font-weight: 700;
+          font-size: 1.125rem;
+          line-height: 24.55px;
+        }
+      }
+      .messages-main-chat {
+        border-radius: 0 1.875rem 1.875rem 1.875rem;
+        padding: 0.9375rem;
+        gap: 0.5rem;
+        width: fit-content;
+        background-color: $bg-color;
+        font-weight: 400;
         font-size: 1.125rem;
         line-height: 24.55px;
+      }
+      .answer-container {
+        display: flex;
+        align-items: center;
       }
     }
   }
 }
 
-.line-separator{
+.singleEmoij {
+  background-color: transparent;
+  border-radius: $b-radius-3;
+  border: solid 1px $primary-light;
+  padding-inline: 0.625rem;
+  &:hover {
+    border: solid 1px $primary;
+  }
+}
+
+.line-separator {
   height: 1px;
   width: 60%;
   background-color: $primary-light;
@@ -69,22 +99,6 @@
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 19.1px;
-}
-
-.messages-main-chat {
-  border-radius: 0 1.875rem 1.875rem 1.875rem;
-  padding: 0.9375rem;
-  gap: 0.5rem;
-  background-color: $bg-color;
-  font-weight: 400;
-  font-size: 1.125rem;
-  line-height: 24.55px;
-}
-
-.answer-container {
-  display: flex;
-  align-items: center;
-
 }
 
 .answer {
