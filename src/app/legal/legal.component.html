@@ -1,5 +1,5 @@
 <div class="logo-container">
-  <app-logo [routerLink]="['/']"></app-logo>
+  <app-logo [routerLink]="['/']" title="zurück zur Startseite" aria-label="Zurück zur Startseite"></app-logo>
 </div>
 
 <section id="legal" class="login-section">
@@ -24,7 +24,7 @@
       <h2 id="m56">Kontaktmöglichkeiten</h2>
       <br>
       <p>E-Mail-Adresse: contact&#64;weiß-nicht.gov</p>
-      <p>Kontaktformular: <a href="https://www.end-of-light.com" target="_blank" rel="noopener noreferrer nofollow">End of light</a></p>
+      <p>Kontaktformular: <a href="https://www.end-of-light.com" target="_blank" rel="noopener noreferrer nofollow" title="www.end-of-light.com" aria-label="Neuer Tab">End of light</a></p>
       <br>
       <h2 id="m172">Social Media und andere Onlinepräsenzen</h2>
       <br>
@@ -36,8 +36,8 @@
   </div>  
 
   <div class="legal-imprint-container ml-mr-auto">
-    <button class="fontNunito" [routerLink]="['/']">Start</button>
-    <button class="fontNunito" [routerLink]="['/start/imprint']">Impressum</button>
+    <button class="fontNunito" [routerLink]="['/']" title="Zur Startseite" aria-label="Link zur Startseite">Start</button>
+    <button class="fontNunito" [routerLink]="['/start/imprint']" title="Impressum" aria-label="Link zum Impressum">Impressum</button>
   </div>
 
 </section>

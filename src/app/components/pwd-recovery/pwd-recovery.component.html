@@ -1,7 +1,7 @@
 <section class="login-section">
 
   <div class="logo-container">
-    <button [routerLink]="['/']">
+    <button [routerLink]="['/']" title="zurück zur Startseite" aria-label="Zurück zur Startseite">
       <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
     </button>
   </div>
@@ -9,7 +9,7 @@
 <div class="form-container ml-mr-auto">
   <div style="padding-top: 2%;">
     <div class="arrow-back-container">
-      <button [routerLink]="['/']">
+      <button [routerLink]="['/']"  title="zurück zur Startseite" aria-label="Zurück zur Startseite">
         <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
       </button>
       <h2 class="fontNunito">Passwort zurücksetzen</h2>
@@ -22,7 +22,7 @@
 
   <div class="check-container">
     <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
-      <input class="input-field input-field-mail-icon  fontNunito" type="email" placeholder="beispielname@email.com" formControlName="email" aria-label="email" aria-required="true" aria-describedby="email-error"/>
+      <input class="input-field input-field-mail-icon  fontNunito" type="email" title="Bitte email eingeben" placeholder="beispielname@email.com" formControlName="email" aria-label="email" aria-required="true" aria-describedby="email-error"/>
 
       @if (recoveryForm.controls['email'].invalid && (isFormValid || recoveryForm.controls['email'].dirty || recoveryForm.controls['email'].touched)) {
         <div class="warn-txt"
@@ -40,7 +40,7 @@
         Du dein Passwort ändern kannst.
       </p>
       <div class="btn-container ml-mr-auto">
-        <button class="login-btn fontNunito" [routerLink]="['/login']">eMail senden</button>
+        <button class="login-btn fontNunito" [routerLink]="['/login']" title="Absenden" aria-label="button zum absenden">eMail senden</button>
       </div>
     </form>
     
@@ -49,7 +49,7 @@
 </div>
 
 <div class="legal-imprint-container ml-mr-auto">
-  <button class="fontNunito" [routerLink]="['/start/imprint']">Impressum</button>
-  <button class="fontNunito" [routerLink]="['/start/legal']">Datenschutz</button>
+  <button class="fontNunito" [routerLink]="['/start/imprint']" title="Impressum" aria-label="Link zum Impressum">Impressum</button>
+  <button class="fontNunito" [routerLink]="['/start/legal']" title="Datenschutz" aria-label="Link zum Datenschutz">Datenschutz</button>
 </div>
 </section>

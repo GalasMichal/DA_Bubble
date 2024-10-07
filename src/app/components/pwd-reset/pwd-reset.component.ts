@@ -6,6 +6,8 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoBoxComponent } from '../../register-user/info-box/info-box.component';
 import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-pwd-reset',
@@ -54,5 +56,11 @@ export class PwdResetComponent {
   
   togglePasswordCopyVisibility() {
     this.isPasswordCopyVisible = !this.isPasswordCopyVisible;
+  }
+
+  readonly location = inject(Location);
+
+  goBack(): void {
+    this.location.back(); // Navigate to the previous page
   }
 }

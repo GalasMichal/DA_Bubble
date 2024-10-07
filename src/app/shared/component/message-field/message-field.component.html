@@ -1,7 +1,7 @@
 
 
   <div class="message-field-container fontNunito" tabindex="0">
-    <textarea (click)="closeEmojiWindow()" [(ngModel)]="textArea" name title="Schreib was Nettes :)" class="input-field fontNunito txt" type="text" placeholder="Nachricht an #Entwicklerteam" wrap="hard"></textarea>
+    <textarea aria-label="message input area - textfield" autocomplete="off" (click)="closeEmojiWindow()" [(ngModel)]="textArea" name="message-field" title="Schreib was Nettes :)" class="input-field fontNunito txt" type="text" placeholder="Nachricht an #Entwicklerteam" wrap="hard"></textarea>
     <div class="textarea-btn-container">
 
       <div class="emoji">

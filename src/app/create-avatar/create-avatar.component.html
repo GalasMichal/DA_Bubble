@@ -1,5 +1,5 @@
 <div class="logo-container">
-  <app-logo [routerLink]="['/']" />
+  <app-logo [routerLink]="['/']" title="zurück zur Startseite" aria-label="Zurück zur Startseite" />
 </div>
 
 <section class="create-avatar-section">
@@ -7,36 +7,36 @@
   <div class="content-container ml-mr-auto">
     <div style="padding-top: 2%;margin-left: 5%;">
       <div class="arrow-back-container">
-        <button [routerLink]="['/']" title="Zurück zum Login">
+        <button (click)="goBack()" title="Zurück zur letzten Seite">
           <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
         </button>
         <h2 class="fontNunito">Wähle deinen Avatar</h2>
       </div>
       <div class="avatar-container">
-        <img class="profile-icon ml-mr-auto" src="../../assets/media/icons/profile-icons/profile-icon.svg" alt="a blank user profile icon">
+        <img title="Dein avatar-icon" aria-label="Dein avatar-icon" class="profile-icon ml-mr-auto" src="../../assets/media/icons/profile-icons/profile-icon.svg" alt="a blank user profile icon">
         <p class="profile-name fontNunito">Frederik Becks</p>
         <span class="profile-name-span fontNunito">Aus der Liste wählen</span>
         <div class="profile-avatars ml-mr-auto">
           @for ( avatar of profileAvatars; track avatar) {
-            <img src="/assets/media/icons/profile-icons/{{avatar.name}}.svg" alt="user-profile icon - default {{avatar.name}}" title="user-icon of : {{avatar.name}}" aria-label="user-icon">
+            <img src="/assets/media/icons/profile-icons/{{avatar.name}}.svg" alt="user-profile icon - default {{avatar.name}}" title="user-icon of : {{avatar.name}}" aria-label="Reihe mit user-icons">
           }
         </div>
 
         <div class="upload-container"> 
-          <span class="upload-text fontNunito">eigenes Bild verwenden</span>
-          <button class="upload-btn fontNunito">Datei hochladen</button>
+          <span class="upload-text fontNunito" >eigenes Bild verwenden</span>
+          <button class="upload-btn fontNunito" title="Datei hochladen" aria-label="Button - Datei hochladen" >Datei hochladen</button>
         </div>
       </div>
     </div>  
 
     <div class="btn-container ml-mr-auto">
-      <button class="login-btn fontNunito" [routerLink]="['/']">Weiter</button>
+      <button class="login-btn fontNunito" [routerLink]="['/']" title="Ab zum Login!" aria-label="Button - Weiter zum Login">Weiter</button>
     </div>
   </div>
 
   <div class="legal-imprint-container ml-mr-auto">
-    <button class="fontNunito" [routerLink]="['/start/imprint']">Impressum</button>
-    <button class="fontNunito" [routerLink]="['/start/legal']">Datenschutz</button>
+    <button class="fontNunito" [routerLink]="['/start/imprint']" title="Impressum" aria-label="Link zum Impressum">Impressum</button>
+    <button class="fontNunito" [routerLink]="['/start/legal']" title="Datenschutz" aria-label="Link zum Datenschutz" >Datenschutz</button>
   </div>
 
 </section>
