@@ -2,15 +2,17 @@
 @import '../../styles.scss';
 
 ::ng-deep {
- app-logo>a>img {
+ app-logo>div>img {
   margin-left: 65px;
  }
 }
 
 section {
   background-color: $bg-color;
-  >div>img {
+  >div {
     position: relative;
+  }
+  >div>img {
     // background-image: url('../../assets/media/bg_404.png');
     background-repeat: no-repeat;
     background-size: cover;

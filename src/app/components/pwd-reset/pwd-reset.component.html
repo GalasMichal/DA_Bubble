@@ -1,7 +1,7 @@
 <section class="login-section">
 
   <div class="logo-container">
-    <button [routerLink]="['/']">
+    <button [routerLink]="['/']" title="zurück zur Startseite" aria-label="Zurück zur Startseite">
       <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
     </button>
   </div>
@@ -9,7 +9,7 @@
 <div class="form-container">
   <div style="padding-top: 2%;">
     <div class="arrow-back-container">
-      <button [routerLink]="['/']">
+      <button (click)="goBack()" title="zurück zur vorigen Seite" aria-label="Zurück zur letzten Seite">
         <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
       </button>
       <div class="title-icon-container">
@@ -17,7 +17,7 @@
           <h2 class="fontNunito ml-5">Passwort zurücksetzen</h2>
         </div>
         <div class="info-container">
-          <img id="info-icon" title="How to -registrieren" (click)="openInfoBox()" class="pulse info-icon" src="../../assets/media/icons/info_symbol-icon.png" alt="">
+          <img id="info-icon" title="How to -registrieren" aria-label="Infobox -How to -registrieren" (click)="openInfoBox()" class="pulse info-icon" src="../../assets/media/icons/info_symbol-icon.png" alt="">
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
     <!-- 
       PWD-CHECK: min-length-8, max-length-32, chars A-Z, a-z, excl ÖöÄäÜü, all special-characters, no wing-dings, at least one from each category, no doubles
     -->
-      <input id="password" class="input-field input-field-mail-icon fontNunito" [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby="password-error"/>
+      <input id="password" class="input-field input-field-mail-icon fontNunito" [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" title="Passwort feld 1" aria-label="password eingabe feld" aria-required="true" aria-describedby="password-error"/>
       <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
       @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
         <div class="warn-txt ml-15"
@@ -41,7 +41,7 @@
         </div>
         }
       
-      <input name="passwordCopy" class="input-field input-field-mail-icon fontNunito" [type]="isPasswordCopyVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby="password-error"/>
+      <input name="passwordCopy" class="input-field input-field-mail-icon fontNunito" [type]="isPasswordCopyVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" title="Passwort feld 2" aria-label="password eingabe feld 2" aria-required="true" aria-describedby="password-error"/>
       <i class="pwd-eye-2  eye-pos-2" [ngClass]="{'eye-closed': !isPasswordCopyVisible, 'eye-open': isPasswordCopyVisible}" (click)="togglePasswordCopyVisibility()" ></i>
       @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
         <div class="warn-txt warn-txt-2 ml-15"
@@ -58,14 +58,14 @@
   </form>
 
   <div class="btn-container">
-    <button class="login-btn fontNunito" [routerLink]="['/']">Passwort ändern</button>
+    <button class="login-btn fontNunito" [routerLink]="['/']" title="Bestätigung" aria-label="Button - Bestätigung bzw Absenden">Passwort ändern</button>
   </div>
 
 </div>
 
 <div class="legal-imprint-container ml-mr-auto">
-  <button class="fontNunito" [routerLink]="['/start/imprint']">Impressum</button>
-  <button class="fontNunito" [routerLink]="['/start/legal']">Datenschutz</button>
+  <button class="fontNunito" [routerLink]="['/start/imprint']" title="Impressum" aria-label="Link zum Impressum">Impressum</button>
+  <button class="fontNunito" [routerLink]="['/start/legal']" title="Datenschutz" aria-label="Link zum Datenschutz">Datenschutz</button>
 </div>
 </section>
 
