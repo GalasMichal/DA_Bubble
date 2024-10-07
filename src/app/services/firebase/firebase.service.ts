@@ -74,6 +74,8 @@ export class FirebaseService {
       this.unsubChannelList();
     }
   }
+
+  
   setUserObject(obj: any, id: string): AppUser {
     return {
       status: obj.status || false,
