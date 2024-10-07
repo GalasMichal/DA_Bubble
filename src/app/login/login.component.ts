@@ -48,7 +48,7 @@ export class LoginComponent {
     const password = this.loginForm.get('password')?.value;
     if (this.loginForm.valid) {
        await this.fb.loginWithEmailAndPassword(email, password).then(() => {
-        console.log('user is eingeloggot', this.fb.currentUser?.uId);
+        console.log('user is eingeloggot', this.fb.currentUser?.uId, 'user ist:', this.fb.currentUser?.displayName)
     })} else {
       console.log('Formular ist ungültig');
     }

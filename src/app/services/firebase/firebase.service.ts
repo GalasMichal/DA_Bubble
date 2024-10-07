@@ -173,9 +173,7 @@ export class FirebaseService {
        await this.getUserByUid(user.uid)
         this.router.navigate(['/start/main']);
       }
-      // getCurrentUser(){
-
-      // }
+   
 
       console.log('User is logged in:', user);
       this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
