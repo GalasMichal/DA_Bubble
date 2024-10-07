@@ -86,16 +86,22 @@
   ul {
     overflow: hidden;
     display: flex;
-    gap: 1.5625rem;
+    gap: 0.5625rem;
     flex-direction: column;
     margin-bottom: 1.5625rem;
     li {
       button {
-        gap: .625rem;
         display: flex;
         flex-direction: row;
         align-items: center;
+        width: fit-content;
+        padding: 0.25rem 1.75rem;
+        gap: .9375rem;
         background: none;
+        border-radius: $b-radius-2;
+        &:hover {
+          background: $bg-color;
+        }
       }
     }
   }
@@ -181,16 +187,3 @@
     flex-direction: column;
   }
 }
-
-// .single-user{
-//   display: flex;
-//   align-items: center;
-//   gap: .9375rem;
-// }
-
-// .online {
-//   position: absolute;
-//   bottom: 0;
-//   right: 0;
-//   z-index: 1;
-// }

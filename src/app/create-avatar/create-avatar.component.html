@@ -18,7 +18,7 @@
         <span class="profile-name-span fontNunito">Aus der Liste wählen</span>
         <div class="profile-avatars ml-mr-auto">
           @for ( avatar of profileAvatars; track avatar) {
-            <img src="/assets/media/icons/profile-icons/{{avatar}}.svg" alt="user-profile icon - default {{avatar}}">
+            <img src="/assets/media/icons/profile-icons/{{avatar.name}}.svg" alt="user-profile icon - default {{avatar.name}}" title="user-icon of : {{avatar.name}}" aria-label="user-icon">
           }
         </div>
 

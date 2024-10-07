@@ -43,4 +43,16 @@ export class PwdResetComponent {
   openInfoBox() {
     this.dialogAddMembers.open(InfoBoxComponent);
   }
+
+  isPasswordVisible = false;
+  
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  isPasswordCopyVisible = false;
+  
+  togglePasswordCopyVisibility() {
+    this.isPasswordCopyVisible = !this.isPasswordCopyVisible;
+  }
 }

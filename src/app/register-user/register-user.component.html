@@ -1,6 +1,6 @@
 <section class="login-section">
 
-  <div class="logo-container">
+  <div class="logo-container" routerLink="/start">
     <app-logo></app-logo>
   </div>
 
@@ -8,7 +8,7 @@
     <form [formGroup]="myForm">
       <div class="title-container">
 
-        <a class="arrow-back" routerLink="">
+        <a class="arrow-back" routerLink="/start">
           <app-back></app-back>
         </a>
 
@@ -43,7 +43,7 @@
         
         <div class="input-container">
           <label class="visually-hidden" for="name">Dein E-Mail</label>
-          <input #email name="name" autocomplete="off" formControlName="email"
+          <input #email name="name" id="email" autocomplete="off" formControlName="email"
             class="input-field input-field-mail-icon fontNunito" type="email" placeholder="beispielname@email.com"/>
           <div class="warn-txt warn-txt-2">
             @if(fb.errorMessageLogin()){
@@ -64,8 +64,9 @@
 
         <div class="input-container">
           <label class="visually-hidden" for="name">Passwort</label>
-          <input #name id="password" name="password" type="password" formControlName="password"
+          <input #name id="password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
             class="input-field input-field-pwd-icon fontNunito" placeholder="Passwort"/>
+            <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
           <div class="warn-txt warn-txt-2">
 
             @if (myForm.controls['password'].invalid && (isFormSubmitted || myForm.controls['password'].touched ||
@@ -85,10 +86,10 @@
           </div>
         </div>
         <div class="checkbox-container">
-          <input type="checkbox" formControlName="term" name="term">
+          <input id="checkbox" type="checkbox" formControlName="term" name="term">
+          <label for="checkbox">Ich stimme der <a class="privacy" href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</label>
           
           <div class="checkbox-description">
-            <label for="checkbox">Ich stimme der <a class="privacy" href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</label>
             @if (myForm.controls['term'].invalid && (isFormSubmitted || myForm.controls['term'].touched ||
             myForm.controls['term'].dirty)) {
 

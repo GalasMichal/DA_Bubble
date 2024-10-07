@@ -66,19 +66,23 @@
           <img src="assets/media/icons/account-profil.svg" alt="account-profil" srcset="">
           <span class="fontNunito">Direktnachrichten</span>
         </div>
-      <div class="channels-content fontNunito padding-l-35" [class.animate]="isSecondDropdownMenuOpen">
+      <div class="channels-content fontNunito" [class.animate]="isSecondDropdownMenuOpen">
         <div>
 
           @if(isSecondDropdownMenuOpen){
 
+            <ul>
             @for(user of this.db.userList; track $index) {
-              <div class="single-user">
-                <div class="user-img">
-                  <app-avatar></app-avatar>
-                </div>
-                <div>{{user.displayName}}</div>
-              </div>
-            }
+                <li>
+                  <button class="single-user">
+                    <div class="user-img">
+                      <app-avatar></app-avatar>
+                    </div>
+                    <div>{{user.displayName}}</div>
+                  </button>
+                </li>
+              }
+            </ul>
 
           }
         </div>

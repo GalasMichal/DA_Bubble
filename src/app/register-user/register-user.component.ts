@@ -100,6 +100,13 @@ export class RegisterUserComponent {
     this.dialogAddMembers.open(InfoBoxComponent);
   }
 
+  isPasswordVisible = false;
+  
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+  
+
     /*
   age-validator - IF NEEDED
   function ageValidator(control: FormControl): { [key: string]: boolean } | null {
