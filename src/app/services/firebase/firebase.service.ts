@@ -19,6 +19,7 @@ import {
   setDoc,
   onSnapshot,
   getDoc,
+  Unsubscribe,
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Channel } from '../../models/interfaces/channel.model';
@@ -38,16 +39,35 @@ export class FirebaseService {
   public channelList: Channel[] = [];
 
 
-  unsubUserList: any;
-  unsubChannelList: any;
+  // unsubUserList: any;
+
 
   public currentUser = signal<AppUser | null>(null);
   public errorMessageLogin = signal('');
 
-  constructor() {}
+  constructor() {
 
+  }
+  unsubscribe: any;
+
+  // async subChannelList() {
+  //   return new Promise((resolve, reject) => {
+  //     this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
+  //       this.channelList = [];
+  //       list.forEach((element) => {
+  //         const channelData = element.data();
+  //         const channelId = element.id;
+  //         const channelObject = this.setChannelObject(channelData, channelId);
+  //         this.channelList.push(channelObject);
+  //       });
+  //       resolve(this.channelList);
+  //     }, (error) => {
+  //       reject(error);
+  //     });
+  //   });
+  // }
   subChannelList() {
-    return onSnapshot(this.getChannels(), (list) => {
+  this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
       this.channelList = [];
       list.forEach((element) => {
         const channelData = element.data();
@@ -57,17 +77,17 @@ export class FirebaseService {
       });
     });
   }
-  
+
   subUserList() {
-    return onSnapshot(this.getUsers(), (list) => {
-      this.userList = [];
-      list.forEach((element) => {
-        const userData = element.data();
-        const userId = element.id;
-        const userObject = this.setUserObject(userData, userId);
-        this.userList.push(userObject);
-      });
-    });
+    // return onSnapshot(this.getUsers(), (list) => {
+    //   this.userList = [];
+    //   list.forEach((element) => {
+    //     const userData = element.data();
+    //     const userId = element.id;
+    //     const userObject = this.setUserObject(userData, userId);
+    //     this.userList.push(userObject);
+    //   });
+    // });
   }
 
 
@@ -95,14 +115,7 @@ export class FirebaseService {
     };
   }
 
-  ngOnDestroy(): void {
-    if (this.unsubUserList) {
-      this.unsubUserList();
-    }
-    if (this.unsubChannelList) {
-      this.unsubChannelList();
-    }
-  }
+
 
   // Methode zum Erstellen eines neuen Benutzers
  async createUser(

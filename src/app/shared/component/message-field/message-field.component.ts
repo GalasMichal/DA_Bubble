@@ -20,15 +20,16 @@ export class MessageFieldComponent {
   isEmojiPickerVisible: boolean = false
 
   addEmoji(event: any) {
-    this.textArea = `${this.textArea}${event.emoji.native}`;
-    this.isEmojiPickerVisible = false;
+    // this.textArea = `${this.textArea}${event.emoji.native}`;
+    // this.isEmojiPickerVisible = false;
   }
 
     showEmojiWindow() {
-    this.isEmojiPickerVisible = !this.isEmojiPickerVisible;
+    // this.isEmojiPickerVisible = !this.isEmojiPickerVisible;
   }
 
   closeEmojiWindow() {
-    this.isEmojiPickerVisible = false
+    // this.isEmojiPickerVisible = false
   }
+
 }

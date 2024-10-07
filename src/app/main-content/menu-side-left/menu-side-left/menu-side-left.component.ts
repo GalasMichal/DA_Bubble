@@ -21,19 +21,25 @@ export class MenuSideLeftComponent {
   db = inject(FirebaseService)
   chat = inject(ChatRoomService)
 
-
-  toogleDropDown1(){
-    this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
-    // this.db.unsubUserList = this.db.subChannelList();
+  ngOnInit() {
+    this.db.subChannelList();
   }
 
+  ngOnDestroy(): void {
+    this.db.unsubscribe();
+  }
+
+
+ async toogleDropDown1(){
+    this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
+
+  }
   openChannelList(){
 
   }
 
   toogleDropDown2(){
     this.isSecondDropdownMenuOpen = !this.isSecondDropdownMenuOpen
-    // this.db.unsubUserList = this.db.subUserList();
   }
 
   addChannel (){
