@@ -24,13 +24,16 @@ export class MenuSideLeftComponent {
 
   toogleDropDown1(){
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
-    this.db.unsubUserList = this.db.subChannelList();
+    // this.db.unsubUserList = this.db.subChannelList();
+  }
+
+  openChannelList(){
 
   }
 
   toogleDropDown2(){
     this.isSecondDropdownMenuOpen = !this.isSecondDropdownMenuOpen
-    this.db.unsubUserList = this.db.subUserList();
+    // this.db.unsubUserList = this.db.subUserList();
   }
 
   addChannel (){
@@ -41,7 +44,7 @@ export class MenuSideLeftComponent {
 
   openChannel(chanId : string) {
     this.chat.openChatById(chanId)
-    
+
   }
 
 

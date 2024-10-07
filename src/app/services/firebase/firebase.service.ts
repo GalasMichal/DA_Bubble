@@ -44,46 +44,36 @@ export class FirebaseService {
   public currentUser = signal<AppUser | null>(null);
   public errorMessageLogin = signal('');
 
-  constructor() {
-    // this.unsubChannelList = this.subChannelList();
-    // this.unsubUserList = this.subUserList();
-    // this.channels$ = collectionData(this.getChannels());
-  }
-
-  ngOnDestroy(): void {
-    this.unsubUserList();
-    this.unsubChannelList();
-  }
-
-  ngOnInit(): void {
-
-  }
-
-  subChannelList() {
-    return onSnapshot(this.getChannels(), (list) => {
-      this.channelList = [];
-      list.forEach((element) => {
-        const channelData = element.data();
-        const channelId = element.id;
-        const channelObject = this.setChannelObject(channelData, channelId);
-        this.channelList.push(channelObject);
-         // Benutzer zur Liste hinzufügen
-      });
-    });
-  }
+  constructor() {}
 
 
-  subUserList() {
-    return onSnapshot(this.getUsers(), (list) => {
-      this.userList = [];
-      list.forEach((element) => {
-        const userData = element.data();
-        const userId = element.id;
-        const userObject = this.setUserObject(userData, userId);
-        this.userList.push(userObject); // Benutzer zur Liste hinzufügen
-      });
-    });
-  }
+
+
+  // subChannelList() {
+  //   return onSnapshot(this.getChannels(), (list) => {
+  //     this.channelList = [];
+  //     list.forEach((element) => {
+  //       const channelData = element.data();
+  //       const channelId = element.id;
+  //       const channelObject = this.setChannelObject(channelData, channelId);
+  //       this.channelList.push(channelObject);
+  //        // Benutzer zur Liste hinzufügen
+  //     });
+  //   });
+  // }
+
+
+  // subUserList() {
+  //   return onSnapshot(this.getUsers(), (list) => {
+  //     this.userList = [];
+  //     list.forEach((element) => {
+  //       const userData = element.data();
+  //       const userId = element.id;
+  //       const userObject = this.setUserObject(userData, userId);
+  //       this.userList.push(userObject); // Benutzer zur Liste hinzufügen
+  //     });
+  //   });
+  // }
 
 
   setUserObject(obj: any, id: string): AppUser {
