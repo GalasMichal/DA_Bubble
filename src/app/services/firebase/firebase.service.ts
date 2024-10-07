@@ -31,29 +31,16 @@ export class FirebaseService {
   private auth: Auth = inject(Auth);
   provider = new GoogleAuthProvider();
   router = inject(Router);
-  channels$;
 
   public userList: AppUser[] = [];
   public channelList: Channel[] = [];
 
-
-  unsubUserList: any;
-  unsubChannelList: any;
-
   currentUser: AppUser | null = null;
   public errorMessageLogin = signal('');
 
-  constructor() {
-    this.unsubChannelList = this.subChannelList();
-    this.unsubUserList = this.subUserList();
-    this.channels$ = collectionData(this.getChannels());
-  }
-
-  ngOnDestroy(): void {
-    this.unsubUserList();
-    this.unsubChannelList();
-  }
-
+  unsubUserList: any;
+  unsubChannelList: any;
+ 
   subChannelList() {
     return onSnapshot(this.getChannels(), (list) => {
       this.channelList = [];
@@ -61,12 +48,11 @@ export class FirebaseService {
         const channelData = element.data();
         const channelId = element.id;
         const channelObject = this.setChannelObject(channelData, channelId);
-        this.channelList.push(channelObject); // Benutzer zur Liste hinzufügen
+        this.channelList.push(channelObject); // Kanał do listy
       });
     });
   }
-
-
+  
   subUserList() {
     return onSnapshot(this.getUsers(), (list) => {
       this.userList = [];
@@ -74,12 +60,20 @@ export class FirebaseService {
         const userData = element.data();
         const userId = element.id;
         const userObject = this.setUserObject(userData, userId);
-        this.userList.push(userObject); // Benutzer zur Liste hinzufügen
+        this.userList.push(userObject); // Użytkownik do listy
       });
     });
   }
-
-
+  
+  ngOnDestroy(): void {
+    if (this.unsubUserList) {
+      this.unsubUserList(); 
+    }
+  
+    if (this.unsubChannelList) {
+      this.unsubChannelList();
+    }
+  }
   setUserObject(obj: any, id: string): AppUser {
     return {
       status: obj.status || false,
