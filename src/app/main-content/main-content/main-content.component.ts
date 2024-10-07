@@ -8,6 +8,8 @@ import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-sid
 import { ChatRoomComponent } from '../chat-room/chat-room.component';
 import { ThreadAnswerComponent } from '../../shared/component/thread-answer/thread-answer.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
+import { FirebaseService } from '../../services/firebase/firebase.service';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-main-content',
@@ -19,6 +21,7 @@ import { StateControlService } from '../../services/state-control/state-control.
     MenuSideLeftComponent,
     ChatRoomComponent,
     ThreadAnswerComponent,
+    RouterModule, RouterLink
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
@@ -27,10 +30,14 @@ export class MainContentComponent {
   readonly userDialog = inject(MatDialog);
   state: StateControlService = inject(StateControlService);
   isMenuOpen = true;
+  public db = inject(FirebaseService);
+  router = inject(Router);
+
+ 
 
   openUserProfile() {
     this.userDialog.open(UserProfileComponent, {
       panelClass: 'user-profile-container',
     });
   }
-}
+  }

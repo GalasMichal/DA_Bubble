@@ -5,7 +5,7 @@
 
 
   <div class="user" (click)="openDialog()">
-    <span> {{ this.fb.currentUser?.displayName}}</span>
+    <span> {{ this.fb.currentUser()?.displayName}}</span>
     <app-avatar></app-avatar>
 
     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">

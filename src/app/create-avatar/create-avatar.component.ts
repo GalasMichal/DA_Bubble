@@ -1,8 +1,9 @@
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { LogoComponent } from '../shared/logo/logo.component';
 import { CommonModule } from '@angular/common';
+import { FirebaseService } from '../services/firebase/firebase.service';
 
 interface ProfileAvatar {
   name: string;
@@ -21,9 +22,10 @@ interface ProfileAvatar {
 })
 
 export class CreateAvatarComponent {
+  db = inject(FirebaseService);
 
   baseSrc = "../../../assets/media/icons/profile-icons/";
-  
+
   profileAvatars: ProfileAvatar[] = [
     { name: "user-1-elise" },
     { name: "user-2-elias" },

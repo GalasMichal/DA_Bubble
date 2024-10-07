@@ -14,7 +14,7 @@
       </div>
       <div class="avatar-container">
         <img class="profile-icon ml-mr-auto" src="../../assets/media/icons/profile-icons/profile-icon.svg" alt="a blank user profile icon">
-        <p class="profile-name fontNunito">Frederik Becks</p>
+        <p class="profile-name fontNunito">{{ this.db.currentUser()?.displayName}}</p>
         <span class="profile-name-span fontNunito">Aus der Liste wählen</span>
         <div class="profile-avatars ml-mr-auto">
           @for ( avatar of profileAvatars; track avatar) {
@@ -22,15 +22,15 @@
           }
         </div>
 
-        <div class="upload-container"> 
+        <div class="upload-container">
           <span class="upload-text fontNunito">eigenes Bild verwenden</span>
           <button class="upload-btn fontNunito">Datei hochladen</button>
         </div>
       </div>
-    </div>  
+    </div>
 
     <div class="btn-container ml-mr-auto">
-      <button class="login-btn fontNunito" [routerLink]="['/']">Weiter</button>
+      <button class="login-btn fontNunito" [routerLink]="['/start/main']">Weiter</button>
     </div>
   </div>
 

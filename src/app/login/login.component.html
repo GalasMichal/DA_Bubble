@@ -1,13 +1,13 @@
 <section>
   <!-- header/logo bar -->
   <div class="header-icons">
-    <app-logo [routerLink]="['/']" 
-    title="Neuladen dieser Seite" 
+    <app-logo [routerLink]="['/']"
+    title="Neuladen dieser Seite"
     aria-label="Neuladen dieser Seite, F5"></app-logo>
     <div class="new-user-link">
       <p class="fontNunito">Neu bei DABubble?</p>
-      <button 
-      class="font-figtree" 
+      <button
+      class="font-figtree"
       title="Konto erstellen, neuer User"
       aria-label="Konto erstellen für neue Benutzer"
       routerLink="register">Konto erstellen</button>
@@ -47,7 +47,7 @@
           placeholder="Passwort" aria-label="password input field" aria-required="true" aria-describedby="password-error" />
           <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
           <div class="warn-txt warn-txt-2">
-          
+
             @if (loginForm.controls['password'].invalid && (isFormSubmitted || loginForm.controls['password'].touched || loginForm.controls['password'].dirty)) {
               @if (loginForm.controls['password'].errors?.['required']) {
               <span>Password ist ein Pflichtfeld.</span>
@@ -62,6 +62,10 @@
             }
           </div>
       </div>
+      <div class="btn-container">
+        <button class="login-btn fontNunito" type="submit" title="Login" aria-label="Login button">Anmelden</button>
+        <button class="guest-btn fontNunito" routerLink="main">Gäste-Login</button>
+      </div>
     </form>
     <!-- pwd recovery link -->
     <button class="btn-password fontNunito" [routerLink]="['/recovery']" title="Passwort vergessen?" aria-label="Link zur Passwort wiederherstellung">Passwort vergessen?</button>
@@ -70,7 +74,7 @@
       <span class="sep-line-txt fontNunito">ODER</span>
     </div>
     <!-- goggle btn -->
-    <button class="input-focus btn-google fontNunito" 
+    <button class="input-focus btn-google fontNunito"
       (click)="createNewUserWithGoogle()"
       title="Anmeldung mit Google"
       aria-label="Button für die Anmeldung mit Google">
@@ -78,10 +82,7 @@
       Anmeldung mit Google
     </button>
     <!-- login & guest btn -->
-    <div class="btn-container">
-      <button class="login-btn fontNunito" type="submit" title="Login" aria-label="Login button">Anmelden</button>
-      <button class="guest-btn fontNunito" routerLink="main">Gäste-Login</button>
-    </div>
+
   </div>
   <!-- legal & imprint btn -->
   <div class="legal-imprint-container">
