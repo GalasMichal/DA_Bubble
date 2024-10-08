@@ -13,6 +13,7 @@ import { ChannelEditComponent } from './shared/component/channel-edit/channel-ed
 import { ChannelCreateComponent } from './shared/component/channel-create/channel-create.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ChatRoomComponent } from './main-content/chat-room/chat-room.component';
+import { empty } from 'rxjs';
 
 
 /*
@@ -36,7 +37,11 @@ export const routes: Routes = [
   { path: 'start/imprint', component: ImprintComponent },
   { path: 'start/legal', component: LegalComponent },
   // { path: '**', component: PageNotFoundComponent },
-  { path: 'start/main', component: MainContentComponent, children: [{ path: 'chat/:id', component: ChatRoomComponent}] },
+  { path: 'start/main', component: MainContentComponent, children:[
+    
+    { path: 'chat/:id', component: ChatRoomComponent}
+
+  ] },
 
 ];
 
