@@ -24,6 +24,7 @@ import { Auth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../../../app.component';
 import { CloseComponent } from '../close/close.component';
+import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 
 @Component({
   selector: 'app-channel-create',
@@ -37,7 +38,7 @@ import { CloseComponent } from '../close/close.component';
     MatDialogContent,
     AddMembersComponent,
     ReactiveFormsModule,
-    InputAddUsersComponent, 
+    InputAddUsersComponent,
     AvatarComponent,
     CloseComponent
   ],
@@ -54,9 +55,9 @@ export class ChannelCreateComponent{
   dialog = inject(MatDialogRef<ChannelCreateComponent>);
   readonly dialogAddMembers = inject(MatDialog);
   readonly dialogRef = inject(MatDialogRef<ChannelCreateComponent>);
-  db = inject(FirebaseService);
+  chat = inject(ChatRoomService);
 
-  
+
   onRadioChange(event: any) {
     if (event.target.value === 'specificPeople') {
       this.isSpecificPeople = true
@@ -77,7 +78,7 @@ export class ChannelCreateComponent{
     return this.channelForm.controls['specificPeople'].valid;
   }
 
-  constructor() { 
+  constructor() {
     this.channelForm = new FormGroup({
       channelName: new FormControl('', [Validators.required, Validators.minLength(3),]),
       channelDescription: new FormControl(''),
@@ -110,20 +111,20 @@ export class ChannelCreateComponent{
     // debugger
       const formValues = this.channelForm.value;
       const newChannel: Channel = {
-        chanId: '', 
+        chanId: '',
         channelName: formValues.channelName,
         channelDescription: formValues.channelDescription || '',
         allMembers: formValues.member,
         specificPeople: formValues.specificPeople ? formValues.specificPeople.split(',') : [],
         createdAt: new Date().toISOString(),
-        createdBy: 'user-id', 
+        createdBy: 'user-id',
        }
       this.createChannel(event, newChannel)
   }
 
   createChannel(event: Event, newChannel: Channel) {
     console.log(newChannel);
-    this.db.addChannelToFirestore(newChannel);
+    this.chat.addChannelToFirestore(newChannel);
     this.closeDialogAddMembers(event)
   }
 }

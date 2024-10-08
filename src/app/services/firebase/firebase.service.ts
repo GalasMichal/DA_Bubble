@@ -33,13 +33,7 @@ export class FirebaseService {
   private auth: Auth = inject(Auth);
   provider = new GoogleAuthProvider();
   router = inject(Router);
-  // channels$;
 
-  public userList: AppUser[] = [];
-  public channelList: Channel[] = [];
-
-
-  // unsubUserList: any;
 
 
   public currentUser = signal<AppUser | null>(null);
@@ -48,7 +42,7 @@ export class FirebaseService {
   constructor() {
 
   }
-  unsubscribe: any;
+
 
   // async subChannelList() {
   //   return new Promise((resolve, reject) => {
@@ -66,55 +60,6 @@ export class FirebaseService {
   //     });
   //   });
   // }
-  subChannelList() {
-  this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
-      this.channelList = [];
-      list.forEach((element) => {
-        const channelData = element.data();
-        const channelId = element.id;
-        const channelObject = this.setChannelObject(channelData, channelId);
-        this.channelList.push(channelObject);
-      });
-    });
-  }
-
-  subUserList() {
-    // return onSnapshot(this.getUsers(), (list) => {
-    //   this.userList = [];
-    //   list.forEach((element) => {
-    //     const userData = element.data();
-    //     const userId = element.id;
-    //     const userObject = this.setUserObject(userData, userId);
-    //     this.userList.push(userObject);
-    //   });
-    // });
-  }
-
-
-  setUserObject(obj: any, id: string): AppUser {
-    return {
-      status: obj.status || false,
-      channels: obj.channels || [],
-      uId: id || '',
-      email: obj.email || '',
-      displayName: obj.displayName || '',
-      avatarUrl: obj.avatarUrl || '',
-      birthdate: obj.birthdate || '',
-    };
-  }
-
-  setChannelObject(obj: any, id: string): Channel {
-    return {
-      chanId: id || '',
-      channelName: obj.channelName || '',
-      channelDescription: obj.channelDescription || '',
-      allMembers: obj.allMembers || '',
-      specificPeople: obj.specificPeople || [],
-      createdAt: obj.createdAt || '',
-      createdBy: obj.createdBy || ''
-    };
-  }
-
 
 
   // Methode zum Erstellen eines neuen Benutzers
@@ -279,16 +224,9 @@ export class FirebaseService {
     });
   }
 
-  addChannelToFirestore(channel: Channel) {
-    const channelCollectionRef = collection(this.firestore, 'channels');
-    const channelDocRef = doc(channelCollectionRef);
-    channel.chanId = channelDocRef.id;
-    setDoc(channelDocRef, channel);
-  }
 
-  getChannels() {
-    return collection(this.firestore, 'channels');
-  }
+
+ 
 
   getUsers() {
     return collection(this.firestore, 'users');

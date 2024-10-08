@@ -37,16 +37,15 @@ export class MainContentComponent {
   router = inject(Router);
   private auth = inject(Auth);
 
-//  ngOnInit(): void {
-//   onAuthStateChanged(this.auth, (user) => {
-//     if (user) {
-//       this.db.getUserByUid(user.uid); // Laden des Benutzers
-//     } else {
-//       this.router.navigate(['/start/login']);
-//     }
-//   });
-
-//  }
+ ngOnInit(): void {
+  onAuthStateChanged(this.auth, (user) => {
+    if (user) {
+      this.db.getUserByUid(user.uid); // Laden des Benutzers
+    } else {
+      this.router.navigate(['/start/login']);
+    }
+  });
+ }
 
   openUserProfile() {
     this.userDialog.open(UserProfileComponent, {

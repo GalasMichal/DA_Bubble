@@ -22,11 +22,11 @@ export class MenuSideLeftComponent {
   chat = inject(ChatRoomService)
 
   ngOnInit() {
-    this.db.subChannelList();
+    this.chat.subChannelList();
   }
 
   ngOnDestroy(): void {
-    this.db.unsubscribe();
+    this.chat.unsubscribe();
   }
 
 
