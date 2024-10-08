@@ -36,13 +36,14 @@ export class ChatRoomComponent {
 
   ngOnInit(): void {
     // Hole die ID aus den Routenparametern
-    const channelId = this.route.snapshot.paramMap.get('channelId');
-    if (channelId) {
-      // Rufe die Funktion auf, um den Kanal zu öffnen
-      this.chat.openChatById(channelId);
-      this.channelData = this.chat.currentChannelData;
-      console.log(this.channelData);
-    }
+    // const channelId = this.route.snapshot.paramMap.get('channelId');
+    this.channelData = this.chat.currentChannelData;
+    // if (channelId) {
+    //   // Rufe die Funktion auf, um den Kanal zu öffnen
+    //   this.chat.openChatById(channelId);
+    //   this.channelData = this.chat.currentChannelData;
+    //   console.log(this.channelData);
+    // }
   }
 
   ngOnDestroy(): void {
