@@ -1,7 +1,7 @@
 import { Reaction } from "./reactions.model";
 
 export interface Message {
-  messageId: string;
+  messageId?: string;
   text: string;
   chatId: string;
   date: string;

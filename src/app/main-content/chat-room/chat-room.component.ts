@@ -8,6 +8,7 @@ import { ChannelEditComponent } from '../../shared/component/channel-edit/channe
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from '../../models/interfaces/channel.model';
+import { Message } from '../../models/interfaces/message.model';
 
 @Component({
   selector: 'app-chat-room',
@@ -33,6 +34,22 @@ export class ChatRoomComponent {
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
 
+  // message: Message = {
+  //   messageId: '',
+  //   text: '',
+  //   chatId: '',
+  //   date: '',
+  //   time: '',
+  //   messageSendBy: '',
+  //   reactions: [],
+  //   threadId: '',
+  //   answerCount: 0,
+  //   lastAnswer: '',
+  //   editCount: 0,
+  //   lastEdit: '',
+  //   storageData: '',
+  //   taggedUser: []
+  // }
 
 
   ngOnDestroy(): void {

@@ -3,6 +3,8 @@ import { collection, doc, DocumentData, Firestore, onSnapshot, setDoc } from '@a
 import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Router, RouterLink } from '@angular/router';
+import { Message } from '../../models/interfaces/message.model';
+import { addDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,19 @@ export class ChatRoomService {
   public userList: AppUser[] = [];
   public channelList: Channel[] = [];
   currentChannelData!: Channel;
+
+
   constructor() {}
+
+ async addMessageToChannel( message: Message) {
+   const channelId = this.currentChannelData.chanId;
+    const channelCollectionRef = await collection(this.firestore, 'channels', channelId, 'messages');
+    const messageDocRef = await addDoc(channelCollectionRef, message)
+    console.log('Message verschickt', message);
+
+    return messageDocRef;
+  }
+
 
 
   subChannelList() {
