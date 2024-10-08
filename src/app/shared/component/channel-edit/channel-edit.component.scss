@@ -1,70 +1,25 @@
-@import '../../../../colors.scss';
-@import '../../../../styles.scss';
-@import '../../../../fonts.scss';
-
-/* HEADINGS */
-h2 {
-  color: $black;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 2.0463rem;
-}
-
-h3, p {
-  color: $black;
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 1.5344rem;
-  margin-top: -14%;
-  
-  span {
-    color: $black;
-    font-size: 1.125rem;
-    font-weight: 400;
-    line-height: 1.5344rem;
-  }
-}
-
-p {
-  font-size: 1.125rem;
-  font-weight: 400;
-}
+@import "../../../../colors.scss";
+@import "../../../../styles.scss";
+@import "../../../../fonts.scss";
 
 /* CONTAINER */
 .container {
-  scale: 0.8;
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 55.875rem;
   height: 47.8125rem;
   background-color: $white;
-  border-radius: 4%;
-  margin-left: auto;
-  margin-right: auto;
-
-  .arrow-back-container {
-    height: 40px;
+  padding: $padding-dialog;
+  .container-content {
     display: flex;
-    justify-content: space-between;
-    margin-left: -2%;
-    padding-top: 2%;
-    word-break: break-word;
-    text-align: center;
-  
-    .close-btn {
-      border-radius: 40px;
-      border: none;
-      cursor: pointer;
-      background-color: white;
-
-      &:hover {
-        background-color: lightgray;
-      }
-      
-      .close-img {
-        width: 100%;
-      }
+    flex-direction: column;
+    gap: 1.875rem;
+    .title {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+      height: 40px;
     }
   }
 
@@ -76,23 +31,23 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: -2%;
-    margin-bottom: 84px;
-
-    p {
-      margin-top: 3%;
+    gap: 30px;
+    .separator {
+      height: 2px;
+      background: $bg-color;
+    }
+    .creat-user {
+      display: flex;
+      flex-direction: column;
     }
   }
-
   .channel-name-container {
-    width: 49.5rem;
-    height: 7.125rem;
+    width: 100%;
+    height: fit-content;
   }
-
   .channel-info-container {
-    width: 49.5rem;
-    height: 22.125rem;
-    margin-top: -54px !important;
+    width: 100%;
+    height: fit-content;
   }
 
   .edit-name-container,
@@ -100,23 +55,22 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-
     button {
       font-size: 1.125rem;
       font-weight: 600;
       line-height: 1.5344rem;
-      color: #535af1;
-      text-decoration: none;
-      cursor: pointer;
-
+      background: none;
+      color: $black;
+      padding-inline: 0.625rem;
+      font-weight: 500;
+      transition: all 175ms ease-in-out;
       &:hover {
-        color: red;
+        color: $primary;
+        background: $bg-color;
+        font-weight: 700;
+        border-radius: $b-radius-2;
       }
     }
-  }
-
-  .edit-info-container {
-    margin-top: -23%;
   }
 
   .user-link {
@@ -124,51 +78,26 @@ p {
     font-weight: 400;
     line-height: 2.0463rem;
     color: #535af1;
-    cursor: pointer;
   }
 
   .check-container {
     display: flex;
     flex-direction: column;
     text-align: center;
-
-    .btn-container {
-      width: 21rem;
-      height: 3.0625rem;
-      display: flex;
-      justify-content: end;
-      margin-top: 39%;
-      margin-left: 65%;
-
-      button {
-        text-decoration: none;
-        justify-content: center;
-      }
-
-      .login-btn {
-        font-weight: 700;
-        font-size: 1.125rem;
-        cursor: pointer;
-        width: 13rem;
-        height: 3.0625rem;
-        display: flex;
-        gap: 10px;
-        padding: 12px 25px;
-        border-radius: 25px;
-        color: white;
-        background-color: $primary;
-        margin-right: 4%;
-
-        &:hover {
-          background-color: $primary-hover;
-          color: #313ae6;
-        }
-      }
+    margin-top: auto;
+    align-self: flex-end;
+    height: 3.0625rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+    height: 3.0625rem;
+    width: fit-content;
+    padding: 12px 25px;
+    border-radius: 25px;
+    color: white;
+    background-color: $primary;
+    &:hover {
+      background-color: $primary-hover;
+      color: $white;
     }
   }
-}
-
-/* GENERAL STYLES */
-.mt {
-  margin-top: -32%;
 }

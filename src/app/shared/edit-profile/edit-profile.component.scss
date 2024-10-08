@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 35px;
+  padding: $padding-dialog;
   .profil {
     display: flex;
     justify-content: space-between;
@@ -92,11 +92,6 @@
       &:hover {
         background: $primary-hover;
       }
-      // &[disabled] {
-      //   cursor: auto;
-      //   background-color: $gray;
-      //   border: solid 0.0625rem $gray;
-      // }
     }
   }
 }
