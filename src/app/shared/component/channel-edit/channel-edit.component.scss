@@ -59,8 +59,8 @@
       font-size: 1.125rem;
       font-weight: 600;
       line-height: 1.5344rem;
+      color: $primary;
       background: none;
-      color: $black;
       padding-inline: 0.625rem;
       font-weight: 500;
       transition: all 175ms ease-in-out;
@@ -100,4 +100,15 @@
       color: $white;
     }
   }
+}
+
+
+::ng-deep
+  .team-container
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  border-radius: 0 $b-radius-1 $b-radius-1 $b-radius-1;
+  top: -1.75rem;
+  right: 5.5rem;
 }
