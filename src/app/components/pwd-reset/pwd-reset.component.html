@@ -6,66 +6,67 @@
     </button>
   </div>
 
-<div class="form-container">
-  <div style="padding-top: 2%;">
-    <div class="arrow-back-container">
-      <button (click)="goBack()" title="zurück zur vorigen Seite" aria-label="Zurück zur letzten Seite">
-        <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
-      </button>
-      <div class="title-icon-container">
-        <div class="title-container">
-          <h2 class="fontNunito ml-5">Passwort zurücksetzen</h2>
-        </div>
-        <div class="info-container">
-          <img id="info-icon" title="How to -registrieren" aria-label="Infobox -How to -registrieren" (click)="openInfoBox()" class="pulse info-icon" src="../../assets/media/icons/info_symbol-icon.png" alt="">
+  <div class="form-container">
+
+    <div style="padding-top: 2%;">
+      <div class="arrow-back-container">
+        <button (click)="goBack()" title="zurück zur vorigen Seite" aria-label="Zurück zur letzten Seite">
+          <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
+        </button>
+        <div class="title-icon-container">
+          <div class="title-container">
+            <h2 class="fontNunito ml-5">Passwort zurücksetzen</h2>
+          </div>
+          <div class="pulse info-container">
+            <img id="info-icon" title="How to -registrieren" aria-label="Infobox -How to -registrieren" (click)="openInfoBox()" class="info-icon" src="../../assets/media/icons/info_symbol-icon.png" alt="">
+          </div>
         </div>
       </div>
-    </div>
-  </div>  
-  <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
-    <div class="input-container"> 
-    <!-- 
-      PWD-CHECK: min-length-8, max-length-32, chars A-Z, a-z, excl ÖöÄäÜü, all special-characters, no wing-dings, at least one from each category, no doubles
-    -->
-      <input id="password" class="input-field input-field-mail-icon fontNunito" [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" title="Passwort feld 1" aria-label="password eingabe feld" aria-required="true" aria-describedby="password-error"/>
-      <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
-      @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
-        <div class="warn-txt ml-15"
-          >
-          @if (resetForm.controls['password'].errors?.['required']) {
-            <span >Password ist ein Pflichtfeld.</span>
-          }
-          @if (resetForm.controls['password'].errors?.['password']) {
-            <span id="password-error"  >Password ist unvollständig/inkorrekt, siehe Info-box.</span>
-          }
-        </div>
-        }
-      
-      <input name="passwordCopy" class="input-field input-field-mail-icon fontNunito" [type]="isPasswordCopyVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" title="Passwort feld 2" aria-label="password eingabe feld 2" aria-required="true" aria-describedby="password-error"/>
-      <i class="pwd-eye-2  eye-pos-2" [ngClass]="{'eye-closed': !isPasswordCopyVisible, 'eye-open': isPasswordCopyVisible}" (click)="togglePasswordCopyVisibility()" ></i>
-      @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
-        <div class="warn-txt warn-txt-2 ml-15"
-          >
-          @if (resetForm.controls['password'].errors?.['required']) {
-            <span >Password ist ein Pflichtfeld.</span>
-          }
-          @if (resetForm.controls['password'].errors?.['pattern']) {
-            <span id="password-error"  >Password ist unvollständig/inkorrekt.</span>
-          }
-        </div>
-        }
-    </div>
-  </form>
+    </div>  
 
-  <div class="btn-container">
-    <button class="login-btn fontNunito" [routerLink]="['/']" title="Bestätigung" aria-label="Button - Bestätigung bzw Absenden">Passwort ändern</button>
+    <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+      <div class="input-container"> 
+        <!-- 
+          special-characters, no wing-dings, at least one from each category, no doubles
+        -->
+        <input id="password" class="input-field input-field-mail-icon fontNunito" [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" title="Passwort feld 1" aria-label="password eingabe feld" aria-required="true" aria-describedby="password-error"/>
+        <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+        @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
+          <div class="warn-txt ml-15">
+            @if (resetForm.controls['password'].errors?.['required']) {
+              <span >Password ist ein Pflichtfeld.</span>
+            }
+            @if (resetForm.controls['password'].errors?.['password']) {
+              <span id="password-error"  >Password ist unvollständig/inkorrekt, siehe Info-box.</span>
+            }
+          </div>
+          }
+        
+        <input name="passwordCopy" class="input-field input-field-mail-icon fontNunito" [type]="isPasswordCopyVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" title="Passwort feld 2" aria-label="password eingabe feld 2" aria-required="true" aria-describedby="password-error"/>
+        <i class="pwd-eye-2  eye-pos-2" [ngClass]="{'eye-closed': !isPasswordCopyVisible, 'eye-open': isPasswordCopyVisible}" (click)="togglePasswordCopyVisibility()" ></i>
+        @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
+          <div class="warn-txt warn-txt-2 ml-15">
+            @if (resetForm.controls['password'].errors?.['required']) {
+              <span >Password ist ein Pflichtfeld.</span>
+            }
+            @if (resetForm.controls['password'].errors?.['pattern']) {
+              <span id="password-error"  >Password ist unvollständig/inkorrekt.</span>
+            }
+          </div>
+          }
+      </div>
+    </form>
+
+    <div class="btn-container">
+      <button class="login-btn fontNunito" [routerLink]="['/']" title="Bestätigung" aria-label="Button - Bestätigung bzw Absenden">Passwort ändern</button>
+    </div>
+
   </div>
 
-</div>
+  <div class="legal-imprint-container ml-mr-auto">
+    <button class="fontNunito" [routerLink]="['/start/imprint']" title="Impressum" aria-label="Link zum Impressum">Impressum</button>
+    <button class="fontNunito" [routerLink]="['/start/legal']" title="Datenschutz" aria-label="Link zum Datenschutz">Datenschutz</button>
+  </div>
 
-<div class="legal-imprint-container ml-mr-auto">
-  <button class="fontNunito" [routerLink]="['/start/imprint']" title="Impressum" aria-label="Link zum Impressum">Impressum</button>
-  <button class="fontNunito" [routerLink]="['/start/legal']" title="Datenschutz" aria-label="Link zum Datenschutz">Datenschutz</button>
-</div>
 </section>
 

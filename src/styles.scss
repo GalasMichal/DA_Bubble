@@ -250,12 +250,12 @@ app-message-edit {
 }
 
 // used in mult. comp.
-.pwd-eye {
+.pwd-eye, .pwd-eye-2 {
   width: 32px;
-  top: 13%;
+  // top: 13%;
   position: absolute;
   height: 30px;
-  left: 89%;
+  left: 75%;
   cursor: pointer;
   background-size: contain;
   background-repeat: no-repeat;
