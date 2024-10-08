@@ -8,10 +8,11 @@ import { User as AppUser } from '../../models/interfaces/user.model';
 })
 export class ChatRoomService {
   firestore = inject(Firestore);
-  channelData: DocumentData | undefined = undefined;
+  currentChannel:string = '';
   unsubscribe: any;
   public userList: AppUser[] = [];
   public channelList: Channel[] = [];
+  currentChannelData!: Channel;
   constructor() {}
 
 
@@ -74,23 +75,17 @@ export class ChatRoomService {
       return collection(this.firestore, 'channels');
     }
 
-  openChatById(id: string): Promise<() => void> {
-    const channelRef = doc(this.firestore, 'channels', id);
-    return new Promise((resolve, reject) => {
-      const unsub = onSnapshot(
-        channelRef,
-        (doc) => {
-           this.channelData = doc.data();
-          if (this.channelData) {
-            resolve(unsub); // Gib die Unsubscribe-Funktion zurück
-          } else {
-            reject(new Error('Channel data not found'));
-          }
-        },
-        (error) => {
-          reject(error); // Fehlerbehandlung
-        }
-      );
-    });
+  openChatById(currentChannel: string) {
+   const channelRef = doc(this.firestore, 'channels', currentChannel);
+    this.unsubscribe = onSnapshot(channelRef, (doc) => {
+      if (doc.exists()) {
+        const channelData = doc.data() as Channel;
+
+        this.currentChannelData = channelData
+        console.log('channelData', channelData);
+      } else {
+        console.log('No such document!');
+      }
+    })
   }
 }

@@ -32,18 +32,9 @@ export class ChatRoomComponent {
   channelData: Channel | null = null;
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
-  private unsubscribe: (() => void) | undefined;
+  unsubscribe: any;
 
- async ngOnInit() {
-    const channelId = this.route.snapshot.paramMap.get('id');
-    if(channelId) {
-      try {
-        this.unsubscribe = await this.chat.openChatById(channelId);
-      } catch (error) {
-        console.error(error);
-      } 
-    }
-  }
+
   ngOnDestroy(): void {
     if (this.unsubscribe) {
       this.unsubscribe(); // Unsubscribe bei der Zerstörung
@@ -60,6 +51,10 @@ export class ChatRoomComponent {
     this.dialog.open(ChannelEditComponent, {
       panelClass: 'team-container',
     })
+  }
+
+  loadChannelData() {
+    
   }
 
   allUserMessages = [

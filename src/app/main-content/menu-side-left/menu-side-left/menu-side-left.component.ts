@@ -34,9 +34,7 @@ export class MenuSideLeftComponent {
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
 
   }
-  openChannelList(){
 
-  }
 
   toogleDropDown2(){
     this.isSecondDropdownMenuOpen = !this.isSecondDropdownMenuOpen
@@ -49,8 +47,10 @@ export class MenuSideLeftComponent {
   }
 
   openChannel(chanId : string) {
-    this.chat.openChatById(chanId)
+    console.log(chanId);
 
+    // this.chat.currentChannel = chanId
+    this.chat.openChatById(chanId)
   }
 
 
