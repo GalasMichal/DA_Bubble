@@ -25,7 +25,7 @@ export class MessageFieldComponent {
 
 
 
-    sendMessage() {
+   async sendMessage() {
       const currentUser = this.fb.currentUser();
       const newMessage: Message = {
 
@@ -44,8 +44,9 @@ export class MessageFieldComponent {
         taggedUser: []
       };
 
-      this.chat.addMessageToChannel(newMessage)
-        this.textArea = ''; // Leere das Eingabefeld nach dem Senden
+     const messageDocRef = await this.chat.addMessageToChannel(newMessage)
+      await this.chat.updateMessageThreadId(messageDocRef.id)
+     this.textArea = ''; // Leere das Eingabefeld nach dem Senden
 
     }
 

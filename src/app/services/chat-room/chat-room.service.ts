@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { collection, doc, DocumentData, Firestore, onSnapshot, setDoc } from '@angular/fire/firestore';
+import { collection, doc, DocumentData, Firestore, onSnapshot, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Router, RouterLink } from '@angular/router';
@@ -28,6 +28,14 @@ export class ChatRoomService {
     console.log('Message verschickt', message);
 
     return messageDocRef;
+  }
+
+  async updateMessageThreadId(messageId: string) {
+    const channelId = this.currentChannelData.chanId;
+    const messageDocRef = doc(this.firestore, 'channels', channelId, 'messages', messageId);
+
+    // Aktualisiere das Dokument mit der Firestore-generierten ID als threadId
+    await updateDoc(messageDocRef, { threadId: messageId });
   }
 
 
