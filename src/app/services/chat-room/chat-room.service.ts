@@ -2,12 +2,14 @@ import { inject, Injectable, signal } from '@angular/core';
 import { collection, doc, DocumentData, Firestore, onSnapshot, setDoc } from '@angular/fire/firestore';
 import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
+import { Router, RouterLink } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatRoomService {
   firestore = inject(Firestore);
+  router = inject(Router);
   currentChannel:string = '';
   unsubscribe: any;
   public userList: AppUser[] = [];
@@ -80,9 +82,8 @@ export class ChatRoomService {
     this.unsubscribe = onSnapshot(channelRef, (doc) => {
       if (doc.exists()) {
         const channelData = doc.data() as Channel;
-
-        this.currentChannelData = channelData
-        console.log('channelData', channelData);
+        this.currentChannelData = channelData;
+        this.router.navigate(['start/main/chat/', currentChannel ]);
       } else {
         console.log('No such document!');
       }

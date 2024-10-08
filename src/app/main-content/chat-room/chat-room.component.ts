@@ -34,6 +34,16 @@ export class ChatRoomComponent {
   route = inject(ActivatedRoute);
   unsubscribe: any;
 
+  ngOnInit(): void {
+    // Hole die ID aus den Routenparametern
+    const channelId = this.route.snapshot.paramMap.get('channelId');
+    if (channelId) {
+      // Rufe die Funktion auf, um den Kanal zu öffnen
+      this.chat.openChatById(channelId);
+      this.channelData = this.chat.currentChannelData;
+      console.log(this.channelData);
+    }
+  }
 
   ngOnDestroy(): void {
     if (this.unsubscribe) {
@@ -53,9 +63,7 @@ export class ChatRoomComponent {
     })
   }
 
-  loadChannelData() {
-    
-  }
+
 
   allUserMessages = [
     {
