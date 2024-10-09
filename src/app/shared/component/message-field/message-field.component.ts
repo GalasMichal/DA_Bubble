@@ -27,6 +27,8 @@ export class MessageFieldComponent {
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
 
+
+
   async sendMessage() {
     const currentUser = this.fb.currentUser();
     const newMessage: Message = {
@@ -46,7 +48,7 @@ export class MessageFieldComponent {
     };
 
     const messageDocRef = await this.chat.addMessageToChannel(newMessage);
-    await this.chat.updateMessageThreadId(messageDocRef.id);
+    await this.chat.updateMessageThreadId(messageDocRef);
     this.textArea = ''; // Leere das Eingabefeld nach dem Senden
   }
 
