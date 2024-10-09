@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import localeDe from '@angular/common/locales/de';
 
 registerLocaleData(localeDe);
@@ -12,7 +12,8 @@ registerLocaleData(localeDe);
   styleUrl: './time-separator.component.scss',
 })
 export class TimeSeparatorComponent {
-  
-  today: number = Date.now();
-  
+  @Input() userDate: string = '';
+
+  // today: number = Date.now();
+
 }

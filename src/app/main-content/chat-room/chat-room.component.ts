@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Channel } from '../../models/interfaces/channel.model';
 import { Message } from '../../models/interfaces/message.model';
 import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-chat-room',
@@ -19,7 +20,8 @@ import { Subscription } from 'rxjs';
     MessageFieldComponent,
     MessageAnswerComponent,
     EmojiComponent,
-    ChannelEditComponent
+    ChannelEditComponent,
+    CommonModule
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss',
@@ -42,7 +44,7 @@ export class ChatRoomComponent {
 
   }
   constructor  () {
-    
+
   }
 
   ngOnDestroy(): void {

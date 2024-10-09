@@ -1,7 +1,7 @@
 
 <div class="chat-content">
  @if(!hideDetails){
-  <app-time-separator class="full-width"></app-time-separator>
+  <app-time-separator [userDate]="userMessage.date" class="full-width"></app-time-separator>
  }
   <div class="user-message-container">
     <app-reaction-bar [index]="index" (emojiSelected)="onEmojiSelected($event)"></app-reaction-bar>
@@ -20,7 +20,7 @@
         <div class="answer-container">
           <div (click)="openThread()" class="answer">{{userMessage.lastAnswer}}</div>
           @if (!hideDetails) {
-            <div class="time-stamp">{{userMessage.lastAnswer}}</div>
+            <div class="time-stamp">{{userMessage.time}}</div>
           } @else {
             <div class="line-separator"></div>
           }
