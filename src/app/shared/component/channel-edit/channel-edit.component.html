@@ -32,11 +32,10 @@
       } } -->
     </div>
 
-    <div class="channel-info-container">
-      
-      <div class="edit-info-container">
+    <div class="channel-info-container" [ngClass]="{'d-none': channelEditDescription}">
+      <div class="edit-name-container">
         <h3 class="fontNunito">Beschreibung</h3>
-        <button class="fontNunito" title="Channelinfo ändern">Bearbeiten</button>
+        <button class="fontNunito" title="Channelinfo ändern" (click)="editChannelDescription()">Bearbeiten</button>
       </div>
       
       <p>
@@ -49,6 +48,25 @@
         <h3 class="fontNunito">Erstellt von</h3>
         <div class="fontNunito user-link" title="Chat user ändern">Noah Braun</div>
       </div>
+
+      
+    </div>
+    
+    <div class="input-container" [ngClass]="{'d-none': !channelEditDescription}">
+      <div class="edit-info-container">
+        <label for="description" class="fontNunito">Speichern</label>
+        <button class="fontNunito" title="Channelinfo ändern" (click)="editChannelDescription()">Bearbeiten</button>
+      </div>
+      <input #description class="fontNunito" type="text" formControlName="channelDescription"
+        placeholder="Dein Text hier" name="description" autocomplete="off"/>
+    
+        <div class="separator"></div>
+
+        <div class="creat-user">
+          <h3 class="fontNunito">Erstellt von</h3>
+          <div class="fontNunito user-link" title="Chat user ändern">Noah Braun</div>
+        </div>
+      
     </div>
     
   </div>  

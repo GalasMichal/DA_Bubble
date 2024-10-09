@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class ChannelEditComponent {
   readonly dialog = inject(MatDialogRef <ChannelEditComponent>)
   channelEditTitel: boolean = false
+  channelEditDescription: boolean = false
 
   closeChannelEdit() {
     this.dialog.close()
@@ -20,7 +21,9 @@ export class ChannelEditComponent {
 
   editChannelTittle() {
     this.channelEditTitel = !this.channelEditTitel
-
   }
 
+  editChannelDescription() {
+    this.channelEditDescription = !this.channelEditDescription
+  }
 }
