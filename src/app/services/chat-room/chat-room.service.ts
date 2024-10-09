@@ -38,6 +38,7 @@ export class ChatRoomService {
       channelId,
       'messages'
     );
+    this.answers = [];
     const messageDocRef = await addDoc(channelCollectionRef, message);
     console.log('Message verschickt', message);
     return messageDocRef.id; // Rückgabe der generierten Message-ID
@@ -118,9 +119,11 @@ export class ChatRoomService {
     this.unsub = onSnapshot(
       messageRef,
       (snapshot: QuerySnapshot<DocumentData>) => {
-
+        this.answers = [];
         snapshot.forEach((doc) => {
+
           const messageData = doc.data() as Message;
+
           this.answers.push(messageData);
 
           console.log('Received changes from DB', this.answers);
