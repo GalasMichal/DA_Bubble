@@ -38,7 +38,6 @@ export class UserServiceService {
     };
   }
 
-
   getUsers() {
     return collection(this.firestore, 'users');
   }

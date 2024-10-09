@@ -22,8 +22,6 @@ export class LoginComponent {
   loginForm: FormGroup;
   isFormSubmitted:boolean = false;
 
-
-
   constructor() {
     this.loginForm = this.formBuilder.group({
       email: ['', [
@@ -40,6 +38,7 @@ export class LoginComponent {
 
   async createNewUserWithGoogle() {
     await this.fb.createGoogleUser();
+    this.fb.loadAllBackendData()
   }
 
  async loginWithEmailAndPassword() {
@@ -49,6 +48,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
        await this.fb.loginWithEmailAndPassword(email, password).then(() => {
         console.log('user is eingeloggot', this.fb.currentUser()?.uId, 'user ist:', this.fb.currentUser()?.displayName)
+        this.fb.loadAllBackendData()
     })} else {
       console.log('Formular ist ungültig');
     }

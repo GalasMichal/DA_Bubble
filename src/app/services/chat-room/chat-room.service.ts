@@ -38,8 +38,6 @@ export class ChatRoomService {
     await updateDoc(messageDocRef, { threadId: messageId });
   }
 
-
-
   subChannelList() {
     this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
         this.channelList = [];

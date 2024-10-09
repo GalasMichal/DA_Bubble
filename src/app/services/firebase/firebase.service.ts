@@ -24,6 +24,8 @@ import {
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Channel } from '../../models/interfaces/channel.model';
 import { Router } from '@angular/router';
+import { ChatRoomService } from '../chat-room/chat-room.service';
+import { UserServiceService } from '../user-service/user-service.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +35,8 @@ export class FirebaseService {
   private auth: Auth = inject(Auth);
   provider = new GoogleAuthProvider();
   router = inject(Router);
-
+  chat = inject(ChatRoomService)
+  userService = inject(UserServiceService)
 
 
   public currentUser = signal<AppUser | null>(null);
@@ -41,6 +44,11 @@ export class FirebaseService {
 
   constructor() {
 
+  }
+
+  async loadAllBackendData() {
+    this.chat.subChannelList();
+    this.userService.subUserList();
   }
 
 
