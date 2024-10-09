@@ -15,6 +15,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.875rem;
+    width: 100%;
     .title {
       display: flex;
       justify-content: space-between;
@@ -71,24 +72,21 @@
         color: red;
       }
     }
+    .separator {
+      height: 2px;
+      background: $bg-color;
+    }
     .input-field-hash-icon {
       background-image: url("../../../../assets/media/icons/hash-icon.svg");
     }
   }
-  .channel-name-container {
-    width: 100%;
-    height: fit-content;
-  }
-  .channel-info-container {
-    width: 100%;
-    height: fit-content;
-  }
-
   .edit-name-container,
   .edit-info-container {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    width: 100%;
+    height: fit-content;
     button {
       font-size: 1.125rem;
       font-weight: 600;
