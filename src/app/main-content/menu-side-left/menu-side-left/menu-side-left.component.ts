@@ -6,6 +6,7 @@ import { ChannelCreateComponent } from '../../../shared/component/channel-create
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class MenuSideLeftComponent {
   db = inject(FirebaseService)
   chat = inject(ChatRoomService)
   userService = inject(UserServiceService)
-  openNewMessage = this.chat.currentChannelData;
+  router = inject(Router);
 
   ngOnInit() {
     this.chat.subChannelList();
@@ -59,7 +60,7 @@ export class MenuSideLeftComponent {
   }
 
   writeMessage() {
-
+    this.router.navigate(['/start/main']);
   }
 
 }
