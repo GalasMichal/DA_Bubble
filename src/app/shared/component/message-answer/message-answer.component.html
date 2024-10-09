@@ -11,16 +11,16 @@
       <div class="message-container">
 
         <div class="font-nunito">
-          <h2> {{userMessage.messageSendBy}}</h2> <span>{{ today | date:'H:mm' }} Uhr</span>
+          <h2> {{userMessage.messageSendBy}}</h2> <span>{{ userMessage.time }} Uhr</span>
         </div>
 
         <div class="messages-main-chat font-nunito">{{userMessage.text}}
         </div>
 
         <div class="answer-container">
-          <div (click)="openThread()" class="answer">{{userMessage.lastAnswer}}</div>
+          <div (click)="openThread()" class="answer">{{userMessage.time}}</div>
           @if (!hideDetails) {
-            <div class="time-stamp">{{userMessage.time}}</div>
+            <div class="time-stamp">{{userMessage.lastAnswer}}</div>
           } @else {
             <div class="line-separator"></div>
           }
