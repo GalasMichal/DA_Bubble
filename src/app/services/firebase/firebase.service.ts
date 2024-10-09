@@ -216,7 +216,7 @@ export class FirebaseService {
       });
   }
 
- async addUserToFirestore(user: AppUser) {
+  async addUserToFirestore(user: AppUser) {
     const userCollectionRef = collection(this.firestore, 'users');
     const userDocRef = doc(userCollectionRef, user.uId);
     setDoc(userDocRef, user).then(() => {
@@ -224,11 +224,4 @@ export class FirebaseService {
     });
   }
 
-
-
- 
-
-  getUsers() {
-    return collection(this.firestore, 'users');
-  }
 }

@@ -72,7 +72,7 @@
           @if(isSecondDropdownMenuOpen){
 
             <ul>
-            @for(user of this.chat.userList; track $index) {
+            @for(user of this.userService.userList; track $index) {
                 <li>
                   <button class="single-user">
                     <div class="user-img">

@@ -52,30 +52,6 @@ export class ChatRoomService {
       });
     }
 
-    subUserList() {
-      // return onSnapshot(this.getUsers(), (list) => {
-      //   this.userList = [];
-      //   list.forEach((element) => {
-      //     const userData = element.data();
-      //     const userId = element.id;
-      //     const userObject = this.setUserObject(userData, userId);
-      //     this.userList.push(userObject);
-      //   });
-      // });
-    }
-
-    setUserObject(obj: any, id: string): AppUser {
-      return {
-        status: obj.status || false,
-        channels: obj.channels || [],
-        uId: id || '',
-        email: obj.email || '',
-        displayName: obj.displayName || '',
-        avatarUrl: obj.avatarUrl || '',
-        birthdate: obj.birthdate || '',
-      };
-    }
-
     setChannelObject(obj: any, id: string): Channel {
       return {
         chanId: id || '',

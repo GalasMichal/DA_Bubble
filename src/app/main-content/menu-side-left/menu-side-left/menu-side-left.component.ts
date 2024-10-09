@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChannelCreateComponent } from '../../../shared/component/channel-create/channel-create.component';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
+import { UserServiceService } from '../../../services/user-service/user-service.service';
 
 
 @Component({
@@ -20,13 +21,16 @@ export class MenuSideLeftComponent {
   dialog = inject(MatDialog);
   db = inject(FirebaseService)
   chat = inject(ChatRoomService)
+  userService = inject(UserServiceService)
 
   ngOnInit() {
     this.chat.subChannelList();
+    this.userService.subUserList();
   }
 
   ngOnDestroy(): void {
     this.chat.unsubscribe();
+    this.userService.unsubscribe()
   }
 
 
