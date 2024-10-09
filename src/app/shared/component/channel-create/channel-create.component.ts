@@ -17,7 +17,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 
-import { Channel } from './../../../models/interfaces/channel.model'
+import { Channel } from '../../../models/interfaces/channel.model'
 import { InputAddUsersComponent } from '../input-add-users/input-add-users.component';
 import { AvatarComponent } from '../../avatar/avatar.component';
 import { Auth } from '@angular/fire/auth';
@@ -127,3 +127,4 @@ export class ChannelCreateComponent{
     this.closeDialogAddMembers(event)
   }
 }
+

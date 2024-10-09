@@ -26,3 +26,4 @@ export class ImprintComponent {
     this.location.back(); // Navigate to the previous page
   }
 }
+

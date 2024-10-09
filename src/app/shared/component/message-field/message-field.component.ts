@@ -32,3 +32,4 @@ export class MessageFieldComponent {
     this.isEmojiPickerVisible = false
   }
 }
+

@@ -1,92 +1,92 @@
 <mat-dialog-content>
   
-<form [formGroup]="channelForm" (submit)="createChannelModel($event)">
-  <div [hidden]="!hiddenChannel">
-
-    <div class="channel-container">
-    <div class="arrow-back-container">
-      <h2 class="fontNunito">Channel erstellen</h2>
-      <button class="close-btn" (click)="closeDialogAddChannel($event)">
-        <app-close></app-close> 
-      </button>
-    </div>
-
-    <p class="fontNunito">
-      Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
-      themenbezogen sein #marketing zum Beispiel.
-    </p>
-    <div>
-
-      <div class="input-container">
-        <label for="channel-name" class="fontNunito">Channel-Name</label>
-        <input type="text" #channelName class="fontNunito input-field-hash-icon"
-          formControlName="channelName" placeholder="z.B. Kooperationsprojekte" name="channelName"  autocomplete="off"
-          />
-        @if (channelForm.controls['channelName'].invalid &&
-        (channelForm.controls['channelName'].touched ||
-        channelForm.controls['channelName'].dirty)) {
-          @if(channelForm.controls['channelName'].errors?.['minlength']) {
-            <span>Minimum 3 Buchstaben.</span>
-        } }
-      </div>
-      
-      <div class="input-container">
-        <label for="description" class="fontNunito">Beschreibung <span class="fontNunito">(optional)</span></label>
-        <input #description class="fontNunito" type="text" formControlName="channelDescription"
-          placeholder="Dein Text hier" name="description" autocomplete="off"/>
-      </div>
-      
-      <div class="check-container">
-        <button class="fontNunito" [disabled]="!isChannelNameValid()" (click)="hiddenChannel = false" >
-        Weiter
-      </button>
-    </div>
-      </div>
-    </div>
-  </div>
- 
-<!-- Pause -->
-  <div [hidden]="hiddenChannel">
-
-    <div class="members-container">
-    <div class="profil">
-        <h1>Leute hinzüfugen</h1>
-        <button class="close-btn" (click)="closeDialogAddMembers($event)">
-        <app-close></app-close> 
+  <form [formGroup]="channelForm" (submit)="createChannelModel($event)">
+    <div [hidden]="!hiddenChannel">
+  
+      <div class="channel-container">
+      <div class="arrow-back-container">
+        <h2 class="fontNunito">Channel erstellen</h2>
+        <button class="close-btn" (click)="closeDialogAddChannel($event)">
+          <app-close></app-close> 
         </button>
-    </div>
-      <div class="radio-input">
-        <div>
-            <input type="radio" id="allMembers" name="member" formControlName="member" (change)="onRadioChange($event)" value="allMembers">
-            <label for="allMembers">Alle Mitglieder von <span>OfficeTeam</span> hinzufügen.</label>
+      </div>
+  
+      <p class="fontNunito">
+        Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
+        themenbezogen sein #marketing zum Beispiel.
+      </p>
+      <div>
+  
+        <div class="input-container">
+          <label for="channel-name" class="fontNunito">Channel-Name</label>
+          <input type="text" #channelName class="fontNunito input-field-hash-icon"
+            formControlName="channelName" placeholder="z.B. Kooperationsprojekte" name="channelName"  autocomplete="off"
+            />
+          @if (channelForm.controls['channelName'].invalid &&
+          (channelForm.controls['channelName'].touched ||
+          channelForm.controls['channelName'].dirty)) {
+            @if(channelForm.controls['channelName'].errors?.['minlength']) {
+              <span>Minimum 3 Buchstaben.</span>
+          } }
         </div>
         
-        <div>
-            <input type="radio" id="specificPeople" name="member" formControlName="member" (change)="onRadioChange($event)" value="specificPeople" >
-            <label for="specificPeople"> Bestimmte Leute hinzufügen.</label>
+        <div class="input-container">
+          <label for="description" class="fontNunito">Beschreibung <span class="fontNunito">(optional)</span></label>
+          <input #description class="fontNunito" type="text" formControlName="channelDescription"
+            placeholder="Dein Text hier" name="description" autocomplete="off"/>
+        </div>
+        
+        <div class="check-container">
+          <button class="fontNunito" [disabled]="!isChannelNameValid()" (click)="hiddenChannel = false" >
+          Weiter
+        </button>
+      </div>
         </div>
       </div>
-      
-      @if(isSpecificPeople){
-        <div class="team">
-          <label for="name-input" class="visually-hidden" autocomplete="off">Name:</label>
-          <input type="text" id="name-input" formControlName="specificPeople" name="specificPeople" placeholder="Name eingeben" autocomplete="off" />
-        
-          <ul>
-            @for (user of this.db.userList; track $index) {
-              <li>
-                <app-avatar></app-avatar>
-                <span>{{user.displayName}}</span>
-              </li>
-            }
-          </ul>
-        </div>
-        }
-        <button class="add" type="submit" [disabled]="!allMembers || isSpecificPeople && !isSpecificPeopleValid()">Erstellen</button>
     </div>
-  </div>
-
-
-</form>
-
-</mat-dialog-content>
+   
+  <!-- Pause -->
+    <div [hidden]="hiddenChannel">
+  
+      <div class="members-container">
+      <div class="profil">
+          <h1>Leute hinzüfugen</h1>
+          <button class="close-btn" (click)="closeDialogAddMembers($event)">
+          <app-close></app-close> 
+          </button>
+      </div>
+        <div class="radio-input">
+          <div>
+              <input type="radio" id="allMembers" name="member" formControlName="member" (change)="onRadioChange($event)" value="allMembers">
+              <label for="allMembers">Alle Mitglieder von <span>OfficeTeam</span> hinzufügen.</label>
+          </div>
+          
+          <div>
+              <input type="radio" id="specificPeople" name="member" formControlName="member" (change)="onRadioChange($event)" value="specificPeople" >
+              <label for="specificPeople"> Bestimmte Leute hinzufügen.</label>
+          </div>
+        </div>
+        
+        @if(isSpecificPeople){
+          <div class="team">
+            <label for="name-input" class="visually-hidden" autocomplete="off">Name:</label>
+            <input type="text" id="name-input" formControlName="specificPeople" name="specificPeople" placeholder="Name eingeben" autocomplete="off" />
+          
+            <ul>
+              @for (user of this.db.userList; track $index) {
+                <li>
+                  <app-avatar></app-avatar>
+                  <span>{{user.displayName}}</span>
+                </li>
+              }
+            </ul>
+          </div>
+          }
+          <button class="add" type="submit" [disabled]="!allMembers || isSpecificPeople && !isSpecificPeopleValid()">Erstellen</button>
+      </div>
+    </div>
+  
+  
+  </form>
+  
+  </mat-dialog-content>

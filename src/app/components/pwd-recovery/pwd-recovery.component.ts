@@ -38,3 +38,4 @@ export class PwdRecoveryComponent {
     this.isFormValid = true;
   }
 }
+

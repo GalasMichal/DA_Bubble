@@ -64,3 +64,4 @@ export class PwdResetComponent {
     this.location.back(); // Navigate to the previous page
   }
 }
+
