@@ -15,7 +15,7 @@ export class UserServiceService {
   constructor() { }
 
   subUserList() {
-    return onSnapshot(this.getUsers(), (list) => {
+    this.unsubscribe = onSnapshot(this.getUsers(), (list) => {
       this.userList = [];
       list.forEach((element) => {
         const userData = element.data();
