@@ -1,10 +1,17 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, doc, Firestore, onSnapshot, setDoc, updateDoc } from '@angular/fire/firestore';
+import {
+  collection,
+  doc,
+  Firestore,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
 import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
-import { addDoc } from 'firebase/firestore';
+import { addDoc, DocumentData, QuerySnapshot } from 'firebase/firestore';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -19,13 +26,18 @@ export class ChatRoomService {
   public channelList: Channel[] = [];
   public currentChannelData!: Channel;
   public answers: Message[] = [];
-
+  unsub: any;
 
   constructor() {}
 
   async addMessageToChannel(message: Message) {
     const channelId = this.currentChannelData.chanId;
-    const channelCollectionRef = collection(this.firestore, 'channels', channelId, 'messages');
+    const channelCollectionRef = collection(
+      this.firestore,
+      'channels',
+      channelId,
+      'messages'
+    );
     const messageDocRef = await addDoc(channelCollectionRef, message);
     console.log('Message verschickt', message);
     return messageDocRef.id; // Rückgabe der generierten Message-ID
@@ -33,7 +45,13 @@ export class ChatRoomService {
 
   async updateMessageThreadId(messageId: string) {
     const channelId = this.currentChannelData.chanId;
-    const messageDocRef = doc(this.firestore, 'channels', channelId, 'messages', messageId);
+    const messageDocRef = doc(
+      this.firestore,
+      'channels',
+      channelId,
+      'messages',
+      messageId
+    );
 
     // Aktualisiere das Dokument mit der Firestore-generierten ID als threadId
     await updateDoc(messageDocRef, { threadId: messageId });
@@ -75,39 +93,39 @@ export class ChatRoomService {
   }
 
   openChatById(currentChannel: string) {
+    this.answers = [];
+    this.currentChannel = currentChannel;
     const channelRef = doc(this.firestore, 'channels', currentChannel);
     this.unsubscribe = onSnapshot(channelRef, (doc) => {
       if (doc.exists()) {
         const channelData = doc.data() as Channel;
         this.currentChannelData = channelData;
-        this.router.navigate(['start/main/chat/', currentChannel]);
       } else {
         console.log('No such document!');
       }
     });
+    this.loadCurrentChatData(currentChannel)
+    this.router.navigate(['start/main/chat/', currentChannel]);
   }
 
-  loadCurrentChatData() {
+  loadCurrentChatData(currentChannel: string) {
 
-    const channelDocRef = doc(this.firestore, 'channels', this.currentChannel);
+    const channelDocRef = doc(this.firestore, 'channels', currentChannel);
 
     // Erstelle die Referenz zur 'messages'-Sammlung in diesem Kanal-Dokument
     const messageRef = collection(channelDocRef, 'messages');
 
-    onSnapshot(messageRef, (querySnapshot) => {
+    this.unsub = onSnapshot(
+      messageRef,
+      (snapshot: QuerySnapshot<DocumentData>) => {
 
-      querySnapshot.forEach((doc) => {
-        const messageData = doc.data() as Message;
+        snapshot.forEach((doc) => {
+          const messageData = doc.data() as Message;
+          this.answers.push(messageData);
 
-        this.answers.push(messageData);
-        console.log(this.answers);
-
-      });
-
-
-
-    });
+          console.log('Received changes from DB', this.answers);
+        });
+      }
+    );
   }
-
-
 }

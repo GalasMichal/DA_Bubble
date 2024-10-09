@@ -39,9 +39,10 @@ export class ChatRoomComponent {
   route = inject(ActivatedRoute);
 
   ngOnInit() {
-    if (this.chat.currentChannel) {
-   this.chat.loadCurrentChatData();
+
   }
+  constructor  () {
+    
   }
 
   ngOnDestroy(): void {
@@ -50,6 +51,9 @@ export class ChatRoomComponent {
     }
     if (this.messageSub) {
       this.messageSub.unsubscribe(); // Unsubscribe bei der Zerstörung
+    }
+    if(this.chat.unsub) { // Unsubscribe bei der Zerstörung
+      this.chat.unsub();
     }
   }
 

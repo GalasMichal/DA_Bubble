@@ -36,7 +36,7 @@ export class MessageFieldComponent {
       chatId: this.chat.currentChannelData.chanId,
       date: new Date().toISOString().split('T')[0],
       time: new Date().toLocaleTimeString(),
-      messageSendBy: currentUser!.uId, // Hier den aktuellen Benutzer dynamisch setzen
+      messageSendBy: currentUser!.displayName, // Hier den aktuellen Benutzer dynamisch setzen
       reactions: [],
       threadId: '',
       answerCount: 0,
