@@ -59,7 +59,7 @@ export class MenuSideLeftComponent {
   }
 
   writeMessage() {
-    this.openNewMessage = this.chat.currentChannelData;
+
   }
 
 }
