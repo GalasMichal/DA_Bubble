@@ -22,6 +22,7 @@ export class MenuSideLeftComponent {
   db = inject(FirebaseService)
   chat = inject(ChatRoomService)
   userService = inject(UserServiceService)
+  openNewMessage = this.chat.currentChannelData;
 
   ngOnInit() {
     this.chat.subChannelList();
@@ -57,5 +58,8 @@ export class MenuSideLeftComponent {
     this.chat.openChatById(chanId)
   }
 
+  writeMessage() {
+    this.openNewMessage = this.chat.currentChannelData;
+  }
 
 }
