@@ -87,4 +87,13 @@ export class ChatRoomService {
       }
     })
   }
+
+  loadCurrentChatData(currentChannel: string) {
+    const channelRef = doc(this.firestore, 'channels', currentChannel);
+    const messageRef = collection(channelRef, 'messages');
+    this.unsubscribe = onSnapshot(messageRef, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        
+}
+}}
 }

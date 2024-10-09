@@ -34,23 +34,10 @@ export class ChatRoomComponent {
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
 
-  // message: Message = {
-  //   messageId: '',
-  //   text: '',
-  //   chatId: '',
-  //   date: '',
-  //   time: '',
-  //   messageSendBy: '',
-  //   reactions: [],
-  //   threadId: '',
-  //   answerCount: 0,
-  //   lastAnswer: '',
-  //   editCount: 0,
-  //   lastEdit: '',
-  //   storageData: '',
-  //   taggedUser: []
-  // }
+  ngOnInit() {
 
+
+  }
 
   ngOnDestroy(): void {
     if (this.chat.unsubscribe) {
