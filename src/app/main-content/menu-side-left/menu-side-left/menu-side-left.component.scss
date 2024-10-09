@@ -15,14 +15,13 @@
   flex-direction: column;
   gap: 1.5625rem;
   overflow: hidden auto;
-
-  & nav {
+  nav {
     display: flex;
     align-items: center;
     width: 19.125rem;
     justify-content: space-between;
 
-    & div {
+    div {
       display: flex;
       align-items: center;
       padding-right: 1.25rem;
@@ -35,6 +34,27 @@
         margin: 0;
       }
     }
+    button {
+      background: none;
+      border: solid 1px transparent;
+      border-radius: $b-radius-2;
+      transition: all 175ms ease-in-out;
+      svg path {
+        scale: 1;
+      }
+      &:hover {
+        background: $bg-color;
+      }
+      &:focus {
+        border: solid 1px transparent;
+        background: $bg-color;
+        outline: transparent;
+      }
+      &:hover svg path {
+          fill: $primary-hover;
+          scale: 1.02;
+        }
+      }
   }
 }
 

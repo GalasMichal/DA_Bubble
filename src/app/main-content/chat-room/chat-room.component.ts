@@ -9,6 +9,7 @@ import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from '../../models/interfaces/channel.model';
 import { Message } from '../../models/interfaces/message.model';
+import { MessageNewComponent } from '../../shared/component/message-new/message-new.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -18,7 +19,8 @@ import { Message } from '../../models/interfaces/message.model';
     MessageFieldComponent,
     MessageAnswerComponent,
     EmojiComponent,
-    ChannelEditComponent
+    ChannelEditComponent,
+    MessageNewComponent
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss',
