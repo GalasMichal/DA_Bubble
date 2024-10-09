@@ -41,6 +41,40 @@
       flex-direction: column;
     }
   }
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+    label {
+      color: $black;
+      font-size: 1.125rem;
+      font-weight: 700;
+      line-height: 1.5344rem;
+    }
+    input {
+      background-repeat: no-repeat;
+      background-position: left 30px top 50%;
+      padding-left: 85px;
+      padding-top: 18px;
+      padding-bottom: 18px;
+      background-color: $white;
+      border-radius: 50px;
+      border: #adb0d9 1px solid;
+      &:focus {
+        border: solid 0.0625rem $secondary;
+        outline: $secondary;
+      }
+      + span {
+        color: red;
+      }
+    }
+    .input-field-hash-icon {
+      background-image: url("../../../../assets/media/icons/hash-icon.svg");
+    }
+  }
   .channel-name-container {
     width: 100%;
     height: fit-content;
@@ -111,4 +145,13 @@
   border-radius: 0 $b-radius-1 $b-radius-1 $b-radius-1;
   top: -1.75rem;
   right: 5.5rem;
+}
+
+
+.d-flex {
+  display: flex !important;
+}
+
+.d-none {
+  display: none !important;
 }
