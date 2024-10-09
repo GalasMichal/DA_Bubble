@@ -44,7 +44,7 @@
   </header>
   <div class="chat-main-container">
 
-    @for (singleMessage of allUserMessages; track allUserMessages[index]; let index = $index) {
+    @for (singleMessage of allUserMessages; track allUserMessages[index].messageSendBy; let index = $index) {
       <app-message-answer [userMessage]="singleMessage" [index]="index"></app-message-answer>
     }
 

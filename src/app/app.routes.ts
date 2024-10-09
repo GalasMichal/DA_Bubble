@@ -34,7 +34,7 @@ export const routes: Routes = [
   { path: 'start/legal', component: LegalComponent },
   // { path: '**', component: PageNotFoundComponent },
   { path: 'start/main', component: MainContentComponent, children:[
-    { path: '', component: MessageNewComponent},
+
     { path: 'chat/:id', component: ChatRoomComponent}
 
   ] },

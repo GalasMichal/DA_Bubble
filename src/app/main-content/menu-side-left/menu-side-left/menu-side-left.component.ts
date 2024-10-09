@@ -38,7 +38,6 @@ export class MenuSideLeftComponent {
 
  async toogleDropDown1(){
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
-
   }
 
 

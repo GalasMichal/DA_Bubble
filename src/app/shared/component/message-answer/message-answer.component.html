@@ -5,22 +5,22 @@
  }
   <div class="user-message-container">
     <app-reaction-bar [index]="index" (emojiSelected)="onEmojiSelected($event)"></app-reaction-bar>
-    <img src={{userMessage.profileImageSrc}} alt="profil-image"/>
+    <!-- <img src={{userMessage.profileImageSrc}} alt="profil-image"/> -->
 
     <div class="message-content">
       <div class="message-container">
 
         <div class="font-nunito">
-          <h2> {{userMessage.userName}}</h2> <span>{{ today | date:'H:mm' }} Uhr</span>
+          <h2> {{userMessage.messageSendBy}}</h2> <span>{{ today | date:'H:mm' }} Uhr</span>
         </div>
-        
-        <div class="messages-main-chat font-nunito">{{userMessage.messageContent}}
+
+        <div class="messages-main-chat font-nunito">{{userMessage.text}}
         </div>
 
         <div class="answer-container">
-          <div (click)="openThread()" class="answer">{{userMessage.answers}}</div>
+          <div (click)="openThread()" class="answer">{{userMessage.lastAnswer}}</div>
           @if (!hideDetails) {
-            <div class="time-stamp">{{userMessage.lastAnswerTimeStamp}}</div>
+            <div class="time-stamp">{{userMessage.lastAnswer}}</div>
           } @else {
             <div class="line-separator"></div>
           }
