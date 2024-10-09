@@ -1,11 +1,12 @@
+import { Time } from "@angular/common";
 import { Reaction } from "./reactions.model";
+import { Timestamp } from "firebase/firestore";
 
 export interface Message {
   messageId?: string;
   text: string;
   chatId: string;
-  date: string;
-  time: string;
+  timestamp: Timestamp;
   messageSendBy: string;
   reactions: Reaction[];
   threadId: string;
@@ -15,4 +16,6 @@ export interface Message {
   lastEdit: string;
   storageData: string;
   taggedUser: string[];
+  date?: string;
+  time?: string;
 }

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Message } from '../../../models/interfaces/message.model';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-message-field',
@@ -34,8 +35,7 @@ export class MessageFieldComponent {
     const newMessage: Message = {
       text: this.textArea,
       chatId: this.chat.currentChannelData.chanId,
-      date: new Date().toISOString().split('T')[0],
-      time: new Date().toLocaleTimeString(),
+      timestamp: Timestamp.now(),
       messageSendBy: currentUser!.displayName, // Hier den aktuellen Benutzer dynamisch setzen
       reactions: [],
       threadId: '',

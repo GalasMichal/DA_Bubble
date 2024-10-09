@@ -7,6 +7,7 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Message } from '../../../models/interfaces/message.model';
+import { Timestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-message-answer',
@@ -24,8 +25,7 @@ export class MessageAnswerComponent {
   @Input() userMessage: Message = {
     text: '',
     chatId: '',
-    date: '',
-    time: '',
+    timestamp: Timestamp.now(),
     messageSendBy: '',
     reactions: [],
     threadId: '',

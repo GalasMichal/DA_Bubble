@@ -4,6 +4,8 @@ import {
   doc,
   Firestore,
   onSnapshot,
+  orderBy,
+  query,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
@@ -38,7 +40,7 @@ export class ChatRoomService {
       channelId,
       'messages'
     );
-    this.answers = [];
+    // this.answers = [];
     const messageDocRef = await addDoc(channelCollectionRef, message);
     console.log('Message verschickt', message);
     return messageDocRef.id; // Rückgabe der generierten Message-ID
@@ -94,7 +96,7 @@ export class ChatRoomService {
   }
 
   openChatById(currentChannel: string) {
-    this.answers = [];
+
     this.currentChannel = currentChannel;
     const channelRef = doc(this.firestore, 'channels', currentChannel);
     this.unsubscribe = onSnapshot(channelRef, (doc) => {
@@ -110,24 +112,25 @@ export class ChatRoomService {
   }
 
   loadCurrentChatData(currentChannel: string) {
-
     const channelDocRef = doc(this.firestore, 'channels', currentChannel);
-
-    // Erstelle die Referenz zur 'messages'-Sammlung in diesem Kanal-Dokument
     const messageRef = collection(channelDocRef, 'messages');
 
     this.unsub = onSnapshot(
       messageRef,
       (snapshot: QuerySnapshot<DocumentData>) => {
-        this.answers = [];
-        snapshot.forEach((doc) => {
+        this.answers = []; // Leere die Antworten
 
+        snapshot.forEach((doc) => {
           const messageData = doc.data() as Message;
 
-          this.answers.push(messageData);
+          // Füge den timestamp von Firebase hinzu
+          this.answers.push(messageData); // messageData enthält bereits den Timestamp
 
           console.log('Received changes from DB', this.answers);
         });
+
+        // Sortiere die Nachrichten nach dem Timestamp von Firebase
+        this.answers.sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
       }
     );
   }
