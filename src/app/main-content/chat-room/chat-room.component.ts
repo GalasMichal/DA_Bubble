@@ -11,6 +11,8 @@ import { Channel } from '../../models/interfaces/channel.model';
 import { Message } from '../../models/interfaces/message.model';
 import { Subscription } from 'rxjs';
 import { MessageNewComponent } from '../../shared/component/message-new/message-new.component';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-chat-room',
@@ -22,6 +24,7 @@ import { MessageNewComponent } from '../../shared/component/message-new/message-
     EmojiComponent,
     ChannelEditComponent,
     MessageNewComponent
+    CommonModule
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss',
@@ -41,17 +44,10 @@ export class ChatRoomComponent {
   route = inject(ActivatedRoute);
 
   ngOnInit() {
-    this.loadMessages();
+
   }
-  loadMessages() {
-    this.messageSub = this.chat.messages$.subscribe({
-      next: (messages: Message[]) => {
-        this.allUserMessages = messages; // Setzt die Nachrichten in das Array
-      },
-      error: (err) => {
-        console.error('Fehler beim Laden der Nachrichten:', err);
-      }
-    });
+  constructor  () {
+
   }
 
   ngOnDestroy(): void {
@@ -60,6 +56,9 @@ export class ChatRoomComponent {
     }
     if (this.messageSub) {
       this.messageSub.unsubscribe(); // Unsubscribe bei der Zerstörung
+    }
+    if(this.chat.unsub) { // Unsubscribe bei der Zerstörung
+      this.chat.unsub();
     }
   }
 

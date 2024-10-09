@@ -1,7 +1,7 @@
 
 <div class="chat-content">
- @if(!hideDetails){
-  <app-time-separator class="full-width"></app-time-separator>
+ @if(!hideDetails ){
+  <app-time-separator [userDate]="userMessage" class="full-width"></app-time-separator>
  }
   <div class="user-message-container">
     <app-reaction-bar [index]="index" (emojiSelected)="onEmojiSelected($event)"></app-reaction-bar>
@@ -11,14 +11,14 @@
       <div class="message-container">
 
         <div class="font-nunito">
-          <h2> {{userMessage.messageSendBy}}</h2> <span>{{ today | date:'H:mm' }} Uhr</span>
+          <h2> {{userMessage.messageSendBy}}</h2> <span>{{ userMessage.timestamp.toDate() | date: 'H:mm' }} Uhr</span>
         </div>
 
         <div class="messages-main-chat font-nunito">{{userMessage.text}}
         </div>
 
         <div class="answer-container">
-          <div (click)="openThread()" class="answer">{{userMessage.lastAnswer}}</div>
+          <div (click)="openThread()" class="answer">{{userMessage.time}}</div>
           @if (!hideDetails) {
             <div class="time-stamp">{{userMessage.lastAnswer}}</div>
           } @else {

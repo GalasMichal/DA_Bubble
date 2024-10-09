@@ -1,6 +1,6 @@
 
   <div class="time-separator">
-    <div class="day-time">{{ today | date:'EEEE, d. MMMM' }}</div>
+    <div class="day-time">{{ userDate.timestamp.toDate() | date: 'dd.MM.yyyy' }}</div>
     <div class="middle-line"></div>
   </div>
 

@@ -55,7 +55,9 @@ export class MenuSideLeftComponent {
     console.log(chanId);
 
     // this.chat.currentChannel = chanId
-    this.chat.openChatById(chanId)
+    this.chat.openChatById(chanId);
+    
+
   }
 
   writeMessage() {
