@@ -23,7 +23,7 @@ import { CommonModule } from '@angular/common';
     MessageAnswerComponent,
     EmojiComponent,
     ChannelEditComponent,
-    MessageNewComponent
+    MessageNewComponent,
     CommonModule
   ],
   templateUrl: './chat-room.component.html',

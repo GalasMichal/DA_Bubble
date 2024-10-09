@@ -29,7 +29,6 @@ export class MessageFieldComponent {
   isEmojiPickerVisible: boolean = false;
 
 
-
   async sendMessage() {
     const currentUser = this.fb.currentUser();
     const newMessage: Message = {
