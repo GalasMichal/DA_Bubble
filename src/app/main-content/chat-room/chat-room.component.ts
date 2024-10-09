@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Channel } from '../../models/interfaces/channel.model';
 import { Message } from '../../models/interfaces/message.model';
 import { Subscription } from 'rxjs';
+import { MessageNewComponent } from '../../shared/component/message-new/message-new.component';
 
 @Component({
   selector: 'app-chat-room',
