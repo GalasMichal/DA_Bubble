@@ -7,12 +7,29 @@
       </button>
     </div>
 
-    <div class="channel-name-container">
+    
+    <div class="channel-name-container" [ngClass]="{'d-none': channelEditTitel}">
       <div class="edit-name-container">
         <h3 class="fontNunito">Channel-Name</h3>
-        <button class="fontNunito" title="Channelname ändern" >Bearbeiten</button>
+        <button class="fontNunito" title="Channelname ändern"(click)="editChannelTittle()">Bearbeiten</button>
       </div>
       <p class="fontNunito"><span style="font-weight: bold;">#</span> Entwicklerteam</p>
+    </div>
+    
+    <div class="input-container" [ngClass]="{'d-none': !channelEditTitel}">
+      <div class="edit-name-container">
+        <label for="channel-name" class="fontNunito">Channel-Name</label>
+        <button class="fontNunito" title="Channelname ändern" (click)="editChannelTittle()">Speichern</button>
+      </div>
+      <input type="text" #channelName class="fontNunito input-field-hash-icon"
+        formControlName="channelName" placeholder="z.B. Kooperationsprojekte" name="channelName"  autocomplete="off"
+        />
+      <!-- @if (channelForm.controls['channelName'].invalid &&
+      (channelForm.controls['channelName'].touched ||
+      channelForm.controls['channelName'].dirty)) {
+        @if(channelForm.controls['channelName'].errors?.['minlength']) {
+          <span>Minimum 3 Buchstaben.</span>
+      } } -->
     </div>
 
     <div class="channel-info-container">

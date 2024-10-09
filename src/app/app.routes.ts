@@ -14,6 +14,7 @@ import { ChannelCreateComponent } from './shared/component/channel-create/channe
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ChatRoomComponent } from './main-content/chat-room/chat-room.component';
 import { empty } from 'rxjs';
+import { MessageNewComponent } from './shared/component/message-new/message-new.component';
 
 
 /*
@@ -29,16 +30,11 @@ export const routes: Routes = [
   { path: 'start/register', component: RegisterUserComponent },
   // { path: 'start/main', component: MainContentComponent },
   { path: 'start/avatar', component: CreateAvatarComponent },
-  { path: 'reset', component: PwdResetComponent },
-  { path: 'recovery', component: PwdRecoveryComponent },
-  { path: 'start/create', component: ChannelCreateComponent },
-
-  { path: 'start/edit', component: ChannelEditComponent },
   { path: 'start/imprint', component: ImprintComponent },
   { path: 'start/legal', component: LegalComponent },
   // { path: '**', component: PageNotFoundComponent },
   { path: 'start/main', component: MainContentComponent, children:[
-
+    { path: '', component: MessageNewComponent},
     { path: 'chat/:id', component: ChatRoomComponent}
 
   ] },
