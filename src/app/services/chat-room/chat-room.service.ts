@@ -19,7 +19,7 @@ export class ChatRoomService {
   public channelList: Channel[] = [];
   public currentChannelData!: Channel;
   public answers: Message[] = [];
-  private messagesSubject = new Subject<Message[]>();
+
 
   constructor() {}
 
@@ -87,26 +87,27 @@ export class ChatRoomService {
     });
   }
 
-  loadCurrentChatData(currentChannel: string) {
-    // Erstelle die Dokumentreferenz für den aktuellen Kanal
-    const channelDocRef = doc(this.firestore, 'channels', currentChannel);
+  loadCurrentChatData() {
+
+    const channelDocRef = doc(this.firestore, 'channels', this.currentChannel);
 
     // Erstelle die Referenz zur 'messages'-Sammlung in diesem Kanal-Dokument
     const messageRef = collection(channelDocRef, 'messages');
 
     onSnapshot(messageRef, (querySnapshot) => {
-      const messages: Message[] = [];
+
       querySnapshot.forEach((doc) => {
         const messageData = doc.data() as Message;
-        messages.push({ ...messageData, messageId: doc.id });
+
+        this.answers.push(messageData);
+        console.log(this.answers);
+
       });
 
-      // Benachrichtige die Subscriber über neue Nachrichten
-      this.messagesSubject.next(messages);
+
+
     });
   }
 
-  // Observable, um auf die geladenen Nachrichten zuzugreifen
-  get messages$(): Observable<Message[]> {
-    return this.messagesSubject.asObservable();
-  }}
+
+}

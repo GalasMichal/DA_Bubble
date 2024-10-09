@@ -39,17 +39,9 @@ export class ChatRoomComponent {
   route = inject(ActivatedRoute);
 
   ngOnInit() {
-    this.loadMessages();
+    if (this.chat.currentChannel) {
+   this.chat.loadCurrentChatData();
   }
-  loadMessages() {
-    this.messageSub = this.chat.messages$.subscribe({
-      next: (messages: Message[]) => {
-        this.allUserMessages = messages; // Setzt die Nachrichten in das Array
-      },
-      error: (err) => {
-        console.error('Fehler beim Laden der Nachrichten:', err);
-      }
-    });
   }
 
   ngOnDestroy(): void {
