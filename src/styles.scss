@@ -155,9 +155,9 @@ a, button {
   cursor: pointer;
 }
 
-$b-radius-1: 1.875rem; //30px
-$b-radius-2: 3.125rem; //50px
-$b-radius-3: 1.25rem;  // 20px
+$b-radius-1: 1.875rem;
+$b-radius-2: 3.125rem;
+$b-radius-3: 1.25rem;
 $padding-dialog: 2.1875rem;
 $padding-global: .625rem;
 
@@ -224,11 +224,6 @@ app-message-edit {
   font-size: .75rem;
 }
 
-.warn-txt-2 {
-	width: 70%;
-  padding-left: 1.5625rem;
-}
-
 [disabled] {
   cursor: auto !important;
   background-color: $gray !important;
@@ -269,6 +264,7 @@ app-message-edit {
 .eye-open {
   background-image: url('./assets/media/icons/pwd-visible_eye-open.png');
 }
+
 .eye-closed {
   background-image: url('./assets/media/icons/pwd-not-visible_eye-close.png');
 }
