@@ -14,6 +14,7 @@ section {
   justify-content: space-between;
   background-color: $bg-color;
   padding: 10px;
+  height: 100%;
 
   form {
     width: 80%;
@@ -293,8 +294,7 @@ section {
       &:hover {
         border: $primary-hover 1px solid;
         border-radius: $b-radius-2;
-        scale: 1.01;
-        font-weight: 600;
+        color: $primary;
       }
       &:focus {
         border: solid 0.0625rem $secondary;

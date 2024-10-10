@@ -49,7 +49,7 @@ export class ChatRoomService {
   async updateMessageThreadId(messageId: string) {
     const channelId = this.currentChannelData.chanId;
     const messageDocRef = doc(
-      this.firestore,
+      this.firestore, 
       'channels',
       channelId,
       'messages',
@@ -126,7 +126,7 @@ export class ChatRoomService {
           // Füge den timestamp von Firebase hinzu
           this.answers.push(messageData); // messageData enthält bereits den Timestamp
 
-          console.log('Received changes from DB', this.answers);
+          // console.log('Received changes from DB', this.answers);
         });
 
         // Sortiere die Nachrichten nach dem Timestamp von Firebase

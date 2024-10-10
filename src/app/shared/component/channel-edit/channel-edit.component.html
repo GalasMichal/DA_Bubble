@@ -7,31 +7,30 @@
       </button>
     </div>
 
-    
+    <!-- Channel-Name -->
     <div class="channel-name-container" [ngClass]="{'d-none': channelEditTitel}">
       <div class="edit-name-container">
         <h3 class="fontNunito">Channel-Name</h3>
         <button class="fontNunito" title="Channelname ändern"(click)="editChannelTittle()">Bearbeiten</button>
       </div>
-      <p class="fontNunito"><span style="font-weight: bold;">#</span> Entwicklerteam</p>
+      <p class="fontNunito"><span style="font-weight: bold;">#</span> {{ channelData?.channelName}}</p>
     </div>
     
     <div class="input-container" [ngClass]="{'d-none': !channelEditTitel}">
       <div class="edit-name-container">
         <label for="channel-name" class="fontNunito">Channel-Name</label>
-        <button class="fontNunito" title="Channelname ändern" (click)="editChannelTittle()">Speichern</button>
+        <button class="fontNunito" title="Channelname speichern" (click)="editChannelTittle()">Speichern</button>
       </div>
       <input type="text" #channelName class="fontNunito input-field-hash-icon"
         formControlName="channelName" placeholder="z.B. Kooperationsprojekte" name="channelName"  autocomplete="off"
         />
-      <!-- @if (channelForm.controls['channelName'].invalid &&
-      (channelForm.controls['channelName'].touched ||
-      channelForm.controls['channelName'].dirty)) {
-        @if(channelForm.controls['channelName'].errors?.['minlength']) {
-          <span>Minimum 3 Buchstaben.</span>
-      } } -->
     </div>
+    <!-- Channel-Name END -->
 
+
+
+
+    <!-- Beschreibung -->
     <div class="channel-info-container" [ngClass]="{'d-none': channelEditDescription}">
       <div class="edit-name-container">
         <h3 class="fontNunito">Beschreibung</h3>
@@ -39,7 +38,7 @@
       </div>
       
       <p>
-        Dieser Channel ist für alles rund um #dfsdf vorgesehen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen
+        
       </p>
 
       <div class="separator"></div>
@@ -48,14 +47,13 @@
         <h3 class="fontNunito">Erstellt von</h3>
         <div class="fontNunito user-link" title="Chat user ändern">Noah Braun</div>
       </div>
-
-      
     </div>
-    
+    <!-- Beschreibung END-->
+
     <div class="input-container" [ngClass]="{'d-none': !channelEditDescription}">
       <div class="edit-info-container">
         <label for="description" class="fontNunito">Speichern</label>
-        <button class="fontNunito" title="Channelinfo ändern" (click)="editChannelDescription()">Bearbeiten</button>
+        <button class="fontNunito" title="Channel Beschreibung bearbeiten" (click)="editChannelDescription()">Speichern</button>
       </div>
       <input #description class="fontNunito" type="text" formControlName="channelDescription"
         placeholder="Dein Text hier" name="description" autocomplete="off"/>
