@@ -159,6 +159,7 @@ $b-radius-1: 1.875rem; //30px
 $b-radius-2: 3.125rem; //50px
 $b-radius-3: 1.25rem;  // 20px
 $padding-dialog: 2.1875rem;
+$padding-global: .625rem;
 
 app-search {
   display: contents;
@@ -191,11 +192,14 @@ app-message-edit {
   gap: 5px;
   border-radius: 0px $b-radius-3 $b-radius-3 $b-radius-3;
   box-shadow: $shadow;
-
 }
 
 .resize-none {
   resize: none;
+}
+
+@mixin firstTranistion() {
+  transition: all 175ms ease-in-out;
 }
 
 .ml-mr-auto {

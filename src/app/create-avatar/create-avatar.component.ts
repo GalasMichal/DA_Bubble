@@ -4,6 +4,7 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { LogoComponent } from '../shared/logo/logo.component';
 import { CommonModule } from '@angular/common';
 import { FirebaseService } from '../services/firebase/firebase.service';
+import { BackComponent } from '../shared/component/back/back.component';
 
 interface ProfileAvatar {
   name: string;
@@ -13,7 +14,7 @@ interface ProfileAvatar {
 @Component({
   selector: 'app-create-avatar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterModule, LogoComponent],
+  imports: [CommonModule, RouterLink, RouterModule, LogoComponent, BackComponent],
   templateUrl: './create-avatar.component.html',
   styleUrls: [
     './create-avatar.component.scss',
