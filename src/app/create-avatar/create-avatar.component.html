@@ -1,8 +1,8 @@
 <section class="create-avatar-section">
 
-  <div class="logo-container" [routerLink]="['/']">
+  <header class="logo-container" [routerLink]="['/']">
     <app-logo></app-logo>
-  </div>
+  </header>
 
 
   <div class="content-container">
@@ -13,14 +13,16 @@
         <h2 class="fontNunito">Wähle deinen Avatar</h2>
       </div>
       <div class="avatar-container">
-        <img class="profile-icon" src="../../assets/media/icons/profile-icons/profile-icon.svg" alt="a blank user profile icon">
+        <img class="profile-icon" [src]="'/assets/media/icons/profile-icons/' + selectedAvatar + '.svg'" alt="a blank user profile icon">
         
         <p class="profile-name fontNunito">{{ this.db.currentUser()?.displayName}}</p>
         
         <span class="profile-name-span fontNunito">Aus der Liste wählen</span>
         <div class="profile-avatars">
           @for ( avatar of profileAvatars; track avatar) {
-            <img src="/assets/media/icons/profile-icons/{{avatar.name}}.svg" alt="user-profile icon - default {{avatar.name}}" title="user-icon of : {{avatar.name}}" aria-label="user-icon">
+            <button (click)="chooseAvatar(avatar.name)">
+              <img src="/assets/media/icons/profile-icons/{{avatar.name}}.svg" alt="user-profile icon - default {{avatar.name}}" title="user-icon of : {{avatar.name}}">
+            </button>
           }
         </div>
 
@@ -37,8 +39,8 @@
 
 
   <footer class="legal-imprint-container">
-    <a class="fontNunito" [routerLink]="['/start/imprint']">Impressum</a>
-    <a class="fontNunito" [routerLink]="['/start/legal']">Datenschutz</a>
+    <a routerLink="/start/imprint">Impressum</a>
+    <a routerLink="/start/legal">Datenschutz</a>
   </footer>
 
 </section>

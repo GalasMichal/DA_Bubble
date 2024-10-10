@@ -24,6 +24,7 @@ interface ProfileAvatar {
 
 export class CreateAvatarComponent {
   db = inject(FirebaseService);
+   selectedAvatar: string = 'profile-icon'
 
   baseSrc = "../../../assets/media/icons/profile-icons/";
 
@@ -38,4 +39,8 @@ export class CreateAvatarComponent {
     ...avatar,
     src: `${this.baseSrc}${avatar.name}.svg`
   }));
+
+  chooseAvatar(avatarName: string) {
+    this.selectedAvatar = avatarName;
+  }
 }
