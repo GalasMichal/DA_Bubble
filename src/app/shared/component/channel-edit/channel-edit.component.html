@@ -1,7 +1,7 @@
 <div class="container">
   <div class="container-content">
     <div class="title">
-      <h2 class="fontNunito"># Entwicklerteam</h2>
+      <h2 class="fontNunito"># {{chat.currentChannelData.channelName}}</h2>
       <button  class="close-btn" (click)="closeChannelEdit()">
         <app-close></app-close>
       </button>
@@ -13,7 +13,7 @@
         <h3 class="fontNunito">Channel-Name</h3>
         <button class="fontNunito" title="Channelname ändern"(click)="editChannelTittle()">Bearbeiten</button>
       </div>
-      <p class="fontNunito"><span style="font-weight: bold;">#</span> {{ channelData?.channelName}}</p>
+      <p class="fontNunito"><span style="font-weight: bold;">#</span>{{chat.currentChannelData.channelName}}</p>
     </div>
     
     <div class="input-container" [ngClass]="{'d-none': !channelEditTitel}">
@@ -22,8 +22,7 @@
         <button class="fontNunito" title="Channelname speichern" (click)="editChannelTittle()">Speichern</button>
       </div>
       <input type="text" #channelName class="fontNunito input-field-hash-icon"
-        formControlName="channelName" placeholder="z.B. Kooperationsprojekte" name="channelName"  autocomplete="off"
-        />
+        placeholder="z.B. Kooperationsprojekte" name="channelName" [(ngModel)]="chat.currentChannelData.channelName" autocomplete="off"/>
     </div>
     <!-- Channel-Name END -->
 
@@ -38,7 +37,7 @@
       </div>
       
       <p>
-        
+        {{chat.currentChannelData.channelDescription}}
       </p>
 
       <div class="separator"></div>
@@ -55,8 +54,8 @@
         <label for="description" class="fontNunito">Speichern</label>
         <button class="fontNunito" title="Channel Beschreibung bearbeiten" (click)="editChannelDescription()">Speichern</button>
       </div>
-      <input #description class="fontNunito" type="text" formControlName="channelDescription"
-        placeholder="Dein Text hier" name="description" autocomplete="off"/>
+      <input #description class="fontNunito" type="text"
+        placeholder="Dein Text hier" name="description" [(ngModel)]="chat.currentChannelData.channelDescription" autocomplete="off"/>
     
         <div class="separator"></div>
 
@@ -69,5 +68,9 @@
     
   </div>  
 
-  <button class="check-container ontNunito" routerLink="main">Channel verlassen</button>
+  <div class="btn-container">
+    <button class="channel-btn ontNunito" routerLink="main">Channel verlassen</button>
+    <button class="change-btn ontNunito" routerLink="main">Änderungen speichern</button>
+  </div>
+
 </div>

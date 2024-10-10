@@ -71,10 +71,16 @@ export class ChatRoomComponent {
   }
 
   openTeam(chat: Object) {
-    const dialog = this.dialog.open(ChannelEditComponent, {
+    const currentChannelID = this.chat.currentChannel
+    console.log('ID', currentChannelID);
+
+    const currentChannelName = this.chat.currentChannelData
+    console.log('Name', currentChannelName);
+    
+
+    this.dialog.open(ChannelEditComponent, {
       panelClass: 'team-container',
     })
 
-    dialog.componentInstance.channelData = this.channelData
   }
 }
