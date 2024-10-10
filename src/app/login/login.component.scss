@@ -20,14 +20,6 @@ section {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-
-    app-logo {
-      border: solid 0.0625rem transparent;
-      &:focus {
-        border: solid 0.0625rem $secondary;
-        outline: $secondary;
-      }
-    }
     .logo-container {
       padding-top: 45px;
       .logo {
@@ -152,6 +144,7 @@ section {
         padding: 0.3125rem 0.9375rem;
         border-radius: $b-radius-2;
         margin-bottom: 30px;
+        border: solid 0.0625rem transparent;
         transition: all 175ms ease-in-out;
         &:hover {
           color: $primary;
