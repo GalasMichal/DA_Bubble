@@ -6,13 +6,10 @@
   background: none;
   border: solid 1px transparent;
   border-radius: $b-radius-2;
-  &:hover {
-    background: $bg-color;
-  }
+  &:hover,
   &:focus {
-    border: solid 1px transparent;
     background: $bg-color;
-    outline: transparent;
+    outline: none;
   }
   app-back {
     &:hover svg path {

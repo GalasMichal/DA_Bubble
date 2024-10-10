@@ -30,15 +30,15 @@
   }
   button {
     background: none;
-    &:hover span {
-      transform: scale(1.02);
-    }
-    span {
-      display: block;
-      text-decoration: none;
+    padding-inline: 0.625rem;
+    transition: all 175ms ease-in-out;
+    &:hover,
+    &:focus {
       color: $primary;
-      transform: scale(1);
-      transition: transform 175ms ease-in-out;
+      background: $bg-color;
+      font-weight: 700;
+      border-radius: $b-radius-2;
+      outline: none;
     }
     img {
       display: none;
