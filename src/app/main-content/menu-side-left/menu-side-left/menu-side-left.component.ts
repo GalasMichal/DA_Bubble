@@ -52,12 +52,7 @@ export class MenuSideLeftComponent {
   }
 
   openChannel(chanId : string) {
-    console.log(chanId);
-
-    // this.chat.currentChannel = chanId
     this.chat.openChatById(chanId);
-    
-
   }
 
   writeMessage() {

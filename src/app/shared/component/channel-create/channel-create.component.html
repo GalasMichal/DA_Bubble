@@ -5,21 +5,21 @@
 
     <div class="channel-container">
     <div class="arrow-back-container">
-      <h2 class="fontNunito">Channel erstellen</h2>
+      <h2>Channel erstellen</h2>
       <button class="close-btn" (click)="closeDialogAddChannel($event)">
         <app-close></app-close>
       </button>
     </div>
 
-    <p class="fontNunito">
+    <p>
       Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
       themenbezogen sein #marketing zum Beispiel.
     </p>
     <div>
 
       <div class="input-container">
-        <label for="channel-name" class="fontNunito">Channel-Name</label>
-        <input type="text" #channelName class="fontNunito input-field-hash-icon"
+        <label for="channel-name">Channel-Name</label>
+        <input type="text" #channelName class="input-field-hash-icon"
           formControlName="channelName" placeholder="z.B. Kooperationsprojekte" name="channelName"  autocomplete="off"
           />
         @if (channelForm.controls['channelName'].invalid &&
@@ -31,13 +31,13 @@
       </div>
 
       <div class="input-container">
-        <label for="description" class="fontNunito">Beschreibung <span class="fontNunito">(optional)</span></label>
-        <input #description class="fontNunito" type="text" formControlName="channelDescription"
+        <label for="description">Beschreibung <span>(optional)</span></label>
+        <input #description type="text" formControlName="channelDescription"
           placeholder="Dein Text hier" name="description" autocomplete="off"/>
       </div>
 
       <div class="check-container">
-        <button class="fontNunito" [disabled]="!isChannelNameValid()" (click)="hiddenChannel = false" >
+        <button [disabled]="!isChannelNameValid()" (click)="hiddenChannel = false" >
         Weiter
       </button>
     </div>

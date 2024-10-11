@@ -24,7 +24,6 @@ Merci :)
 */
 
 export const routes: Routes = [
-
   { path: '', redirectTo: 'start', pathMatch: 'full' },
   { path: 'start', component: LoginComponent },
   { path: 'start/register', component: RegisterUserComponent },
@@ -36,7 +35,6 @@ export const routes: Routes = [
   { path: 'start/main', component: MainContentComponent, children:[
     { path: '', component: MessageNewComponent},
     { path: 'chat/:id', component: ChatRoomComponent}
-
   ] },
 
 ];

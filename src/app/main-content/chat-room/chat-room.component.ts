@@ -60,6 +60,8 @@ export class ChatRoomComponent {
     if(this.chat.unsub) { // Unsubscribe bei der Zerstörung
       this.chat.unsub();
     }
+
+    
   }
 
   openAddUsers() {
@@ -68,64 +70,21 @@ export class ChatRoomComponent {
     });
   }
 
-  openTeam() {
+  openTeam(chat: Object) {
+    // const currentChannelID = this.chat.currentChannel
+    // console.log('ID', currentChannelID);
+
+    // const currentChannelName = this.chat.currentChannelData
+    // console.log('Name', currentChannelName);
+    
+
     this.dialog.open(ChannelEditComponent, {
       panelClass: 'team-container',
     })
   }
 
-
-
-  // allUserMessages = [
-  //   {
-  //     userName: 'User Name',
-  //     timeStamp: 'time stamp',
-  //     userMessage: 'Welche Version ist aktuell von Angular?',
-  //     profileImageSrc: 'assets/media/icons/profile-icons/user-6-noah.svg',
-  //     profileImageAlt: 'profile-image',
-  //     messageContent: 'Welche Version ist aktuell von Angular?',
-  //     answers: '2 Antworten',
-  //     lastAnswerTimeStamp: 'Time stamp from last answer',
-  //   },
-  //   {
-  //     userName: 'User Name',
-  //     timeStamp: 'time stamp',
-  //     userMessage: 'Welche Version ist aktuell von Angular?',
-  //     profileImageSrc: 'assets/media/icons/profile-icons/user-6-noah.svg',
-  //     profileImageAlt: 'profile-image',
-  //     messageContent: 'Welche Version ist aktuell von Angular?',
-  //     answers: '2 Antworten',
-  //     lastAnswerTimeStamp: 'Time stamp from last answer',
-  //   },
-  //   {
-  //     userName: 'User Name',
-  //     timeStamp: 'time stamp',
-  //     userMessage: 'Welche Version ist aktuell von Angular?',
-  //     profileImageSrc: 'assets/media/icons/profile-icons/user-6-noah.svg',
-  //     profileImageAlt: 'profile-image',
-  //     messageContent: 'Welche Version ist aktuell von Angular?',
-  //     answers: '2 Antworten',
-  //     lastAnswerTimeStamp: 'Time stamp from last answer',
-  //   },
-  //   {
-  //     userName: 'User Name',
-  //     timeStamp: 'time stamp',
-  //     userMessage: 'Welche Version ist aktuell von Angular?',
-  //     profileImageSrc: 'assets/media/icons/profile-icons/user-6-noah.svg',
-  //     profileImageAlt: 'profile-image',
-  //     messageContent: 'Welche Version ist aktuell von Angular?',
-  //     answers: '2 Antworten',
-  //     lastAnswerTimeStamp: 'Time stamp from last answer',
-  //   },
-  //   {
-  //     userName: 'User Name',
-  //     timeStamp: 'time stamp',
-  //     userMessage: 'Welche Version ist aktuell von Angular?',
-  //     profileImageSrc: 'assets/media/icons/profile-icons/user-6-noah.svg',
-  //     profileImageAlt: 'profile-image',
-  //     messageContent: 'Welche Version ist aktuell von Angular?',
-  //     answers: '2 Antworten',
-  //     lastAnswerTimeStamp: 'Time stamp from last answer',
-  //   },
-  // ];
+  showId(id: object) {
+    console.log('ThreatID:', id);
+    
+  }
 }

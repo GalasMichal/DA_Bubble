@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 55.875rem;
+  max-width: 55.875rem;
   height: 47.8125rem;
   background-color: $white;
   padding: $padding-dialog;
@@ -15,6 +15,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.875rem;
+    width: 100%;
     .title {
       display: flex;
       justify-content: space-between;
@@ -71,24 +72,21 @@
         color: red;
       }
     }
+    .separator {
+      height: 2px;
+      background: $bg-color;
+    }
     .input-field-hash-icon {
       background-image: url("../../../../assets/media/icons/hash-icon.svg");
     }
   }
-  .channel-name-container {
-    width: 100%;
-    height: fit-content;
-  }
-  .channel-info-container {
-    width: 100%;
-    height: fit-content;
-  }
-
   .edit-name-container,
   .edit-info-container {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    width: 100%;
+    height: fit-content;
     button {
       font-size: 1.125rem;
       font-weight: 600;
@@ -98,11 +96,13 @@
       padding-inline: 0.625rem;
       font-weight: 500;
       transition: all 175ms ease-in-out;
-      &:hover {
+      &:hover,
+      &:focus {
         color: $primary;
         background: $bg-color;
         font-weight: 700;
         border-radius: $b-radius-2;
+        outline: none;
       }
     }
   }
@@ -114,28 +114,55 @@
     color: #535af1;
   }
 
-  .check-container {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+  .btn-container {
     margin-top: auto;
-    align-self: flex-end;
-    height: 3.0625rem;
-    font-weight: 700;
-    font-size: 1.125rem;
-    height: 3.0625rem;
-    width: fit-content;
-    padding: 12px 25px;
-    border-radius: 25px;
-    color: white;
-    background-color: $primary;
-    &:hover {
-      background-color: $primary-hover;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.875rem;
+
+    .channel-btn,
+    .change-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      font-weight: 700;
+      font-size: 1.125rem;
+      gap: 10px;
+      padding: 12px 25px;
+      border-radius: $b-radius-2;
       color: $white;
+    }
+    .channel-btn {
+      background-color: $primary;
+      transition: all 175ms ease-in-out;
+      &:hover {
+        background-color: $primary-hover;
+      }
+      &:focus {
+        background-color: $primary-hover;
+        outline: $primary-hover;
+      }
+    }
+    .change-btn {
+      border: 1px solid $primary;
+      color: $primary;
+      background-color: $white;
+      transition: all 175ms ease-in-out;
+      &:hover {
+        background-color: $primary-hover;
+        color: $white;
+        border: solid 1px $primary-hover;
+      }
+      &:focus {
+        background-color: $primary-hover;
+        color: $white;
+        border: solid 1px $primary-hover;
+        outline: $secondary;
+      }
     }
   }
 }
-
 
 ::ng-deep
   .team-container
@@ -143,15 +170,14 @@
   .mdc-dialog__container
   .mat-mdc-dialog-surface {
   border-radius: 0 $b-radius-1 $b-radius-1 $b-radius-1;
-  top: -1.75rem;
-  right: 5.5rem;
-}
-
-
-.d-flex {
-  display: flex !important;
 }
 
 .d-none {
   display: none !important;
 }
+
+// @media (max-width: 600px) {
+//   ::ng-deep
+//   .cdk-overlay-pane.mat-mdc-dialog-panel {
+//   }
+// }

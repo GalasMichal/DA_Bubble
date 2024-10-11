@@ -6,13 +6,11 @@
   background: none;
   border: solid 1px transparent;
   border-radius: $b-radius-2;
-  &:hover {
+  transition: all 175ms ease-in-out;
+  &:hover,
+  &:focus-visible {
     background: $bg-color;
-  }
-  &:focus {
-    border: solid 1px transparent;
-    background: $bg-color;
-    outline: transparent;
+    outline: none;
   }
   app-close {
     &:hover svg path {

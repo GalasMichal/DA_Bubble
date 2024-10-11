@@ -45,15 +45,19 @@ export class MessageFieldComponent {
       storageData: '',
       taggedUser: [],
     };
-
-    const messageDocRef = await this.chat.addMessageToChannel(newMessage);
-    await this.chat.updateMessageThreadId(messageDocRef);
-    this.textArea = ''; // Leere das Eingabefeld nach dem Senden
+    
+    if(this.textArea !== "") {
+      const messageDocRef = await this.chat.addMessageToChannel(newMessage);
+      await this.chat.updateMessageThreadId(messageDocRef);
+      this.textArea = ''; // Leere das Eingabefeld nach dem Senden
+    }
   }
 
   addEmoji(event: any) {
     this.textArea = `${this.textArea}${event.emoji.native}`;
     this.isEmojiPickerVisible = false;
+    console.log('TEST');
+    
   }
 
   showEmojiWindow() {

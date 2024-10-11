@@ -28,7 +28,7 @@
       </div>
 
       <div class="emoijReaction">
-        @for( emoji of emojis; track emojis[index]) {
+        @for( emoji of userMessage.reactions; track emojis[index]) {
           <button class="singleEmoij">{{emoji.symbol}} {{emoji.count}}</button>
         }
 

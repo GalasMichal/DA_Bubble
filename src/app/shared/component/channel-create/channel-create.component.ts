@@ -6,8 +6,6 @@ import {
   MatDialogContent,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { AddMembersComponent } from '../add-members/add-members.component';
-import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 import {
   FormControl,
@@ -20,9 +18,6 @@ import {
 import { Channel } from './../../../models/interfaces/channel.model'
 import { InputAddUsersComponent } from '../input-add-users/input-add-users.component';
 import { AvatarComponent } from '../../avatar/avatar.component';
-import { Auth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
-import { AppComponent } from '../../../app.component';
 import { CloseComponent } from '../close/close.component';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 
@@ -34,9 +29,7 @@ import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
     RouterModule,
     FormsModule,
     RouterLink,
-    AddMembersComponent,
     MatDialogContent,
-    AddMembersComponent,
     ReactiveFormsModule,
     InputAddUsersComponent,
     AvatarComponent,
@@ -96,16 +89,6 @@ export class ChannelCreateComponent{
     event.preventDefault()
     this.dialog.close();
   }
-
-  openAddMembers(event: Event) {
-    this.dialogAddMembers.open(AddMembersComponent, {
-      panelClass: 'add-members-container',
-       // Custom class for profile dialog
-    });
-    this.closeDialogAddChannel(event);
-  }
-
-
 
   createChannelModel(event: Event) {
     // debugger

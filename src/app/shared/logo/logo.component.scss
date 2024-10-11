@@ -1,4 +1,15 @@
-div {
-  cursor: pointer;
-  width: 22.875rem;
+@import "./../../../styles.scss";
+@import "./../../../colors.scss";
+
+::ng-deep header {
+    app-logo {
+        display: flex;
+        border: solid 0.0625rem transparent;
+        width: fit-content;
+        cursor: pointer;
+        &:focus {
+            border: solid 0.0625rem $secondary;
+            outline: $secondary;
+        }
+    }
 }

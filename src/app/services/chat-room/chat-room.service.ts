@@ -47,18 +47,17 @@ export class ChatRoomService {
   }
 
   async updateMessageThreadId(messageId: string) {
+    console.log('updateMessageThreadId:', messageId);
+    
     const channelId = this.currentChannelData.chanId;
     const messageDocRef = doc(
-      this.firestore,
-      'channels',
-      channelId,
-      'messages',
-      messageId
-    );
+      this.firestore, 'channels', channelId, 'messages', messageId);
 
     // Aktualisiere das Dokument mit der Firestore-generierten ID als threadId
     await updateDoc(messageDocRef, { threadId: messageId });
   }
+
+  
 
   subChannelList() {
     this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
@@ -126,7 +125,7 @@ export class ChatRoomService {
           // Füge den timestamp von Firebase hinzu
           this.answers.push(messageData); // messageData enthält bereits den Timestamp
 
-          console.log('Received changes from DB', this.answers);
+          // console.log('Received changes from DB', this.answers);
         });
 
         // Sortiere die Nachrichten nach dem Timestamp von Firebase
@@ -134,4 +133,5 @@ export class ChatRoomService {
       }
     );
   }
+
 }
