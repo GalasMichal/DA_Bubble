@@ -52,9 +52,6 @@ export class MenuSideLeftComponent {
   }
 
   openChannel(chanId : string) {
-    console.log("ID from the chat", chanId);
-
-    // this.chat.currentChannel = chanId
     this.chat.openChatById(chanId);
   }
 

@@ -57,6 +57,8 @@ export class MessageFieldComponent {
   addEmoji(event: any) {
     this.textArea = `${this.textArea}${event.emoji.native}`;
     this.isEmojiPickerVisible = false;
+    console.log('TEST');
+    
   }
 
   showEmojiWindow() {

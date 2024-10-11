@@ -7,7 +7,9 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Message } from '../../../models/interfaces/message.model';
-import { Timestamp } from 'firebase/firestore';
+import { doc, Timestamp, updateDoc } from 'firebase/firestore';
+import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-message-answer',
@@ -18,8 +20,12 @@ import { Timestamp } from 'firebase/firestore';
 })
 export class MessageAnswerComponent {
 
+  chat = inject(ChatRoomService)
+  firestore = inject(Firestore);
   today: number = Date.now();
-
+  state = inject(StateControlService);
+  
+  @Input() hideDetails: boolean = false;
   @Input() index: number = 0;
 
   @Input() userMessage: Message = {
@@ -41,20 +47,33 @@ export class MessageAnswerComponent {
 
   onEmojiSelected(emoji: string) {
     // Überprüfe, ob das Emoji bereits existiert
-    const existingEmoji = this.emojis.find(e => e.symbol === emoji);
-
-    if (existingEmoji) {
-      existingEmoji.count++; // Erhöhe den Zähler
-    } else {
-      this.emojis.push({ symbol: emoji, count: 1 }); // Füge neues Emoji hinzu
+    const existingReaction = this.userMessage.reactions.find(e => e.symbol === emoji);
+    
+    if (existingReaction) {
+      existingReaction.count++; // Erhöhe den Zähler
+    } else {     
+      this.userMessage.reactions.push({ symbol: emoji, count: 1 });
     }
-    console.log(this.emojis);
+
+    this.updateReactionsInFirestore();
   }
 
-  state = inject(StateControlService);
-  @Input() hideDetails: boolean = false;
 
   openThread() {
     this.state.isThreadOpen = true;
   }
+
+  // Methode zum Aktualisieren der Reaktionen in Firestore
+async updateReactionsInFirestore() {
+  const channelId = this.chat.currentChannelData.chanId;
+  const messageId = this.userMessage.threadId;
+  
+  const messageDocRef = doc(this.firestore, 'channels', channelId, 'messages', messageId);
+
+  // Aktualisiere die Reaktionen im Firestore-Dokument
+  await updateDoc(messageDocRef, {reactions: this.userMessage.reactions});
+
+  console.log('Reaktionen erfolgreich aktualisiert');
+}
+
 }

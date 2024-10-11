@@ -8,7 +8,7 @@ export interface Message {
   chatId: string;
   timestamp: Timestamp;
   messageSendBy: string;
-  reactions: Reaction[];
+  reactions: { symbol: string; count: number }[];
   threadId: string;
   answerCount: number;
   lastAnswer: string;
