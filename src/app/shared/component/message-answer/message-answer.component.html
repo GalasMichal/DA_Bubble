@@ -5,13 +5,13 @@
  }
   <div class="user-message-container">
     <app-reaction-bar [index]="index" (emojiSelected)="onEmojiSelected($event)"></app-reaction-bar>
-    <!-- <img src={{userMessage.profileImageSrc}} alt="profil-image"/> -->
+    <img src={{userMessage.messageSendBy!.avatarUrl}} alt="profil-image"/>
 
     <div class="message-content">
       <div class="message-container">
 
         <div class="font-nunito">
-          <h2> {{userMessage.messageSendBy}}</h2> <span>{{ userMessage.timestamp.toDate() | date: 'H:mm' }} Uhr</span>
+          <h2> {{userMessage.messageSendBy.displayName}}</h2> <span>{{ userMessage.timestamp.toDate() | date: 'H:mm' }} Uhr</span>
         </div>
 
         <div class="messages-main-chat font-nunito">{{userMessage.text}}

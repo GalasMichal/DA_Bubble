@@ -30,26 +30,28 @@ export class MessageFieldComponent {
 
 
   async sendMessage() {
+
     const currentUser = this.fb.currentUser();
-    const newMessage: Message = {
-      text: this.textArea,
-      chatId: this.chat.currentChannelData.chanId,
-      timestamp: Timestamp.now(),
-      messageSendBy: currentUser!.displayName, // Hier den aktuellen Benutzer dynamisch setzen
-      reactions: [],
-      threadId: '',
-      answerCount: 0,
-      lastAnswer: '',
-      editCount: 0,
-      lastEdit: '',
-      storageData: '',
-      taggedUser: [],
-    };
-    
-    if(this.textArea !== "") {
-      const messageDocRef = await this.chat.addMessageToChannel(newMessage);
-      await this.chat.updateMessageThreadId(messageDocRef);
-      this.textArea = ''; // Leere das Eingabefeld nach dem Senden
+    if(currentUser){
+      const newMessage: Message = {
+        text: this.textArea,
+        chatId: this.chat.currentChannelData.chanId,
+        timestamp: Timestamp.now(),
+        messageSendBy: currentUser, // Hier den aktuellen Benutzer dynamisch setzen
+        reactions: [],
+        threadId: '',
+        answerCount: 0,
+        lastAnswer: '',
+        editCount: 0,
+        lastEdit: '',
+        storageData: '',
+        taggedUser: [],
+      };
+      if(this.textArea !== "") {
+        const messageDocRef = await this.chat.addMessageToChannel(newMessage);
+        await this.chat.updateMessageThreadId(messageDocRef);
+        this.textArea = ''; // Leere das Eingabefeld nach dem Senden
+      }
     }
   }
 
@@ -57,7 +59,7 @@ export class MessageFieldComponent {
     this.textArea = `${this.textArea}${event.emoji.native}`;
     this.isEmojiPickerVisible = false;
     console.log('TEST');
-    
+
   }
 
   showEmojiWindow() {

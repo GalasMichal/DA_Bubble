@@ -40,7 +40,6 @@ export class ChatRoomService {
       channelId,
       'messages'
     );
-    // this.answers = [];
     const messageDocRef = await addDoc(channelCollectionRef, message);
     console.log('Message verschickt', message);
     return messageDocRef.id; // Rückgabe der generierten Message-ID
@@ -48,7 +47,7 @@ export class ChatRoomService {
 
   async updateMessageThreadId(messageId: string) {
     console.log('updateMessageThreadId:', messageId);
-    
+
     const channelId = this.currentChannelData.chanId;
     const messageDocRef = doc(
       this.firestore, 'channels', channelId, 'messages', messageId);
@@ -57,7 +56,7 @@ export class ChatRoomService {
     await updateDoc(messageDocRef, { threadId: messageId });
   }
 
-  
+
 
   subChannelList() {
     this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
@@ -117,7 +116,7 @@ export class ChatRoomService {
     this.unsub = onSnapshot(
       messageRef,
       (snapshot: QuerySnapshot<DocumentData>) => {
-        this.answers = []; // Leere die Antworten
+        this.answers = []; 
 
         snapshot.forEach((doc) => {
           const messageData = doc.data() as Message;
