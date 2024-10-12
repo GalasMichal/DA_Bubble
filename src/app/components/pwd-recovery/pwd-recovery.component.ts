@@ -4,11 +4,12 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { RouterLink, RouterModule } from '@angular/router';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { CommonModule } from '@angular/common';
+import { LinkFooterComponent } from "../../shared/component/link-footer/link-footer.component";
 
 @Component({
   selector: 'app-pwd-recovery',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, RouterLink, FormsModule, ReactiveFormsModule, LinkFooterComponent],
   templateUrl: './pwd-recovery.component.html',
   styleUrl: './pwd-recovery.component.scss'
 })

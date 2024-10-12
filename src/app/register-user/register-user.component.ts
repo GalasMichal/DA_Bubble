@@ -8,6 +8,7 @@ import { FirebaseService } from '../services/firebase/firebase.service';
 import { LoginComponent } from '../login/login.component';
 import { LogoComponent } from "../shared/logo/logo.component";
 import { BackComponent } from '../shared/component/back/back.component';
+import { LinkFooterComponent } from "../shared/component/link-footer/link-footer.component";
 
 
 
@@ -25,7 +26,8 @@ import { BackComponent } from '../shared/component/back/back.component';
     InfoBoxComponent,
     LoginComponent,
     LogoComponent,
-    BackComponent
+    BackComponent,
+    LinkFooterComponent
 ],
 
   templateUrl: './register-user.component.html',

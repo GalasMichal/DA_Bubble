@@ -31,11 +31,30 @@ export const routes: Routes = [
   { path: 'start/avatar', component: CreateAvatarComponent },
   { path: 'start/imprint', component: ImprintComponent },
   { path: 'start/legal', component: LegalComponent },
-  // { path: '**', component: PageNotFoundComponent },
   { path: 'start/main', component: MainContentComponent, children:[
     { path: '', component: MessageNewComponent},
     { path: 'chat/:id', component: ChatRoomComponent}
   ] },
+  { path: 'reset', component: PwdResetComponent },
+  { path: 'recovery', component: PwdRecoveryComponent },
+  { path: '**', component: PageNotFoundComponent },
 
 ];
+
+// from before :
+// export const routes: Routes = [
+//   { path: '', redirectTo: 'start', pathMatch: 'full' },
+//   { path: 'start', component: LoginComponent },
+//   { path: 'start/register', component: RegisterUserComponent },
+//   // { path: 'start/main', component: MainContentComponent },
+//   { path: 'start/avatar', component: CreateAvatarComponent },
+//   { path: 'start/imprint', component: ImprintComponent },
+//   { path: 'start/legal', component: LegalComponent },
+//   // { path: '**', component: PageNotFoundComponent },
+//   { path: 'start/main', component: MainContentComponent, children:[
+//     { path: '', component: MessageNewComponent},
+//     { path: 'chat/:id', component: ChatRoomComponent}
+//   ] },
+
+// ];
 

@@ -4,13 +4,14 @@ import { FirebaseService } from '../services/firebase/firebase.service';
 import { LogoComponent } from "../shared/logo/logo.component";
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { LinkFooterComponent } from '../shared/component/link-footer/link-footer.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './login.component.media.scss'],
-  imports: [CommonModule, LogoComponent, RouterModule,ReactiveFormsModule, FormsModule, RouterModule, RouterOutlet, RouterLink],
+  imports: [CommonModule, LogoComponent, RouterModule,ReactiveFormsModule, FormsModule, RouterModule, RouterOutlet, RouterLink, LinkFooterComponent],
 
 })
 export class LoginComponent {
