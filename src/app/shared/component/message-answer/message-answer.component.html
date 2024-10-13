@@ -29,7 +29,12 @@
 
       <div class="emoijReaction">
         @for( emoji of userMessage.reactions; track emojis[index]) {
-          <button class="singleEmoij">{{emoji.symbol}} {{emoji.count}}</button>
+          <button class="single-emoij">{{emoji.symbol}} {{emoji.count}}
+            <app-reaction-cloud 
+            [name]="emoji.userName"
+            [symbol]="emoji.symbol"
+            ></app-reaction-cloud>
+          </button>
         }
 
       </div>

@@ -194,6 +194,23 @@ app-message-edit {
   box-shadow: $shadow;
 }
 
+app-reaction-cloud {
+  position: absolute;
+  bottom: 1.625rem;
+  right: -9.1875rem;
+  z-index: 2;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: $b-radius-3 $b-radius-3 $b-radius-3 0;
+  min-width: 10.625rem;
+  width: 100%;
+  min-height: 7.1875rem;
+  height: 100%;
+  background: $primary;
+  color: $white
+}
+
 .resize-none {
   resize: none;
 }

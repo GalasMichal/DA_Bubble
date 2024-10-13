@@ -79,13 +79,17 @@
   }
 }
 
-.singleEmoij {
+.single-emoij {
+  position: relative;
   background-color: transparent;
   border-radius: $b-radius-3;
   border: solid 1px $primary-light;
   padding-inline: 0.625rem;
   &:hover {
     border: solid 1px $primary;
+  }
+  &:hover app-reaction-cloud {
+    display: flex;
   }
 }
 

@@ -9,7 +9,7 @@ export interface Message {
   chatId: string;
   timestamp: Timestamp;
   messageSendBy: User;
-  reactions: { symbol: string; count: number }[];
+  reactions: { userName: string | undefined; symbol: string; count: number }[];
   threadId: string;
   answerCount: number;
   lastAnswer: string;
