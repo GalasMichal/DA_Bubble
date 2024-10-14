@@ -5,7 +5,7 @@ import { LogoComponent } from '../shared/logo/logo.component';
 import { CommonModule } from '@angular/common';
 import { FirebaseService } from '../services/firebase/firebase.service';
 import { BackComponent } from '../shared/component/back/back.component';
-import { LinkFooterComponent } from "../shared/component/link-footer/link-footer.component";
+import { LinkFooterComponent } from "../shared/component/footer/footer.component";
 
 interface ProfileAvatar {
   name: string;

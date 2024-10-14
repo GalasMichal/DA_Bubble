@@ -6,7 +6,7 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoBoxComponent } from '../../register-user/info-box/info-box.component';
 import { CommonModule } from '@angular/common';
-import { LinkFooterComponent } from "../../shared/component/link-footer/link-footer.component";
+import { LinkFooterComponent } from '../../shared/component/footer/footer.component';
 
 @Component({
   selector: 'app-pwd-reset',
