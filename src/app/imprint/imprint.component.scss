@@ -12,7 +12,7 @@ $background-color_2: $white;
 .logo-container {
 	cursor: pointer;
 	padding-top: 4.0625rem;
-	padding-left: 5.5%;
+	padding-left: 4rem; //5.5%
 }
 
 section {
@@ -36,7 +36,7 @@ section {
 		gap: 15rem;
     align-items: end;
 		a {
-			margin-left: 5%;
+			margin-left: 3rem;
 		}
   }
   app-back {
