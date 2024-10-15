@@ -36,6 +36,8 @@ export class MessageAnswerComponent {
   today: number = Date.now();
   state = inject(StateControlService);
 
+  meUser: boolean = true;
+
   @Input() hideDetails: boolean = false;
   @Input() index: number = 0;
 
