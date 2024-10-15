@@ -66,7 +66,7 @@ export class MessageAnswerComponent {
   emojis: { symbol: string; count: number }[] = [];
 
   onEmojiSelected(emoji: string) {
-    const currentUser = this.fb.currentUser()?.displayName;
+    // const currentUser = this.fb.currentUser()?.displayName;
     
     // Überprüfe, ob das Emoji bereits existiert
     const existingReaction = this.userMessage.reactions.find(
@@ -76,7 +76,7 @@ export class MessageAnswerComponent {
     if (existingReaction) {
       existingReaction.count++; // Erhöhe den Zähler
     } else {
-      this.userMessage.reactions.push({ userName: currentUser, symbol: emoji, count: 1 });
+      // this.userMessage.reactions.push({ userName: currentUser, symbol: emoji, count: 1 });
     }
 
     this.updateReactionsInFirestore();
