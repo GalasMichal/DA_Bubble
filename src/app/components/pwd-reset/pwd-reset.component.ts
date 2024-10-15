@@ -6,11 +6,12 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoBoxComponent } from '../../register-user/info-box/info-box.component';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from '../../shared/component/footer/footer.component';
 
 @Component({
   selector: 'app-pwd-reset',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, RouterLink, FormsModule, ReactiveFormsModule, FooterComponent],
   templateUrl: './pwd-reset.component.html',
   styleUrl: './pwd-reset.component.scss'
 })
