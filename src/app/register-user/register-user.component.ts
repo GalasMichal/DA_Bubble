@@ -8,7 +8,7 @@ import { FirebaseService } from '../services/firebase/firebase.service';
 import { LoginComponent } from '../login/login.component';
 import { LogoComponent } from "../shared/logo/logo.component";
 import { BackComponent } from '../shared/component/back/back.component';
-import { LinkFooterComponent } from "../shared/component/footer/footer.component";
+import { FooterComponent } from "../shared/component/footer/footer.component";
 
 
 @Component({
@@ -25,7 +25,7 @@ import { LinkFooterComponent } from "../shared/component/footer/footer.component
     LoginComponent,
     LogoComponent,
     BackComponent,
-    LinkFooterComponent
+    FooterComponent
 ],
 
   templateUrl: './register-user.component.html',

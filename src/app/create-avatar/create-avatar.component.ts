@@ -5,7 +5,7 @@ import { LogoComponent } from '../shared/logo/logo.component';
 import { CommonModule } from '@angular/common';
 import { FirebaseService } from '../services/firebase/firebase.service';
 import { BackComponent } from '../shared/component/back/back.component';
-import { LinkFooterComponent } from "../shared/component/footer/footer.component";
+import { FooterComponent } from "../shared/component/footer/footer.component";
 
 interface ProfileAvatar {
   name: string;
@@ -15,7 +15,7 @@ interface ProfileAvatar {
 @Component({
   selector: 'app-create-avatar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterModule, LogoComponent, BackComponent, LinkFooterComponent],
+  imports: [CommonModule, RouterLink, RouterModule, LogoComponent, BackComponent, FooterComponent],
   templateUrl: './create-avatar.component.html',
   styleUrls: [
     './create-avatar.component.scss',

@@ -8,6 +8,13 @@ $color_2: $black;
 $background-color_1: red;
 $background-color_2: $white;
 
+/* HEADER */
+.logo-container {
+	cursor: pointer;
+	// padding-top: 65px;
+	padding-top: 4.0625rem;
+	padding-left: 5.5%;
+}
 
 section {
   width: 50%;
@@ -17,6 +24,7 @@ section {
   display: flex;
   justify-content: center;
   background-color: $bg-color;
+  scale: .9;
 	>div {
 		background-color: $background-color_2;
 		border-radius: 30px;
@@ -45,10 +53,11 @@ section {
     color: $color_1 !important;
   }
 }
-/* HEADER */
-.logo-container {
-	cursor: pointer;
-	// padding-top: 65px;
-	padding-top: 4.0625rem;
-	padding-left: 5.5%;
+
+/* FOOTER */
+::ng-deep {
+  footer {
+    display: flex;
+    justify-content: center;
+  }
 }
