@@ -1,0 +1,17 @@
+@import "../../../../colors.scss";
+@import "../../../../fonts.scss";
+@import "../../../../styles.scss";
+
+
+.emoji-cloud {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .name {
+        font-weight: 700;
+        line-height: 1.2rem;
+    }
+    .reaction {
+        font-weight: 500;
+    }
+}

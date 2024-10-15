@@ -11,6 +11,8 @@ import { doc, Timestamp, updateDoc } from 'firebase/firestore';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Firestore } from '@angular/fire/firestore';
 import { User } from '../../../models/interfaces/user.model';
+import { ReactionCloudComponent } from '../reaction-cloud/reaction-cloud.component';
+import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 @Component({
   selector: 'app-message-answer',
@@ -22,6 +24,7 @@ import { User } from '../../../models/interfaces/user.model';
     EmojiComponent,
     PickerComponent,
     DatePipe,
+    ReactionCloudComponent
   ],
   templateUrl: './message-answer.component.html',
   styleUrl: './message-answer.component.scss',
@@ -29,6 +32,7 @@ import { User } from '../../../models/interfaces/user.model';
 export class MessageAnswerComponent {
   chat = inject(ChatRoomService);
   firestore = inject(Firestore);
+  fb = inject(FirebaseService)
   today: number = Date.now();
   state = inject(StateControlService);
 
@@ -62,6 +66,8 @@ export class MessageAnswerComponent {
   emojis: { symbol: string; count: number }[] = [];
 
   onEmojiSelected(emoji: string) {
+    const currentUser = this.fb.currentUser()?.displayName;
+    
     // Überprüfe, ob das Emoji bereits existiert
     const existingReaction = this.userMessage.reactions.find(
       (e) => e.symbol === emoji
@@ -70,7 +76,7 @@ export class MessageAnswerComponent {
     if (existingReaction) {
       existingReaction.count++; // Erhöhe den Zähler
     } else {
-      this.userMessage.reactions.push({ symbol: emoji, count: 1 });
+      this.userMessage.reactions.push({ userName: currentUser, symbol: emoji, count: 1 });
     }
 
     this.updateReactionsInFirestore();
@@ -113,7 +119,5 @@ export class MessageAnswerComponent {
 
     // Aktualisiere die Reaktionen im Firestore-Dokument
     await updateDoc(messageDocRef, { reactions: this.userMessage.reactions });
-
-    console.log('Reaktionen erfolgreich aktualisiert');
   }
 }

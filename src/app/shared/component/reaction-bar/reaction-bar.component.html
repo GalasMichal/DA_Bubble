@@ -1,13 +1,13 @@
 <div class="icons">
 
-    <button (click)="confirmMessage()">
+    <!-- <button (click)="confirmMessage()">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20Z" fill="#4BD37B"/>
             <path d="M14.6668 4L7.66679 11.2L5.33346 8.8L3.00012 11.2L7.66679 16L17.0001 6.4L14.6668 4Z" fill="white"/>
         </svg>
-    </button>
+    </button> -->
 
-    <button (click)="handsUp()">
+    <!-- <button (click)="handsUp()">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path d="M8.33777 0L10.0044 3.33333L11.6711 0H8.33777ZM14.3044 0.333333L14.0711 4.06667L17.1711 2L14.3044 0.333333ZM2.83777 2L5.9711 4.06667L5.73777 0.333333L2.83777 2Z" fill="#4AA9FF"/>
             <path d="M6.13768 20H2.20435V15.7L6.80435 16.7666C5.70435 17.9333 6.13768 20 6.13768 20Z" fill="#EBA352"/>
@@ -24,11 +24,16 @@
             <path d="M10.5378 10.5C9.47114 11.3 11.4378 12.8333 12.3711 15.2C13.7045 18.6 17.6045 18.6 19.2378 17.0333C17.7378 18.8 13.5711 19.1333 12.1711 15.4333C11.2378 13.0333 8.97114 11.2 10.5378 10.5Z" fill="#EBA352"/>
             <path d="M13.0045 12.7333C14.3045 12.2667 17.0378 13.1667 16.6712 15.7667C16.6712 13.3333 14.5045 12.7667 13.3045 12.7667C13.1379 12.7667 13.0045 12.7333 13.0045 12.7333Z" fill="#EBA352"/>
             </svg>
-    </button>
+    </button> -->
     
     <!-- EMOJI -->
     <div class="emoji">
-        <emoji-mart #emojiContainer (emojiClick)="addEmoji($event) "[ngClass]="{'show-emoji': isEmojiPickerVisibleMessage[index]}" ></emoji-mart>
+        <emoji-mart #emojiContainer (emojiClick)="addEmoji($event)
+         "[ngClass]="{'show-emoji': isEmojiPickerVisibleMessage[index]}"
+         [showPreview]="false"
+         [enableSearch]="false"
+         [showSingleCategory]="false"
+         ></emoji-mart>
       </div>
     <!-- EMOJI END-->
 
