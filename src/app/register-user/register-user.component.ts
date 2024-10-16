@@ -101,11 +101,11 @@ export class RegisterUserComponent {
   }
 
   isPasswordVisible = false;
-  
+
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
-  
+
 
     /*
   age-validator - IF NEEDED

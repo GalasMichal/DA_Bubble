@@ -22,7 +22,7 @@
       </div>
 
           <p class="fontNunito">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
-        
+
 
         <div class="input-container">
           <label class="visually-hidden" for="name">Dein Name</label>
@@ -40,7 +40,7 @@
           }
         </div>
         </div>
-        
+
         <div class="input-container">
           <label class="visually-hidden" for="name">Dein E-Mail</label>
           <input #email name="name" id="email" autocomplete="off" formControlName="email"
@@ -88,7 +88,7 @@
         <div class="checkbox-container">
           <input id="checkbox" type="checkbox" formControlName="term" name="term">
           <label for="checkbox">Ich stimme der <a class="privacy" href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</label>
-          
+
           <div class="checkbox-description">
             @if (myForm.controls['term'].invalid && (isFormSubmitted || myForm.controls['term'].touched ||
             myForm.controls['term'].dirty)) {
@@ -101,7 +101,7 @@
       </div>
 
         <div class="btn-container">
-          
+
           <button id="submit" type="submit" class="login-btn fontNunito" [disabled]="!myForm.valid" (click)="onSubmit()">Weiter</button>
         </div>
     </form>
