@@ -1,0 +1,32 @@
+<mat-dialog-content class="profile-card">
+    <div class="profil">
+        <h1>Profil</h1>
+        <button class="close-btn" (click)="closeDialogProfile()">
+            <app-close></app-close>             
+        </button>
+    </div>
+
+    <div class="avatar">
+        <app-avatar></app-avatar>
+    </div>
+
+    <div class="name">
+        <h2>Frederik Beck</h2>
+        <button (click)="openDialogEdit()">Bearbeiten
+            <img src="./assets/media/icons/edit.svg" alt="edit">
+        </button>
+    </div>
+
+    <div class="active">
+        <img src="./assets/media/icons/online-without-circle.svg" alt="active">
+        <span class="status">Aktive</span>
+    </div>
+
+    <div class="e-mail">
+        <img src="./assets/media/icons/mail.svg" alt="email" srcset="">
+        <div>
+            <span>E-Mail-Adresse</span>
+            <a href="mailto:" class="email">fred.beckemail.com</a>
+        </div>
+    </div>
+</mat-dialog-content>

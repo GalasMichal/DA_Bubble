@@ -14,7 +14,6 @@ mat-dialog-content {
     align-items: center;
     gap: 0.625rem;
     font-size: 1.25rem;
-    list-style-type: none;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -22,30 +21,53 @@ mat-dialog-content {
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
       width: 100%;
       max-width: 9.375rem;
       height: 2.1875rem;
       border-radius: $b-radius-1;
       &:hover {
-          background-color: $bg-color;
-          transform: scale(1.01);
+        background: $bg-color;
+        transform: scale(1.05);
+      }
+      &:hover a {
+        color: $primary;
+      }
+      &:hover button {
+        color: $primary;
+      }
+      button {
+        color: $black;
+        width: 100%;
+        height: 100%;
+        background: none;
+        &:focus-visible {
+          outline: none;
         }
-        &:hover a{
-          color: $primary;
-
       }
       a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         color: $black;
+        width: 100%;
+        height: 100%;
         text-decoration: none;
-        border: none;
         &:focus-visible {
-            outline: none;
+          outline: none;
         }
       }
     }
   }
 }
+
+::ng-deep
+  .cdk-global-overlay-wrapper {
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+  }
 
 ::ng-deep
   .custom-container
@@ -58,4 +80,19 @@ mat-dialog-content {
   position: absolute;
   top: 6.25rem;
   right: 2.5rem;
+}
+
+@media (max-width: 500px) {
+  ::ng-deep
+    .custom-container
+    .mat-mdc-dialog-container
+    .mdc-dialog__container
+    .mat-mdc-dialog-surface {
+    border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
+    height: 9rem;
+    width: 13rem;
+    position: absolute;
+    top: auto;
+    right: auto;
+  }
 }

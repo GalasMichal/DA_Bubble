@@ -1,61 +1,110 @@
-<section class="login-section">
+<section>
 
-    <div class="logo-container">
-      <a routerLink="">
-        <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
-      </a>
-    </div>
+  <header>
+    <app-logo routerLink="/start"></app-logo>
+  </header>
 
-  <div class="form-container ml-mr-auto">
-    <div style="padding-top: 2%;">
-      <div class="arrow-back-container">
-        <a routerLink="/login" title="Zurück - Login">
-          <mat-icon>arrow_back</mat-icon>
+
+    <form [formGroup]="myForm">
+      <div class="title-container">
+
+        <a class="arrow-back" routerLink="/start">
+          <app-back></app-back>
         </a>
-        <!-- <a href="login">
-          <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
-        </a> -->
-        <h2>Konto erstellen</h2>
+
+        <h2 class="fontNunito">Konto erstellen</h2>
+
+        <button class="info-container">
+          <img id="info-icon" title="How to -registrieren" (click)="openInfoBox()" class="pulse info-icon"
+            src="/assets/media/icons/info_symbol-icon.png" alt="">
+        </button>
+
       </div>
-      <div class="form-title ml-mr-auto">
-        <p>Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
+
+          <p class="fontNunito">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
+
+
+        <div class="input-container">
+          <label class="visually-hidden" for="name">Dein Name</label>
+          <input name="name" id="name" autocomplete="off" formControlName="name"
+            class="input-field input-field-user-icon fontNunito" type="text" placeholder="Dein Name" autocomplete="off" />
+            <div class="warn-txt warn-txt-2">
+          @if (myForm.controls['name'].invalid && (isFormSubmitted || myForm.controls['name'].dirty ||
+          myForm.controls['name'].touched)) {
+            @if (myForm.controls['name'].errors?.['required']) {
+            <span>Name ist ein Pflichtfeld.</span>
+            }
+            @if (myForm.controls['name'].errors?.['minlength']) {
+            <span>Mindestens 4 Buchstaben.</span>
+            }
+          }
+        </div>
+        </div>
+
+        <div class="input-container">
+          <label class="visually-hidden" for="name">Dein E-Mail</label>
+          <input #email name="name" id="email" autocomplete="off" formControlName="email"
+            class="input-field input-field-mail-icon fontNunito" type="email" placeholder="beispielname@email.com"/>
+          <div class="warn-txt warn-txt-2">
+            @if(fb.errorMessageLogin()){
+              <span>{{ fb.errorMessageLogin() }}</span>
+              }
+            @if (myForm.controls['email'].invalid && (isFormSubmitted || myForm.controls['email'].touched ||
+            myForm.controls['email'].dirty)) {
+
+            @if (myForm.controls['email'].errors?.['required']) {
+            <span>E-Mail ist ein Pflichtfeld.</span>
+            }
+            @if (myForm.controls['email'].errors?.['email']) {
+            <span>E-Mail ist unvollständig/inkorrekt.</span>
+            }
+          }
+        </div>
+        </div>
+
+        <div class="input-container">
+          <label class="visually-hidden" for="name">Passwort</label>
+          <input #name id="password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+            class="input-field input-field-pwd-icon fontNunito" placeholder="Passwort"/>
+            <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+          <div class="warn-txt warn-txt-2">
+
+            @if (myForm.controls['password'].invalid && (isFormSubmitted || myForm.controls['password'].touched ||
+            myForm.controls['password'].dirty)) {
+
+            @if (myForm.controls['password'].errors?.['required']) {
+            <span>Password ist ein Pflichtfeld.</span>
+            }
+            @if (myForm.controls['password'].errors?.['minlength']) {
+            <span>Mindestens 8 Zeichen erforderlich: ein Klein- u. ein
+              Großbuchstabe, eine Zahl und ein Sonderzeichen, siehe Info-box.</span>
+            }
+            @if ((myForm.controls['password'].errors?.['pattern']) && !(myForm.controls['password'].errors?.['minlength'])) {
+            <span>Mindestanforderungen nicht erfüllt, siehe Info-box.</span>
+            }
+            }
+          </div>
+        </div>
+        <div class="checkbox-container">
+          <input id="checkbox" type="checkbox" formControlName="term" name="term">
+          <label for="checkbox">Ich stimme der <a class="privacy" href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</label>
+
+          <div class="checkbox-description">
+            @if (myForm.controls['term'].invalid && (isFormSubmitted || myForm.controls['term'].touched ||
+            myForm.controls['term'].dirty)) {
+
+            @if (myForm.controls['term'].errors?.['required']) {
+            <span>Password ist ein Pflichtfeld.</span>
+            }
+          }
+          </div>
       </div>
-    </div>  
-    <form >
-      <div class="input-container ml-mr-auto"> 
-        <input id="name" name="name" class="input-field input-field-user-icon" minlength="3" type="text" placeholder="Name und Nachname" required>
-        <input class="input-field input-field-mail-icon" type="text" placeholder="beispielname@email.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" required />
-        <input class="input-field input-field-pwd-icon" minlength="8" type="password" placeholder="Passwort"  required />
-      </div>
+
+        <div class="btn-container">
+
+          <button id="submit" type="submit" class="login-btn fontNunito" [disabled]="!myForm.valid" (click)="onSubmit()">Weiter</button>
+        </div>
     </form>
 
-    <div class="check-container">
-      <input type="checkbox" required>
-      <br>
-      <label for="checkbox">Ich stimme der <a href="legal">Datenschutzerklärung</a> zu.</label>
-    </div>
-    <div class="btn-container ml-mr-auto">
-
-      <a class="login-btn" href="create">Weiter</a>
-
-      <!-- <button class="login-btn" mat-raised-button>
-        <a class="login-a" href="#">Weiter</a>
-      </button> -->
-
-      <a class="login-a" href="#" title="Weiter - Registrierung">
-        <button class="login-btn" mat-raised-button>Weiter</button>
-      </a>
-    </div>
-
-  </div>
-  
-  <div class="legal-imprint-container ml-mr-auto">
-    <a href="imprint">Impressum</a>
-    <a href="legal">Datenschutz</a>
-
-    <!-- <a href="legal">
-      <button mat-flat-button>Datenschutz</button>
-    </a> -->
-
-  </div>
+  <app-footer />
 </section>

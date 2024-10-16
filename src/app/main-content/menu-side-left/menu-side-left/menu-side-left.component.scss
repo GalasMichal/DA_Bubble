@@ -1,0 +1,209 @@
+@import "./../../../../colors.scss";
+@import "./../../../../styles.scss";
+@import "./../../../../fonts.scss";
+
+.fontNunito {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 27px;
+}
+
+.side-nav-wrapper {
+  padding: 2rem 1.875rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5625rem;
+  overflow: hidden auto;
+  nav {
+    display: flex;
+    align-items: center;
+    width: 19.125rem;
+    justify-content: space-between;
+
+    div {
+      display: flex;
+      align-items: center;
+      padding-right: 1.25rem;
+      gap: 0.9375rem;
+
+      & h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 32.7px;
+        margin: 0;
+      }
+    }
+    button {
+      background: none;
+      border: solid 1px transparent;
+      border-radius: $b-radius-2;
+      transition: all 175ms ease-in-out;
+      svg path {
+        scale: 1;
+      }
+      &:hover {
+        background: $bg-color;
+      }
+      &:focus {
+        border: solid 1px transparent;
+        background: $bg-color;
+        outline: transparent;
+      }
+      &:hover svg path {
+          fill: $primary-hover;
+          scale: 1.02;
+        }
+      }
+  }
+}
+
+.channels {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5625rem;
+}
+
+.drop-down {
+  transform: rotate(-90deg);
+}
+
+.channels-navbar {
+  display: flex;
+  width: 100%;
+  padding: 0.1875rem 0;
+  align-items: center;
+  justify-content: space-between;
+  .channels-navbar-left-container {
+    display: flex;
+    padding: 0.25rem;
+    gap: 1.5625rem;
+    align-items: center;
+    background: none;
+    cursor: pointer;
+    &:hover svg path {
+      fill: $primary-hover;
+    }
+    &:hover div {
+      color: $primary-hover;
+    }
+
+    & .drop-down {
+      width: 0.6875rem;
+    }
+  }
+}
+
+.channels-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  padding-left: 10px;
+  transition: grid-template-rows 500ms;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+
+  ul {
+    overflow: hidden;
+    display: flex;
+    gap: 0.5625rem;
+    flex-direction: column;
+    margin-bottom: 1.5625rem;
+    li {
+      button {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: fit-content;
+        padding: 0.25rem 1.75rem;
+        gap: .9375rem;
+        background: none;
+        border-radius: $b-radius-2;
+        &:hover {
+          background: $bg-color;
+        }
+      }
+    }
+  }
+}
+
+/* start - hover-state add-channel-icon*/
+.add-channel-icon {
+  background: none;
+  border: none;
+  border-radius: $b-radius-2;
+  &:hover {
+    background: $bg-color;
+  }
+  &:hover svg path {
+    fill: $primary-hover;
+  }
+  &:focus-visible {
+    outline: none;
+  }
+}
+/* end - */
+
+.pm-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5625rem;
+
+  > div {
+    > span {
+      margin-top: 3px;
+    }
+  }
+
+  // & .user-img {
+  //   width: 3.125rem;
+  //   position: relative;
+  // }
+}
+
+.padding-l-35 {
+  padding-left: 35px;
+}
+
+.channels-inner-position {
+  display: flex;
+  width: fit-content;
+  gap: 1.5625rem;
+  border-radius: $b-radius-3;
+  &:hover {
+    background-color: $bg-color;
+    span {
+      color: $primary;
+    }
+    svg path {
+      fill: $primary;
+    }
+  }
+  button {
+    padding: 0.25rem 1.75rem;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.menu-title {
+  display: flex;
+  padding: 0.25rem;
+  min-width: 12.875rem;
+  gap: 1.3125rem;
+  cursor: pointer;
+}
+
+.bg-channels {
+  border-radius: $b-radius-3;
+  background-color: $bg-color;
+}
+
+.channels-content.animate {
+  grid-template-rows: 1fr;
+  >div{
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+  }
+}

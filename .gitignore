@@ -1,8 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-meine-info.txt
+my-info.txt
 .eslintrc
 .prettierrc
+dsgvo-start.odt
+imprint-start.odt
 
 # Compiled output
 /dist
@@ -44,3 +46,8 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

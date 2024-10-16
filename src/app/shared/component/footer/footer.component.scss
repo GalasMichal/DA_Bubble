@@ -1,0 +1,29 @@
+@import "../../../../colors.scss";
+@import "../../../../styles.scss";
+
+
+footer {
+  width: 100%;
+  ul {
+    display: flex;
+    gap: 30px;
+    >li>a {
+      font-size: 1.125rem;
+      text-decoration: none;
+      color: $primary-hover;
+      border: transparent 1px solid;
+      border-radius: $b-radius-2;
+      padding: 0.625rem 0.9375rem;
+      &:hover {
+        @include firstTranistion();
+        border: $primary-hover 1px solid;
+        border-radius: $b-radius-2;
+        color: $primary;
+      }
+      &:focus {
+        border: solid 0.0625rem $secondary;
+        outline: $secondary;
+      }
+    }
+  }
+}

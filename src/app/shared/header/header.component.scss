@@ -8,9 +8,6 @@ header {
   justify-content: space-between;
   gap: 0.5rem;
   width: 100%;
-  a {
-    width: 22.875rem; //366px
-  }
   .search-container {
     position: relative;
     height: 3.375rem;
@@ -38,15 +35,8 @@ header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    margin-left: 1.25rem;
     cursor: pointer;
-    .user-avatar {
-      position: relative;
-      .online {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      }
-    }
     span {
       font-weight: 700;
     }
@@ -57,6 +47,12 @@ header {
       fill: $primary-hover;
     }
   }
+}
+
+app-header-dialog{
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 @media (max-width: 900px) {
@@ -78,3 +74,4 @@ header {
     }
   }
 }
+

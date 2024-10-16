@@ -1,0 +1,183 @@
+@import "../../../../colors.scss";
+@import "../../../../styles.scss";
+@import "../../../../fonts.scss";
+
+/* CONTAINER */
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 55.875rem;
+  height: 47.8125rem;
+  background-color: $white;
+  padding: $padding-dialog;
+  .container-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.875rem;
+    width: 100%;
+    .title {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+      height: 40px;
+    }
+  }
+
+  .channel-name-container,
+  .channel-info-container {
+    border: 1px solid #adb0d9;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    .separator {
+      height: 2px;
+      background: $bg-color;
+    }
+    .creat-user {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+    label {
+      color: $black;
+      font-size: 1.125rem;
+      font-weight: 700;
+      line-height: 1.5344rem;
+    }
+    input {
+      background-repeat: no-repeat;
+      background-position: left 30px top 50%;
+      padding-left: 85px;
+      padding-top: 18px;
+      padding-bottom: 18px;
+      background-color: $white;
+      border-radius: 50px;
+      border: #adb0d9 1px solid;
+      &:focus {
+        border: solid 0.0625rem $secondary;
+        outline: $secondary;
+      }
+      + span {
+        color: red;
+      }
+    }
+    .separator {
+      height: 2px;
+      background: $bg-color;
+    }
+    .input-field-hash-icon {
+      background-image: url("../../../../assets/media/icons/hash-icon.svg");
+    }
+  }
+  .edit-name-container,
+  .edit-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    height: fit-content;
+    button {
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 1.5344rem;
+      color: $primary;
+      background: none;
+      padding-inline: 0.625rem;
+      font-weight: 500;
+      transition: all 175ms ease-in-out;
+      &:hover,
+      &:focus {
+        color: $primary;
+        background: $bg-color;
+        font-weight: 700;
+        border-radius: $b-radius-2;
+        outline: none;
+      }
+    }
+  }
+
+  .user-link {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 2.0463rem;
+    color: #535af1;
+  }
+
+  .btn-container {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.875rem;
+
+    .channel-btn,
+    .change-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      font-weight: 700;
+      font-size: 1.125rem;
+      gap: 10px;
+      padding: 12px 25px;
+      border-radius: $b-radius-2;
+      color: $white;
+    }
+    .channel-btn {
+      background-color: $primary;
+      transition: all 175ms ease-in-out;
+      &:hover {
+        background-color: $primary-hover;
+      }
+      &:focus {
+        background-color: $primary-hover;
+        outline: $primary-hover;
+      }
+    }
+    .change-btn {
+      border: 1px solid $primary;
+      color: $primary;
+      background-color: $white;
+      transition: all 175ms ease-in-out;
+      &:hover {
+        background-color: $primary-hover;
+        color: $white;
+        border: solid 1px $primary-hover;
+      }
+      &:focus {
+        background-color: $primary-hover;
+        color: $white;
+        border: solid 1px $primary-hover;
+        outline: $secondary;
+      }
+    }
+  }
+}
+
+::ng-deep
+  .team-container
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  border-radius: 0 $b-radius-1 $b-radius-1 $b-radius-1;
+}
+
+.d-none {
+  display: none !important;
+}
+
+// @media (max-width: 600px) {
+//   ::ng-deep
+//   .cdk-overlay-pane.mat-mdc-dialog-panel {
+//   }
+// }

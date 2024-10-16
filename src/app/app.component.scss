@@ -1,19 +1,19 @@
 @import "./../colors.scss";
 @import "./../styles.scss";
 
-.wrapper {
+.wrapper{
   height: 100vh;
   width: 100%;
   max-width: 1920px;
-  background-color: $bg-color;
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  margin: auto;
+  align-items: center;
+  justify-content: center;
 }
 
 .router-outlet{
   display: flex;
   flex: 1;
   min-width: 100%;
+  min-height: 100%;
 }

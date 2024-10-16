@@ -1,33 +1,27 @@
-<mat-drawer-container class="content-container" autosize>
-  <mat-drawer #drawer class="sidenav" mode="side">
-    <div class="side-nav-wrapper">
-      <nav>
-        <div>
-          <img src="assets/media/icons/workspace-logo.svg" alt="logo navbar" srcset="">
-          <h2>Devspace</h2>
-        </div>
-        <img src="assets/media/icons/edit-square.svg" alt="" srcset="">
-      </nav>
-      <div class="content wrapper">
-        <div class="channels">
-          <div class="channels-navbar">
-            <div class="channels-navbar-left-container">
-              <img src="assets/media/icons/arrow-drop-down.svg" alt="drop-down-menu" srcset="">
-              <img src="assets/media/icons/workspaces.svg" alt="" srcset="">
-              <div>Channels</div>
-            </div>
-            <img src="" alt="" srcset="">
-          </div>
-        </div>
-      </div>
-    </div>
-  </mat-drawer>
+<div class="wrapper">
+  <app-header></app-header>
 
-  <div class="sidenav-content">
-    <button type="button-sidenav-toggle" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
-    </button>
+  <div class="main-content-container">
+    <div class="sidenav" [class.animate]="isMenuOpen">
+      <app-menu-side-left></app-menu-side-left>
+    </div>
+
+    <div class="main-content">
+      <router-outlet></router-outlet>
+
+      <!-- <button (click)="openUserProfile()">
+          Open Dialog User
+
+        </button> -->
+
+    </div>
+    <div [ngClass]="state.isThreadOpen ? 'thread-container' : 'd-none'" [class.animate]="state.isThreadOpen">
+      <app-thread-answer></app-thread-answer>
+    </div>
+
+    <button class="side-menu-btn fontNunito" (click)="isMenuOpen = !isMenuOpen">Side Menu <img
+        src="assets/media/icons/show-menu.svg" alt="" srcset=""></button>
   </div>
 
 
-</mat-drawer-container>
+</div>

@@ -1,47 +1,85 @@
-<section class="login-section">
-  <div class="header-icons">
-    <div class="logo-container">
-      <a routerLink="">
-        <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
-      </a>
-    </div>
+<section>
+  <!-- header/logo bar -->
+  <header>
+    <app-logo routerLink='/'></app-logo>
     <div class="new-user-link">
       <p>Neu bei DABubble?</p>
-      <a href="register">Konto erstellen</a>
+      <button routerLink="register">Konto erstellen</button>
     </div>
-  </div>
- 
-  <div class="form-container ml-mr-auto">
+  </header>
 
-    <div class="form-title ml-mr-auto">
+  <!-- white container -->
+  <div class="content-container">
+    <!-- title box -->
+    <div class="form-title">
       <h2>Anmeldung</h2>
       <p>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
     </div>
-    <form >
-      <div class="input-container ml-mr-auto"> 
-        <input class="input-field input-field-mail-icon" type="text" placeholder="beispielname@email.com" />
-        <input class="input-field input-field-pwd-icon" type="password" placeholder="Passwort" />
-        <a class="ml-mr-auto" href="#">Passwort vergessen?</a>
+
+    <!-- form container -->
+    <form [formGroup]="loginForm" (ngSubmit)="loginWithEmailAndPassword()">
+      <div class="input-container">
+        <label class="visually-hidden" for="email">E-Mail-Adresse</label>
+        <input class="input-field input-field-mail-icon" id="email" type="email" formControlName="email"
+          placeholder="beispielname@email.com" autocomplete="username"/>
+        <div class="warn-txt">
+            @if(fb.errorMessageLogin()){
+            <span>{{ fb.errorMessageLogin() }}</span>
+            }
+          @if (loginForm.controls['email'].invalid && (isFormSubmitted || loginForm.controls['email'].touched ||
+            loginForm.controls['email'].dirty)) {
+          @if (loginForm.controls['email'].errors?.['required']) {
+          <span>E-Mail ist ein Pflichtfeld.</span>
+            }
+          @if (loginForm.controls['email'].errors?.['email']) {
+            <span id="email-error">E-Mail ist unvollständig/inkorrekt.</span>
+          }
+          }
+        </div>
       </div>
-    </form>
+      <div class="input-container">
+        <label class="visually-hidden" for="password">Passwort</label>
+        <input autocomplete="current-password" id="password" class="input-field input-field-pwd-icon fontNunito input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+          placeholder="Passwort"/>
+          <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+          <div class="warn-txt">
 
-    <div class="seperator-container">
-      <p class="sep-line-txt">ODER</p>
+            @if (loginForm.controls['password'].invalid && (isFormSubmitted || loginForm.controls['password'].touched || loginForm.controls['password'].dirty)) {
+              @if (loginForm.controls['password'].errors?.['required']) {
+              <span>Password ist ein Pflichtfeld.</span>
+              }
+              @if (loginForm.controls['password'].errors?.['minlength']) {
+              <span id="password-error">
+                Mindestens 8 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen.</span>
+              }
+              @if ((loginForm.controls['password'].errors?.['pattern']) && !(loginForm.controls['password'].errors?.['minlength'])) {
+              <span>Mindestanforderungen nicht erfüllt.</span>
+              }
+            }
+          </div>
+      </div>
+      <div class="btn-container">
+        <button class="login-btn" type="submit">Anmelden</button>
+        <button class="guest-btn" routerLink="main">Gäste-Login</button>
+      </div>
+      <!-- pwd recovery link -->
+      <button class="btn-password fontNunito" routerLink= '/recovery' title="Passwort vergessen?" aria-label="Link zur Passwort wiederherstellung">Passwort vergessen?</button>
+      <!-- separator -->
+      <div class="seperator-container">
+      <span class="sep-line-txt">ODER</span>
     </div>
-    <div class="google-btn-container ml-mr-auto">
-      <a class="ml-mr-auto" href="#">
-        <img class="google-logo" src="../../assets/media/icons/google-logo-icon.svg" alt="google logo">
-        Anmeldung mit Google</a>
-    </div>
-    <div class="btn-container ml-mr-auto">
-      <a class="login-btn" href="#">Anmelden</a>
-      <a class="guest-btn" href="#">Gäste-Login</a>
-    </div>
+    <!-- goggle btn -->
+  </form>
 
-  </div>
-  
-  <div class="legal-imprint-container ml-mr-auto">
-    <a routerLink="imprint">Impressum</a>
-    <a routerLink="legal">Datenschutz</a>
-  </div>
+  <button class="input-focus btn-google"
+    (click)="createNewUserWithGoogle()">
+    <img src="/assets/media/icons/google-logo-icon.svg" alt="google logo">
+    Anmeldung mit Google
+  </button>
+  <!-- login & guest btn -->
+
+</div>
+  <!-- legal & imprint btn -->
+  <app-footer />
+
 </section>
