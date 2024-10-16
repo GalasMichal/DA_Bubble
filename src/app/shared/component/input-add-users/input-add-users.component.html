@@ -1,12 +1,21 @@
 <div class="team">
   <div class="search">
     <label for="name-input" class="visually-hidden">Name:</label>
+    @for (add of choosenUser; track $index) {
+      <li>
+        <div class="user-img">
+          <app-avatar></app-avatar>
+        </div>
+        <div>{{add}}</div>
+        <app-close></app-close>
+      </li>
+    }
     <input type="text" id="name-input" placeholder="Name eingeben" autocomplete="off" />
   </div>
 
   <ul>
       @for(user of this.userService.userList; track $index) {
-          <li (click)="addUser()">
+          <li (click)="addUser(user.displayName)">
             <button class="single-user">
               <div class="user-img">
                 <app-avatar></app-avatar>
