@@ -26,8 +26,7 @@ section {
     height: 75vh;
     width: 100%;
     text-align: center;
-    overflow: hidden;
-    overflow-y: scroll;
+    overflow: auto;
     >div {
       width: 80%;
     }
