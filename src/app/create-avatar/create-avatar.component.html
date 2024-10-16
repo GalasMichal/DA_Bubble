@@ -4,7 +4,6 @@
     <app-logo></app-logo>
   </header>
 
-
   <div class="content-container">
       <div class="arrow-back-container">
         <a class="arrow-back" [routerLink]="['/']" >
@@ -14,9 +13,9 @@
       </div>
       <div class="avatar-container">
         <img class="profile-icon" [src]="'/assets/media/icons/profile-icons/' + selectedAvatar + '.svg'" alt="a blank user profile icon">
-        
+
         <p class="profile-name fontNunito">{{ this.db.currentUser()?.displayName}}</p>
-        
+
         <span class="profile-name-span fontNunito">Aus der Liste wählen</span>
         <div class="profile-avatars">
           @for ( avatar of profileAvatars; track avatar) {
