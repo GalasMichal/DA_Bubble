@@ -4,12 +4,14 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { LogoComponent } from '../shared/logo/logo.component';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
+import { BackComponent } from '../shared/component/back/back.component';
+import { FooterComponent } from '../shared/component/footer/footer.component';
 
 
 @Component({
   selector: 'app-legal',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, LogoComponent],
+  imports: [CommonModule, RouterModule, RouterLink, LogoComponent, BackComponent, FooterComponent],
   templateUrl: './legal.component.html',
   styleUrls: [
     './legal.component.scss',
