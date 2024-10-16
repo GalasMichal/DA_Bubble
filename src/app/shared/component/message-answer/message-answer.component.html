@@ -5,13 +5,13 @@
  }
   <div class="user-message-container" [ngClass]="{'user-message-container-right': meUser}">
     <app-reaction-bar class="reaction-bar" [ngClass]="{'reaction-bar-right': meUser}" [index]="index" (emojiSelected)="onEmojiSelected($event)"></app-reaction-bar>
-    <img src={{userMessage.messageSendBy!.avatarUrl}} alt="profil-image"/>
+    <img src={{userMessage.messageSendBy.avatarUrl}} alt="profil-image"/>
 
     <div class="message-content" [ngClass]="{'message-content-right': meUser}">
       <div class="message-container">
 
         <div class="user-time" [ngClass]="{'user-time-right': meUser}">
-          <h2> {{userMessage.messageSendBy.displayName}}</h2> 
+          <h2> {{userMessage.messageSendBy.displayName}}</h2>
           <span>{{ userMessage.timestamp.toDate() | date: 'H:mm' }} Uhr</span>
         </div>
 
@@ -31,7 +31,7 @@
       <div class="emoijReaction">
         @for( emoji of userMessage.reactions; track emojis[index]) {
           <button class="single-emoij">{{emoji.symbol}} {{emoji.count}}
-            <app-reaction-cloud 
+            <app-reaction-cloud
             [name]="emoji.userName"
             [symbol]="emoji.symbol"
             ></app-reaction-cloud>

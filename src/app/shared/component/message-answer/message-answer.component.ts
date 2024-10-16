@@ -36,7 +36,7 @@ export class MessageAnswerComponent {
   today: number = Date.now();
   state = inject(StateControlService);
 
-  meUser: boolean = true;
+  meUser: boolean = false;
 
   @Input() hideDetails: boolean = false;
   @Input() index: number = 0;
@@ -63,13 +63,13 @@ export class MessageAnswerComponent {
     taggedUser: [],
   };
 
-  
+
 
   emojis: { symbol: string; count: number }[] = [];
 
   onEmojiSelected(emoji: string) {
     // const currentUser = this.fb.currentUser()?.displayName;
-    
+
     // Überprüfe, ob das Emoji bereits existiert
     const existingReaction = this.userMessage.reactions.find(
       (e) => e.symbol === emoji
@@ -89,6 +89,9 @@ export class MessageAnswerComponent {
   }
 
   ngOnInit() {
+    if (this.userMessage.messageSendBy.uId === this.fb.currentUser()?.uId) {
+      this.meUser = true;
+    }
     // if(this.userId) {
     //   this.getUserFromAnswer(this.userId);
     // }
