@@ -28,10 +28,10 @@
     </div>
   </div>
 
-  <app-input-add-users></app-input-add-users>
+  <app-input-add-users (activeButton)="onButtonChanged($event)" ></app-input-add-users>
 
 
-  <button class="add" [disabled]="true">
+  <button class="add" [disabled]="!activeButton">
     Hinzüfugen
   </button>
 </mat-dialog-content>

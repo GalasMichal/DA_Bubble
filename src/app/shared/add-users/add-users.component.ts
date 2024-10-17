@@ -12,8 +12,12 @@ import { InputAddUsersComponent } from '../component/input-add-users/input-add-u
 })
 export class AddUsersComponent {
   readonly dialog = inject(MatDialogRef <AddUsersComponent>)
+  activeButton: boolean = false
 
   closeAddUsers() {
     this.dialog.close()
+  }
+  onButtonChanged(value: boolean) {
+    this.activeButton = value;
   }
 }

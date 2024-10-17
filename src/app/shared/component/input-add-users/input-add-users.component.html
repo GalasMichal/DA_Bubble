@@ -1,21 +1,25 @@
 <div class="team">
   <div class="search">
     <label for="name-input" class="visually-hidden">Name:</label>
-    @for (add of choosenUser; track $index) {
-      <li>
+    <ul class="added-user">
+      @for (user of choosenUser; track $index) {
+        <li>
         <div class="user-img">
           <app-avatar></app-avatar>
         </div>
-        <div>{{add}}</div>
-        <app-close></app-close>
+        <div>{{user.userName}}</div>
+        <button class="close-btn" (click)="removeUser($index)">
+          <app-close></app-close>
+        </button>
       </li>
     }
+    </ul>
     <input type="text" id="name-input" placeholder="Name eingeben" autocomplete="off" />
   </div>
 
-  <ul>
+  <ul class="list-of-user" [ngStyle]="{'top': top + 'px'}">
       @for(user of this.userService.userList; track $index) {
-          <li (click)="addUser(user.displayName)">
+          <li (click)="addUser(user.displayName, user.uId)">
             <button class="single-user">
               <div class="user-img">
                 <app-avatar></app-avatar>

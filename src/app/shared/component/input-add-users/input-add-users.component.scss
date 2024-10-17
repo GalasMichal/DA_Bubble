@@ -3,37 +3,42 @@
 @import "../../../../styles.scss";
 
 .team {
-  position: relative;
   display: flex;
   flex-direction: column;
   max-width: 20rem;
   width: 100%;
-
-  &:has(input[type="text"]:focus) ul {
+  color: $black;
+  border-radius: $b-radius-1 $b-radius-1 $b-radius-1 $b-radius-1;
+  &:has(input[type="text"]:focus) .list-of-user {
     display: block;
   }
 
   .search {
     display: flex;
     flex-direction: column;
+    position: relative;
     border: solid 0.0625rem $primary-light;
     border-radius: $b-radius-1;
-    li {
-      display: flex;
-      align-items: center;
-      background: $bg-color;
-      border-radius: $b-radius-2;
-      width: fit-content;
-      margin: .25rem;
-      gap: .5rem;
+    .added-user {
+      li {
+        display: flex;
+        align-items: center;
+        background: $bg-color;
+        border-radius: $b-radius-2;
+        width: fit-content;
+        font-weight: 400;
+        font-size: 1.125rem;
+        margin: 0.25rem;
+        gap: 0.5rem;
+      }
     }
     > input {
       max-width: 26.25rem;
       width: 100%;
       height: 3.25rem;
       padding-inline: 1.25rem;
-      border-radius: $b-radius-1;
-
+      border-radius: $b-radius-1 $b-radius-1 $b-radius-1 $b-radius-1;
+      background: padding-box;
       &:focus {
         border: solid 0.0625rem $secondary;
         outline: $secondary;
@@ -41,16 +46,17 @@
     }
   }
 
-  ul {
+  .list-of-user {
     display: none;
     position: absolute;
-    top: 45px;
-    left: 20px;
+    top: 175px;
+    left: 45px;
     z-index: 900;
     max-width: 300px;
     width: 100%;
     max-height: 300px;
     border-radius: 0 $b-radius-1 $b-radius-1 $b-radius-1;
+    border: solid 1px $primary-light;
     padding: 0.9375rem;
     box-shadow: $shadow;
     background: $white;
