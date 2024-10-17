@@ -26,6 +26,10 @@ section {
 
   .logo-container {
     width: 100%;
+    >app-logo {
+      padding-top: 3.5rem;
+      padding-left: 3.2rem;
+    }
   }
 
   .content-container {
@@ -41,6 +45,7 @@ section {
     border-radius: $b-radius-2;
     padding: 40px;
     margin: 10px;
+    scale: .9;
 
     .arrow-back-container {
       display: flex;

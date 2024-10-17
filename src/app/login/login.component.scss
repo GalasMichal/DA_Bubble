@@ -20,13 +20,9 @@ section {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    .logo-container {
-      padding-top: 45px;
-      .logo {
-        width: 242.11px;
-        height: 70px;
-      }
-    }
+    padding-top: 3.5rem !important;
+    padding-left: 4rem;
+    padding-right: 4rem;
     .new-user-link {
       display: flex;
       flex-direction: column;
@@ -76,6 +72,7 @@ section {
     border-radius: $b-radius-3;
     padding: 40px;
     margin: 10px;
+    scale: .9;
     .form-title {
       display: flex;
       flex-direction: column;

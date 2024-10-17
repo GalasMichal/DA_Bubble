@@ -8,25 +8,24 @@ $background-color_1: $bg-color;
 $background-color_2: $white;
 $background-color_3: $primary;
 
-h2 {
-	color: $color_1;
-	font-size: 2.875rem;
-	font-weight: 700;
-	line-height: normal;
-}
-.login-section {
+section {
 	width: 100%;
 	height: 100vh;
 	background-color: $background-color_1;
-	.logo-container { padding-top: 4.0625rem;
-    padding-left: 5.5%;
+	h2 {
+		color: $color_1;
+		font-size: 2.875rem;
+		font-weight: 700;
+		line-height: normal;
+	}
+	>div:first-child { 
+		padding-top: 4.0625rem;
+    padding-left: 4rem;
     .logo { cursor: pointer;
       width: 242.11px;
       height: 70px;
     }
   }
-}
-
 	.form-container {
 		scale: 0.8;
 		display: flex;
@@ -37,7 +36,8 @@ h2 {
 		background-color: $background-color_2;
 		border-radius: 4%;
 		padding-top: 2%;
-		.arrow-back-container { height: 40px;
+		.arrow-back-container { 
+			height: 40px;
       display: flex;
       margin-left: 1%;
       align-items: center;
@@ -49,66 +49,75 @@ h2 {
         cursor: pointer;
       }
     }
-  }
-	.form-title {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin-top: 17%;
-		gap: 8px;
-		width: 27.75rem;
-		text-align: center;
-		margin-bottom: 35px;
-		p { font-size: 20px;
-	  }
-  }
-	.check-container {
-		display: flex;
-		gap: 8px;
-		flex-direction: column;
-		text-align: center;
-		.input-field { background-repeat: no-repeat;
-		background-position: left 30px top 50%;
-		padding-left: 85px;
-		padding-top: 18px;
-		padding-bottom: 18px;
-		width: 31.25rem;
-		height: 3.07rem;
-		background-color: $background-color_1;
-		border-radius: 50px;
-		margin-bottom: 35px;
-		&.input-field-mail-icon { background-image: url('../../../assets/media/icons/mail-icon-input-field.svg');
-	  }
-  }
-	p {
-		font-weight: normal;
-	}
-	} 
-
-.btn-container {
-	width: 21rem;
-	height: 3.0625rem;
-	display: flex;
-	justify-content: end;
-	margin-top: 9%;
-	margin-left: 34%;
-	button { text-decoration: none;
-	justify-content: center;
+		.form-title {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 17%;
+			gap: 8px;
+			width: 27.75rem;
+			text-align: center;
+			margin-bottom: 35px;
+			p { font-size: 20px;
+			}
+		}
+		.check-container {
+			display: flex;
+			gap: 8px;
+			flex-direction: column;
+			text-align: center;
+			.input-field { 
+				background-repeat: no-repeat;
+				background-position: left 30px top 50%;
+				padding-left: 85px;
+				padding-top: 18px;
+				padding-bottom: 18px;
+				width: 31.25rem;
+				height: 3.07rem;
+				background-color: $background-color_1;
+				border-radius: 50px;
+				margin-bottom: 35px;
+				&.input-field-mail-icon { 
+					background-image: url('../../../assets/media/icons/mail-icon-input-field.svg');
+				}
+			}
+			p {
+				font-weight: normal;
+			}
+			.btn-container {
+				width: 21rem;
+				height: 3.0625rem;
+				display: flex;
+				justify-content: end;
+				margin-top: 9%;
+				margin-left: 34%;
+				button { 
+					width: 8.5625rem;
+					height: 3.0625rem;
+					display: flex;
+					justify-content: center;
+					font-weight: 700;
+					font-size: 1.125rem;
+					color: $color_2;
+					padding: 12px 25px;
+					border-radius: 25px;
+					background-color: $background-color_3;
+					cursor: pointer;
+					margin-right: 4%;
+					&:hover { 
+						background-color: $primary-hover;
+						color: $color_3;
+					}
+				}
+			}
+		} 
   }
 }
-.login-btn {
-	font-weight: 700;
-	font-size: 1.125rem;
-	cursor: pointer;
-	width: 8.5625rem;
-	height: 3.0625rem;
-	display: flex;
-	padding: 12px 25px;
-	border-radius: 25px;
-	color: $color_2;
-	background-color: $background-color_3;
-	margin-right: 4%;
-	&:hover { background-color: $primary-hover;
-	color: $color_3;
+
+/* FOOTER */
+::ng-deep {
+  footer {
+    display: flex;
+    justify-content: center;
   }
 }

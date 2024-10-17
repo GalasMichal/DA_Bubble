@@ -12,6 +12,10 @@ section {
   padding: $padding-global;
   header {
     width: 100%;
+    >app-logo {
+      padding-top: 3.5rem;
+      padding-left: 3.1rem;
+    }
   }
 
   form {
@@ -27,7 +31,7 @@ section {
     border-radius: $b-radius-3;
     padding: 40px;
     margin: 10px;
-
+    scale: .9;
     .title-container {
       display: flex;
       align-items: center;

@@ -7,11 +7,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { InfoBoxComponent } from '../../register-user/info-box/info-box.component';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../shared/component/footer/footer.component';
+import { BackComponent } from '../../shared/component/back/back.component';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-pwd-reset',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, FormsModule, ReactiveFormsModule, FooterComponent],
+  imports: [CommonModule, RouterModule, RouterLink, FormsModule, ReactiveFormsModule, FooterComponent,BackComponent],
   templateUrl: './pwd-reset.component.html',
   styleUrl: './pwd-reset.component.scss'
 })
@@ -55,5 +58,11 @@ export class PwdResetComponent {
   
   togglePasswordCopyVisibility() {
     this.isPasswordCopyVisible = !this.isPasswordCopyVisible;
+  }
+
+  readonly location = inject(Location);
+
+  goBack(): void {
+    this.location.back(); // Navigate to the previous page
   }
 }
