@@ -1,0 +1,30 @@
+@import '../../../../styles.scss';
+@import '../../../../colors.scss';
+
+div {
+  display: flex;
+  background-color: $primary;
+  width: 17.0625rem;
+  height: 9.3125rem;
+  padding: 50px;
+  gap: 10px;
+  border-radius: 30px 30px 0 30px;
+  box-shadow: 0px 6px 10px 0px #00000033;
+  ::after {
+    // After delay
+    animation-delay: 1300ms;
+    // Navigate to: "01-Log In";
+    // Animate: Dissolve;
+    animation-timing-function: ease-out;
+    animation-duration: 200ms;
+  }
+  >p {
+    width: 10.8125rem;
+    height: 3.0625rem;
+    font-family: 'Nunito';
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 3.0688rem;
+    color: $white;
+  }
+}

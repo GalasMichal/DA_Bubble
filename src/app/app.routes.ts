@@ -15,6 +15,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ChatRoomComponent } from './main-content/chat-room/chat-room.component';
 import { empty } from 'rxjs';
 import { MessageNewComponent } from './shared/component/message-new/message-new.component';
+import { AccSuccessComponent } from './shared/component/acc-success/acc-success.component';
+import { EmailSentComponent } from './shared/component/email-sent/email-sent.component';
+import { LogginInComponent } from './shared/component/loggin-in/loggin-in.component';
+
 
 
 /*
@@ -27,10 +31,12 @@ export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
   { path: 'start', component: LoginComponent },
   { path: 'start/register', component: RegisterUserComponent },
-  // { path: 'start/main', component: MainContentComponent },
   { path: 'start/avatar', component: CreateAvatarComponent },
   { path: 'start/imprint', component: ImprintComponent },
   { path: 'start/legal', component: LegalComponent },
+  { path: 'start/access', component: AccSuccessComponent },
+  { path: 'start/sendmail', component: EmailSentComponent },
+  { path: 'start/logginin', component: LogginInComponent },
   { path: 'start/main', component: MainContentComponent, children:[
     { path: '', component: MessageNewComponent},
     { path: 'chat/:id', component: ChatRoomComponent}
