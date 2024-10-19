@@ -38,6 +38,7 @@
       height: 3.25rem;
       padding-inline: 1.25rem;
       border-radius: $b-radius-1 $b-radius-1 $b-radius-1 $b-radius-1;
+      border: solid 0.0625rem transparent;
       background: padding-box;
       &:focus {
         border: solid 0.0625rem $secondary;

@@ -13,33 +13,59 @@ import { CommonModule } from '@angular/common';
 })
 export class InputAddUsersComponent {
   userService = inject(UserServiceService);
+
   choosenUser: { userName: string; uId: string }[] = [];
+  listOfAllUsers: { userName: string; uId: string }[] = [];
+
   top: number = 175;
 
   @Output() activeButton: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  activeReactiveButton(para:boolean = true) {
-    this.activeButton.emit(para); 
+  activeReactiveButton(para: boolean = true) {
+    this.activeButton.emit(para);
   }
 
-  addUser(user: string, id: string) {
-    const foundUser = this.choosenUser.find(
-      (userchoosenUser) => userchoosenUser.uId === id
-    );
+  ngOnInit(): void {
+    this.loadOfListOfAllUsers()
+  }
 
-    if (!foundUser) {
-      this.choosenUser.push({ userName: user, uId: id });
-      this.addPxToList();
-      this.activeReactiveButton();
+  loadOfListOfAllUsers() {
+    const listOfUsers = this.userService.userList;
+    for (let i = 0; i < listOfUsers.length; i++) {
+      const userName = listOfUsers[i].displayName;
+      const userId = listOfUsers[i].uId;
+      this.listOfAllUsers.push({ userName: userName, uId: userId });
     }
+  }
+
+  addUser(index: number) {
+    const indexListOfAllUsers = this.listOfAllUsers[index];
+    this.choosenUser.push(indexListOfAllUsers);
+    this.addPxToList();
+    this.activeReactiveButton();
+    this.removeUserFromListOfAllUsers(index);
   }
 
   removeUser(index: number) {
-    this.choosenUser.splice(index, 1);
+    const indexChoosenUser = this.choosenUser[index];
+    this.listOfAllUsers.push(indexChoosenUser);
+    this.removeUserFromChoosenUser(index);
+    this.makeButtonActiveReactive()
     this.removePxFromList();
-    if(this.choosenUser.length === 0) {
-      this.activeReactiveButton(false);
-    }
+  }
+
+  makeButtonActiveReactive() {
+    if (this.choosenUser.length === 0) {
+        this.activeReactiveButton(false);
+      }
+  }
+
+  removeUserFromChoosenUser(index: number) {
+    this.choosenUser.splice(index, 1);
+  }
+
+  removeUserFromListOfAllUsers(index: number) {
+    this.listOfAllUsers.splice(index, 1);
   }
 
   addPxToList() {

@@ -4,28 +4,33 @@
     <ul class="added-user">
       @for (user of choosenUser; track $index) {
         <li>
-        <div class="user-img">
-          <app-avatar></app-avatar>
-        </div>
-        <div>{{user.userName}}</div>
-        <button class="close-btn" (click)="removeUser($index)">
-          <app-close></app-close>
-        </button>
-      </li>
-    }
+          <div class="user-img">
+            <app-avatar></app-avatar>
+          </div>
+          <div>{{user.userName}}</div>
+          <button class="close-btn" (click)="removeUser($index)">
+            <app-close></app-close>
+          </button>
+        </li>
+      }
     </ul>
     <input type="text" id="name-input" placeholder="Name eingeben" autocomplete="off" />
   </div>
 
   <ul class="list-of-user" [ngStyle]="{'top': top + 'px'}">
-      @for(user of this.userService.userList; track $index) {
-          <li (click)="addUser(user.displayName, user.uId)">
+      @for(user of this.listOfAllUsers; track $index) {
+          <li (click)="addUser($index)">
             <button class="single-user">
               <div class="user-img">
                 <app-avatar></app-avatar>
               </div>
-              <div>{{user.displayName}}</div>
+              <div>{{user.userName}}</div>
             </button>
+          </li>
+        }
+        @if(listOfAllUsers.length === 0) {
+          <li>
+            Du hast alle Benutzer ausgewählt.
           </li>
         }
   </ul>
