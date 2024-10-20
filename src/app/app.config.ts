@@ -1,6 +1,6 @@
 import { ApplicationConfig, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
+import { provideStorage, getStorage } from '@angular/fire/storage';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -32,6 +32,7 @@ export const appConfig: ApplicationConfig = {
         measurementId: 'G-WJY4TV84X3',
       })
     ),
+    provideStorage(() => getStorage()),
     provideAuth(() => getAuth()),
     provideAnalytics(() => getAnalytics()),
     ScreenTrackingService,
