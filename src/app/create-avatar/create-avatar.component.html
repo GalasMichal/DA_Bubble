@@ -5,41 +5,38 @@
   </header>
 
   <div class="content-container">
-      <div class="arrow-back-container">
-        <a class="arrow-back" [routerLink]="['/']" >
-          <app-back></app-back>
-        </a>
-        <h2 class="fontNunito">Wähle deinen Avatar</h2>
-      </div>
-      <div class="avatar-container">
-        <img class="profile-icon" [src]="'/assets/media/icons/profile-icons/' + selectedAvatar + '.svg'" alt="a blank user profile icon">
+    <div class="arrow-back-container">
+      <a class="arrow-back" [routerLink]="['/']">
+        <app-back></app-back>
+      </a>
+      <h2 class="fontNunito">Wähle deinen Avatar</h2>
+    </div>
+    <div class="avatar-container">
+      <img class="profile-icon" #profileIcon  [src]="selectedAvatar"
+        alt="a blank user profile icon">
 
-        <p class="profile-name fontNunito">{{ this.db.currentUser()?.displayName}}</p>
+      <p class="profile-name fontNunito">{{ this.db.currentUser()?.displayName}}</p>
 
-        <span class="profile-name-span fontNunito">Aus der Liste wählen</span>
-        <div class="profile-avatars">
-          @for ( avatar of profileAvatars; track avatar) {
-            <button (click)="chooseAvatar(avatar.name)">
-              <img src="/assets/media/icons/profile-icons/{{avatar.name}}.svg" alt="user-profile icon - default {{avatar.name}}" title="user-icon of : {{avatar.name}}">
-            </button>
-          }
-        </div>
-
-        <div class="upload-container">
-          <span class="upload-text fontNunito">{{st.uploadMsg()}}</span>
-          <input
-    hidden
-    type="file"
-    #uploader
-    (change)="st.uploadUserAvatar($event)"
-/>
-          <button type="file" (click)="uploader.click()" class="upload-btn fontNunito">Datei hochladen </button>
-        </div>
+      <span class="profile-name-span fontNunito">Aus der Liste wählen</span>
+      <div class="profile-avatars">
+        @for ( avatar of profileAvatars; track avatar) {
+        <button (click)="chooseAvatar(avatar.name)">
+          <img src="{{avatar.name}}"
+            alt="user-profile icon - default {{avatar.name}}" title="user-icon of : {{avatar.name}}">
+        </button>
+        }
       </div>
 
-      <div class="btn-container">
-        <button class="further-btn fontNunito" [routerLink]="['/start/main']">Weiter</button>
+      <div class="upload-container">
+        <span class="upload-text fontNunito">{{st.uploadMsg()}}</span>
+        <input hidden type="file" #uploader (change)="uploadUserAvatar($event)" />
+        <button type="file" (click)="uploader.click()" class="upload-btn fontNunito">Datei hochladen </button>
       </div>
+    </div>
+
+    <div class="btn-container">
+      <button class="further-btn fontNunito" [routerLink]="['/start/main']">Weiter</button>
+    </div>
   </div>
 
 

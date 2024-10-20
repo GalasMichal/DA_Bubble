@@ -10,7 +10,7 @@ import { StorageService } from '../services/storage/storage.service';
 
 interface ProfileAvatar {
   name: string;
-  src: string;
+
 }
 
 @Component({
@@ -27,23 +27,34 @@ interface ProfileAvatar {
 export class CreateAvatarComponent {
   db = inject(FirebaseService);
   st = inject(StorageService);
-   selectedAvatar: string = 'profile-icon'
-
-  baseSrc = "../../../assets/media/icons/profile-icons/";
+  selectedAvatar: string = 'assets/media/icons/profile-icons/profile-icon.svg'
+  file: any;
 
   profileAvatars: ProfileAvatar[] = [
-    { name: "user-1-elise" },
-    { name: "user-2-elias" },
-    { name: "user-3-frederick" },
-    { name: "user-4-steffen" },
-    { name: "user-5-sofia" },
-    { name: "user-6-noah" }
-  ].map(avatar => ({
-    ...avatar,
-    src: `${this.baseSrc}${avatar.name}.svg`
-  }));
+    { name: "assets/media/icons/profile-icons/user-2-elias.svg" },
+    { name: "assets/media/icons/profile-icons/user-3-frederick.svg" },
+    { name: "assets/media/icons/profile-icons/user-4-steffen.svg" },
+    { name: "assets/media/icons/profile-icons/user-5-sofia.svg" },
+    { name: "assets/media/icons/profile-icons/user-6-noah.svg" }
+  ]
 
   chooseAvatar(avatarName: string) {
     this.selectedAvatar = avatarName;
   }
-}
+
+  uploadUserAvatar(event: any) {
+    const file = event.target.files[0];
+    this.readURL(file);
+    this.st.uploadMsg.set(file.name);
+    this.st.uploadAvatarToStorage(file);
+    console.log('file', file);
+  }
+
+  readURL(file : any) {
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = e => this.selectedAvatar = reader.result as string;
+
+        reader.readAsDataURL(file);
+    }
+}}

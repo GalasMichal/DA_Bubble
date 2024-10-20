@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Storage } from '@angular/fire/storage';
+import { ref, Storage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +9,11 @@ export class StorageService {
   private storage = inject(Storage);
   uploadMsg = signal('eigenes Bild verwenden');
 
-  uploadUserAvatar(event: any) {
-    const file = event.target.files[0];
-    this.uploadMsg.set(file.name);
+  loadStandardAvatar() {
+   const pathRef = ref(this.storage, 'exampleAvatars');
+  }
+  uploadAvatarToStorage(file: any) {
+
     console.log('file', file);
   }
 }
