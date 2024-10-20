@@ -27,7 +27,13 @@
 
         <div class="upload-container">
           <span class="upload-text fontNunito">eigenes Bild verwenden</span>
-          <button class="upload-btn fontNunito">Datei hochladen</button>
+          <input
+    hidden
+    type="file"
+    #uploader
+    (change)="st.uploadUserAvatar($event)"
+/>
+          <button type="file" (click)="uploader.click()" class="upload-btn fontNunito">Datei hochladen </button>
         </div>
       </div>
 

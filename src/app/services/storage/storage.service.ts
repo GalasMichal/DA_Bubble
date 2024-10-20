@@ -9,6 +9,8 @@ export class StorageService {
   constructor() { }
   private storage = inject(Storage);
 
-  uploadUserAvatar
+  uploadUserAvatar(event: any) {
+
+  }
 
 }

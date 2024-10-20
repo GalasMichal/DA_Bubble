@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FirebaseService } from '../services/firebase/firebase.service';
 import { BackComponent } from '../shared/component/back/back.component';
 import { FooterComponent } from "../shared/component/footer/footer.component";
+import { StorageService } from '../services/storage/storage.service';
 
 interface ProfileAvatar {
   name: string;
@@ -25,6 +26,7 @@ interface ProfileAvatar {
 
 export class CreateAvatarComponent {
   db = inject(FirebaseService);
+  st = inject(StorageService);
    selectedAvatar: string = 'profile-icon'
 
   baseSrc = "../../../assets/media/icons/profile-icons/";
