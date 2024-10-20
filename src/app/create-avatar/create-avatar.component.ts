@@ -46,7 +46,7 @@ export class CreateAvatarComponent {
     const file = event.target.files[0];
     this.readURL(file);
     this.st.uploadMsg.set(file.name);
-    this.st.uploadAvatarToStorage(file);
+    this.file = file;
     console.log('file', file);
   }
 
@@ -56,4 +56,12 @@ export class CreateAvatarComponent {
         reader.onload = e => this.selectedAvatar = reader.result as string;
         reader.readAsDataURL(file);
     }
-}}
+}
+
+closeCreateAvatar() {
+  if(this.file){
+    this.st.uploadAvatarToStorage(this.file);
+  } else {
+    this.st.uploadAvatarToStorage(this.selectedAvatar);}
+}
+}
