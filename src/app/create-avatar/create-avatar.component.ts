@@ -54,7 +54,6 @@ export class CreateAvatarComponent {
     if (file) {
         const reader = new FileReader();
         reader.onload = e => this.selectedAvatar = reader.result as string;
-
         reader.readAsDataURL(file);
     }
 }}
