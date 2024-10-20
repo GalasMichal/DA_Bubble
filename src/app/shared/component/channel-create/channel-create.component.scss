@@ -94,6 +94,7 @@ form {
   .members-container {
     display: flex;
     flex-direction: column;
+    position: relative;
     gap: 2rem;
     padding: 2.1875rem;
     overflow: unset;

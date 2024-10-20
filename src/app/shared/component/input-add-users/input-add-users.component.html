@@ -17,9 +17,9 @@
     <input type="text" id="name-input" placeholder="Name eingeben" autocomplete="off" />
   </div>
 
-  <ul class="list-of-user" [ngStyle]="{'top': top + 'px'}">
+  <ul class="list-of-user" [ngStyle]="{'bottom': bottom + 'px'}">
       @for(user of this.listOfAllUsers; track $index) {
-          <li (click)="addUser($index)">
+          <li (click)="addUser($index, $event)">
             <button class="single-user">
               <div class="user-img">
                 <app-avatar></app-avatar>

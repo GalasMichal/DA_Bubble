@@ -17,7 +17,7 @@ export class InputAddUsersComponent {
   choosenUser: { userName: string; uId: string }[] = [];
   listOfAllUsers: { userName: string; uId: string }[] = [];
 
-  top: number = 175;
+  bottom: number = -135;
 
   @Output() activeButton: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -38,20 +38,21 @@ export class InputAddUsersComponent {
     }
   }
 
-  addUser(index: number) {
+  addUser(index: number, event: Event) {
+    event.preventDefault()
     const indexListOfAllUsers = this.listOfAllUsers[index];
     this.choosenUser.push(indexListOfAllUsers);
-    this.addPxToList();
     this.activeReactiveButton();
     this.removeUserFromListOfAllUsers(index);
+    this.addPxToList();
   }
 
   removeUser(index: number) {
+    this.removePxFromList();
     const indexChoosenUser = this.choosenUser[index];
     this.listOfAllUsers.push(indexChoosenUser);
     this.removeUserFromChoosenUser(index);
     this.makeButtonActiveReactive()
-    this.removePxFromList();
   }
 
   makeButtonActiveReactive() {
@@ -69,10 +70,18 @@ export class InputAddUsersComponent {
   }
 
   addPxToList() {
-    this.top += 58;
+    if(this.listOfAllUsers.length === 0) {
+      this.bottom += 0;
+    } else {
+      this.bottom += 58;
+    }
   }
 
   removePxFromList() {
-    this.top -= 58;
+    if(this.listOfAllUsers.length === 0) {
+      this.bottom -= 0;
+    } else {
+      this.bottom -= 58;
+    }
   }
 }

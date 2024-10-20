@@ -50,7 +50,7 @@
 
     <div class="members-container">
     <div class="profil">
-        <h1>Leute hinzüfugen</h1>
+        <h1>Benutzer hinzüfugen</h1>
         <button class="close-btn" (click)="closeDialogAddMembers($event)">
         <app-close></app-close>
         </button>
@@ -61,26 +61,14 @@
             <label for="allMembers">Alle Mitglieder von <span>OfficeTeam</span> hinzufügen.</label>
         </div>
 
-        <div>
+          <div>
             <input type="radio" id="specificPeople" name="member" formControlName="member" (change)="onRadioChange($event)" value="specificPeople" >
-            <label for="specificPeople"> Bestimmte Leute hinzufügen.</label>
+            <label for="specificPeople"> Bestimmte Benutzer hinzufügen.</label>
+          </div>
+          <app-input-add-users></app-input-add-users>
         </div>
-      </div>
 
       @if(isSpecificPeople){
-        <div class="team">
-          <label for="name-input" class="visually-hidden" autocomplete="off">Name:</label>
-          <input type="text" id="name-input" formControlName="specificPeople" name="specificPeople" placeholder="Name eingeben" autocomplete="off" />
-
-          <ul>
-            @for (user of this.chat.userList; track $index) {
-              <li>
-                <app-avatar></app-avatar>
-                <span>{{user.displayName}}</span>
-              </li>
-            }
-          </ul>
-        </div>
         }
         <button class="add" type="submit" [disabled]="!allMembers || isSpecificPeople && !isSpecificPeopleValid()">Erstellen</button>
     </div>
