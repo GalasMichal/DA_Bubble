@@ -29,7 +29,7 @@ import { Channel } from '../../models/interfaces/channel.model';
 import { Router } from '@angular/router';
 import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
-import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',
