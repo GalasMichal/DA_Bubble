@@ -52,24 +52,6 @@ export class FirebaseService {
   }
 
 
-  // async subChannelList() {
-  //   return new Promise((resolve, reject) => {
-  //     this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
-  //       this.channelList = [];
-  //       list.forEach((element) => {
-  //         const channelData = element.data();
-  //         const channelId = element.id;
-  //         const channelObject = this.setChannelObject(channelData, channelId);
-  //         this.channelList.push(channelObject);
-  //       });
-  //       resolve(this.channelList);
-  //     }, (error) => {
-  //       reject(error);
-  //     });
-  //   });
-  // }
-
-
   // Methode zum Erstellen eines neuen Benutzers
  async createUser(
     email: string,
