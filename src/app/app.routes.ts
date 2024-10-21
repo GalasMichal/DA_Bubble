@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { MainContentComponent } from './main-content/main-content/main-content.component';
-import { MenuSideLeftComponent } from './main-content/menu-side-left/menu-side-left/menu-side-left.component';
 import { LegalComponent } from './landing-page/legal/legal.component';
 import { ImprintComponent } from './landing-page/imprint/imprint.component';
 import { RegisterUserComponent } from './landing-page/register-user/register-user.component';
