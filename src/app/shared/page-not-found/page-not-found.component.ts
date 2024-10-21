@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule } from '@angular/router';
-import { LoginComponent } from "../login/login.component";
-import { LogoComponent } from "../shared/logo/logo.component";
+import { LoginComponent } from '../../landing-page/login/login.component';
+import { LogoComponent } from '../logo/logo.component';
 import { Location } from '@angular/common';
 
 @Component({
@@ -14,13 +14,12 @@ import { Location } from '@angular/common';
     RouterLink,
     LogoComponent,
     LoginComponent,
-    LogoComponent
-],
+    LogoComponent,
+  ],
   templateUrl: './page-not-found.component.html',
-  styleUrl: './page-not-found.component.scss'
+  styleUrl: './page-not-found.component.scss',
 })
 export class PageNotFoundComponent {
-
   readonly location = inject(Location);
 
   constructor() {}

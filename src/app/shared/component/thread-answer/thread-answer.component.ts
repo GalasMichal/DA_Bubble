@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MessageAnswerComponent } from '../message-answer/message-answer.component';
+import { MessageAnswerComponent } from '../../message-answer/message-answer.component';
 import { MessageFieldComponent } from '../message-field/message-field.component';
 
 import { StateControlService } from '../../../services/state-control/state-control.service';

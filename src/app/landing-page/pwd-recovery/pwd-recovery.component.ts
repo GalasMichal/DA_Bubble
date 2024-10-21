@@ -1,20 +1,32 @@
-
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { CommonModule } from '@angular/common';
-import { FooterComponent } from "../../shared/component/footer/footer.component";
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-pwd-recovery',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, FormsModule, ReactiveFormsModule, FooterComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+    FooterComponent,
+  ],
   templateUrl: './pwd-recovery.component.html',
-  styleUrl: './pwd-recovery.component.scss'
+  styleUrl: './pwd-recovery.component.scss',
 })
 export class PwdRecoveryComponent {
-
   fb = inject(FirebaseService);
   formBuilder = inject(FormBuilder);
 
@@ -29,10 +41,8 @@ export class PwdRecoveryComponent {
     // });
 
     this.recoveryForm = new FormGroup({
-      email: new FormControl('',[
-        Validators.required,
-        Validators.email]),
-    })
+      email: new FormControl('', [Validators.required, Validators.email]),
+    });
   }
 
   onSubmit() {

@@ -1,21 +1,20 @@
 import { Routes } from '@angular/router';
 import { MainContentComponent } from './main-content/main-content/main-content.component';
 import { MenuSideLeftComponent } from './main-content/menu-side-left/menu-side-left/menu-side-left.component';
-import { LegalComponent } from './legal/legal.component';
-import { ImprintComponent } from './imprint/imprint.component';
-import { RegisterUserComponent } from './register-user/register-user.component';
-import { LoginComponent } from './login/login.component';
-import { CreateAvatarComponent } from './create-avatar/create-avatar.component';
-import { PwdResetComponent } from './components/pwd-reset/pwd-reset.component';
-import { PwdRecoveryComponent } from './components/pwd-recovery/pwd-recovery.component';
-import { ChannelEmptyComponent } from './shared/component/channel-empty/channel-empty.component';
-import { ChannelEditComponent } from './shared/component/channel-edit/channel-edit.component';
-import { ChannelCreateComponent } from './shared/component/channel-create/channel-create.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LegalComponent } from './landing-page/legal/legal.component';
+import { ImprintComponent } from './landing-page/imprint/imprint.component';
+import { RegisterUserComponent } from './landing-page/register-user/register-user.component';
+import { LoginComponent } from './landing-page/login/login.component';
+import { CreateAvatarComponent } from './landing-page/create-avatar/create-avatar.component';
+import { PwdResetComponent } from './landing-page/pwd-reset/pwd-reset.component';
+import { PwdRecoveryComponent } from './landing-page/pwd-recovery/pwd-recovery.component';
+
+import { ChannelEditComponent } from './main-content/chat-room/channel-edit/channel-edit.component';
+import { ChannelCreateComponent } from './main-content/chat-room/channel-create/channel-create.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { ChatRoomComponent } from './main-content/chat-room/chat-room.component';
 import { empty } from 'rxjs';
 import { MessageNewComponent } from './shared/component/message-new/message-new.component';
-
 
 /*
 IMPORTANTE
@@ -31,14 +30,17 @@ export const routes: Routes = [
   { path: 'start/avatar', component: CreateAvatarComponent },
   { path: 'start/imprint', component: ImprintComponent },
   { path: 'start/legal', component: LegalComponent },
-  { path: 'start/main', component: MainContentComponent, children:[
-    { path: '', component: MessageNewComponent},
-    { path: 'chat/:id', component: ChatRoomComponent}
-  ] },
+  {
+    path: 'start/main',
+    component: MainContentComponent,
+    children: [
+      { path: '', component: MessageNewComponent },
+      { path: 'chat/:id', component: ChatRoomComponent },
+    ],
+  },
   { path: 'reset', component: PwdResetComponent },
   { path: 'recovery', component: PwdRecoveryComponent },
-  { path: '**', component: PageNotFoundComponent },
-
+  // { path: '**', component: PageNotFoundComponent },
 ];
 
 // from before :
@@ -57,4 +59,3 @@ export const routes: Routes = [
 //   ] },
 
 // ];
-
