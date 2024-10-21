@@ -3,7 +3,7 @@ export interface Channel {
   channelName: string;
   channelDescription: string;
   allMembers: string
-  specificPeople: string[];
+  specificPeople: { userName: string; uId: string }[];
   createdAt: string;
-  createdBy: string;
+  createdBy: string | undefined;
 }

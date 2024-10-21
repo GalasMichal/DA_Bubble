@@ -12,6 +12,7 @@ import { Message } from '../../models/interfaces/message.model';
 import { Subscription } from 'rxjs';
 import { MessageNewComponent } from '../../shared/component/message-new/message-new.component';
 import { CommonModule } from '@angular/common';
+import { StateControlService } from '../../services/state-control/state-control.service';
 
 
 @Component({
@@ -32,6 +33,7 @@ import { CommonModule } from '@angular/common';
 export class ChatRoomComponent {
   allUserMessages: Message[] = [];
   private messageSub: Subscription | undefined;
+  stateServer = inject(StateControlService)
 
   usersInChat = [
     'assets/media/icons/profile-icons/user-1-elise.svg',

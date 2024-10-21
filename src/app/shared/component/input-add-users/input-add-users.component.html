@@ -2,13 +2,13 @@
   <div class="search">
     <label for="name-input" class="visually-hidden">Name:</label>
     <ul class="added-user">
-      @for (user of choosenUser; track $index) {
+      @for (user of stateServer.choosenUser; track $index) {
         <li>
           <div class="user-img">
             <app-avatar></app-avatar>
           </div>
           <div>{{user.userName}}</div>
-          <button class="close-btn" (click)="removeUser($index)">
+          <button class="close-btn" (click)="removeUser($index, $event)">
             <app-close></app-close>
           </button>
         </li>

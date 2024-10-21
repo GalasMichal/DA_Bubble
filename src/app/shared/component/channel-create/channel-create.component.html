@@ -65,12 +65,12 @@
             <input type="radio" id="specificPeople" name="member" formControlName="member" (change)="onRadioChange($event)" value="specificPeople" >
             <label for="specificPeople"> Bestimmte Benutzer hinzufügen.</label>
           </div>
-          <app-input-add-users></app-input-add-users>
+          @if(isSpecificPeople){
+            <app-input-add-users></app-input-add-users>
+          }
         </div>
 
-      @if(isSpecificPeople){
-        }
-        <button class="add" type="submit" [disabled]="!allMembers || isSpecificPeople && !isSpecificPeopleValid()">Erstellen</button>
+        <button class="add" type="submit" [disabled]="!allMembers || isSpecificPeople && isSpecificPeopleValid()">Erstellen</button>
     </div>
   </div>
 

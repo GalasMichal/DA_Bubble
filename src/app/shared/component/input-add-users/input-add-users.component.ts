@@ -3,6 +3,7 @@ import { AvatarComponent } from '../../avatar/avatar.component';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
 import { CloseComponent } from '../close/close.component';
 import { CommonModule } from '@angular/common';
+import { StateControlService } from '../../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-input-add-users',
@@ -13,8 +14,8 @@ import { CommonModule } from '@angular/common';
 })
 export class InputAddUsersComponent {
   userService = inject(UserServiceService);
+  stateServer = inject(StateControlService)
 
-  choosenUser: { userName: string; uId: string }[] = [];
   listOfAllUsers: { userName: string; uId: string }[] = [];
 
   bottom: number = -135;
@@ -41,28 +42,29 @@ export class InputAddUsersComponent {
   addUser(index: number, event: Event) {
     event.preventDefault()
     const indexListOfAllUsers = this.listOfAllUsers[index];
-    this.choosenUser.push(indexListOfAllUsers);
+    this.stateServer.choosenUser.push(indexListOfAllUsers);
     this.activeReactiveButton();
     this.removeUserFromListOfAllUsers(index);
     this.addPxToList();
   }
 
-  removeUser(index: number) {
+  removeUser(index: number, event: Event) {
+    event.preventDefault();
     this.removePxFromList();
-    const indexChoosenUser = this.choosenUser[index];
+    const indexChoosenUser = this.stateServer.choosenUser[index];
     this.listOfAllUsers.push(indexChoosenUser);
     this.removeUserFromChoosenUser(index);
     this.makeButtonActiveReactive()
   }
 
   makeButtonActiveReactive() {
-    if (this.choosenUser.length === 0) {
+    if (this.stateServer.choosenUser.length === 0) {
         this.activeReactiveButton(false);
       }
   }
 
   removeUserFromChoosenUser(index: number) {
-    this.choosenUser.splice(index, 1);
+    this.stateServer.choosenUser.splice(index, 1);
   }
 
   removeUserFromListOfAllUsers(index: number) {

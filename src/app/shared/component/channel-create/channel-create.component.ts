@@ -20,6 +20,8 @@ import { InputAddUsersComponent } from '../input-add-users/input-add-users.compo
 import { AvatarComponent } from '../../avatar/avatar.component';
 import { CloseComponent } from '../close/close.component';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
+import { FirebaseService } from '../../../services/firebase/firebase.service';
+import { StateControlService } from '../../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-channel-create',
@@ -46,9 +48,11 @@ export class ChannelCreateComponent{
   allMembers: boolean = false
 
   dialog = inject(MatDialogRef<ChannelCreateComponent>);
+  stateServer = inject(StateControlService)
   readonly dialogAddMembers = inject(MatDialog);
   readonly dialogRef = inject(MatDialogRef<ChannelCreateComponent>);
   chat = inject(ChatRoomService);
+  fb = inject(FirebaseService);
 
 
   onRadioChange(event: any) {
@@ -91,16 +95,15 @@ export class ChannelCreateComponent{
   }
 
   createChannelModel(event: Event) {
-    // debugger
       const formValues = this.channelForm.value;
       const newChannel: Channel = {
         chanId: '',
         channelName: formValues.channelName,
         channelDescription: formValues.channelDescription || '',
         allMembers: formValues.member,
-        specificPeople: formValues.specificPeople ? formValues.specificPeople.split(',') : [],
+        specificPeople: this.stateServer.choosenUser,
         createdAt: new Date().toISOString(),
-        createdBy: 'user-id',
+        createdBy: this.fb.currentUser()?.displayName,
        }
       this.createChannel(event, newChannel)
   }

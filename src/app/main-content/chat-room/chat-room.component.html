@@ -28,8 +28,9 @@
 
     <div class="header-right-container">
       <div class="user-container">
-        @for (user of usersInChat; track $index) {
-        <img src="{{ user }}" alt="userProfilPhoto">
+        @for (user of chat.currentChannelData.specificPeople; track $index) {
+          {{ user.userName }}
+        <!-- <img src="{{ user }}" alt="userProfilPhoto"> -->
         }
         <div class="font-nunito"> {{ usersInChat.length }}</div>
       </div>
