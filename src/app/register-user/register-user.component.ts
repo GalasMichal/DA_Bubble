@@ -9,6 +9,7 @@ import { LoginComponent } from '../login/login.component';
 import { LogoComponent } from "../shared/logo/logo.component";
 import { BackComponent } from '../shared/component/back/back.component';
 import { FooterComponent } from "../shared/component/footer/footer.component";
+import { User } from '../models/interfaces/user.model';
 
 
 @Component({
@@ -82,7 +83,7 @@ export class RegisterUserComponent {
       const displayName = this.myForm.get('name')?.value;
 
       try {
-        const user = await this.fb.createUser(email, password, displayName);
+        const user: User = await this.fb.createUser(email, password, displayName);
         if (user) {
           console.log('User successfully registered:', user);
            this.router.navigate(['/start/avatar']); // Navigation nach der Registrierung

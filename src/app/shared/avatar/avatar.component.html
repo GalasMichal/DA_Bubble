@@ -1,4 +1,16 @@
-<div class="user-avatar">
-    <img src="/assets/media/icons/profile-icons/user-3-frederick.svg" alt="avatar">
+@if(this.userList){
+  <div class="user-avatar">
+    <img [src]="user.avatarUrl" alt="avatar">
+    @if(user.status) {
+      <img class="online" src="/assets/media/icons/online.svg" alt="">
+    }@else {
+      <img class="online" src="/assets/media/icons/abwesend.svg" alt="">}
+
+</div>
+}@else {
+  <div class="user-avatar">
+    <img [src]="this.db.currentUser()!.avatarUrl" alt="avatar">
     <img class="online" src="/assets/media/icons/online.svg" alt="">
 </div>
+}
+
