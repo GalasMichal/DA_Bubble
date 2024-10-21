@@ -20,12 +20,16 @@ import {
   onSnapshot,
   getDoc,
   Unsubscribe,
+  getDocs,
+  query,
+  where,
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Channel } from '../../models/interfaces/channel.model';
 import { Router } from '@angular/router';
 import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -35,43 +39,21 @@ export class FirebaseService {
   private auth: Auth = inject(Auth);
   provider = new GoogleAuthProvider();
   router = inject(Router);
-  chat = inject(ChatRoomService)
-  userService = inject(UserServiceService)
-
+  chat = inject(ChatRoomService);
+  userService = inject(UserServiceService);
 
   public currentUser = signal<AppUser | null>(null);
   public errorMessageLogin = signal('');
 
-  constructor() {
-
-  }
+  constructor() {}
 
   async loadAllBackendData() {
     this.chat.subChannelList();
     this.userService.subUserList();
   }
 
-
-  // async subChannelList() {
-  //   return new Promise((resolve, reject) => {
-  //     this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
-  //       this.channelList = [];
-  //       list.forEach((element) => {
-  //         const channelData = element.data();
-  //         const channelId = element.id;
-  //         const channelObject = this.setChannelObject(channelData, channelId);
-  //         this.channelList.push(channelObject);
-  //       });
-  //       resolve(this.channelList);
-  //     }, (error) => {
-  //       reject(error);
-  //     });
-  //   });
-  // }
-
-
   // Methode zum Erstellen eines neuen Benutzers
- async createUser(
+  async createUser(
     email: string,
     password: string,
     displayName: string
@@ -120,10 +102,12 @@ export class FirebaseService {
             ); // Standardfehlermeldung
         }
       });
-
   }
 
-  async loginWithEmailAndPassword(email: string, password: string): Promise<any> {
+  async loginWithEmailAndPassword(
+    email: string,
+    password: string
+  ): Promise<any> {
     try {
       const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
       if (!exists) {
@@ -132,25 +116,25 @@ export class FirebaseService {
         );
       }
       // Wenn der Benutzer existiert, führe die Anmeldung durch
-      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-      const user = await userCredential.user as FirebaseUser;
-      console.log('user is', user)
+      const userCredential = await signInWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
+      const user = userCredential.user as FirebaseUser;
+      console.log('user is', user);
       if (user) {
-       await this.getUserByUid(user.uid)
+        await this.getUserByUid(user.uid);
         this.router.navigate(['/start/main']);
       }
 
-
       console.log('User is logged in:', user);
       this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
-
     } catch (error) {
-      if (error=== 'auth/wrong-password') {
+      if (error === 'auth/wrong-password') {
         this.errorMessageLogin.set('Falsches Passwort.');
       } else {
-        this.errorMessageLogin.set(
-          'Fehler beim Anmelden: ' + error
-        );
+        this.errorMessageLogin.set('Fehler beim Anmelden: ' + error);
       }
 
       // Falls es einen allgemeinen Fehler gibt (bei der Benutzerabfrage oder Anmeldung)
@@ -164,8 +148,8 @@ export class FirebaseService {
 
       if (userDocSnapshot.exists()) {
         const userData = userDocSnapshot.data() as AppUser; // Cast zu deinem AppUser-Interface
-        this.currentUser.set(userData)
-        return userData// Benutzer-Daten zurückgeben
+        this.currentUser.set(userData);
+        return userData; // Benutzer-Daten zurückgeben
       } else {
         console.log('Kein Benutzer mit dieser UID gefunden.');
         return null; // Falls kein Benutzer gefunden wird
@@ -202,11 +186,16 @@ export class FirebaseService {
         email: googleUser.email ?? '',
         displayName: displayName,
       };
-      await this.addUserToFirestore(user);
-      this.currentUser.set(user);
-      console.log('User ist eingeloggt', this.currentUser());
-      this.router.navigate(['/start/avatar']);
+      if (!this.userExistFirestore(googleUser.uid)) {
+        await this.addUserToFirestore(user);
+        this.currentUser.set(user);
+        this.router.navigate(['/start/avatar']);
+      } else {
+        await this.getUserByUid(googleUser.uid);
+        this.router.navigate(['/start/main']);
+      }
 
+      console.log('User ist eingeloggt', this.currentUser());
     } catch (error) {
       console.error('Fehler bei der Google-Anmeldung:', error);
     }
@@ -224,6 +213,14 @@ export class FirebaseService {
       });
   }
 
+  userExistFirestore(uId: string): Promise<boolean> {
+    return getDocs(
+      query(collection(this.firestore, 'users'), where('${uId}', '==', uId))
+    ).then((querySnapshot) => {
+      return querySnapshot.size > 0;
+    });
+  }
+
   async addUserToFirestore(user: AppUser) {
     const userCollectionRef = collection(this.firestore, 'users');
     const userDocRef = doc(userCollectionRef, user.uId);
@@ -231,5 +228,4 @@ export class FirebaseService {
       return user;
     });
   }
-
 }
