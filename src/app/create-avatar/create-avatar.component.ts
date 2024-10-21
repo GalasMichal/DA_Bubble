@@ -1,12 +1,13 @@
 
 import { Component, inject } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { LogoComponent } from '../shared/logo/logo.component';
 import { CommonModule } from '@angular/common';
 import { FirebaseService } from '../services/firebase/firebase.service';
 import { BackComponent } from '../shared/component/back/back.component';
 import { FooterComponent } from "../shared/component/footer/footer.component";
 import { StorageService } from '../services/storage/storage.service';
+import { UserServiceService } from '../services/user-service/user-service.service';
 
 interface ProfileAvatar {
   name: string;
@@ -27,6 +28,8 @@ interface ProfileAvatar {
 export class CreateAvatarComponent {
   db = inject(FirebaseService);
   st = inject(StorageService);
+  user = inject(UserServiceService);
+  router = inject(Router);
   selectedAvatar: string = 'assets/media/icons/profile-icons/profile-icon.svg'
   file: any;
 
@@ -58,10 +61,18 @@ export class CreateAvatarComponent {
     }
 }
 
-closeCreateAvatar() {
+async closeCreateAvatar() {
   if(this.file){
-    this.st.uploadAvatarToStorage(this.file);
-  } else {
-    this.st.uploadAvatarToStorage(this.selectedAvatar);}
-}
+   const downloadUrl = await this.st.uploadAvatarToStorage(this.db.currentUser()!.uId,this.file);
+   if (downloadUrl) {
+    this.selectedAvatar = downloadUrl;
+   }
+  }
+   this.user.updateUserAvatar(this.db.currentUser()!.uId,this.selectedAvatar);
+   await this.user.updateCurrentUser(this.db.currentUser()!);
+   this.router.navigate(['/start/main']);
+  }
+
+
+
 }
