@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FirebaseService } from '../../services/firebase/firebase.service';
 
 @Component({
   selector: 'app-avatar',
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './avatar.component.scss'
 })
 export class AvatarComponent {
+  db = inject(FirebaseService);
+
 
 }
