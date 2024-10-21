@@ -186,11 +186,13 @@ export class FirebaseService {
         email: googleUser.email ?? '',
         displayName: displayName,
       };
-      if (!this.userExistFirestore(googleUser.uid)) {
+      if (!(await this.userExistFirestore(user.uId)))  {
+        // Benutzer existiert nicht, also Avatar-Seite anzeigen
         await this.addUserToFirestore(user);
         this.currentUser.set(user);
         this.router.navigate(['/start/avatar']);
       } else {
+        // Benutzer existiert, also zum Main-Content
         await this.getUserByUid(googleUser.uid);
         this.router.navigate(['/start/main']);
       }
@@ -215,7 +217,7 @@ export class FirebaseService {
 
   userExistFirestore(uId: string): Promise<boolean> {
     return getDocs(
-      query(collection(this.firestore, 'users'), where('${uId}', '==', uId))
+      query(collection(this.firestore, 'users'), where('uId', '==', uId))
     ).then((querySnapshot) => {
       return querySnapshot.size > 0;
     });
