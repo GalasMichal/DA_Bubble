@@ -3,6 +3,7 @@ import { AvatarComponent } from '../../avatar/avatar.component';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
 import { CloseComponent } from '../close/close.component';
 import { CommonModule } from '@angular/common';
+import { StateControlService } from '../../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-input-add-users',
@@ -13,11 +14,11 @@ import { CommonModule } from '@angular/common';
 })
 export class InputAddUsersComponent {
   userService = inject(UserServiceService);
+  stateServer = inject(StateControlService)
 
-  choosenUser: { userName: string; uId: string }[] = [];
   listOfAllUsers: { userName: string; uId: string }[] = [];
 
-  top: number = 175;
+  bottom: number = -135;
 
   @Output() activeButton: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -38,30 +39,32 @@ export class InputAddUsersComponent {
     }
   }
 
-  addUser(index: number) {
+  addUser(index: number, event: Event) {
+    event.preventDefault()
     const indexListOfAllUsers = this.listOfAllUsers[index];
-    this.choosenUser.push(indexListOfAllUsers);
-    this.addPxToList();
+    this.stateServer.choosenUser.push(indexListOfAllUsers);
     this.activeReactiveButton();
     this.removeUserFromListOfAllUsers(index);
+    this.addPxToList();
   }
 
-  removeUser(index: number) {
-    const indexChoosenUser = this.choosenUser[index];
+  removeUser(index: number, event: Event) {
+    event.preventDefault();
+    this.removePxFromList();
+    const indexChoosenUser = this.stateServer.choosenUser[index];
     this.listOfAllUsers.push(indexChoosenUser);
     this.removeUserFromChoosenUser(index);
     this.makeButtonActiveReactive()
-    this.removePxFromList();
   }
 
   makeButtonActiveReactive() {
-    if (this.choosenUser.length === 0) {
+    if (this.stateServer.choosenUser.length === 0) {
         this.activeReactiveButton(false);
       }
   }
 
   removeUserFromChoosenUser(index: number) {
-    this.choosenUser.splice(index, 1);
+    this.stateServer.choosenUser.splice(index, 1);
   }
 
   removeUserFromListOfAllUsers(index: number) {
@@ -69,10 +72,18 @@ export class InputAddUsersComponent {
   }
 
   addPxToList() {
-    this.top += 58;
+    if(this.listOfAllUsers.length === 0) {
+      this.bottom += 0;
+    } else {
+      this.bottom += 58;
+    }
   }
 
   removePxFromList() {
-    this.top -= 58;
+    if(this.listOfAllUsers.length === 0) {
+      this.bottom -= 0;
+    } else {
+      this.bottom -= 58;
+    }
   }
 }
