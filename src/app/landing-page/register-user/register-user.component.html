@@ -5,30 +5,31 @@
   </header>
 
 
-    <form [formGroup]="myForm">
-      <div class="title-container">
+  <div class="content-container">
 
-        <a class="arrow-back" routerLink="/start">
-          <app-back></app-back>
-        </a>
+    <div class="form-title">
 
-        <h2 class="fontNunito">Konto erstellen</h2>
+      <a class="arrow-back" routerLink="/start">
+        <app-back></app-back>
+      </a>
+
+        <h2>Konto erstellen</h2>
 
         <button class="info-container">
           <img id="info-icon" title="How to -registrieren" (click)="openInfoBox()" class="pulse info-icon"
-            src="/assets/media/icons/info_symbol-icon.png" alt="">
+          src="/assets/media/icons/info_symbol-icon.png" alt="">
         </button>
-
-      </div>
-
-          <p class="fontNunito">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
-
-
+        
+        <p>Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
+    </div>
+      
+      
+      <form [formGroup]="myForm">
         <div class="input-container">
           <label class="visually-hidden" for="name">Dein Name</label>
           <input name="name" id="name" autocomplete="off" formControlName="name"
-            class="input-field input-field-user-icon fontNunito" type="text" placeholder="Dein Name" autocomplete="off" />
-            <div class="warn-txt warn-txt-2">
+            class="input-field input-field-user-icon" type="text" placeholder="Dein Name" autocomplete="off" />
+            <div class="warn-txt">
           @if (myForm.controls['name'].invalid && (isFormSubmitted || myForm.controls['name'].dirty ||
           myForm.controls['name'].touched)) {
             @if (myForm.controls['name'].errors?.['required']) {
@@ -44,8 +45,8 @@
         <div class="input-container">
           <label class="visually-hidden" for="name">Dein E-Mail</label>
           <input #email name="name" id="email" autocomplete="off" formControlName="email"
-            class="input-field input-field-mail-icon fontNunito" type="email" placeholder="beispielname@email.com"/>
-          <div class="warn-txt warn-txt-2">
+            class="input-field input-field-mail-icon" type="email" placeholder="beispielname@email.com"/>
+          <div class="warn-txt">
             @if(fb.errorMessageLogin()){
               <span>{{ fb.errorMessageLogin() }}</span>
               }
@@ -65,9 +66,9 @@
         <div class="input-container">
           <label class="visually-hidden" for="name">Passwort</label>
           <input #name id="password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
-            class="input-field input-field-pwd-icon fontNunito" placeholder="Passwort"/>
+            class="input-field input-field-pwd-icon" placeholder="Passwort"/>
             <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
-          <div class="warn-txt warn-txt-2">
+          <div class="warn-txt">
 
             @if (myForm.controls['password'].invalid && (isFormSubmitted || myForm.controls['password'].touched ||
             myForm.controls['password'].dirty)) {
@@ -90,21 +91,21 @@
           <label for="checkbox">Ich stimme der <a class="privacy" href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</label>
 
           <div class="checkbox-description">
-            @if (myForm.controls['term'].invalid && (isFormSubmitted || myForm.controls['term'].touched ||
-            myForm.controls['term'].dirty)) {
+              @if (myForm.controls['term'].invalid && (isFormSubmitted || myForm.controls['term'].touched ||
+              myForm.controls['term'].dirty)) {
 
-            @if (myForm.controls['term'].errors?.['required']) {
-            <span>Password ist ein Pflichtfeld.</span>
+             @if (myForm.controls['term'].errors?.['required']) {
+              <span>Password ist ein Pflichtfeld.</span>
+              }
             }
-          }
           </div>
-      </div>
+        </div>
 
         <div class="btn-container">
 
-          <button id="submit" type="submit" class="login-btn fontNunito" [disabled]="!myForm.valid" (click)="onSubmit()">Weiter</button>
+          <button id="submit" type="submit" class="login-btn" [disabled]="!myForm.valid" (click)="onSubmit()">Weiter</button>
         </div>
     </form>
-
-  <app-footer />
+  </div>
+  <app-footer></app-footer>
 </section>

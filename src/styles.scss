@@ -87,15 +87,7 @@ body {
 
 html,
 body {
-  height: 100%;
-}
-
-html {
   scroll-behavior: smooth;
-}
-
-html,
-body {
   height: 100%;
 
 }
@@ -193,6 +185,10 @@ app-message-edit {
   gap: 5px;
   border-radius: 0px $b-radius-3 $b-radius-3 $b-radius-3;
   box-shadow: $shadow;
+}
+
+app-footer {
+  width: 100%;
 }
 
 app-reaction-cloud {

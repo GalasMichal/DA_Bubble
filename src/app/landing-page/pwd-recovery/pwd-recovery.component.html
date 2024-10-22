@@ -1,28 +1,28 @@
 <section class="login-section">
 
   <div class="logo-container">
-    <button [routerLink]="['/']">
+    <button routerLink='/'>
       <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
     </button>
   </div>
 
-<div class="form-container ml-mr-auto">
-  <div style="padding-top: 2%;">
+<div class="form-container">
+  <div >
     <div class="arrow-back-container">
-      <button [routerLink]="['/']">
+      <button routerLink='/'>
         <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
       </button>
-      <h2 class="fontNunito">Passwort zurücksetzen</h2>
+      <h2 class="">Passwort zurücksetzen</h2>
     </div>
-    <div class="form-title ml-mr-auto fontNunito">
-      <p class="fontNunito">Bitte gib deine eMail ein:</p>
+    <div class="form-title">
+      <p class="">Bitte gib deine eMail ein:</p>
     </div>
   </div>  
 
 
   <div class="check-container">
     <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
-      <input class="input-field input-field-mail-icon  fontNunito" type="email" placeholder="beispielname@email.com" formControlName="email" aria-label="email" aria-required="true" aria-describedby="email-error"/>
+      <input class="input-field input-field-mail-icon" type="email" placeholder="beispielname@email.com" formControlName="email"/>
 
       @if (recoveryForm.controls['email'].invalid && (isFormValid || recoveryForm.controls['email'].dirty || recoveryForm.controls['email'].touched)) {
         <div class="warn-txt"
@@ -35,12 +35,12 @@
           }
         </div>
         }
-      <p class="fontNunito">
+      <p class="">
         Wir senden Dir eine E-Mail, über die 
         Du dein Passwort ändern kannst.
       </p>
-      <div class="btn-container ml-mr-auto">
-        <button class="login-btn fontNunito" [routerLink]="['/login']">eMail senden</button>
+      <div class="btn-container">
+        <button class="login-btn" routerLink='/login'>eMail senden</button>
       </div>
     </form>
     
@@ -48,5 +48,5 @@
 
 </div>
 
-<app-footer />
+<app-footer></app-footer>
 </section>

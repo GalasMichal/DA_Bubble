@@ -39,7 +39,7 @@
       </div>
       <div class="input-container">
         <label class="visually-hidden" for="password">Passwort</label>
-        <input autocomplete="current-password" id="password" class="input-field input-field-pwd-icon fontNunito input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+        <input autocomplete="current-password" id="password" class="input-field input-field-pwd-icon input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
           placeholder="Passwort"/>
           <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
           <div class="warn-txt">
@@ -80,6 +80,8 @@
 
 </div>
   <!-- legal & imprint btn -->
-  <app-footer />
+  <footer>
+    <app-footer></app-footer>
+  </footer>
 
 </section>
