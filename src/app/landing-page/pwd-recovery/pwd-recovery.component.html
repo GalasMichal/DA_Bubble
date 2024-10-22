@@ -1,52 +1,47 @@
-<section class="login-section">
+<section>
 
-  <div class="logo-container">
-    <button routerLink='/'>
-      <img class="logo" src="../../assets/media/icons/logo-animation.svg" alt="blubbel logo">
-    </button>
-  </div>
+  <header>
+    <app-logo routerLink="/start"></app-logo>
+  </header>
 
-<div class="form-container">
-  <div >
-    <div class="arrow-back-container">
-      <button routerLink='/'>
-        <img src="../../assets/media/icons/arrow_back.svg" alt="arrow pointing left">
-      </button>
-      <h2 class="">Passwort zurücksetzen</h2>
-    </div>
-    <div class="form-title">
-      <p class="">Bitte gib deine eMail ein:</p>
-    </div>
+<div class="content-container">
+
+  <div class="form-title recovery">
+    <a class="arrow-back" (click)="goBack()">
+      <app-back></app-back>
+    </a>
+      <h2>Passwort zurücksetzen</h2>
+
   </div>  
-
-
-  <div class="check-container">
     <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
-      <input class="input-field input-field-mail-icon" type="email" placeholder="beispielname@email.com" formControlName="email"/>
+      <div class="input-container">
 
-      @if (recoveryForm.controls['email'].invalid && (isFormValid || recoveryForm.controls['email'].dirty || recoveryForm.controls['email'].touched)) {
-        <div class="warn-txt"
-          >
-          @if (recoveryForm.controls['email'].errors?.['required']) {
-            <span  >eMail ist ein Pflichtfeld.</span>
+        <label for="name">Bitte gib deine E-Mail ein:</label>
+        <input class="input-field input-field-mail-icon" type="email" placeholder="beispielname@email.com" formControlName="email"/>
+        <div class="warn-txt">
+        
+        @if (recoveryForm.controls['email'].invalid && (isFormValid || recoveryForm.controls['email'].dirty || recoveryForm.controls['email'].touched)) {
+        @if (recoveryForm.controls['email'].errors?.['required']) {
+            <span>E-Mail ist ein Pflichtfeld.</span>
           }
           @if (recoveryForm.controls['email'].errors?.['email']) {
-            <span id="email-error"  >eMail ist unvollständig/inkorrekt.</span>
+            <span id="email-error">eMail ist unvollständig/inkorrekt.</span>
           }
-        </div>
         }
-      <p class="">
-        Wir senden Dir eine E-Mail, über die 
+      </div>
+
+    </div>
+      
+      <p>
+        Wir senden Dir eine E-Mail, <br> über die 
         Du dein Passwort ändern kannst.
       </p>
-      <div class="btn-container">
-        <button class="login-btn" routerLink='/login'>eMail senden</button>
+
+      <div class="btn-container e-mail-container" >
+        <button class="login-btn e-mail-button" routerLink='/login'>E-Mail senden</button>
       </div>
     </form>
-    
   </div>
-
-</div>
 
 <app-footer></app-footer>
 </section>

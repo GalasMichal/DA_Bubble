@@ -7,7 +7,7 @@
 
   <div class="content-container">
 
-    <div class="form-title">
+    <div class="form-title ">
 
       <a class="arrow-back" routerLink="/start">
         <app-back></app-back>
@@ -19,9 +19,9 @@
           <img id="info-icon" title="How to -registrieren" (click)="openInfoBox()" class="pulse info-icon"
           src="/assets/media/icons/info_symbol-icon.png" alt="">
         </button>
+      </div>
         
-        <p>Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
-    </div>
+        <p class="description">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
       
       
       <form [formGroup]="myForm">
@@ -86,11 +86,14 @@
             }
           </div>
         </div>
-        <div class="checkbox-container">
-          <input id="checkbox" type="checkbox" formControlName="term" name="term">
-          <label for="checkbox">Ich stimme der <a class="privacy" href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</label>
 
-          <div class="checkbox-description">
+        <div class="checkbox-container">
+          <div class="checkbox-content">
+            <input id="checkbox" type="checkbox" formControlName="term" name="term">
+            <label for="checkbox">Ich stimme der <a class="privacy" href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</label>
+          </div>
+
+          <div class="checkbox-description warn-txt">
               @if (myForm.controls['term'].invalid && (isFormSubmitted || myForm.controls['term'].touched ||
               myForm.controls['term'].dirty)) {
 
@@ -103,7 +106,7 @@
 
         <div class="btn-container">
 
-          <button id="submit" type="submit" class="login-btn" [disabled]="!myForm.valid" (click)="onSubmit()">Weiter</button>
+          <button id="submit" type="submit" class="forward-btn" [disabled]="!myForm.valid" (click)="onSubmit()">Weiter</button>
         </div>
     </form>
   </div>
