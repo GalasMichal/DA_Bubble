@@ -16,7 +16,7 @@
         <h2>Konto erstellen</h2>
 
         <button class="info-container">
-          <img id="info-icon" title="How to -registrieren" (click)="openInfoBox()" class="pulse info-icon"
+          <img id="info-icon" (click)="openInfoBox()" class="pulse info-icon"
           src="/assets/media/icons/info_symbol-icon.png" alt="">
         </button>
       </div>
@@ -105,7 +105,6 @@
         </div>
 
         <div class="btn-container">
-
           <button id="submit" type="submit" class="forward-btn" [disabled]="!myForm.valid" (click)="onSubmit()">Weiter</button>
         </div>
     </form>
