@@ -1,0 +1,51 @@
+@import "./../../../colors.scss";
+@import "./../../../styles.scss";
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    .logo-container {
+      padding-top: 45px;
+      .logo {
+        width: 242.11px;
+        height: 70px;
+      }
+    }
+    .new-user-link {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      width: 11.25rem;
+      p {
+        font-weight: 400;
+        font-size: 1.125rem;
+        line-height: 24.55px;
+        color: $black;
+      }
+
+      button {
+        background-color: $bg-color;
+        text-align: center;
+        padding: 0.625rem 0.9375rem;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 21.6px;
+        color: $primary-hover;
+        border: solid 1px transparent;
+        border-radius: $b-radius-2;
+        text-decoration: none;
+        transition: all 175ms ease-in-out;
+        &:hover {
+          border: $primary-hover 1px solid;
+          border-radius: $b-radius-2;
+          color: $primary;
+        }
+        &:focus {
+          border: solid 0.0625rem $secondary;
+          outline: $secondary;
+        }
+      }
+    }
+  }

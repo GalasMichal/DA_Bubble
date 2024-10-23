@@ -1,12 +1,8 @@
 <section id="imprint">
-  <header>
-    <app-logo routerLink="/"></app-logo>
-  </header>
-  
   <div class="content-container">
     <div class="title-container">
 
-      <a class="arrow-back" (click)="goBack()">
+      <a class="arrow-back" [routerLink]="['/start']">
         <app-back></app-back>
       </a>
 
@@ -461,6 +457,4 @@
 
     </div>
   </div>
-
-  <app-footer></app-footer>
 </section>

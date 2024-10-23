@@ -1,26 +1,21 @@
-<div class="logo-container">
-  <app-logo [routerLink]="['/']" title="Startseite" aria-label="Button - Zur Startseite"></app-logo>
-</div>
-
 <section id="imprint" >
 
-  <div class="ml-mr-auto">
+  <div class="content-container">
     <br>
     <div class="title-container">
 
-      <a class="arrow-back" (click)="goBack()">
+      <a class="arrow-back" [routerLink]="['/start']">
         <app-back></app-back>
       </a>
+      <h2 class="fontNunito">Impressum</h2>
 
     </div>
-    <h2 class="fontNunito">Impressum</h2>
     <br>
     <div class="ml-mr-auto fontNunito">
       <h2 class="fontNunito" id="m46">Diensteanbieter</h2>
         <ul>
-          <li>M G</li>
-          <li>D P</li>
-          <li>J K</li>
+          <li>Mike Galas</li>
+          <li>Damian Poloczek</li>
         </ul>
       <br>
       <p>Da & Dort - FIRMENNAME</p>
@@ -42,5 +37,3 @@
   </div>
 
 </section>
-
-<app-footer />

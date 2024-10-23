@@ -47,6 +47,7 @@ app-chat-room{
   overflow: hidden;
 }
 
+app-header-landing,
 app-message-field {
 width: 100%;
 }
@@ -288,6 +289,7 @@ app-reaction-cloud {
   overflow: hidden auto;
   max-height: 100%;
 }
+
 
 /* width */
 ::-webkit-scrollbar {

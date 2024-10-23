@@ -1,16 +1,17 @@
 @import "./../../../colors.scss";
 @import "./../../../styles.scss";
+@import "./../../../animations.scss";
+
 
 section {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   background-color: $bg-color;
-  padding: $padding-global;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   header {
     display: flex;
     justify-content: space-between;

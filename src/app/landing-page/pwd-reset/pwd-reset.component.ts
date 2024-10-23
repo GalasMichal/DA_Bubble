@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { InfoBoxComponent } from '../info-box/info-box.component';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
+import { BackComponent } from '../../shared/component/back/back.component';
 
 @Component({
   selector: 'app-pwd-reset',
@@ -24,6 +25,7 @@ import { FooterComponent } from '../footer/footer.component';
     FormsModule,
     ReactiveFormsModule,
     FooterComponent,
+    BackComponent
   ],
   templateUrl: './pwd-reset.component.html',
   styleUrl: './pwd-reset.component.scss',
