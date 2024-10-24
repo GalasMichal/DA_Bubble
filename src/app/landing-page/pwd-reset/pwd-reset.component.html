@@ -1,4 +1,4 @@
-<section>
+<section class="landing-page">
 
 <div class="content-container">
 
@@ -8,7 +8,7 @@
       <app-back></app-back>
     </a>
 
-    <h2>Passwort zurücksetzen</h2>
+    <h1>Passwort zurücksetzen</h1>
 
       <button class="info-container">
         <img id="info-icon" (click)="openInfoBox()" class="pulse info-icon"
@@ -21,8 +21,12 @@
     <!-- 
       PWD-CHECK: min-length-8, max-length-32, chars A-Z, a-z, excl ÖöÄäÜü, all special-characters, no wing-dings, at least one from each category, no doubles
     -->
-      <input id="password" class="input-field input-field-pwd-icon" [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby="password-error"/>
-      <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+    <label class="visually-hidden" for="password">Passwort</label>
+      <input id="password" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password"/>
+      <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordTopVisible, 'eye-open': isPasswordTopVisible}" (click)="togglePasswordVisibilityTop()"></i>
+      <div class="input-icon">
+        <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
+      </div>
       <div class="warn-txt">
       @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
           @if (resetForm.controls['password'].errors?.['required']) {
@@ -35,9 +39,13 @@
       </div>
       </div>
       
-      <div class="input-container"> 
-        <input name="passwordCopy" class="input-field input-field-pwd-icon" [type]="isPasswordCopyVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" aria-label="password" aria-required="true" aria-describedby="password-error"/>
-        <i class="pwd-eye-2  eye-pos-2" [ngClass]="{'eye-closed': !isPasswordCopyVisible, 'eye-open': isPasswordCopyVisible}" (click)="togglePasswordCopyVisibility()" ></i>
+      <div class="input-container">
+        <label class="visually-hidden" for="password">Passwort</label>
+        <input name="passwordCopy" class="input-field" [type]="isPasswordBottomVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password"/>
+        <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordBottomVisible, 'eye-open': isPasswordBottomVisible}" (click)="togglePasswordVisibilityBottom()"></i>
+        <div class="input-icon">
+          <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
+        </div>
         <div class="warn-txt">
         @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
           @if (resetForm.controls['password'].errors?.['required']) {

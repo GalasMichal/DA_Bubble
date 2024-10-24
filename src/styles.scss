@@ -90,7 +90,7 @@ html,
 body {
   scroll-behavior: smooth;
   height: 100%;
-
+  font-family: 'Nunito';
 }
 
 /*
@@ -270,7 +270,6 @@ app-reaction-cloud {
   top: 13%;
   position: absolute;
   height: 30px;
-  left: 89%;
   cursor: pointer;
   background-size: contain;
   background-repeat: no-repeat;
@@ -312,4 +311,21 @@ app-reaction-cloud {
 ::-webkit-scrollbar-thumb:hover {
   background: $primary-hover;
   border-radius: $b-radius-3;
+}
+
+
+@media (max-width: 500px) {
+  .landing-page {
+    .content-container {
+      padding: 1.25rem;
+      margin: 0;
+    }
+    .btn-container {
+      gap: 0.875rem;
+    }
+    .legal-imprint-container {
+      // flex-direction: column;
+      gap: 0;
+    }
+  }
 }

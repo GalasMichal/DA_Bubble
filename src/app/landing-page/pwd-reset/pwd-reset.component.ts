@@ -34,6 +34,8 @@ export class PwdResetComponent {
   fb = inject(FirebaseService);
   formBuilder = inject(FormBuilder);
   readonly dialogAddMembers = inject(MatDialog);
+  isPasswordTopVisible:boolean = false;
+  isPasswordBottomVisible: boolean = false;
 
   resetForm: FormGroup;
 
@@ -59,15 +61,13 @@ export class PwdResetComponent {
     this.dialogAddMembers.open(InfoBoxComponent);
   }
 
-  isPasswordVisible = false;
 
-  togglePasswordVisibility() {
-    this.isPasswordVisible = !this.isPasswordVisible;
+  togglePasswordVisibilityTop() {
+    this.isPasswordTopVisible = !this.isPasswordTopVisible;
   }
 
-  isPasswordCopyVisible = false;
 
-  togglePasswordCopyVisibility() {
-    this.isPasswordCopyVisible = !this.isPasswordCopyVisible;
+  togglePasswordVisibilityBottom() {
+    this.isPasswordBottomVisible = !this.isPasswordBottomVisible;
   }
 }

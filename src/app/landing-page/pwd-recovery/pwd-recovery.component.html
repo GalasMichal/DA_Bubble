@@ -1,4 +1,4 @@
-<section>
+<section class="landing-page">
 
 <div class="content-container">
 
@@ -6,16 +6,19 @@
     <a class="arrow-back" (click)="goBack()">
       <app-back></app-back>
     </a>
-      <h2>Passwort zurücksetzen</h2>
+      <h1>Passwort zurücksetzen</h1>
 
   </div>  
     <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
       <div class="input-container">
 
         <label for="name">Bitte gib deine E-Mail ein:</label>
-        <input class="input-field input-field-mail-icon" type="email" placeholder="beispielname@email.com" formControlName="email" autocomplete="on"/>
+        <input class="input-field" type="email" placeholder="beispielname@email.com" formControlName="email" autocomplete="on"/>
+        <div class="input-icon">
+          <img src="./assets/media/icons/mail-icon-input-field.svg" alt="e-mail">
+        </div>
+
         <div class="warn-txt">
-        
         @if (recoveryForm.controls['email'].invalid && (isFormValid || recoveryForm.controls['email'].dirty || recoveryForm.controls['email'].touched)) {
         @if (recoveryForm.controls['email'].errors?.['required']) {
             <span>E-Mail ist ein Pflichtfeld.</span>

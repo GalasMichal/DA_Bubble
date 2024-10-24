@@ -1,4 +1,4 @@
-<section>
+<section class="landing-page">
 
   <div class="content-container">
 
@@ -8,7 +8,7 @@
         <app-back></app-back>
       </a>
 
-        <h2>Konto erstellen</h2>
+        <h1>Konto erstellen</h1>
 
         <button class="info-container">
           <img id="info-icon" (click)="openInfoBox()" class="pulse info-icon"
@@ -23,8 +23,11 @@
         <div class="input-container">
           <label class="visually-hidden" for="name">Dein Name</label>
           <input name="name" id="name" autocomplete="off" formControlName="name"
-            class="input-field input-field-user-icon" type="text" placeholder="Dein Name" autocomplete="off" />
-            <div class="warn-txt">
+            class="input-field" type="text" placeholder="Dein Name" />
+            <div class="input-icon">
+              <img src="./assets/media/icons/user-icon.svg" alt="user-icon">
+            </div>
+          <div class="warn-txt">
           @if (myForm.controls['name'].invalid && (isFormSubmitted || myForm.controls['name'].dirty ||
           myForm.controls['name'].touched)) {
             @if (myForm.controls['name'].errors?.['required']) {
@@ -40,7 +43,12 @@
         <div class="input-container">
           <label class="visually-hidden" for="name">Dein E-Mail</label>
           <input #email name="name" id="email" autocomplete="off" formControlName="email"
-            class="input-field input-field-mail-icon" type="email" placeholder="beispielname@email.com"/>
+            class="input-field" type="email" placeholder="beispielname@email.com"/>
+            <div class="input-icon">
+              <img src="./assets/media/icons/mail-icon-input-field.svg" alt="e-mail">
+
+            </div>
+
           <div class="warn-txt">
             @if(fb.errorMessageLogin()){
               <span>{{ fb.errorMessageLogin() }}</span>
@@ -63,8 +71,11 @@
           <input #name id="password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
             class="input-field input-field-pwd-icon" placeholder="Passwort"/>
             <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+            <div class="input-icon">
+              <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="e-mail">
+            </div>
+          
           <div class="warn-txt">
-
             @if (myForm.controls['password'].invalid && (isFormSubmitted || myForm.controls['password'].touched ||
             myForm.controls['password'].dirty)) {
 
@@ -85,18 +96,19 @@
         <div class="checkbox-container">
           <div class="checkbox-content">
             <input id="checkbox" type="checkbox" formControlName="term" name="term">
-            <label for="checkbox">Ich stimme der <a class="privacy" href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</label>
           </div>
 
-          <div class="checkbox-description warn-txt">
+          <div class="checkbox-description">
+            <label for="checkbox">Ich stimme der <a class="privacy" routerLink="/start/legal">Datenschutzerklärung</a> zu.</label>
+            <div class="checkbox-description warn-txt">
               @if (myForm.controls['term'].invalid && (isFormSubmitted || myForm.controls['term'].touched ||
               myForm.controls['term'].dirty)) {
-
              @if (myForm.controls['term'].errors?.['required']) {
               <span>Password ist ein Pflichtfeld.</span>
-              }
             }
-          </div>
+          }
+        </div>
+      </div>
         </div>
 
         <div class="btn-container">

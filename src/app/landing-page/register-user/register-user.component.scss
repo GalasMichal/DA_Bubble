@@ -2,7 +2,7 @@
 @import "./../../../styles.scss";
 @import "./../../../animations.scss";
 
-section {
+.landing-page {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -34,10 +34,12 @@ section {
       a {
         text-decoration: none;
       }
-      h2 {
+      h1 {
         color: $primary;
         font-size: 1.875rem;
         font-weight: 700;
+        line-height: normal;
+        text-align: center;
       }
       button {
         background: none;
@@ -63,10 +65,27 @@ section {
         label {
           margin-bottom: 1.875rem;
         }
+        .input-icon {
+          position: absolute;
+          top: 13px;
+          left: 0;
+          padding: 0 25px;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+        }
+  
+        .eye-pos {
+          position: absolute;
+          top: 10px;
+          right: 0;
+          padding: 0 25px;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
       .input-field {
-        background-repeat: no-repeat;
-        background-position: left 30px top 50%;
         border: solid 0.0625rem transparent;
         padding-left: 85px;
         padding-top: 18px;
@@ -82,17 +101,6 @@ section {
         &:focus {
           border: solid 0.0625rem $secondary;
           outline: $secondary;
-        }
-
-        &.input-field-mail-icon {
-          background-image: url("./../../../assets/media/icons/mail-icon-input-field.svg");
-        }
-
-        &.input-field-pwd-icon {
-          background-image: url("./../../../assets/media/icons/pwd-lock-icon-input-field.svg");
-        }
-        &.input-field-user-icon {
-          background-image: url("./../../../assets/media/icons/user-icon.svg");
         }
       }
 
@@ -121,11 +129,6 @@ section {
       }
 
     }
-    .eye-pos {
-      top: 13%;
-      left: 89%;
-    }
-
     p {
       text-align: center;
       margin-bottom: 1.875rem;
@@ -135,8 +138,8 @@ section {
       display: flex;
       justify-content: center;
       gap: 1.875rem;
-      margin-bottom: 1.875rem;
       width: 100%;
+      margin-top: 1.875rem;
 
       .forward-btn {
         display: flex;
@@ -165,7 +168,6 @@ section {
   }
   .checkbox-container {
     display: flex;
-    flex-direction: column;
     max-width: 31.25rem;
     width: 100%;
     gap: 0.5rem;
@@ -203,31 +205,6 @@ section {
       font-weight: 400;
       line-height: 16.8px;
       padding-block: 0.3125rem;
-    }
-  }
-}
-
-@media (max-width: 500px) {
-  section {
-    header {
-      justify-content: center;
-      .new-user-link {
-        display: none;
-      }
-    }
-    .content-container {
-      padding: 1.25rem;
-      margin: 0;
-      .input-container {
-        padding-inline: 10px;
-      }
-    }
-    .btn-container {
-      gap: 0.875rem;
-    }
-    .legal-imprint-container {
-      flex-direction: column;
-      gap: 0;
     }
   }
 }

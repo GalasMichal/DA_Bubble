@@ -103,25 +103,14 @@ export class RegisterUserComponent {
   }
 
   openInfoBox() {
-    this.dialogAddMembers.open(InfoBoxComponent);
+    this.dialogAddMembers.open(InfoBoxComponent, {
+      panelClass: 'info-container', // Custom class for profile dialog
+    });
   }
-
   isPasswordVisible = false;
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
-  /*
-  age-validator - IF NEEDED
-  function ageValidator(control: FormControl): { [key: string]: boolean } | null {
-    if (control.value !== null && control.value < 18) {
-      return { 'ageInvalid': true };
-    }
-    return null;
-  }
-  this.myForm = new FormGroup({
-    age: new FormControl('', [ageValidator])
-  });
-  */
 }
