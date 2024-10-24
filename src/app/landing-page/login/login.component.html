@@ -1,28 +1,25 @@
-<section>
+<section class="landing-page">
   <!-- header/logo bar -->
-  <header>
-    <app-logo routerLink='/'></app-logo>
-    <div class="new-user-link">
-      <p>Neu bei DABubble?</p>
-      <button routerLink="register">Konto erstellen</button>
-    </div>
-  </header>
 
   <!-- white container -->
   <div class="content-container">
     <!-- title box -->
     <div class="form-title">
-      <h2>Anmeldung</h2>
-      <p>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
+      <h1>Anmeldung</h1>
     </div>
+
+    <p class="description">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
 
     <!-- form container -->
     <form [formGroup]="loginForm" (ngSubmit)="loginWithEmailAndPassword()">
       <div class="input-container">
         <label class="visually-hidden" for="email">E-Mail-Adresse</label>
-        <input class="input-field input-field-mail-icon" id="email" type="email" formControlName="email"
+        <input class="input-field" id="email" type="email" formControlName="email"
           placeholder="beispielname@email.com" autocomplete="username"/>
-        <div class="warn-txt">
+          <div class="input-icon">
+            <img src="./assets/media/icons/mail-icon-input-field.svg" alt="e-mail">
+          </div>
+          <div class="warn-txt">
             @if(fb.errorMessageLogin()){
             <span>{{ fb.errorMessageLogin() }}</span>
             }
@@ -37,11 +34,17 @@
           }
         </div>
       </div>
+      
       <div class="input-container">
         <label class="visually-hidden" for="password">Passwort</label>
-        <input autocomplete="current-password" id="password" class="input-field input-field-pwd-icon fontNunito input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+        <input autocomplete="current-password" id="password" class="input-field input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
           placeholder="Passwort"/>
-          <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+
+            <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+
+          <div class="input-icon">
+            <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
+          </div>
           <div class="warn-txt">
 
             @if (loginForm.controls['password'].invalid && (isFormSubmitted || loginForm.controls['password'].touched || loginForm.controls['password'].dirty)) {
@@ -58,12 +61,13 @@
             }
           </div>
       </div>
+
       <div class="btn-container">
         <button class="login-btn" type="submit">Anmelden</button>
         <button class="guest-btn" routerLink="main">Gäste-Login</button>
       </div>
       <!-- pwd recovery link -->
-      <button class="btn-password fontNunito" routerLink= '/recovery' title="Passwort vergessen?" aria-label="Link zur Passwort wiederherstellung">Passwort vergessen?</button>
+      <button class="btn-password" routerLink= '/recovery' title="Passwort vergessen?" aria-label="Link zur Passwort wiederherstellung">Passwort vergessen?</button>
       <!-- separator -->
       <div class="seperator-container">
       <span class="sep-line-txt">ODER</span>
@@ -80,6 +84,5 @@
 
 </div>
   <!-- legal & imprint btn -->
-  <app-footer />
 
 </section>

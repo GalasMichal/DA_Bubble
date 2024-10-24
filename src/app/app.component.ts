@@ -6,6 +6,8 @@ import { HeaderComponent } from './shared/header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Firestore } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
+import { FooterComponent } from './landing-page/footer/footer.component';
+import { HeaderLandingComponent } from './landing-page/header-landing/header-landing.component';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,8 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     HeaderComponent,
     ReactiveFormsModule,
+    FooterComponent,
+    HeaderLandingComponent
   ],
 
   templateUrl: './app.component.html',

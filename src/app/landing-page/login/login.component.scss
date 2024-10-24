@@ -1,68 +1,15 @@
 @import "./../../../colors.scss";
 @import "./../../../styles.scss";
 
-app-login {
-  width: 100%;
-  height: 100vh;
-}
-
-section {
+.landing-page {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   background-color: $bg-color;
-  padding: $padding-global;
+  width: 100%;
   height: 100%;
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    .logo-container {
-      padding-top: 45px;
-      .logo {
-        width: 242.11px;
-        height: 70px;
-      }
-    }
-    .new-user-link {
-      display: flex;
-      flex-direction: column;
-      gap: 0.625rem;
-      width: 11.25rem;
-      p {
-        font-weight: 400;
-        font-size: 1.125rem;
-        line-height: 24.55px;
-        color: $black;
-      }
-
-      button {
-        background-color: $bg-color;
-        text-align: center;
-        padding: 0.625rem 0.9375rem;
-        font-size: 1.125rem;
-        font-weight: 400;
-        line-height: 21.6px;
-        color: $primary-hover;
-        border: solid 1px transparent;
-        border-radius: $b-radius-2;
-        text-decoration: none;
-        transition: all 175ms ease-in-out;
-        &:hover {
-          border: $primary-hover 1px solid;
-          border-radius: $b-radius-2;
-          color: $primary;
-        }
-        &:focus {
-          border: solid 0.0625rem $secondary;
-          outline: $secondary;
-        }
-      }
-    }
-  }
   .content-container {
     display: flex;
     align-items: center;
@@ -71,24 +18,33 @@ section {
     max-width: 37.875rem;
     width: 100%;
     max-height: 46rem;
-    height: 100%;
     background-color: $white;
     border-radius: $b-radius-3;
     padding: 40px;
     margin: 10px;
     .form-title {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      text-align: center;
-      max-width: 27.75rem;
+      justify-content: center;
+      max-width: 31.25rem;
       width: 100%;
+      height: 40px;
       margin-bottom: 1.875rem;
-      h2 {
+      a {
+        text-decoration: none;
+      }
+      h1 {
         color: $primary;
-        font-size: 2.875rem;
+        font-size: 1.875rem;
         font-weight: 700;
       }
+      button {
+        background: none;
+      }
+    }
+    .description {
+      text-align: center;
+      margin-bottom: 1.875rem;
     }
 
     form {
@@ -105,8 +61,6 @@ section {
         width: 100%;
       }
       .input-field {
-        background-repeat: no-repeat;
-        background-position: left 30px top 50%;
         border: solid 0.0625rem transparent;
         padding-left: 85px;
         padding-top: 18px;
@@ -115,24 +69,36 @@ section {
         height: 3.07rem;
         background-color: $bg-color;
         border-radius: $b-radius-2;
-        transition: border 175ms ease-in-out;
+        @include firstTranistion();
         &:hover {
           border: solid 0.0625rem $black;
         }
+      
         &:focus {
           border: solid 0.0625rem $secondary;
           outline: $secondary;
         }
-
-        &.input-field-mail-icon {
-          background-image: url("./../../../assets/media/icons/mail-icon-input-field.svg");
-        }
-
-        &.input-field-pwd-icon {
-          background-image: url("./../../../assets/media/icons/pwd-lock-icon-input-field.svg");
-        }
+      }
+      .input-icon {
+        position: absolute;
+        top: 13px;
+        left: 0;
+        padding: 0 25px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
       }
 
+      .eye-pos {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        padding: 0 25px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
       .btn-password {
         display: flex;
         justify-content: center;
@@ -208,28 +174,35 @@ section {
       }
     }
 
-    .eye-pos {
-      top: 13%;
-      left: 89%;
+    p {
+      text-align: center;
+      margin-bottom: 1.875rem;
     }
 
     .btn-container {
       display: flex;
+      justify-content: center;
       gap: 1.875rem;
       margin-bottom: 1.875rem;
+      width: 100%;
 
       .login-btn,
       .guest-btn {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 10.375rem;
+        max-width: 10.375rem;
+        width: 100%;
         font-weight: 700;
         font-size: 1.125rem;
         gap: 10px;
         padding: 12px 25px;
         border-radius: $b-radius-2;
         color: $white;
+      }
+      .e-mail-button {
+        width: fit-content;
+        margin-left: auto;
       }
       .login-btn {
         background-color: $primary;
@@ -261,33 +234,5 @@ section {
       }
     }
   }
-
-
 }
 
-
-@media (max-width: 500px) {
-  section {
-    header {
-      justify-content: center;
-      .new-user-link {
-        display: none;
-      }
-    }
-    .content-container {
-      padding: 0;
-      margin: 0;
-      .input-container {
-        padding-inline: 10px;
-      }
-    }
-    .btn-container {
-      flex-direction: column;
-      gap: 0.875rem;
-    }
-    .legal-imprint-container {
-      flex-direction: column;
-      gap: 0;
-    }
-  }
-}

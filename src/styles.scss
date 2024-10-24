@@ -47,6 +47,7 @@ app-chat-room{
   overflow: hidden;
 }
 
+app-header-landing,
 app-message-field {
 width: 100%;
 }
@@ -87,17 +88,9 @@ body {
 
 html,
 body {
-  height: 100%;
-}
-
-html {
   scroll-behavior: smooth;
-}
-
-html,
-body {
   height: 100%;
-
+  font-family: 'Nunito';
 }
 
 /*
@@ -195,6 +188,10 @@ app-message-edit {
   box-shadow: $shadow;
 }
 
+app-footer {
+  width: 100%;
+}
+
 app-reaction-cloud {
   position: absolute;
   bottom: 1.65rem;
@@ -273,7 +270,6 @@ app-reaction-cloud {
   top: 13%;
   position: absolute;
   height: 30px;
-  left: 89%;
   cursor: pointer;
   background-size: contain;
   background-repeat: no-repeat;
@@ -292,6 +288,7 @@ app-reaction-cloud {
   overflow: hidden auto;
   max-height: 100%;
 }
+
 
 /* width */
 ::-webkit-scrollbar {
@@ -314,4 +311,21 @@ app-reaction-cloud {
 ::-webkit-scrollbar-thumb:hover {
   background: $primary-hover;
   border-radius: $b-radius-3;
+}
+
+
+@media (max-width: 500px) {
+  .landing-page {
+    .content-container {
+      padding: 1.25rem;
+      margin: 0;
+    }
+    .btn-container {
+      gap: 0.875rem;
+    }
+    .legal-imprint-container {
+      // flex-direction: column;
+      gap: 0;
+    }
+  }
 }

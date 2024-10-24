@@ -7,12 +7,7 @@ import { LoginComponent } from './landing-page/login/login.component';
 import { CreateAvatarComponent } from './landing-page/create-avatar/create-avatar.component';
 import { PwdResetComponent } from './landing-page/pwd-reset/pwd-reset.component';
 import { PwdRecoveryComponent } from './landing-page/pwd-recovery/pwd-recovery.component';
-
-import { ChannelEditComponent } from './main-content/chat-room/channel-edit/channel-edit.component';
-import { ChannelCreateComponent } from './main-content/chat-room/channel-create/channel-create.component';
-import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { ChatRoomComponent } from './main-content/chat-room/chat-room.component';
-import { empty } from 'rxjs';
 import { MessageNewComponent } from './shared/component/message-new/message-new.component';
 
 /*

@@ -9,8 +9,10 @@ import {
 } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { FirebaseService } from '../../services/firebase/firebase.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
+import { BackComponent } from '../../shared/component/back/back.component';
+import { LogoComponent } from '../../shared/logo/logo.component';
 
 @Component({
   selector: 'app-pwd-recovery',
@@ -22,11 +24,14 @@ import { FooterComponent } from '../footer/footer.component';
     FormsModule,
     ReactiveFormsModule,
     FooterComponent,
+    BackComponent,
+    LogoComponent
   ],
   templateUrl: './pwd-recovery.component.html',
   styleUrl: './pwd-recovery.component.scss',
 })
 export class PwdRecoveryComponent {
+  readonly location = inject(Location);
   fb = inject(FirebaseService);
   formBuilder = inject(FormBuilder);
 
@@ -47,5 +52,9 @@ export class PwdRecoveryComponent {
 
   onSubmit() {
     this.isFormValid = true;
+  }
+
+  goBack(): void {
+    this.location.back(); // Navigate to the previous page
   }
 }

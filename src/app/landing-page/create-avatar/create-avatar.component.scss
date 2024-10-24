@@ -1,28 +1,16 @@
 @import "../../../colors.scss";
 @import "../../../styles.scss";
 
-h2 {
-  color: $primary;
-  font-size: 2.875rem;
-  font-weight: 700;
-}
-
-/* LOGO CONTAINER */
-.logo-create-avatar-page {
-  padding-top: 3rem;
-  padding-left: 4%;
-}
-
 /* CREATE AVATAR SECTION */
-section {
+.landing-page {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 100vh;
+  justify-content: center;
   background-color: $bg-color;
-  padding: $padding-global;
+  width: 100%;
+  height: 100%;
 
   .logo-container {
     width: 100%;
@@ -48,28 +36,24 @@ section {
       justify-content: center;
       position: relative;
       width: 100%;
-
       .arrow-back {
         position: absolute;
         width: fit-content;
         left: 0;
         right: 0;
       }
-
-      h2 {
+      h1 {
         color: $primary;
         font-size: 2.275rem;
         font-weight: 700;
       }
     }
-
     .avatar-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 100%;
       gap: 32px;
-
       .profile-icon {
         border-radius: 50%;
         margin-top: 16px;
@@ -93,14 +77,23 @@ section {
 
       .profile-avatars {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 8px;
         button {
           border-radius: 50%;
           padding: 0.3125rem;
           background-color: $primary-light;
+          border: solid 0.0625rem transparent;
           @include firstTranistion();
           &:hover {
             background-color: $primary-hover;
+          }
+          &:focus {
+            border: solid 0.0625rem $secondary;
+            outline: $secondary;
+            transform: scale(1.1);
+            animation: pulse 0.5s infinite;
           }
           img {
             border-radius: 50%;
@@ -156,12 +149,12 @@ section {
             color: $white;
             border: solid 0.0625rem $primary-hover;
           }
-          &:focus {
-            background-color: $primary-hover;
-            color: $white;
-            border: solid 0.0625rem $primary-hover;
-            outline: $secondary;
-          }
+            &:focus {
+              background-color: $primary-hover;
+              color: $white;
+              border: solid 0.0625rem $primary-hover;
+              outline: $secondary;
+            }
         }
       }
     }
@@ -173,7 +166,7 @@ section {
     width: 100%;
     margin-top: auto;
 
-    .further-btn {
+    .forward-btn {
       display: flex;
       font-weight: 700;
       font-size: 1.125rem;
@@ -188,12 +181,11 @@ section {
         background-color: $primary-hover;
         color: $white;
       }
+      &:focus {
+        background-color: $primary-hover;
+        color: $white;
+        outline: $secondary;
+      }
     }
   }
-}
-
-/* CHECK CONTAINER */
-.check-container {
-  display: flex;
-  gap: 8px;
 }
