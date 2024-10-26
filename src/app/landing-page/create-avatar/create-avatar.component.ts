@@ -79,6 +79,10 @@ export class CreateAvatarComponent {
     }
     this.user.updateUserAvatar(this.db.currentUser()!.uId, this.selectedAvatar);
     await this.user.updateCurrentUser(this.db.currentUser()!);
+    this.showSuccess(text)
+  }
+  
+  showSuccess(text: string) {
     this.stateControl.showSuccess = true
     this.stateControl.showSuccessText = text
     this.stateControl.removeShowSuccess()
