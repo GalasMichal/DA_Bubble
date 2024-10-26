@@ -1,20 +1,16 @@
-<section class="landing-page">
-
-<div class="content-container">
-
   <div class="form-title ">
 
     <a class="arrow-back" routerLink="/start">
       <app-back></app-back>
     </a>
 
-    <h1>Passwort zurücksetzen</h1>
+    <h1 class="form-title-name">Passwort zurücksetzen</h1>
 
       <button class="info-container">
         <img id="info-icon" (click)="openInfoBox()" class="pulse info-icon"
         src="/assets/media/icons/info_symbol-icon.png" alt="info icon">
       </button>
-    </div>
+  </div>
 
   <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
     <div class="input-container"> 
@@ -63,7 +59,4 @@
     </div>
   </form>
 
-</div>
-
-</section>
 

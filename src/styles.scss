@@ -1,7 +1,6 @@
-
-@import './colors.scss';
-@import '@angular/cdk/overlay-prebuilt.css';
-@import '@ctrl/ngx-emoji-mart/picker';
+@import "./colors.scss";
+@import "@angular/cdk/overlay-prebuilt.css";
+@import "@ctrl/ngx-emoji-mart/picker";
 
 /*
   1. Use a more-intuitive box-sizing model.
@@ -10,7 +9,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-
 }
 
 /*
@@ -18,10 +16,10 @@
   */
 * {
   margin: 0;
-  padding: 0 ;
+  padding: 0;
 }
 
-.cdk-global-scrollblock{
+.cdk-global-scrollblock {
   overflow-y: hidden;
 }
 
@@ -30,7 +28,7 @@
     3. Add accessible line-height
     4. Improve text rendering
   */
-app-root{
+app-root {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,7 +38,7 @@ app-main-content {
   flex: 1;
 }
 
-app-chat-room{
+app-chat-room {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -49,14 +47,13 @@ app-chat-room{
 
 app-header-landing,
 app-message-field {
-width: 100%;
+  width: 100%;
 }
 
+
 app-message-new,
-app-login,
 app-pwd-reset,
 app-pwd-recovery,
-app-register-user,
 app-create-avatar,
 app-imprint,
 app-legal,
@@ -65,15 +62,6 @@ app-link-footer {
   flex: 1;
   width: 100%;
   height: 100%;
-}
-
-app-imprint,
-app-legal {
-  overflow: hidden;
-}
-
-.padding-r-1 {
-  margin-right: 1.5rem !important;
 }
 
 body {
@@ -90,7 +78,7 @@ html,
 body {
   scroll-behavior: smooth;
   height: 100%;
-  font-family: 'Nunito';
+  font-family: "Nunito";
 }
 
 /*
@@ -145,7 +133,8 @@ ul {
   list-style-type: none;
 }
 
-a, button {
+a,
+button {
   cursor: pointer;
 }
 
@@ -153,21 +142,21 @@ $b-radius-1: 1.875rem;
 $b-radius-2: 3.125rem;
 $b-radius-3: 1.25rem;
 $padding-dialog: 2.1875rem;
-$padding-global: .625rem;
+$padding-global: 0.625rem;
 
 app-search {
   display: contents;
 }
 
-.full-width{
+.full-width {
   width: 100%;
 }
 
-.padding-25{
+.padding-25 {
   padding: 1.5625rem;
 }
 
-.d-none{
+.d-none {
   display: none;
 }
 
@@ -206,7 +195,7 @@ app-reaction-cloud {
   min-height: 7.1875rem;
   height: 100%;
   background: $primary;
-  color: $white
+  color: $white;
 }
 
 .resize-none {
@@ -231,12 +220,12 @@ app-reaction-cloud {
 }
 
 .warn-txt {
-	width: 70%;
+  width: 70%;
   display: flex;
   flex-direction: column;
-	color: $red;
+  color: $red;
   height: 30px;
-  font-size: .75rem;
+  font-size: 0.75rem;
 }
 
 [disabled] {
@@ -246,8 +235,8 @@ app-reaction-cloud {
 }
 
 .input-focus:focus {
-    border: solid 0.0625rem $secondary;
-    outline: $secondary;
+  border: solid 0.0625rem $secondary;
+  outline: $secondary;
 }
 
 //Label is hidden
@@ -276,11 +265,11 @@ app-reaction-cloud {
   background-position: center;
 }
 .eye-open {
-  background-image: url('./assets/media/icons/pwd-visible_eye-open.png');
+  background-image: url("./assets/media/icons/pwd-visible_eye-open.png");
 }
 
 .eye-closed {
-  background-image: url('./assets/media/icons/pwd-not-visible_eye-close.png');
+  background-image: url("./assets/media/icons/pwd-not-visible_eye-close.png");
 }
 
 .chat-main-container {

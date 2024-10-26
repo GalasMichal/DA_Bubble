@@ -2,198 +2,136 @@
 @import "./../../../styles.scss";
 @import "./../../../animations.scss";
 
-
-.landing-page {
+.form-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 1.875rem;
+  .form-title-name {
+    color: $primary;
+    font-size: 1.875rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: normal;
+  }
+}
+.arrow-back {
+  position: absolute;
+  left: 0;
+  width: fit-content;
+  text-decoration: none;
+}
+.description {
+  text-align: center;
+  margin-bottom: 1.875rem;
+}
+
+form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: $bg-color;
-  width: 100%;
-  height: 100%;
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  .content-container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 37.875rem;
-    width: 100%;
-    max-height: 46rem;
-    background-color: $white;
-    border-radius: $b-radius-3;
-    padding: 40px;
-    margin: 10px;
-    .form-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      max-width: 31.25rem;
-      width: 100%;
-      height: 40px;
-      margin-bottom: 1.875rem;
-      a {
-        text-decoration: none;
-      }
-      h1 {
-        color: $primary;
-        font-size: 1.875rem;
-        font-weight: 700;
-        text-align: center;
-        line-height: normal;
-      }
-      button {
-        background: none;
-      }
-    }
-    .arrow-back {
-      position: absolute;
-      left: 0;
-      width: fit-content;
-      text-decoration: none;
-    }
-  }
-  .description {
-    text-align: center;
-    margin-bottom: 1.875rem;
-  }
-
-  form {
-    width: 100%;
+  .input-container {
+    position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    .input-container {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      label {
-        margin-bottom: 1rem;
-      }
+    width: 100%;
+    label {
+      margin-bottom: 1rem;
     }
-    .input-field {
-      background-repeat: no-repeat;
-      background-position: left 30px top 50%;
-      border: solid 0.0625rem transparent;
-      padding-left: 85px;
-      padding-top: 18px;
-      padding-bottom: 18px;
-      width: 100%;
-      height: 3.07rem;
-      background-color: $bg-color;
-      border-radius: $b-radius-2;
-      @include firstTranistion();
-      &:hover {
-        border: solid 0.0625rem $black;
-      }
-      &:focus {
-        border: solid 0.0625rem $secondary;
-        outline: $secondary;
-      }
+  }
+  .input-field {
+    background-repeat: no-repeat;
+    background-position: left 30px top 50%;
+    border: solid 0.0625rem transparent;
+    padding-left: 85px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    width: 100%;
+    height: 3.07rem;
+    background-color: $bg-color;
+    border-radius: $b-radius-2;
+    @include firstTranistion();
+    &:hover {
+      border: solid 0.0625rem $black;
     }
-
-    .input-icon {
-      position: absolute;
-      top: 52px;
-      left: 0;
-      padding: 0 25px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .btn-password {
-      display: flex;
-      justify-content: center;
-      background: none;
-      color: $primary-hover;
-      text-decoration: none;
-      width: fit-content;
-      padding: 0.3125rem 0.9375rem;
-      border-radius: $b-radius-2;
-      margin-bottom: 30px;
-      border: solid 0.0625rem transparent;
-      @include firstTranistion();
-      &:hover {
-        color: $primary;
-        background: $bg-color;
-      }
-      &:focus {
-        color: $primary;
-        background: $bg-color;
-        border: solid 0.0625rem $secondary;
-        outline: $secondary;
-      }
+    &:focus {
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
     }
   }
 
-  p {
-    text-align: center;
-    margin-bottom: 1.875rem;
+  .input-icon {
+    position: absolute;
+    top: 52px;
+    left: 0;
+    padding: 0 25px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
   }
-
-  .btn-container {
+  .btn-password {
     display: flex;
     justify-content: center;
-    gap: 1.875rem;
-    width: 100%;
-    margin-top: 1.875rem;
-    .forward-btn {
-      display: flex;
-      justify-content: center;
-      width: fit-content;
-      font-weight: 700;
-      font-size: 1.125rem;
-      gap: 10px;
-      padding: 12px 25px;
-      border: solid 0.0625rem transparent;
-      border-radius: $b-radius-2;
-      color: $white;
-      background-color: $primary;
-      margin-left: auto;
-      margin-top: auto;
-      transition: all 175ms ease-in-out;
-      &:hover {
-        background-color: $primary-hover;
-      }
-      &:focus {
-        background-color: $primary-hover;
-        outline: $primary-hover;
-      }
+    background: none;
+    color: $primary-hover;
+    text-decoration: none;
+    width: fit-content;
+    padding: 0.3125rem 0.9375rem;
+    border-radius: $b-radius-2;
+    margin-bottom: 30px;
+    border: solid 0.0625rem transparent;
+    @include firstTranistion();
+    &:hover {
+      color: $primary;
+      background: $bg-color;
+    }
+    &:focus {
+      color: $primary;
+      background: $bg-color;
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
     }
   }
 }
 
-@media (max-width: 500px) {
-  section {
-    header {
-      justify-content: center;
-      .new-user-link {
-        display: none;
-      }
+p {
+  text-align: center;
+  margin-bottom: 1.875rem;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.875rem;
+  width: 100%;
+  margin-top: 1.875rem;
+  .forward-btn {
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    font-weight: 700;
+    font-size: 1.125rem;
+    gap: 10px;
+    padding: 12px 25px;
+    border: solid 0.0625rem transparent;
+    border-radius: $b-radius-2;
+    color: $white;
+    background-color: $primary;
+    margin-left: auto;
+    margin-top: auto;
+    transition: all 175ms ease-in-out;
+    &:hover {
+      background-color: $primary-hover;
     }
-    .content-container {
-      padding: 1.25rem;
-      margin: 0;
-      .input-container {
-        padding-inline: 10px;
-      }
-    }
-    .btn-container {
-      gap: 0.875rem;
-    }
-    .legal-imprint-container {
-      flex-direction: column;
-      gap: 0;
+    &:focus {
+      background-color: $primary-hover;
+      outline: $primary-hover;
     }
   }
 }

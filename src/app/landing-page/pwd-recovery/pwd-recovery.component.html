@@ -1,12 +1,10 @@
-<section class="landing-page">
-
-<div class="content-container">
-
   <div class="form-title">
     <a class="arrow-back" (click)="goBack()">
       <app-back></app-back>
     </a>
-      <h1>Passwort zurücksetzen</h1>
+    <h1 class="form-title-name">
+      Passwort zurücksetzen
+    </h1>
 
   </div>  
     <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
@@ -40,5 +38,3 @@
         <button class="forward-btn" routerLink='/login'>E-Mail senden</button>
       </div>
     </form>
-  </div>
-</section>
