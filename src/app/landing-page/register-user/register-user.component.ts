@@ -17,6 +17,7 @@ import { LogoComponent } from '../../shared/logo/logo.component';
 import { BackComponent } from '../../shared/component/back/back.component';
 import { FooterComponent } from '../footer/footer.component';
 import { User } from '../../models/interfaces/user.model';
+import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-register-user',
@@ -48,6 +49,7 @@ export class RegisterUserComponent {
 
   myForm: FormGroup; // name - just for now
   isFormSubmitted: boolean = false;
+  isPasswordVisible = false;
 
   constructor() {
     // const upper_req = '(?=.*[A-Z])';
@@ -107,7 +109,7 @@ export class RegisterUserComponent {
       panelClass: 'info-container', // Custom class for profile dialog
     });
   }
-  isPasswordVisible = false;
+  
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;

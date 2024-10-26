@@ -7,6 +7,7 @@ import { BackComponent } from '../../shared/component/back/back.component';
 import { FooterComponent } from '../footer/footer.component';
 import { StorageService } from '../../services/storage/storage.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
+import { StateControlService } from '../../services/state-control/state-control.service';
 
 interface ProfileAvatar {
   name: string;
@@ -34,6 +35,7 @@ export class CreateAvatarComponent {
   st = inject(StorageService);
   user = inject(UserServiceService);
   router = inject(Router);
+  stateControl = inject(StateControlService)
   selectedAvatar: string = 'assets/media/icons/profile-icons/profile-icon.svg';
   file: any;
 
@@ -65,7 +67,7 @@ export class CreateAvatarComponent {
     }
   }
 
-  async closeCreateAvatar() {
+  async closeCreateAvatar(text: string) {
     if (this.file) {
       const downloadUrl = await this.st.uploadAvatarToStorage(
         this.db.currentUser()!.uId,
@@ -77,6 +79,12 @@ export class CreateAvatarComponent {
     }
     this.user.updateUserAvatar(this.db.currentUser()!.uId, this.selectedAvatar);
     await this.user.updateCurrentUser(this.db.currentUser()!);
-    this.router.navigate(['/start/main']);
+    this.stateControl.showSuccess = true
+    this.stateControl.showSuccessText = text
+    this.stateControl.removeShowSuccess()
+    setTimeout(() => {
+      this.router.navigate(['/start/main']);
+      }, 2200);
+
   }
 }

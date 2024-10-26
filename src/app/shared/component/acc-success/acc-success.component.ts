@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, Input, input } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterLink, RouterModule } from '@angular/router';
+import { StateControlService } from '../../../services/state-control/state-control.service';
 
 
 @Component({
@@ -18,4 +19,7 @@ import { RouterLink, RouterModule } from '@angular/router';
 })
 export class AccSuccessComponent {
 
+  stateControl = inject(StateControlService)
+
+  showSuccessText: string = ''
 }
