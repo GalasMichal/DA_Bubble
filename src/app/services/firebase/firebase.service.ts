@@ -215,7 +215,7 @@ export class FirebaseService {
       });
   }
 
-  userExistFirestore(uId: string): Promise<boolean> {
+ async userExistFirestore(uId: string): Promise<boolean> {
     return getDocs(
       query(collection(this.firestore, 'users'), where('uId', '==', uId))
     ).then((querySnapshot) => {
