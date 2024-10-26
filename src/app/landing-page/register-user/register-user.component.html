@@ -1,0 +1,116 @@
+<section class="main-content">
+  <div class="form-title ">
+
+        <a class="arrow-back" routerLink="start">
+          <app-back></app-back>
+        </a>
+
+        <h1 class="form-title-name">Konto erstellen</h1>
+
+        <button class="info-container">
+          <img id="info-icon" (click)="openInfoBox()" class="pulse info-icon"
+          src="/assets/media/icons/info_symbol-icon.png" alt="info icon">
+        </button>
+      </div>
+        
+        <p class="description">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
+      
+      
+      <form [formGroup]="myForm">
+        <div class="input-container">
+          <label class="visually-hidden" for="name">Dein Name</label>
+          <input name="name" id="name" autocomplete="off" formControlName="name"
+            class="input-field" type="text" placeholder="Dein Name" />
+            <div class="input-icon">
+              <img src="./assets/media/icons/user-icon.svg" alt="user-icon">
+            </div>
+          <div class="warn-txt">
+          @if (myForm.controls['name'].invalid && (isFormSubmitted || myForm.controls['name'].dirty ||
+          myForm.controls['name'].touched)) {
+            @if (myForm.controls['name'].errors?.['required']) {
+            <span>Name ist ein Pflichtfeld.</span>
+            }
+            @if (myForm.controls['name'].errors?.['minlength']) {
+            <span>Mindestens 4 Buchstaben.</span>
+            }
+          }
+        </div>
+        </div>
+
+        <div class="input-container">
+          <label class="visually-hidden" for="name">Dein E-Mail</label>
+          <input #email name="name" id="email" autocomplete="off" formControlName="email"
+            class="input-field" type="email" placeholder="beispielname@email.com"/>
+            <div class="input-icon">
+              <img src="./assets/media/icons/mail-icon-input-field.svg" alt="e-mail">
+
+            </div>
+
+          <div class="warn-txt">
+            @if(fb.errorMessageLogin()){
+              <span>{{ fb.errorMessageLogin() }}</span>
+              }
+            @if (myForm.controls['email'].invalid && (isFormSubmitted || myForm.controls['email'].touched ||
+            myForm.controls['email'].dirty)) {
+
+            @if (myForm.controls['email'].errors?.['required']) {
+            <span>E-Mail ist ein Pflichtfeld.</span>
+            }
+            @if (myForm.controls['email'].errors?.['email']) {
+            <span>E-Mail ist unvollständig/inkorrekt.</span>
+            }
+          }
+        </div>
+        </div>
+
+        <div class="input-container">
+          <label class="visually-hidden" for="name">Passwort</label>
+          <input #name id="password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+            class="input-field input-field-pwd-icon" placeholder="Passwort"/>
+            <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+            <div class="input-icon">
+              <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="e-mail">
+            </div>
+          
+          <div class="warn-txt">
+            @if (myForm.controls['password'].invalid && (isFormSubmitted || myForm.controls['password'].touched ||
+            myForm.controls['password'].dirty)) {
+
+            @if (myForm.controls['password'].errors?.['required']) {
+            <span>Password ist ein Pflichtfeld.</span>
+            }
+            @if (myForm.controls['password'].errors?.['minlength']) {
+            <span>Mindestens 8 Zeichen erforderlich: ein Klein- u. ein
+              Großbuchstabe, eine Zahl und ein Sonderzeichen, siehe Info-box.</span>
+            }
+            @if ((myForm.controls['password'].errors?.['pattern']) && !(myForm.controls['password'].errors?.['minlength'])) {
+            <span>Mindestanforderungen nicht erfüllt, siehe Info-box.</span>
+            }
+            }
+          </div>
+        </div>
+
+        <div class="checkbox-container">
+          <div class="checkbox-content">
+            <input id="checkbox" type="checkbox" formControlName="term" name="term">
+          </div>
+
+          <div class="checkbox-description">
+            <label for="checkbox">Ich stimme der <a class="privacy" routerLink="/start/legal">Datenschutzerklärung</a> zu.</label>
+            <div class="checkbox-description warn-txt">
+              @if (myForm.controls['term'].invalid && (isFormSubmitted || myForm.controls['term'].touched ||
+              myForm.controls['term'].dirty)) {
+             @if (myForm.controls['term'].errors?.['required']) {
+              <span>Password ist ein Pflichtfeld.</span>
+            }
+          }
+        </div>
+      </div>
+        </div>
+
+        <div class="btn-container">
+          <button id="submit" type="submit" class="forward-btn" [disabled]="!myForm.valid" (click)="onSubmit()">Weiter</button>
+        </div>
+    </form>
+
+</section>

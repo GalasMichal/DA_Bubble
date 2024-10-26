@@ -1,0 +1,80 @@
+<mat-dialog-content>
+
+<form [formGroup]="channelForm" (submit)="createChannelModel($event)">
+  <div [hidden]="!hiddenChannel">
+
+    <div class="channel-container">
+    <div class="arrow-back-container">
+      <h2>Channel erstellen</h2>
+      <button class="close-btn" (click)="closeDialogAddChannel($event)">
+        <app-close></app-close>
+      </button>
+    </div>
+
+    <p>
+      Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
+      themenbezogen sein #marketing zum Beispiel.
+    </p>
+    <div>
+
+      <div class="input-container">
+        <label for="channel-name">Channel-Name</label>
+        <input type="text" #channelName class="input-field-hash-icon"
+          formControlName="channelName" placeholder="z.B. Kooperationsprojekte" name="channelName"  autocomplete="off"
+          />
+        @if (channelForm.controls['channelName'].invalid &&
+        (channelForm.controls['channelName'].touched ||
+        channelForm.controls['channelName'].dirty)) {
+          @if(channelForm.controls['channelName'].errors?.['minlength']) {
+            <span>Minimum 3 Buchstaben.</span>
+        } }
+      </div>
+
+      <div class="input-container">
+        <label for="description">Beschreibung <span>(optional)</span></label>
+        <input #description type="text" formControlName="channelDescription"
+          placeholder="Dein Text hier" name="description" autocomplete="off"/>
+      </div>
+
+      <div class="check-container">
+        <button [disabled]="!isChannelNameValid()" (click)="hiddenChannel = false" >
+        Weiter
+      </button>
+    </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Pause -->
+  <div [hidden]="hiddenChannel">
+
+    <div class="members-container">
+    <div class="profil">
+        <h1>Benutzer hinzüfugen</h1>
+        <button class="close-btn" (click)="closeDialogAddMembers($event)">
+        <app-close></app-close>
+        </button>
+    </div>
+      <div class="radio-input">
+        <div>
+            <input type="radio" id="allMembers" name="member" formControlName="member" (change)="onRadioChange($event)" value="allMembers">
+            <label for="allMembers">Alle Mitglieder von <span>OfficeTeam</span> hinzufügen.</label>
+        </div>
+
+          <div>
+            <input type="radio" id="specificPeople" name="member" formControlName="member" (change)="onRadioChange($event)" value="specificPeople" >
+            <label for="specificPeople"> Bestimmte Benutzer hinzufügen.</label>
+          </div>
+          @if(isSpecificPeople){
+            <app-input-add-users></app-input-add-users>
+          }
+        </div>
+
+        <button class="add" type="submit" [disabled]="!allMembers || isSpecificPeople && isSpecificPeopleValid()">Erstellen</button>
+    </div>
+  </div>
+
+
+</form>
+
+</mat-dialog-content>

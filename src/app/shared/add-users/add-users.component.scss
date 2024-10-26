@@ -15,6 +15,7 @@
     .user-title {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       h1 {
         font-size: 1.5rem;
         font-weight: 600;
@@ -84,7 +85,7 @@
   border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
   position: absolute;
   width: 500px;
-  height: 300px;
+  height: fit-content;
   top: 13.5rem;
   right: 7.25rem;
   overflow-y: unset;

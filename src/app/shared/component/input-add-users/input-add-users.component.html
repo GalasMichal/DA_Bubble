@@ -1,18 +1,36 @@
 <div class="team">
   <div class="search">
     <label for="name-input" class="visually-hidden">Name:</label>
+    <ul class="added-user">
+      @for (user of stateServer.choosenUser; track $index) {
+        <li>
+          <div class="user-img">
+            <app-avatar></app-avatar>
+          </div>
+          <div>{{user.userName}}</div>
+          <button class="close-btn" (click)="removeUser($index, $event)">
+            <app-close></app-close>
+          </button>
+        </li>
+      }
+    </ul>
     <input type="text" id="name-input" placeholder="Name eingeben" autocomplete="off" />
   </div>
 
-  <ul>
-      @for(user of this.userService.userList; track $index) {
-          <li (click)="addUser()">
+  <ul class="list-of-user" [ngStyle]="{'bottom': bottom + 'px'}">
+      @for(user of this.listOfAllUsers; track $index) {
+          <li (click)="addUser($index, $event)">
             <button class="single-user">
               <div class="user-img">
                 <app-avatar></app-avatar>
               </div>
-              <div>{{user.displayName}}</div>
+              <div>{{user.userName}}</div>
             </button>
+          </li>
+        }
+        @if(listOfAllUsers.length === 0) {
+          <li>
+            Du hast alle Benutzer ausgewählt.
           </li>
         }
   </ul>
