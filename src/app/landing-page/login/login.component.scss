@@ -1,209 +1,211 @@
 @import "./../../../colors.scss";
 @import "./../../../styles.scss";
 
-.form-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 40px;
-  margin-bottom: 1.875rem;
-  .form-title-name {
-    color: $primary;
-    font-size: 1.875rem;
-    font-weight: 700;
+.main-content {
+  .form-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 1.875rem;
+    .form-title-name {
+      color: $primary;
+      font-size: 1.875rem;
+      font-weight: 700;
+    }
   }
-}
 
-.description {
-  text-align: center;
-  margin-bottom: 1.875rem;
-}
+  .description {
+    text-align: center;
+    margin-bottom: 1.875rem;
+  }
 
-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .input-container {
-    position: relative;
+  form {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 100%;
-  }
-  .input-field {
-    border: solid 0.0625rem transparent;
-    padding-left: 85px;
-    padding-top: 18px;
-    padding-bottom: 18px;
-    width: 100%;
-    height: 3.07rem;
-    background-color: $bg-color;
-    border-radius: $b-radius-2;
-    @include firstTranistion();
-    &:hover {
-      border: solid 0.0625rem $black;
-    }
-
-    &:focus {
-      border: solid 0.0625rem $secondary;
-      outline: $secondary;
-    }
-  }
-  .input-icon {
-    position: absolute;
-    top: 13px;
-    left: 0;
-    padding: 0 25px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .eye-pos {
-    position: absolute;
-    top: 10px;
-    right: 0;
-    padding: 0 25px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .btn-password {
-    display: flex;
-    justify-content: center;
-    background: none;
-    color: $primary-hover;
-    text-decoration: none;
-    width: fit-content;
-    padding: 0.3125rem 0.9375rem;
-    border-radius: $b-radius-2;
-    margin-bottom: 30px;
-    border: solid 0.0625rem transparent;
-    transition: all 175ms ease-in-out;
-    &:hover {
-      color: $primary;
-      background: $bg-color;
-    }
-    &:focus {
-      color: $primary;
-      background: $bg-color;
-      border: solid 0.0625rem $secondary;
-      outline: $secondary;
-    }
-  }
-
-  .seperator-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    margin-bottom: 30px;
-    &::before {
-      content: "";
-      position: absolute;
-      background-color: $bg-color;
-      height: 2px;
-      width: 100%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .sep-line-txt {
+    .input-container {
+      position: relative;
       display: flex;
-      border-radius: $b-radius-1;
-      padding-inline: 15px;
-      background-color: $white;
-      z-index: 1;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .input-field {
+      border: solid 0.0625rem transparent;
+      padding-left: 85px;
+      padding-top: 18px;
+      padding-bottom: 18px;
+      width: 100%;
+      height: 3.07rem;
+      background-color: $bg-color;
+      border-radius: $b-radius-2;
+      @include firstTranistion();
+      &:hover {
+        border: solid 0.0625rem $black;
+      }
+
+      &:focus {
+        border: solid 0.0625rem $secondary;
+        outline: $secondary;
+      }
+    }
+    .input-icon {
+      position: absolute;
+      top: 13px;
+      left: 0;
+      padding: 0 25px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .eye-pos {
+      position: absolute;
+      top: 10px;
+      right: 0;
+      padding: 0 25px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-password {
+      display: flex;
+      justify-content: center;
+      background: none;
+      color: $primary-hover;
+      text-decoration: none;
+      width: fit-content;
+      padding: 0.3125rem 0.9375rem;
+      border-radius: $b-radius-2;
+      margin-bottom: 30px;
+      border: solid 0.0625rem transparent;
+      transition: all 175ms ease-in-out;
+      &:hover {
+        color: $primary;
+        background: $bg-color;
+      }
+      &:focus {
+        color: $primary;
+        background: $bg-color;
+        border: solid 0.0625rem $secondary;
+        outline: $secondary;
+      }
+    }
+
+    .seperator-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 30px;
+      &::before {
+        content: "";
+        position: absolute;
+        background-color: $bg-color;
+        height: 2px;
+        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .sep-line-txt {
+        display: flex;
+        border-radius: $b-radius-1;
+        padding-inline: 15px;
+        background-color: $white;
+        z-index: 1;
+      }
     }
   }
-}
-.btn-google {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 3.75rem;
-  background-color: $bg-color;
-  border-radius: $b-radius-2; //3.125rem;
-  color: $primary;
-  border: solid 0.0625rem transparent;
-  transition: all 175ms ease-in-out;
-  &:hover {
-    border: solid 0.0625rem $secondary;
-    outline: $secondary;
-    font-weight: 500;
+  .btn-google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 3.75rem;
+    background-color: $bg-color;
+    border-radius: $b-radius-2; //3.125rem;
+    color: $primary;
+    border: solid 0.0625rem transparent;
+    transition: all 175ms ease-in-out;
+    &:hover {
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
+      font-weight: 500;
+    }
+    &:focus {
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
+    }
+    img {
+      margin-right: 16px;
+    }
   }
-  &:focus {
-    border: solid 0.0625rem $secondary;
-    outline: $secondary;
+
+  p {
+    text-align: center;
+    margin-bottom: 1.875rem;
   }
-  img {
-    margin-right: 16px;
-  }
-}
 
-p {
-  text-align: center;
-  margin-bottom: 1.875rem;
-}
-
-.btn-container {
-  display: flex;
-  justify-content: center;
-  gap: 1.875rem;
-  margin-bottom: 1.875rem;
-  width: 100%;
-
-  .login-btn,
-  .guest-btn {
+  .btn-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    max-width: 10.375rem;
+    gap: 1.875rem;
+    margin-bottom: 1.875rem;
     width: 100%;
-    font-weight: 700;
-    font-size: 1.125rem;
-    gap: 10px;
-    padding: 12px 25px;
-    border-radius: $b-radius-2;
-    color: $white;
-  }
-  .e-mail-button {
-    width: fit-content;
-    margin-left: auto;
-  }
-  .login-btn {
-    background-color: $primary;
-    transition: all 175ms ease-in-out;
-    &:hover {
-      background-color: $primary-hover;
-    }
-    &:focus {
-      background-color: $primary-hover;
-      outline: $primary-hover;
-    }
-  }
-  .guest-btn {
-    border: 1px solid $primary;
-    color: $primary;
-    background-color: $white;
-    transition: all 175ms ease-in-out;
-    &:hover {
-      background-color: $primary-hover;
+
+    .login-btn,
+    .guest-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      max-width: 10.375rem;
+      width: 100%;
+      font-weight: 700;
+      font-size: 1.125rem;
+      gap: 10px;
+      padding: 12px 25px;
+      border-radius: $b-radius-2;
       color: $white;
-      border: solid 1px $primary-hover;
     }
-    &:focus {
-      background-color: $primary-hover;
-      color: $white;
-      border: solid 1px $primary-hover;
-      outline: $secondary;
+    .e-mail-button {
+      width: fit-content;
+      margin-left: auto;
+    }
+    .login-btn {
+      background-color: $primary;
+      transition: all 175ms ease-in-out;
+      &:hover {
+        background-color: $primary-hover;
+      }
+      &:focus {
+        background-color: $primary-hover;
+        outline: $primary-hover;
+      }
+    }
+    .guest-btn {
+      border: 1px solid $primary;
+      color: $primary;
+      background-color: $white;
+      transition: all 175ms ease-in-out;
+      &:hover {
+        background-color: $primary-hover;
+        color: $white;
+        border: solid 1px $primary-hover;
+      }
+      &:focus {
+        background-color: $primary-hover;
+        color: $white;
+        border: solid 1px $primary-hover;
+        outline: $secondary;
+      }
     }
   }
 }

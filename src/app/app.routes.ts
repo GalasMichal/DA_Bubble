@@ -19,7 +19,7 @@ Merci :)
 
 export const routes: Routes = [
   { path: '', redirectTo: 'start', pathMatch: 'full' },
-  { path: 'start', component: LegalComponent },
+  { path: 'start', component: RegisterUserComponent },
   { path: 'start/register', component: RegisterUserComponent },
   // { path: 'start/main', component: MainContentComponent },
   { path: 'start/avatar', component: CreateAvatarComponent },

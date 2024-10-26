@@ -1,5 +1,6 @@
-    <div class="arrow-back-container">
-      <a class="arrow-back" [routerLink]="['/']">
+<section class="main-content">  
+  <div class="arrow-back-container">
+    <a class="arrow-back" [routerLink]="['/']">
         <app-back></app-back>
 
         
@@ -18,7 +19,7 @@
         <button (click)="chooseAvatar(avatar.name)">
           <img src="{{avatar.name}}"
             alt="user-profile icon - default {{avatar.name}}" title="user-icon of : {{avatar.name}}">
-        </button>
+          </button>
         }
       </div>
 
@@ -32,3 +33,5 @@
     <div class="btn-container">
       <button class="forward-btn" (click)="closeCreateAvatar()">Weiter</button>
     </div>
+
+</section>

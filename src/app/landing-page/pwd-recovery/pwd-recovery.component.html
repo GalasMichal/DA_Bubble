@@ -1,3 +1,4 @@
+<section class="main-content">
   <div class="form-title">
     <a class="arrow-back" (click)="goBack()">
       <app-back></app-back>
@@ -5,7 +6,7 @@
     <h1 class="form-title-name">
       Passwort zurücksetzen
     </h1>
-
+    
   </div>  
     <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit()">
       <div class="input-container">
@@ -38,3 +39,4 @@
         <button class="forward-btn" routerLink='/login'>E-Mail senden</button>
       </div>
     </form>
+</section>
