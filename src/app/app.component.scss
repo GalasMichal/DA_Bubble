@@ -1,5 +1,7 @@
-@import "./../colors.scss";
+@import './../colors.scss';
 @import './../styles.scss';
+@import './../landing-page.scss';
+
 
 .wrapper{
   height: 100vh;
@@ -16,5 +18,4 @@
   display: flex;
   flex-grow: 1;
   min-width: 100%;
-  // min-height: 100%;
 }

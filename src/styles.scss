@@ -289,7 +289,6 @@ app-reaction-cloud {
   max-height: 100%;
 }
 
-
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -305,14 +304,12 @@ app-reaction-cloud {
 ::-webkit-scrollbar-thumb {
   background: $primary;
   border-radius: $b-radius-3;
-
 }
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: $primary-hover;
   border-radius: $b-radius-3;
 }
-
 
 @media (max-width: 500px) {
   .landing-page {
@@ -324,7 +321,6 @@ app-reaction-cloud {
       gap: 0.875rem;
     }
     .legal-imprint-container {
-      // flex-direction: column;
       gap: 0;
     }
   }

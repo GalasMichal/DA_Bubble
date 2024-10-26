@@ -2,209 +2,186 @@
 @import "./../../../styles.scss";
 @import "./../../../animations.scss";
 
-.landing-page {
-  position: relative;
+.form-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 31.25rem;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 1.875rem;
+  h1 {
+    color: $primary;
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+  }
+  .info-container {
+    background: none;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .info-icon {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    animation: pulse-effect 2s infinite;
+  }
+}
+.description {
+  text-align: center;
+  margin-bottom: 1.875rem;
+}
+
+form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: $bg-color;
-  width: 100%;
-  height: 100%;
-  .content-container {
+  .input-container {
+    position: relative;
     display: flex;
-    align-items: center;
     flex-direction: column;
     justify-content: center;
-    max-width: 37.875rem;
+    align-items: center;
     width: 100%;
-    max-height: 46rem;
-    background-color: $white;
-    border-radius: $b-radius-3;
-    padding: 40px;
-    margin: 10px;
-    .form-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 31.25rem;
-      width: 100%;
-      height: 40px;
-      margin-bottom: 1.875rem;
-      a {
-        text-decoration: none;
-      }
-      h1 {
-        color: $primary;
-        font-size: 1.875rem;
-        font-weight: 700;
-        line-height: normal;
-        text-align: center;
-      }
-      button {
-        background: none;
-      }
-    }
-    .description {
-      text-align: center;
+    label {
       margin-bottom: 1.875rem;
     }
-
-    form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      .input-container {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        label {
-          margin-bottom: 1.875rem;
-        }
-        .input-icon {
-          position: absolute;
-          top: 13px;
-          left: 0;
-          padding: 0 25px;
-          display: inline-flex;
-          justify-content: center;
-          align-items: center;
-        }
-  
-        .eye-pos {
-          position: absolute;
-          top: 10px;
-          right: 0;
-          padding: 0 25px;
-          display: inline-flex;
-          justify-content: center;
-          align-items: center;
-        }
-      }
-      .input-field {
-        border: solid 0.0625rem transparent;
-        padding-left: 85px;
-        padding-top: 18px;
-        padding-bottom: 18px;
-        width: 100%;
-        height: 3.07rem;
-        background-color: $bg-color;
-        border-radius: $b-radius-2;
-        transition: border 175ms ease-in-out;
-        &:hover {
-          border: solid 0.0625rem $black;
-        }
-        &:focus {
-          border: solid 0.0625rem $secondary;
-          outline: $secondary;
-        }
-      }
-
-      .btn-password {
-        display: flex;
-        justify-content: center;
-        background: none;
-        color: $primary-hover;
-        text-decoration: none;
-        width: fit-content;
-        padding: 0.3125rem 0.9375rem;
-        border-radius: $b-radius-2;
-        margin-bottom: 30px;
-        border: solid 0.0625rem transparent;
-        transition: all 175ms ease-in-out;
-        &:hover {
-          color: $primary;
-          background: $bg-color;
-        }
-        &:focus {
-          color: $primary;
-          background: $bg-color;
-          border: solid 0.0625rem $secondary;
-          outline: $secondary;
-        }
-      }
-
-    }
-    p {
-      text-align: center;
-      margin-bottom: 1.875rem;
-    }
-
-    .btn-container {
-      display: flex;
+    .input-icon {
+      position: absolute;
+      top: 13px;
+      left: 0;
+      padding: 0 25px;
+      display: inline-flex;
       justify-content: center;
-      gap: 1.875rem;
-      width: 100%;
-      margin-top: 1.875rem;
+      align-items: center;
+    }
 
-      .forward-btn {
-        display: flex;
-        justify-content: center;
-        width: 10.375rem;
-        font-weight: 700;
-        font-size: 1.125rem;
-        gap: 10px;
-        padding: 12px 25px;
-        border: solid 0.0625rem transparent;
-        border-radius: $b-radius-2;
-        color: $white;
-        background-color: $primary;
-        margin-left: auto;
-        margin-top: auto;
-        transition: all 175ms ease-in-out;
-        &:hover {
-          background-color: $primary-hover;
-        }
-        &:focus {
-          background-color: $primary-hover;
-          outline: $primary-hover;
-        }
+    .eye-pos {
+      position: absolute;
+      top: 10px;
+      right: 0;
+      padding: 0 25px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .input-field {
+    border: solid 0.0625rem transparent;
+    padding-left: 85px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    width: 100%;
+    height: 3.07rem;
+    background-color: $bg-color;
+    border-radius: $b-radius-2;
+    transition: border 175ms ease-in-out;
+    &:hover {
+      border: solid 0.0625rem $black;
+    }
+    &:focus {
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
+    }
+  }
+
+  .btn-password {
+    display: flex;
+    justify-content: center;
+    background: none;
+    color: $primary-hover;
+    text-decoration: none;
+    width: fit-content;
+    padding: 0.3125rem 0.9375rem;
+    border-radius: $b-radius-2;
+    margin-bottom: 30px;
+    border: solid 0.0625rem transparent;
+    transition: all 175ms ease-in-out;
+    &:hover {
+      color: $primary;
+      background: $bg-color;
+    }
+    &:focus {
+      color: $primary;
+      background: $bg-color;
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
+    }
+  }
+}
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.875rem;
+  width: 100%;
+  margin-top: 1.875rem;
+
+  .forward-btn {
+    display: flex;
+    justify-content: center;
+    width: 10.375rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+    gap: 10px;
+    padding: 12px 25px;
+    border: solid 0.0625rem transparent;
+    border-radius: $b-radius-2;
+    color: $white;
+    background-color: $primary;
+    margin-left: auto;
+    margin-top: auto;
+    transition: all 175ms ease-in-out;
+    &:hover {
+      background-color: $primary-hover;
+    }
+    &:focus {
+      background-color: $primary-hover;
+      outline: $primary-hover;
+    }
+  }
+}
+.checkbox-container {
+  display: flex;
+  max-width: 31.25rem;
+  width: 100%;
+  gap: 0.5rem;
+  .checkbox-content {
+    display: flex;
+    align-items: center;
+    column-gap: 0.625rem;
+    input {
+      display: flex;
+      margin-bottom: auto;
+      cursor: pointer;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+  label {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16.8px;
+    text-align: left;
+    .privacy {
+      text-decoration: none;
+      color: $primary;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
       }
     }
   }
-  .checkbox-container {
+  span {
     display: flex;
-    max-width: 31.25rem;
-    width: 100%;
-    gap: 0.5rem;
-    .checkbox-content {
-      display: flex;
-      align-items: center;
-      column-gap: .625rem;
-      input {
-        display: flex;
-        margin-bottom: auto;
-        cursor: pointer;
-        width: 1.25rem;
-        height: 1.25rem;
-      }
-    }
-    label {
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 16.8px;
-      text-align: left;
-      .privacy {
-        text-decoration: none;
-        color: $primary;
-        cursor: pointer;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-    span {
-      display: flex;
-      text-align: left;
-      color: #ff0000;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 16.8px;
-      padding-block: 0.3125rem;
-    }
+    text-align: left;
+    color: #ff0000;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.8px;
+    padding-block: 0.3125rem;
   }
 }

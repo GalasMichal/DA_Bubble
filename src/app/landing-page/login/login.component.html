@@ -64,7 +64,7 @@
 
       <div class="btn-container">
         <button class="login-btn" type="submit">Anmelden</button>
-        <button class="guest-btn" routerLink="main">Gäste-Login</button>
+        <a class="guest-btn" routerLink="main">Gäste-Login</a>
       </div>
       <!-- pwd recovery link -->
       <button class="btn-password" routerLink= '/recovery' title="Passwort vergessen?" aria-label="Link zur Passwort wiederherstellung">Passwort vergessen?</button>
@@ -75,11 +75,11 @@
     <!-- goggle btn -->
   </form>
 
-  <button class="input-focus btn-google"
+  <a class="input-focus btn-google"
     (click)="createNewUserWithGoogle()">
     <img src="/assets/media/icons/google-logo-icon.svg" alt="google logo">
     Anmeldung mit Google
-  </button>
+  </a>
   <!-- login & guest btn -->
 
 </div>
