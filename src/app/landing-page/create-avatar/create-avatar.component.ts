@@ -89,6 +89,5 @@ export class CreateAvatarComponent {
     setTimeout(() => {
       this.router.navigate(['/start/main']);
       }, 2200);
-
   }
 }

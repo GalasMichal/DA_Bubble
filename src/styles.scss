@@ -222,21 +222,12 @@ app-acc-success {
   transform: translateX(0);
 }
 
+.show-arrow {
+  display: flex !important;
+}
+
 .resize-none {
   resize: none;
-}
-
-.ml-mr-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.ml-5 {
-  margin-left: -5%;
-}
-
-.ml-15 {
-  margin-left: 15%;
 }
 
 .warn-txt {

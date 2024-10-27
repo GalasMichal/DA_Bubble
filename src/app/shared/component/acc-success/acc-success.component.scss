@@ -1,10 +1,20 @@
 @import "../../../../styles.scss";
 @import "../../../../colors.scss";
 
-.content-description {
-  height: 3.0625rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 3.0688rem;
-  color: $white;
+.content-container {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  svg {
+    display: none;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .content-description {
+    height: 3.0625rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 3.0688rem;
+    color: $white;
+  }
 }

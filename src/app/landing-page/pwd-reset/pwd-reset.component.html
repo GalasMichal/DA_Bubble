@@ -15,7 +15,7 @@
       </button>
   </div>
 
-  <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="resetForm" (ngSubmit)="onSubmit('Anmelden')">
     <div class="input-container"> 
     <!-- 
       PWD-CHECK: min-length-8, max-length-32, chars A-Z, a-z, excl ÖöÄäÜü, all special-characters, no wing-dings, at least one from each category, no doubles
@@ -58,7 +58,7 @@
       </div>
     
     <div class="btn-container">
-      <button class="forward-btn" [routerLink]="['/']">Passwort ändern</button>
+      <button class="forward-btn">Passwort ändern</button>
     </div>
   </form>
 </section>

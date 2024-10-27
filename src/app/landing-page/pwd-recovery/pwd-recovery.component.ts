@@ -54,6 +54,7 @@ export class PwdRecoveryComponent {
 
   onSubmit(text: string) {
     this.isFormValid = true;
+    this.stateControl.showArrow = true
     this.stateControl.showSuccess = true
     this.stateControl.showSuccessText = text
     this.stateControl.removeShowSuccess()
