@@ -1,6 +1,5 @@
 import { Component, ElementRef, inject } from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
@@ -37,7 +36,6 @@ import { FooterComponent } from '../footer/footer.component';
 })
 export class LoginComponent {
   fb = inject(FirebaseService);
-  formBuilder = inject(FormBuilder);
   private router = inject(Router);
 
   // FormGroup für die Anmeldeform
@@ -45,8 +43,8 @@ export class LoginComponent {
   isFormSubmitted: boolean = false;
 
   constructor() {
-    this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+    this.loginForm = new FormGroup({
+      userEmail: new FormControl('',[Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),

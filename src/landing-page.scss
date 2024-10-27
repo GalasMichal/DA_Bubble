@@ -26,3 +26,12 @@
       margin: 10px;
     }
 }
+
+@media (max-width: 500px) {
+  .landing-page {
+    .main-container {
+      padding: 0.50rem;
+      margin: 0;
+    }
+  }
+}

@@ -310,18 +310,3 @@ app-acc-success {
   background: $primary-hover;
   border-radius: $b-radius-3;
 }
-
-@media (max-width: 500px) {
-  .landing-page {
-    .content-container {
-      padding: 1.25rem;
-      margin: 0;
-    }
-    .btn-container {
-      gap: 0.875rem;
-    }
-    .legal-imprint-container {
-      gap: 0;
-    }
-  }
-}
