@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -45,15 +46,32 @@ export class PwdResetComponent {
   isFormValid: boolean = false;
 
   constructor() {
-    this.resetForm = new FormGroup({
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(
-          '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%+-/*?&])[A-Za-z0-9@$!%+-/*?&]+$'
-        ),
-      ]),
-    });
+    this.resetForm = new FormGroup(
+      {
+        password1: new FormControl('', [
+          Validators.required,
+          Validators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-8])(?=.*[@$!%+-/*?&])[A-Za-z0-9@$!%+-/*?&]+$'
+          ),
+        ]),
+        password2: new FormControl('', [
+          Validators.required,
+          Validators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-8])(?=.*[@$!%+-/*?&])[A-Za-z0-9@$!%+-/*?&]+$'
+          ),
+        ])
+      },
+      { validators: this.passwordMatchValidator } // Validator als Referenz übergeben, ohne Klammern
+    );
+  }
+  
+  passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const formGroup = control as FormGroup;
+    const password1 = formGroup.get('password1')?.value;
+    const password2 = formGroup.get('password2')?.value;
+  
+    // Return null if passwords match, otherwise return error object
+    return password1 === password2 ? null : { passwordMismatch: true };
   }
 
   onSubmit(text: string) {
