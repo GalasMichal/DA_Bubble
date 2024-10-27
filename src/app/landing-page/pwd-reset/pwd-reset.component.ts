@@ -67,14 +67,14 @@ export class PwdResetComponent {
   }
 
   openInfoBox() {
-    this.dialogAddMembers.open(InfoBoxComponent);
+    this.dialogAddMembers.open(InfoBoxComponent, {
+      panelClass: 'info-container', // Custom class for profile dialog
+    });
   }
-
 
   togglePasswordVisibilityTop() {
     this.isPasswordTopVisible = !this.isPasswordTopVisible;
   }
-
 
   togglePasswordVisibilityBottom() {
     this.isPasswordBottomVisible = !this.isPasswordBottomVisible;
