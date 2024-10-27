@@ -52,15 +52,10 @@ export class RegisterUserComponent {
   isPasswordVisible = false;
 
   constructor() {
-    // const upper_req = '(?=.*[A-Z])';
-    // const special_char_req = '(?=.*[!@#$%^&*()])';
-    // const lower_req = '(?=.*[a-z])';
-    // const number_req = '(?=.*[0-9])';
     this.myForm = new FormGroup({
       name: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
-        // checks if name contains only letters
+        Validators.minLength(3),
         Validators.pattern('^[a-zA-Z ]*$'),
       ]),
       email: new FormControl('', [Validators.required, Validators.email]),
