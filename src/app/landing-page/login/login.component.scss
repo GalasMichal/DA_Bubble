@@ -63,6 +63,10 @@
       align-items: center;
     }
 
+    .warn-txt-hight {
+      height: 55px;
+    }
+
     .eye-pos {
       position: absolute;
       top: 10px;
@@ -206,6 +210,17 @@
         border: solid 1px $primary-hover;
         outline: $secondary;
       }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .main-content{
+    .btn-container {
+      gap: 0.875rem;
+    }
+    .legal-imprint-container {
+      gap: 0;
     }
   }
 }

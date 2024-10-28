@@ -6,6 +6,7 @@
       <div class="main-container">
         <router-outlet> </router-outlet>
       </div>
+      <app-toast [ngClass]="{'show-success': stateControl.showSuccess}"></app-toast>
     </div>
   </div>
   

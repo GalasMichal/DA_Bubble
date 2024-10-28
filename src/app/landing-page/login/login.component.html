@@ -8,39 +8,38 @@
   <!-- form container -->
   <form [formGroup]="loginForm" (ngSubmit)="loginWithEmailAndPassword()">
     <div class="input-container">
-      <label class="visually-hidden" for="email">E-Mail-Adresse</label>
-      <input class="input-field" id="email" type="email" formControlName="email"
+      <label class="visually-hidden" for="userEmail">E-Mail-Adresse</label>
+      <input class="input-field" id="userEmail" type="email" formControlName="userEmail"
         placeholder="beispielname@email.com" autocomplete="username"/>
         <div class="input-icon">
           <img src="./assets/media/icons/mail-icon-input-field.svg" alt="e-mail">
         </div>
-        <div class="warn-txt">
+        <div class="warn-txt"> 
           @if(fb.errorMessageLogin()){
           <span>{{ fb.errorMessageLogin() }}</span>
           }
-        @if (loginForm.controls['email'].invalid && (isFormSubmitted || loginForm.controls['email'].touched ||
-          loginForm.controls['email'].dirty)) {
-        @if (loginForm.controls['email'].errors?.['required']) {
+        @if (loginForm.controls['userEmail'].invalid && (loginForm.controls['userEmail'].touched || loginForm.controls['userEmail'].dirty)) {
+        @if (loginForm.controls['userEmail'].errors?.['required']) {
         <span>E-Mail ist ein Pflichtfeld.</span>
           }
-        @if (loginForm.controls['email'].errors?.['email']) {
-          <span id="email-error">E-Mail ist unvollständig/inkorrekt.</span>
+        @if (loginForm.controls['userEmail'].errors?.['email']) {
+          <span>E-Mail ist unvollständig/inkorrekt.</span>
         }
       }
       </div>
     </div>
     
     <div class="input-container">
-      <label class="visually-hidden" for="password">Passwort</label>
-      <input autocomplete="current-password" id="password" class="input-field input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
-        placeholder="Passwort"/>
+        <label class="visually-hidden" for="password">Passwort</label>
+        <input autocomplete="current-password" id="password" class="input-field input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+          placeholder="Passwort"/>
 
           <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
 
           <div class="input-icon">
           <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
         </div>
-        <div class="warn-txt">
+        <div class="warn-txt warn-txt-hight">
 
           @if (loginForm.controls['password'].invalid && (isFormSubmitted || loginForm.controls['password'].touched || loginForm.controls['password'].dirty)) {
             @if (loginForm.controls['password'].errors?.['required']) {
@@ -62,7 +61,7 @@
       <a class="guest-btn" routerLink="main">Gäste-Login</a>
     </div>
     <!-- pwd recovery link -->
-    <button class="btn-password" routerLink= '/recovery' title="Passwort vergessen?" aria-label="Link zur Passwort wiederherstellung">Passwort vergessen?</button>
+    <a class="btn-password" routerLink='/recovery'>Passwort vergessen?</a>
     <!-- separator -->
     <div class="seperator-container">
       <span class="sep-line-txt">ODER</span>

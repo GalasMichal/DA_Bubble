@@ -9,56 +9,61 @@
 
     <h1 class="form-title-name">Passwort zurücksetzen</h1>
 
-      <button class="info-container">
-        <img id="info-icon" (click)="openInfoBox()" class="pulse info-icon"
+      <button class="info-container" (click)="openInfoBox()">
+        <img id="info-icon" class="pulse info-icon"
         src="/assets/media/icons/info_symbol-icon.png" alt="info icon">
       </button>
   </div>
 
-  <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="resetForm" (ngSubmit)="onSubmit('Anmelden')">
     <div class="input-container"> 
-    <!-- 
-      PWD-CHECK: min-length-8, max-length-32, chars A-Z, a-z, excl ÖöÄäÜü, all special-characters, no wing-dings, at least one from each category, no doubles
-    -->
-    <label class="visually-hidden" for="password">Passwort</label>
-      <input id="password" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password"/>
-      <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordTopVisible, 'eye-open': isPasswordTopVisible}" (click)="togglePasswordVisibilityTop()"></i>
-      <div class="input-icon">
-        <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
-      </div>
-      <div class="warn-txt">
-      @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
-          @if (resetForm.controls['password'].errors?.['required']) {
-            <span >Password ist ein Pflichtfeld.</span>
-          }
-          @if (resetForm.controls['password'].errors?.['password']) {
-            <span id="password-error">Password ist unvollständig/inkorrekt, siehe Info-box.</span>
-          }
-        }
-      </div>
-      </div>
-      
-      <div class="input-container">
-        <label class="visually-hidden" for="password">Passwort</label>
-        <input name="passwordCopy" class="input-field" [type]="isPasswordBottomVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password"/>
-        <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordBottomVisible, 'eye-open': isPasswordBottomVisible}" (click)="togglePasswordVisibilityBottom()"></i>
+      <label class="visually-hidden" for="password1">Passwort</label>
+        <input name="password1" id="password1" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password1" autocomplete="on"/>
+        <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordTopVisible, 'eye-open': isPasswordTopVisible}" (click)="togglePasswordVisibilityTop()"></i>
         <div class="input-icon">
           <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
         </div>
         <div class="warn-txt">
-        @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
-          @if (resetForm.controls['password'].errors?.['required']) {
-            <span >Password ist ein Pflichtfeld.</span>
+        @if (resetForm.controls['password1'].invalid && (isFormValid || resetForm.controls['password1'].dirty || resetForm.controls['password1'].touched)) {
+            @if (resetForm.controls['password1'].errors?.['required']) {
+              <span >Password ist ein Pflichtfeld.</span>
+            }
+            @if (resetForm.controls['password1'].errors?.['pattern']) {
+              <span id="password-error">Password ist unvollständig/inkorrekt, siehe Info-box.</span>
+            }
           }
-          @if (resetForm.controls['password'].errors?.['pattern']) {
-            <span id="password-error">Password ist unvollständig/inkorrekt.</span>
+        </div>
+      </div>
+      
+        <div class="input-container">
+          <label class="visually-hidden" for="password2">Passwort</label>
+          <input name="password2" id="password2" class="input-field" [type]="isPasswordBottomVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password2" autocomplete="on"/>
+          <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordBottomVisible, 'eye-open': isPasswordBottomVisible}" (click)="togglePasswordVisibilityBottom()"></i>
+          <div class="input-icon">
+            <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
+          </div>
+          <div class="warn-txt">
+          @if (resetForm.controls['password2'].invalid && (isFormValid || resetForm.controls['password2'].dirty || resetForm.controls['password2'].touched)) {
+            @if (resetForm.controls['password2'].errors?.['required']) {
+              <span >Password ist ein Pflichtfeld.</span>
+            }
+            @if (resetForm.controls['password2'].errors?.['pattern']) {
+              <span id="password-error">Password ist unvollständig/inkorrekt.</span>
+            }
           }
+        </div>
+      </div>
+      
+      <div class="warn-txt">       
+        @if(resetForm.errors?.['passwordMismatch'] && (resetForm.controls['password2'].dirty || resetForm.controls['password2'].touched)) {
+          <span>
+            Passwörter stimmen nicht überein.
+          </span>  
         }
       </div>
-      </div>
-    
+
     <div class="btn-container">
-      <button class="forward-btn" [routerLink]="['/']">Passwort ändern</button>
+      <button class="forward-btn" [disabled]="!resetForm.valid">Passwort ändern</button>
     </div>
   </form>
 </section>
