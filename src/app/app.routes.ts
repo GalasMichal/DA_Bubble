@@ -35,6 +35,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: MessageNewComponent },
       { path: 'chat/:id', component: ChatRoomComponent },
+      { path: 'messages/:id', component: MessageNewComponent },
     ],
   },
   { path: 'reset', component: PwdResetComponent },

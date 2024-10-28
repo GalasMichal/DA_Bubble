@@ -6,7 +6,7 @@ import { ChannelCreateComponent } from '../../chat-room/channel-create/channel-c
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../services/messages/message.service';
 import { PrivateChat } from '../../../models/interfaces/privateChat.class';
 import { User } from '../../../models/interfaces/user.model';
@@ -33,8 +33,9 @@ export class MenuSideLeftComponent {
     this.userService.subUserList();
   }
 
-  sendMessage(ûser: User) {
-    this.ms.newPrivateMessage(this.db.currentUser()!);
+  sendMessage(user: User) {
+    
+    this.ms.newPrivateMessageChannel(user);
   }
 
   ngOnDestroy(): void {
