@@ -16,6 +16,7 @@ import {
 } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
+import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-login',
@@ -37,14 +38,16 @@ import { FooterComponent } from '../footer/footer.component';
 export class LoginComponent {
   fb = inject(FirebaseService);
   private router = inject(Router);
+  stateControl = inject(StateControlService);
 
   // FormGroup für die Anmeldeform
   loginForm: FormGroup;
   isFormSubmitted: boolean = false;
+  isPasswordVisible = false;
 
   constructor() {
     this.loginForm = new FormGroup({
-      userEmail: new FormControl('',[Validators.required, Validators.email]),
+      userEmail: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -58,6 +61,8 @@ export class LoginComponent {
   async createNewUserWithGoogle() {
     await this.fb.createGoogleUser();
     this.fb.loadAllBackendData();
+    this.stateControl.showMainContent = true;
+
   }
 
   async loginWithEmailAndPassword() {
@@ -73,13 +78,18 @@ export class LoginComponent {
           this.fb.currentUser()?.displayName
         );
         this.fb.loadAllBackendData();
+        this.stateControl.showMainContent = true;
       });
     } else {
       console.log('Formular ist ungültig');
     }
   }
 
-  isPasswordVisible = false;
+  navigateToMainContent() {
+    this.fb.loadAllBackendData();
+    this.stateControl.showMainContent = true;
+    this.router.navigateByUrl('start/main');
+  }
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;

@@ -1,15 +1,25 @@
-<div class="wrapper">
-  <app-header-landing></app-header-landing>
 
-  <div class="router-outlet">
-    <div class="landing-page">
+@if (!stateControl.showMainContent) {
+ 
+  <div class="wrapper">
+  <app-header-landing></app-header-landing>
+   <div class="router-outlet">
+     <div class="landing-page">
       <div class="main-container">
         <router-outlet> </router-outlet>
       </div>
-      <app-toast [ngClass]="{'show-success': stateControl.showSuccess}"></app-toast>
+      <app-toast [ngClass]="{ 'show-success': stateControl.showSuccess }"></app-toast>
     </div>
-  </div>
-  
-  <app-footer></app-footer>  
+   </div>
+   <app-footer></app-footer>
 </div>
 
+}
+
+@if (stateControl.showMainContent) { 
+  <div class="wrapper">
+    <div class="router-outlet">
+          <router-outlet> </router-outlet>
+    </div>
+  </div>
+}
