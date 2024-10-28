@@ -42,11 +42,7 @@ header {
       fill: $primary;
     }
   }
-  .header-right-container {
-    display: flex;
-    gap: 0.625rem;
-    height: 2.875rem;
-    align-items: center;
+
     .user-container {
       display: flex;
       align-items: center;
@@ -96,4 +92,4 @@ header {
       }
     }
   }
-}
+
