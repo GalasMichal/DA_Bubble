@@ -6,6 +6,7 @@ import {
 } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
 import { Router, RouterLink } from '@angular/router';
+import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-header-dialog',
@@ -18,6 +19,7 @@ export class HeaderDialogComponent {
   readonly dialog = inject(MatDialog)
   readonly closeDialog = inject(MatDialogRef <ProfileComponent>)
   router = inject(Router)
+  stateControl = inject(StateControlService)
 
   openDialogProfile() {
     this.dialog.open(ProfileComponent, {
@@ -27,6 +29,7 @@ export class HeaderDialogComponent {
 
   logOut() {
     this.closeDialog.close()
+    this.stateControl.showMainContent = false;
     this.router.navigateByUrl('/start')
   }
 }

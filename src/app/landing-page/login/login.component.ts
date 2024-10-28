@@ -16,6 +16,7 @@ import {
 } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
+import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-login',
@@ -37,10 +38,12 @@ import { FooterComponent } from '../footer/footer.component';
 export class LoginComponent {
   fb = inject(FirebaseService);
   private router = inject(Router);
+  stateControl = inject(StateControlService)
 
   // FormGroup für die Anmeldeform
   loginForm: FormGroup;
   isFormSubmitted: boolean = false;
+  isPasswordVisible = false;
 
   constructor() {
     this.loginForm = new FormGroup({
@@ -79,7 +82,12 @@ export class LoginComponent {
     }
   }
 
-  isPasswordVisible = false;
+  navigateToMainContent() {
+    this.fb.loadAllBackendData();
+    this.stateControl.showMainContent = true;
+    this.router.navigateByUrl('start/main');
+
+  }
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;

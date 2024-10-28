@@ -9,6 +9,7 @@ export class StateControlService {
   showArrow: boolean = false
   showSuccessText: string = ''
   choosenUser: { userName: string; uId: string }[] = [];
+  showMainContent: boolean = false;
 
   removeShowSuccess() {
     setTimeout(() => {
