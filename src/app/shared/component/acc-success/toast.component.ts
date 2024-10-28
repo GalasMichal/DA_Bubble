@@ -6,7 +6,7 @@ import { StateControlService } from '../../../services/state-control/state-contr
 
 
 @Component({
-  selector: 'app-acc-success',
+  selector: 'app-toast',
   standalone: true,
   imports: [
     CommonModule,
@@ -14,10 +14,10 @@ import { StateControlService } from '../../../services/state-control/state-contr
     RouterLink,
     MatDialogModule,
 ],
-  templateUrl: './acc-success.component.html',
-  styleUrl: './acc-success.component.scss'
+  templateUrl: './toast.component.html',
+  styleUrl: './toast.component.scss'
 })
-export class AccSuccessComponent {
+export class ToastComponent {
 
   stateControl = inject(StateControlService)
 

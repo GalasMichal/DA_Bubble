@@ -13,8 +13,8 @@ import { CommonModule, Location } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
 import { BackComponent } from '../../shared/component/back/back.component';
 import { LogoComponent } from '../../shared/logo/logo.component';
-import { AccSuccessComponent } from '../../shared/component/acc-success/acc-success.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
+import { ToastComponent } from '../../shared/component/acc-success/toast.component';
 
 @Component({
   selector: 'app-pwd-recovery',
@@ -28,7 +28,7 @@ import { StateControlService } from '../../services/state-control/state-control.
     FooterComponent,
     BackComponent,
     LogoComponent,
-    AccSuccessComponent
+    ToastComponent
   ],
   templateUrl: './pwd-recovery.component.html',
   styleUrl: './pwd-recovery.component.scss',

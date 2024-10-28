@@ -8,8 +8,8 @@ import { Firestore } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from './landing-page/footer/footer.component';
 import { HeaderLandingComponent } from './landing-page/header-landing/header-landing.component';
-import { AccSuccessComponent } from './shared/component/acc-success/acc-success.component';
 import { StateControlService } from './services/state-control/state-control.service';
+import { ToastComponent } from './shared/component/acc-success/toast.component';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +25,7 @@ import { StateControlService } from './services/state-control/state-control.serv
     ReactiveFormsModule,
     FooterComponent,
     HeaderLandingComponent,
-    AccSuccessComponent
+    ToastComponent
   ],
 
   templateUrl: './app.component.html',

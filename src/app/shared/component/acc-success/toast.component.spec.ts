@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccSuccessComponent } from './acc-success.component';
+import { ToastComponent } from './toast.component';
 
-describe('AccSuccessComponent', () => {
-  let component: AccSuccessComponent;
-  let fixture: ComponentFixture<AccSuccessComponent>;
+describe('Toa', () => {
+  let component: ToastComponent;
+  let fixture: ComponentFixture<ToastComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AccSuccessComponent]
+      imports: [ToastComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AccSuccessComponent);
+    fixture = TestBed.createComponent(ToastComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
