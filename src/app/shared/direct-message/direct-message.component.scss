@@ -41,8 +41,6 @@ header {
     &:hover svg path {
       fill: $primary;
     }
-  }
-
     .user-container {
       display: flex;
       align-items: center;
@@ -74,6 +72,9 @@ header {
         padding: 0.1875rem 0.625rem;
       }
     }
+  }
+
+
     button {
       background: none;
       border-radius: $b-radius-2;

@@ -33,9 +33,10 @@ export class MenuSideLeftComponent {
     this.userService.subUserList();
   }
 
-  sendMessage(user: User) {
-    
-    this.ms.newPrivateMessageChannel(user);
+  openMessage(user: User) {
+    this.userService.messageReceiver = user;
+    this.router.navigate(['/start/main/messages']);
+    // this.ms.newPrivateMessageChannel(user);
   }
 
   ngOnDestroy(): void {

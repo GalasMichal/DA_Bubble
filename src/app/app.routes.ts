@@ -31,6 +31,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: MessageNewComponent },
       { path: 'chat/:id', component: ChatRoomComponent },
+      { path: 'messages', component: DirectMessageComponent },
       { path: 'messages/:id', component: DirectMessageComponent },
     ],
   },
