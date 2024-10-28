@@ -6,7 +6,10 @@ import { ChannelCreateComponent } from '../../chat-room/channel-create/channel-c
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MessageService } from '../../../services/messages/message.service';
+import { PrivateChat } from '../../../models/interfaces/privateChat.class';
+import { User } from '../../../models/interfaces/user.model';
 
 @Component({
   selector: 'app-menu-side-left',
@@ -21,12 +24,18 @@ export class MenuSideLeftComponent {
   dialog = inject(MatDialog);
   db = inject(FirebaseService);
   chat = inject(ChatRoomService);
+  ms = inject(MessageService);
   userService = inject(UserServiceService);
   router = inject(Router);
 
   ngOnInit() {
     this.chat.subChannelList();
     this.userService.subUserList();
+  }
+
+  sendMessage(user: User) {
+    
+    this.ms.newPrivateMessageChannel(user);
   }
 
   ngOnDestroy(): void {
