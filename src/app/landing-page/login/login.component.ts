@@ -38,7 +38,7 @@ import { StateControlService } from '../../services/state-control/state-control.
 export class LoginComponent {
   fb = inject(FirebaseService);
   private router = inject(Router);
-  stateControl = inject(StateControlService)
+  stateControl = inject(StateControlService);
 
   // FormGroup für die Anmeldeform
   loginForm: FormGroup;
@@ -47,7 +47,7 @@ export class LoginComponent {
 
   constructor() {
     this.loginForm = new FormGroup({
-      userEmail: new FormControl('',[Validators.required, Validators.email]),
+      userEmail: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -61,6 +61,8 @@ export class LoginComponent {
   async createNewUserWithGoogle() {
     await this.fb.createGoogleUser();
     this.fb.loadAllBackendData();
+    this.stateControl.showMainContent = true;
+
   }
 
   async loginWithEmailAndPassword() {
@@ -76,6 +78,7 @@ export class LoginComponent {
           this.fb.currentUser()?.displayName
         );
         this.fb.loadAllBackendData();
+        this.stateControl.showMainContent = true;
       });
     } else {
       console.log('Formular ist ungültig');
@@ -86,7 +89,6 @@ export class LoginComponent {
     this.fb.loadAllBackendData();
     this.stateControl.showMainContent = true;
     this.router.navigateByUrl('start/main');
-
   }
 
   togglePasswordVisibility() {
