@@ -4,8 +4,6 @@ import {
   doc,
   Firestore,
   onSnapshot,
-  orderBy,
-  query,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
@@ -14,7 +12,6 @@ import { User as AppUser } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import { addDoc, DocumentData, QuerySnapshot } from 'firebase/firestore';
-import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -116,7 +113,7 @@ export class ChatRoomService {
     this.unsub = onSnapshot(
       messageRef,
       (snapshot: QuerySnapshot<DocumentData>) => {
-        this.answers = []; 
+        this.answers = [];
 
         snapshot.forEach((doc) => {
           const messageData = doc.data() as Message;

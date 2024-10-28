@@ -13,17 +13,23 @@ export class MessageService {
   db = inject(FirebaseService)
   user = inject(UserServiceService)
 
- async newPrivateMessage(privateChat: PrivateChat, user: User) {
+ async newPrivateMessage(User: User) {
   const channelCollectionRef = collection(this.db.firestore, 'privateMessages');
   const channelDocRef = doc(channelCollectionRef);
-  privateChat.privatChatId = channelDocRef.id;
-  privateChat.chatCreator = this.db.currentUser()!.uId;
-  privateChat.chatReciver = user.uId;
+  const privateChat = this.setPrivateObject(channelDocRef, User);
+
   await setDoc(channelDocRef, privateChat);
  }
 
-  constructor() { }
 
+  setPrivateObject(obj: any, user: User) {
+      const privateChat: PrivateChat = {
+       privatChatId: obj.id,
+       chatCreator: this.db.currentUser()!.uId,
+       chatReciver: user.uId
+     };
+     return privateChat;
+   }
 
 }
 
