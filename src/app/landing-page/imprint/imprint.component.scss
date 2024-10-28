@@ -1,59 +1,57 @@
-
 @import "../../../fonts.scss";
 @import "../../../colors.scss";
 @import "../../../styles.scss";
 
-$color_1: $primary;
-$color_2: $black;
-$background-color_1: red;
-$background-color_2: $white;
-
-/* HEADER */
-.logo-container {
-	cursor: pointer;
-	padding-top: 4.0625rem;
-	padding-left: 4rem; //5.5%
-}
-
-section {
-  width: 50%;
-  height: 73vh;
-  background-color: $bg-color;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  background-color: $bg-color;
-  scale: .9;
-	>div {
-		background-color: $background-color_2;
-		border-radius: 30px;
-		height: 75vh;
-		width: 100%;
-		text-align: center;
-	}
+.main-content {
   .title-container {
-		display: flex;
-		gap: 15rem;
-    align-items: end;
-		a {
-			margin-left: 3rem;
-		}
-  }
-  app-back {
-    &:hover {
-      cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 1.875rem;
+    .arrow-back {
+      position: absolute;
+      left: 0;
+      width: fit-content;
+      text-decoration: none;
+    }
+    .form-title-name {
+      color: $primary;
+      font-size: 1.875rem;
+      font-weight: 700;
     }
   }
-  h2 {
-    font-size: 2em;
-    color: $color_1 !important;
-  }
-}
-
-/* FOOTER */
-::ng-deep {
-  footer {
+  .content-section {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 1.875rem;
+    gap: 16px;
+    h2 {
+      color: $primary;
+      font-size: 32px;
+      font-weight: 700;
+    }
+    p {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+  .content-e-mail {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 1.875rem;
+    h2 {
+      color: $primary;
+      font-size: 32px;
+      font-weight: 700;
+    }
+    p {
+      font-size: 20px;
+      font-weight: 500;
+    }
   }
 }
