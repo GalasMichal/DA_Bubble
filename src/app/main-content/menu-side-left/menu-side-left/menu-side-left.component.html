@@ -83,7 +83,7 @@
             <ul>
             @for(user of this.userService.userList; track $index) {
                 <li>
-                  <button class="single-user">
+                  <button (click)="sendMessage(user)" class="single-user">
                     <div class="user-img">
                       <app-avatar [user]="user" [userList]="true"></app-avatar>
                     </div>

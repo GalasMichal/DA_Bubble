@@ -14,7 +14,9 @@ export class UserServiceService {
   public userList: AppUser[] = [];
   private readonly storageService = inject(StorageService);
 
-  constructor() { }
+  constructor() {
+    
+  }
 
   subUserList() {
     this.unsubscribe = onSnapshot(this.getUsers(), (list) => {
