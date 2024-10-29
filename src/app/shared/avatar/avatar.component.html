@@ -7,7 +7,14 @@
       <img class="online" src="/assets/media/icons/offline.svg" alt="offline">}
 
 </div>
-}@else {
+}@else if (userMessageReceiver) {
+  <div class="user-avatar">
+    <img [src]="userMessageReceiver.avatarUrl" alt="avatar">
+    <img class="online" src="/assets/media/icons/online.svg" alt="online">
+</div>
+}
+
+@else {
   <div class="user-avatar">
     <img [src]="this.db.currentUser()!.avatarUrl" alt="avatar">
     <img class="online" src="/assets/media/icons/online.svg" alt="online">

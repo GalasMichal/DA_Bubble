@@ -12,6 +12,8 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
+import { ChatRoomService } from '../../services/chat-room/chat-room.service';
+import { UserServiceService } from '../../services/user-service/user-service.service';
 
 @Component({
   selector: 'app-main-content',
@@ -36,6 +38,12 @@ export class MainContentComponent {
   public db = inject(FirebaseService);
   router = inject(Router);
   private auth = inject(Auth);
+  chat = inject(ChatRoomService);
+  userService = inject(UserServiceService);
+
+  constructor() {
+    this.state.showMainContent = true;
+  }
 
   ngOnInit(): void {
     onAuthStateChanged(this.auth, (user) => {
@@ -45,6 +53,10 @@ export class MainContentComponent {
         this.router.navigate(['/start/login']);
       }
     });
+  }
+  ngOnDestroy(): void {
+    this.chat.unsubscribeAll();
+    // this.userService.unsubscribe();
   }
 
   openUserProfile() {
