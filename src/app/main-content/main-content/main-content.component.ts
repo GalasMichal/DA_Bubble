@@ -45,15 +45,25 @@ export class MainContentComponent {
     this.state.showMainContent = true;
   }
 
-  ngOnInit(): void {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        this.db.getUserByUid(user.uid); // Laden des Benutzers
-      } else {
-        this.router.navigate(['/start/login']);
-      }
+  async ngOnInit(): Promise<void> {
+    let authenticated = false;
+
+    await new Promise<void>((resolve, reject) => {
+      onAuthStateChanged(this.auth, (user) => {
+        if (user) {
+          authenticated = true;
+          this.db.getUserByUid(user.uid); // Laden des Benutzers
+        } else {
+          this.router.navigate(['/start']);
+        }
+        resolve();
+      });
     });
-  }
+
+    if (!authenticated) {
+      return;
+    }}
+    
   ngOnDestroy(): void {
     this.chat.unsubscribeAll();
     // this.userService.unsubscribe();
