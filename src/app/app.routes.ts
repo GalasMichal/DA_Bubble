@@ -9,8 +9,8 @@ import { PwdResetComponent } from './landing-page/pwd-reset/pwd-reset.component'
 import { PwdRecoveryComponent } from './landing-page/pwd-recovery/pwd-recovery.component';
 import { ChatRoomComponent } from './main-content/chat-room/chat-room.component';
 import { MessageNewComponent } from './shared/component/message-new/message-new.component';
-import { createComponent } from '@angular/core';
-import { AvatarComponent } from './shared/avatar/avatar.component';
+import { DirectMessageComponent } from './shared/direct-message/direct-message.component';
+
 /*
 IMPORTANTE
 wenn ihr die route zum arbeiten ändert -> auch bitte wieder zurück setzen
@@ -30,7 +30,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: MessageNewComponent },
       { path: 'chat/:id', component: ChatRoomComponent },
-      { path: 'messages/:id', component: MessageNewComponent },
+      { path: 'messages', component: DirectMessageComponent },
+      { path: 'messages/:id', component: DirectMessageComponent },
     ],
   },
   { path: 'reset', component: PwdResetComponent },

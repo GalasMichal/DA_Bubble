@@ -13,9 +13,12 @@ export class UserServiceService {
   unsubscribe: any;
   public userList: AppUser[] = [];
   private readonly storageService = inject(StorageService);
+  messageReceiver: User | null = null;
+
+
 
   constructor() {
-    
+
   }
 
   subUserList() {
