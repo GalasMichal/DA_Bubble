@@ -1,16 +1,19 @@
-.user-avatar {
-  // tu tylko zmienialem popraw to 
-  position: relative;
-  img {
-    height: 3.125rem;
-    width: 3.125rem;
-    border-radius: 50%;
-  }
-  .online {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 1.25rem;
+::ng-deep {
+  .user-avatar {
+    position: relative;
+    img {
+      height: 3.125rem;
+      width: 3.125rem;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .online {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
   }
 }
 
@@ -21,6 +24,7 @@
       justify-content: center;
       img {
         height: 12.5rem;
+        object-fit: cover;
       }
       .online {
         display: none;
@@ -34,12 +38,13 @@
     display: flex;
     align-items: center;
     gap: 0.9375rem;
-      app-avatar {
+    app-avatar {
       .user-avatar {
         display: flex;
         justify-content: center;
         img {
           height: 3.125rem;
+          object-fit: cover;
         }
         .online {
           height: 17px;
@@ -52,12 +57,13 @@
 
 ::ng-deep {
   .add-user-card {
-      app-avatar {
+    app-avatar {
       .user-avatar {
         display: flex;
         justify-content: center;
         img {
           height: 3.125rem;
+          object-fit: cover;
         }
         .online {
           height: 17px;
@@ -67,4 +73,3 @@
     }
   }
 }
-
