@@ -1,6 +1,6 @@
 @if(this.userList){
   <div class="user-avatar">
-    <img [src]="user.avatarUrl" alt="avatar">
+    <img class="avatar" [src]="user.avatarUrl" alt="avatar">
     @if(user.status) {
       <img class="online" src="/assets/media/icons/online.svg" alt="online">
     }@else {
