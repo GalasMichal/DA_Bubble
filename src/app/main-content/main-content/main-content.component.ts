@@ -12,6 +12,7 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
+import { LoaderComponent } from '../../shared/component/loader/loader.component';
 
 @Component({
   selector: 'app-main-content',
@@ -24,7 +25,7 @@ import { Auth } from '@angular/fire/auth';
     ChatRoomComponent,
     ThreadAnswerComponent,
     RouterModule,
-    RouterLink,
+    RouterLink
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',

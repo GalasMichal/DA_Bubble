@@ -48,7 +48,7 @@
     </div>
   </header>
   <div class="chat-main-container">
-
+    <!-- <app-loader></app-loader> -->
     @for (singleMessage of this.chat.answers; track this.chat.answers; let index = $index) {
       <app-message-answer (click)="showId(this.chat)" [userMessage]="singleMessage" [index]="index"></app-message-answer>
     }

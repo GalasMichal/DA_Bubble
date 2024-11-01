@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { MessageNewComponent } from '../../shared/component/message-new/message-new.component';
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
+import { LoaderComponent } from '../../shared/component/loader/loader.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -25,6 +26,7 @@ import { StateControlService } from '../../services/state-control/state-control.
     ChannelEditComponent,
     MessageNewComponent,
     CommonModule,
+    LoaderComponent
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss',
