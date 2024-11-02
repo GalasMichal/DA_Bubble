@@ -10,6 +10,7 @@ import { PwdRecoveryComponent } from './landing-page/pwd-recovery/pwd-recovery.c
 import { ChatRoomComponent } from './main-content/chat-room/chat-room.component';
 import { MessageNewComponent } from './shared/component/message-new/message-new.component';
 import { DirectMessageComponent } from './shared/direct-message/direct-message.component';
+import { LoaderComponent } from './shared/component/loader/loader.component';
 
 /*
 IMPORTANTE
@@ -31,6 +32,7 @@ export const routes: Routes = [
       { path: '', component: MessageNewComponent },
       { path: 'chat/:id', component: ChatRoomComponent },
       { path: 'messages', component: DirectMessageComponent },
+      // { path: 'messages', component: LoaderComponent },
       { path: 'messages/:id', component: DirectMessageComponent },
     ],
   },
