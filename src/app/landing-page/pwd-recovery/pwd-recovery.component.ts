@@ -14,7 +14,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { BackComponent } from '../../shared/component/back/back.component';
 import { LogoComponent } from '../../shared/logo/logo.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
-import { ToastComponent } from '../../shared/component/acc-success/toast.component';
+import { ToastComponent } from '../../shared/component/toast/toast.component';
 
 @Component({
   selector: 'app-pwd-recovery',
@@ -55,9 +55,9 @@ export class PwdRecoveryComponent {
   onSubmit(text: string) {
     this.isFormValid = true;
     this.stateControl.showArrow = true
-    this.stateControl.showSuccess = true
-    this.stateControl.showSuccessText = text
-    this.stateControl.removeShowSuccess()
+    this.stateControl.showToast = true
+    this.stateControl.showToastText = text
+    this.stateControl.removeShowToast()
   }
 
   goBack(): void {

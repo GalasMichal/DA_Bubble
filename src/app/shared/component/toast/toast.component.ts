@@ -21,5 +21,5 @@ export class ToastComponent {
 
   stateControl = inject(StateControlService)
 
-  showSuccessText: string = ''
+  showToastText: string = ''
 }

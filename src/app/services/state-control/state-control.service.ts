@@ -5,15 +5,15 @@ import { Injectable } from '@angular/core';
 })
 export class StateControlService {
   isThreadOpen = false;
-  showSuccess: boolean = false;
+  showToast: boolean = false;
   showArrow: boolean = false
-  showSuccessText: string = ''
+  showToastText: string = ''
   choosenUser: { userName: string; uId: string }[] = [];
   showMainContent: boolean = true;
 
-  removeShowSuccess() {
+  removeShowToast() {
     setTimeout(() => {
-    this.showSuccess = false
+    this.showToast = false
     this.showArrow = false
     }, 2000);
   }

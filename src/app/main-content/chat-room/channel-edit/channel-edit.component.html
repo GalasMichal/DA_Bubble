@@ -70,8 +70,9 @@
     <div class="btn-container">
       <button class="channel-btn" routerLink="main" (click)="deleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
       <button class="channel-btn" routerLink="main">Channel verlassen</button>
-      <button class="change-btn" routerLink="main" (click)="updateChannel(chat.currentChannelData.chanId)">Änderungen speichern</button>
+      <button class="change-btn" routerLink="main" (click)="updateChannel(chat.currentChannelData.chanId, 'Änderungen wurden gespeichert')">Änderungen speichern</button>
     </div>
-  
+    <app-toast [ngClass]="{ 'show-success': stateControl.showToast }"></app-toast>
+    
   </div>
   

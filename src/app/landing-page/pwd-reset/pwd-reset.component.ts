@@ -76,9 +76,9 @@ export class PwdResetComponent {
 
   onSubmit(text: string) {
     this.isFormValid = true;
-    this.stateControl.showSuccess = true
-    this.stateControl.showSuccessText = text
-    this.stateControl.removeShowSuccess()
+    this.stateControl.showToast = true
+    this.stateControl.showToastText = text
+    this.stateControl.removeShowToast()
     setTimeout(() => {
       this.router.navigate(['start']);
       }, 2200);

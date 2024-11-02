@@ -7,11 +7,13 @@ import { Channel } from '../../../models/interfaces/channel.model';
 import { FormsModule } from '@angular/forms';
 import { Firestore } from '@angular/fire/firestore';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { StateControlService } from '../../../services/state-control/state-control.service';
+import { ToastComponent } from '../../../shared/component/toast/toast.component';
 
 @Component({
   selector: 'app-channel-edit',
   standalone: true,
-  imports: [CloseComponent, CommonModule, FormsModule],
+  imports: [CloseComponent, CommonModule, FormsModule, ToastComponent],
   templateUrl: './channel-edit.component.html',
   styleUrl: './channel-edit.component.scss',
 })
@@ -21,6 +23,8 @@ export class ChannelEditComponent {
   channelEditDescription: boolean = false;
   chat = inject(ChatRoomService);
   firestore = inject(Firestore)
+  stateControl = inject(StateControlService)
+
   currentTitle = this.chat.currentChannelData.channelName
   currentDescription = this.chat.currentChannelData.channelDescription
   newTitle: string = ""
@@ -49,13 +53,18 @@ export class ChannelEditComponent {
     this.newDescription = this.chat.currentChannelData.channelDescription
   }
   
-  updateChannel(chanId: string) {
+  updateChannel(chanId: string, text:string) {
     const newTitleNewDescription = doc(this.firestore, "channels", chanId);
 
     updateDoc(newTitleNewDescription, {
       channelName: this.newTitle === "" ? this.currentTitle : this.newTitle,
       channelDescription: this.newDescription === "" ? this.currentDescription : this.newDescription,
     });
+
+    this.stateControl.showToast = true;
+    this.stateControl.showToastText = text
+
+    this.stateControl.removeShowToast();
   }
 
   deleteChannel(chanId: string) {

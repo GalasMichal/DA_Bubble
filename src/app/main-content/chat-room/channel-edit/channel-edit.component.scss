@@ -115,6 +115,7 @@
   .btn-container {
     margin-top: auto;
     display: flex;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     gap: 1.875rem;
 
@@ -167,6 +168,7 @@
   .mat-mdc-dialog-container
   .mdc-dialog__container
   .mat-mdc-dialog-surface {
+  overflow: hidden;
   border-radius: 0 $b-radius-1 $b-radius-1 $b-radius-1;
 }
 

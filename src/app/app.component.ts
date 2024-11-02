@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from './landing-page/footer/footer.component';
 import { HeaderLandingComponent } from './landing-page/header-landing/header-landing.component';
 import { StateControlService } from './services/state-control/state-control.service';
-import { ToastComponent } from './shared/component/acc-success/toast.component';
+import { ToastComponent } from './shared/component/toast/toast.component';
 
 @Component({
   selector: 'app-root',
