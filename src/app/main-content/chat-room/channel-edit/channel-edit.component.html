@@ -69,8 +69,9 @@
   </div>  
 
   <div class="btn-container">
-    <button class="channel-btn ontNunito" routerLink="main">Channel verlassen</button>
-    <button class="change-btn ontNunito" routerLink="main">Änderungen speichern</button>
+    <button class="channel-btn" routerLink="main" (click)="deleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
+    <button class="channel-btn" routerLink="main">Channel verlassen</button>
+    <button class="change-btn" routerLink="main">Änderungen speichern</button>
   </div>
 
 </div>

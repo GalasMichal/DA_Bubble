@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Channel } from '../../../models/interfaces/channel.model';
 import { FormsModule } from '@angular/forms';
+import { Firestore } from '@angular/fire/firestore';
+import { deleteDoc, doc } from 'firebase/firestore';
 
 @Component({
   selector: 'app-channel-edit',
@@ -18,6 +20,8 @@ export class ChannelEditComponent {
   channelEditTitel: boolean = false;
   channelEditDescription: boolean = false;
   chat = inject(ChatRoomService);
+  firestore = inject(Firestore)
+
 
   closeChannelEdit() {
     this.dialog.close();
@@ -30,4 +34,12 @@ export class ChannelEditComponent {
   editChannelDescription() {
     this.channelEditDescription = !this.channelEditDescription;
   }
+
+  deleteChannel(chanId: string) {
+    "Tylko przejsciowo"
+    if (window.confirm('Bist du dir sicher?')) {
+      deleteDoc(doc(this.firestore, "channels", chanId));
+    }
+  }
+  
 }
