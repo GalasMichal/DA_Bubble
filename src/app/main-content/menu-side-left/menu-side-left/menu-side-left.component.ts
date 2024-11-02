@@ -60,7 +60,6 @@ export class MenuSideLeftComponent {
 
   openChannel(chanId: string) {
     this.chat.openChatById(chanId);
-    console.log('chanId: ', chanId);
   }
 
   writeMessage() {
