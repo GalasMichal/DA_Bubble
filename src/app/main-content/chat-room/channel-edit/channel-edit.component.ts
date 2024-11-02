@@ -6,7 +6,7 @@ import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Channel } from '../../../models/interfaces/channel.model';
 import { FormsModule } from '@angular/forms';
 import { Firestore } from '@angular/fire/firestore';
-import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 
 @Component({
   selector: 'app-channel-edit',
@@ -21,6 +21,10 @@ export class ChannelEditComponent {
   channelEditDescription: boolean = false;
   chat = inject(ChatRoomService);
   firestore = inject(Firestore)
+  currentTitle = this.chat.currentChannelData.channelName
+  currentDescription = this.chat.currentChannelData.channelDescription
+  newTitle: string = ""
+  newDescription: string = ""
 
 
   closeChannelEdit() {
@@ -31,8 +35,27 @@ export class ChannelEditComponent {
     this.channelEditTitel = !this.channelEditTitel;
   }
 
+  saveChannelTittle() {
+    this.channelEditTitel = !this.channelEditTitel;
+    this.newTitle = this.chat.currentChannelData.channelName;
+  }
+
   editChannelDescription() {
     this.channelEditDescription = !this.channelEditDescription;
+  }
+  
+  saveChannelDescription() {
+    this.channelEditDescription = !this.channelEditDescription;
+    this.newDescription = this.chat.currentChannelData.channelDescription
+  }
+  
+  updateChannel(chanId: string) {
+    const newTitleNewDescription = doc(this.firestore, "channels", chanId);
+
+    updateDoc(newTitleNewDescription, {
+      channelName: this.newTitle === "" ? this.currentTitle : this.newTitle,
+      channelDescription: this.newDescription === "" ? this.currentDescription : this.newDescription,
+    });
   }
 
   deleteChannel(chanId: string) {

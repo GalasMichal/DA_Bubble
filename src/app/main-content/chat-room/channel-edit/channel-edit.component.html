@@ -1,77 +1,77 @@
 <div class="container">
-  <div class="container-content">
-    <div class="title">
-      <h2># {{chat.currentChannelData.channelName}}</h2>
-      <button  class="close-btn" (click)="closeChannelEdit()">
-        <app-close></app-close>
-      </button>
-    </div>
-
-    <!-- Channel-Name -->
-    <div class="channel-name-container" [ngClass]="{'d-none': channelEditTitel}">
-      <div class="edit-name-container">
-        <h3>Channel-Name</h3>
-        <button (click)="editChannelTittle()">Bearbeiten</button>
+    <div class="container-content">
+      <div class="title">
+        <h2># {{chat.currentChannelData.channelName}}</h2>
+        <button  class="close-btn" (click)="closeChannelEdit()">
+          <app-close></app-close>
+        </button>
       </div>
-      <p><span style="font-weight: bold;">#</span>{{chat.currentChannelData.channelName}}</p>
-    </div>
-    
-    <div class="input-container" [ngClass]="{'d-none': !channelEditTitel}">
-      <div class="edit-name-container">
-        <label for="channel-name">Channel-Name</label>
-        <button (click)="editChannelTittle()">Speichern</button>
-      </div>
-      <input type="text" #channelName class="input-field-hash-icon"
-        placeholder="z.B. Kooperationsprojekte" name="channelName" [(ngModel)]="chat.currentChannelData.channelName" autocomplete="off"/>
-    </div>
-    <!-- Channel-Name END -->
-
-
-
-
-    <!-- Beschreibung -->
-    <div class="channel-info-container" [ngClass]="{'d-none': channelEditDescription}">
-      <div class="edit-name-container">
-        <h3>Beschreibung</h3>
-        <button (click)="editChannelDescription()">Bearbeiten</button>
+  
+      <!-- Channel-Name -->
+      <div class="channel-name-container" [ngClass]="{'d-none': channelEditTitel}">
+        <div class="edit-name-container">
+          <h3>Channel-Name</h3>
+          <button (click)="editChannelTittle()">Bearbeiten</button>
+        </div>
+        <p><span style="font-weight: bold;">#  </span>{{chat.currentChannelData.channelName}}</p>
       </div>
       
-      <p>
-        {{chat.currentChannelData.channelDescription}}
-      </p>
-
-      <div class="separator"></div>
-      
-      <div class="creat-user">
-        <h3>Erstellt von</h3>
-        <div class="user-link">{{ chat.currentChannelData.createdBy }}</div>
+      <div class="input-container" [ngClass]="{'d-none': !channelEditTitel}">
+        <div class="edit-name-container">
+          <label for="channel-name">Channel-Name</label>
+          <button (click)="saveChannelTittle()">Speichern</button>
+        </div>
+        <input type="text" #channelName class="input-field-hash-icon" placeholder="z.B. Kooperationsprojekte" name="channelName" [(ngModel)]="chat.currentChannelData.channelName" autocomplete="off"/>
       </div>
-    </div>
-    <!-- Beschreibung END-->
-
-    <div class="input-container" [ngClass]="{'d-none': !channelEditDescription}">
-      <div class="edit-info-container">
-        <label for="description">Speichern</label>
-        <button (click)="editChannelDescription()">Speichern</button>
-      </div>
-      <input #description type="text"
-        placeholder="Dein Text hier" name="description" [(ngModel)]="chat.currentChannelData.channelDescription" autocomplete="off"/>
-    
+      <!-- Channel-Name END -->
+  
+  
+  
+  
+      <!-- Beschreibung -->
+      <div class="channel-info-container" [ngClass]="{'d-none': channelEditDescription}">
+        <div class="edit-name-container">
+          <h3>Beschreibung</h3>
+          <button (click)="editChannelDescription()">Bearbeiten</button>
+        </div>
+        
+        <p>
+          {{chat.currentChannelData.channelDescription}}
+        </p>
+  
         <div class="separator"></div>
-
+        
         <div class="creat-user">
           <h3>Erstellt von</h3>
           <div class="user-link">{{ chat.currentChannelData.createdBy }}</div>
         </div>
+      </div>
+      <!-- Beschreibung END-->
+  
+      <div class="input-container" [ngClass]="{'d-none': !channelEditDescription}">
+        <div class="edit-info-container">
+          <label for="description">Speichern</label>
+          <button (click)="saveChannelDescription()">Speichern</button>
+        </div>
+        <input #description type="text"
+          placeholder="Dein Text hier" name="description" [(ngModel)]="chat.currentChannelData.channelDescription" autocomplete="off"/>
       
+          <div class="separator"></div>
+  
+          <div class="creat-user">
+            <h3>Erstellt von</h3>
+            <div class="user-link">{{ chat.currentChannelData.createdBy }}</div>
+          </div>
+        
+      </div>
+      
+    </div>  
+  
+    <div class="btn-container">
+      <button class="channel-btn" routerLink="main" (click)="deleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
+      <button class="channel-btn" routerLink="main">Channel verlassen</button>
+      <button class="change-btn" routerLink="main" (click)="updateChannel(chat.currentChannelData.chanId)">Änderungen speichern</button>
     </div>
-    
-  </div>  
-
-  <div class="btn-container">
-    <button class="channel-btn" routerLink="main" (click)="deleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
-    <button class="channel-btn" routerLink="main">Channel verlassen</button>
-    <button class="change-btn" routerLink="main">Änderungen speichern</button>
+  
   </div>
-
-</div>
+  
