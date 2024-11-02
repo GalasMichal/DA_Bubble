@@ -91,17 +91,15 @@
       font-size: 1.125rem;
       font-weight: 600;
       line-height: 1.5344rem;
-      color: $primary;
+      color: $primary-hover;
       background: none;
       padding-inline: 0.625rem;
       font-weight: 500;
-      transition: all 175ms ease-in-out;
+      @include firstTranistion();
       &:hover,
       &:focus {
         color: $primary;
-        background: $bg-color;
         font-weight: 700;
-        border-radius: $b-radius-2;
         outline: none;
       }
     }
@@ -175,9 +173,3 @@
 .d-none {
   display: none !important;
 }
-
-// @media (max-width: 600px) {
-//   ::ng-deep
-//   .cdk-overlay-pane.mat-mdc-dialog-panel {
-//   }
-// }
