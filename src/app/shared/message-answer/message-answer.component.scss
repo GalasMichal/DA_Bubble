@@ -29,10 +29,11 @@
       opacity: 1;
       transform: translateX(0);
     }
-    img {
+    .avatar {
       width: 4.375rem;
       height: 4.375rem;
       border-radius: 2.5rem;
+      object-fit: cover;
     }
     .message-content {
       display: flex;
