@@ -1,16 +1,16 @@
 @if (!stateControl.showMainContent) {
  
   <div class="wrapper">
-  <app-header-landing></app-header-landing>
-   <div class="router-outlet">
+    <div class="router-outlet">
+      <app-header-landing></app-header-landing>
      <div class="landing-page">
       <div class="main-container">
         <router-outlet> </router-outlet>
       </div>
       <app-toast [ngClass]="{ 'show-success': stateControl.showToast }"></app-toast>
     </div>
-   </div>
-   <app-footer></app-footer>
+    <app-footer></app-footer>
+  </div>
 
 </div>
 
