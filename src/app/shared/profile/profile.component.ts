@@ -20,8 +20,9 @@ export class ProfileComponent {
   closeDialogProfile() {
     this.dialog.close()
   }
-
+  
   openDialogEdit() {    
+    console.log(this.fb.currentUser());
     this.editDialog.open(EditProfileComponent, {
       panelClass: 'edit-profile-container', // Custom class for profile dialog
     });

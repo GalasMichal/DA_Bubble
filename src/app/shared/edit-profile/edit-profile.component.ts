@@ -6,6 +6,7 @@ import {
 import { AvatarComponent } from '../avatar/avatar.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FirebaseService } from '../../services/firebase/firebase.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { CommonModule } from '@angular/common';
 })
 export class EditProfileComponent {
   readonly dialog = inject(MatDialogRef <EditProfileComponent>)
+  fb = inject(FirebaseService);
 
   userForm: FormGroup;
 
@@ -28,8 +30,6 @@ export class EditProfileComponent {
   }
 
   closeDialogEdit() {
-    console.log(this.userForm.valid);
-
     this.dialog.close()
   }
 
