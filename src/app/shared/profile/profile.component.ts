@@ -3,6 +3,7 @@ import { MatDialog, MatDialogContent, MatDialogRef } from '@angular/material/dia
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { CloseComponent } from '../component/close/close.component';
+import { FirebaseService } from '../../services/firebase/firebase.service';
 
 @Component({
   selector: 'app-profil',
@@ -14,12 +15,13 @@ import { CloseComponent } from '../component/close/close.component';
 export class ProfileComponent {
   readonly dialog = inject(MatDialogRef <ProfileComponent>)
   readonly editDialog = inject(MatDialog)
+  fb = inject(FirebaseService);
 
   closeDialogProfile() {
     this.dialog.close()
   }
 
-  openDialogEdit() {
+  openDialogEdit() {    
     this.editDialog.open(EditProfileComponent, {
       panelClass: 'edit-profile-container', // Custom class for profile dialog
     });

@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    h1 {
+    .title {
       font-size: 1.5rem;
       font-weight: 500;
       color: $black;
@@ -31,15 +31,13 @@
   button {
     background: none;
     padding-inline: 0.625rem;
-    transition: all 175ms ease-in-out;
-    &:hover,
-    &:focus {
-      color: $primary;
-      background: $bg-color;
-      font-weight: 700;
-      border-radius: $b-radius-2;
-      outline: none;
-    }
+    color: $primary-hover;
+    @include firstTranistion();
+      &:hover,
+      &:focus {
+        color: $primary;
+        outline: none;
+      }
     img {
       display: none;
     }
@@ -72,6 +70,11 @@
       font-size: 1.125rem;
       text-decoration: none;
       color: $e-mail;
+      border: dotted .2rem transparent;
+      &:focus {
+        outline: none;
+        border: dotted .2rem $e-mail;
+      }
     }
   }
 }

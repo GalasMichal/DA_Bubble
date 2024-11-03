@@ -1,6 +1,6 @@
 <mat-dialog-content class="profile-card">
     <div class="profil">
-        <h1>Profil</h1>
+        <h1 class="title">Profil</h1>
         <button class="close-btn" (click)="closeDialogProfile()">
             <app-close></app-close>             
         </button>
@@ -11,7 +11,7 @@
     </div>
 
     <div class="name">
-        <h2>Frederik Beck</h2>
+        <h2>{{ this.fb.currentUser()?.displayName }}</h2>
         <button (click)="openDialogEdit()">Bearbeiten
             <img src="./assets/media/icons/edit.svg" alt="edit">
         </button>
@@ -26,7 +26,7 @@
         <img src="./assets/media/icons/mail.svg" alt="email" srcset="">
         <div>
             <span>E-Mail-Adresse</span>
-            <a href="mailto:" class="email">fred.beckemail.com</a>
+            <a href="mailto:" class="email">{{ this.fb.currentUser()?.email }}</a>
         </div>
     </div>
 </mat-dialog-content>
