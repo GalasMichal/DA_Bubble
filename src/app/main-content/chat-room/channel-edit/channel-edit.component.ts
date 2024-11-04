@@ -54,6 +54,7 @@ export class ChannelEditComponent {
   }
   
   updateChannel(chanId: string, text:string) {
+
     const newTitleNewDescription = doc(this.firestore, "channels", chanId);
 
     updateDoc(newTitleNewDescription, {

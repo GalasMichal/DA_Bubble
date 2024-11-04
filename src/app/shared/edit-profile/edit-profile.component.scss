@@ -112,9 +112,13 @@
   border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
   position: absolute;
   width: 500px;
-  height: 700px;
+  height: 100%;
+  max-height: 650px;
   top: 6.25rem;
   right: 2.5rem;
+  .mat-mdc-dialog-content {
+    max-height: 100%;
+  }
 }
 
 @media (max-width: 500px) {
