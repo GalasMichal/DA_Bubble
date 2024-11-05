@@ -70,7 +70,7 @@
           }
         </div>
 
-        <button class="add" type="submit" [disabled]="!allMembers || isSpecificPeople && isSpecificPeopleValid()">Erstellen</button>
+        <button class="add" type="submit" [disabled]="!allMembers || isSpecificPeople && !(stateServer.choosenUser.length > 0)">Erstellen</button>
     </div>
   </div>
 

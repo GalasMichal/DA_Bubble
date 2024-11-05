@@ -68,10 +68,6 @@ export class ChannelCreateComponent {
     return this.channelForm.controls['channelName'].valid;
   }
 
-  isSpecificPeopleValid() {
-    return this.channelForm.controls['specificPeople'].valid;
-  }
-
   constructor() {
     this.channelForm = new FormGroup({
       channelName: new FormControl('', [
