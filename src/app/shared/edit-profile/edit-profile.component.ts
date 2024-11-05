@@ -51,11 +51,8 @@ export class EditProfileComponent {
 
     if (uId) {
       newNameNewEmail = doc(this.firestore, 'users', uId);
-    } else {
-      console.error(
-        'Benutzer ist nicht eingeloggt oder uId ist nicht vorhanden.'
-      );
-    }
+    } 
+    
     if (newNameNewEmail) {
       updateDoc(newNameNewEmail, {
         displayName: this.userForm.get('userName')?.value,
