@@ -236,7 +236,8 @@ app-toast {
   display: flex;
   flex-direction: column;
   color: $red;
-  height: 30px;
+  min-height: 30px;
+  height: 100%;
   font-size: 0.75rem;
 }
 

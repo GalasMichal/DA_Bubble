@@ -33,6 +33,9 @@
             @if (myForm.controls['name'].errors?.['minlength']) {
             <span>Mindestens 4 Buchstaben.</span>
             }
+            @if (myForm.controls['name'].errors?.['pattern']) {
+              <span>Sonderzeichen sind nicht erlaubt.<br> Es muss Vorname und Nachname sein.</span>
+            }
           }
         </div>
         </div>
