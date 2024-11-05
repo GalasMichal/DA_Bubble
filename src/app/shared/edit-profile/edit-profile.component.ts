@@ -60,7 +60,6 @@ export class EditProfileComponent {
       });
     }
 
-    this.userForm.reset();
     this.closeDialogEdit();
   }
 }
