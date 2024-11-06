@@ -15,6 +15,30 @@ app-message-field {
   padding: 0 25px 25px 25px;
 }
 
+.welcome-container {
+  display: flex;
+    width: 100%;
+    min-height: 8.8125rem;
+    padding: 0.625rem 2.8125rem;
+    gap: 1.875rem;
+    background-color: rgba(252,240,214,255);
+    .avatar {
+      width: 13.375rem;
+      height: 4.375rem;
+      border-radius: 50%;
+    }
+    .user-time {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .welcome-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+}
+
 header {
   padding: 1.5625rem 2.8125rem;
   display: flex;
