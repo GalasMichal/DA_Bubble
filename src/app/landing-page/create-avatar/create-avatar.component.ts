@@ -38,6 +38,7 @@ export class CreateAvatarComponent {
   stateControl = inject(StateControlService)
   selectedAvatar: string = 'assets/media/icons/profile-icons/profile-icon.svg';
   file: any;
+  isSelected: boolean = false;
 
   profileAvatars: ProfileAvatar[] = [
     { name: 'assets/media/icons/profile-icons/user-2-elias.svg' },
@@ -49,6 +50,7 @@ export class CreateAvatarComponent {
 
   chooseAvatar(avatarName: string) {
     this.selectedAvatar = avatarName;
+    this.isSelected = true;
   }
 
   uploadUserAvatar(event: any) {
@@ -57,6 +59,7 @@ export class CreateAvatarComponent {
     this.st.uploadMsg.set(file.name);
     this.file = file;
     console.log('file', file);
+    this.isSelected = true;
   }
 
   readURL(file: any) {
@@ -76,12 +79,14 @@ export class CreateAvatarComponent {
       if (downloadUrl) {
         this.selectedAvatar = downloadUrl;
       }
+    }else {
+      
     }
     this.user.updateUserAvatar(this.db.currentUser()!.uId, this.selectedAvatar);
     await this.user.updateCurrentUser(this.db.currentUser()!);
     this.showToast(text)
   }
-  
+
   showToast(text: string) {
     this.stateControl.showToast = true
     this.stateControl.showToastText = text
