@@ -86,8 +86,10 @@ export class RegisterUserComponent {
           password,
           displayName
         );
+
         if (user) {
           console.log('User successfully registered:', user);
+          this.fb.currentUser.update(() => user);
           this.router.navigate(['/start/avatar']); // Navigation nach der Registrierung
         }
       } catch (error) {
@@ -104,7 +106,7 @@ export class RegisterUserComponent {
       panelClass: 'info-container', // Custom class for profile dialog
     });
   }
-  
+
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
