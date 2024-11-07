@@ -17,26 +17,29 @@ app-message-field {
 
 .welcome-container {
   display: flex;
-    width: 100%;
-    min-height: 8.8125rem;
-    padding: 0.625rem 2.8125rem;
-    gap: 1.875rem;
-    background-color: rgba(252,240,214,255);
+  min-height: 8.8125rem;
+  padding: 0.625rem 0.8125rem;
+  margin: 0.625rem 1.8125rem;
+  gap: 1.875rem;
+  background-color: rgba(252, 240, 214, 255);
+  .avatar-container {
+    height: fit-content;
+    border-radius: 50%;
     .avatar {
-      width: 13.375rem;
-      height: 4.375rem;
-      border-radius: 50%;
+      max-width: 50vw;
+      max-height: 50vh;
     }
-    .user-time {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .welcome-content {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
+  }
+  .user-time {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .welcome-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
 }
 
 header {
