@@ -17,15 +17,16 @@ app-message-field {
 
 .welcome-container {
   display: flex;
-    width: 100%;
     min-height: 8.8125rem;
-    padding: 0.625rem 2.8125rem;
     gap: 1.875rem;
     background-color: rgba(252,240,214,255);
+    margin: 1.5625rem 2.8125rem;
+    padding: 0.625rem;
     .avatar {
-      width: 13.375rem;
-      height: 4.375rem;
+      width: 140px;
+      height: 70px;
       border-radius: 50%;
+      overflow: hidden;
     }
     .user-time {
       display: flex;
