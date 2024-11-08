@@ -14,6 +14,8 @@ import { MessageNewComponent } from '../../shared/component/message-new/message-
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { LoaderComponent } from '../../shared/component/loader/loader.component';
+import { UserServiceService } from '../../services/user-service/user-service.service';
+import { AvatarComponent } from '../../shared/avatar/avatar.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -26,7 +28,8 @@ import { LoaderComponent } from '../../shared/component/loader/loader.component'
     ChannelEditComponent,
     MessageNewComponent,
     CommonModule,
-    LoaderComponent
+    LoaderComponent,
+    AvatarComponent
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss',
@@ -45,6 +48,8 @@ export class ChatRoomComponent {
   channelData: Channel | null = null;
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
+  userService = inject(UserServiceService);
+
 
   ngOnInit() {}
   constructor() {}

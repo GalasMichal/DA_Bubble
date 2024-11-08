@@ -4,6 +4,7 @@ import { UserServiceService } from '../../../services/user-service/user-service.
 import { CloseComponent } from '../close/close.component';
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../../services/state-control/state-control.service';
+import { User } from '../../../models/interfaces/user.model';
 
 @Component({
   selector: 'app-input-add-users',
@@ -16,7 +17,7 @@ export class InputAddUsersComponent {
   userService = inject(UserServiceService);
   stateServer = inject(StateControlService)
 
-  listOfAllUsers: { userName: string; uId: string }[] = [];
+  listOfAllUsers: User[] = [];
 
   bottom: number = -135;
 
@@ -33,9 +34,8 @@ export class InputAddUsersComponent {
   loadOfListOfAllUsers() {
     const listOfUsers = this.userService.userList;
     for (let i = 0; i < listOfUsers.length; i++) {
-      const userName = listOfUsers[i].displayName;
-      const userId = listOfUsers[i].uId;
-      this.listOfAllUsers.push({ userName: userName, uId: userId });
+      const object = listOfUsers[i];
+      this.listOfAllUsers.push(object);
     }
   }
 

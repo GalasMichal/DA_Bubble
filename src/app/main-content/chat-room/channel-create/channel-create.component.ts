@@ -17,7 +17,6 @@ import {
 
 import { Channel } from '../../../models/interfaces/channel.model';
 import { InputAddUsersComponent } from '../../../shared/component/input-add-users/input-add-users.component';
-import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { CloseComponent } from '../../../shared/component/close/close.component';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
@@ -30,12 +29,10 @@ import { StateControlService } from '../../../services/state-control/state-contr
     CommonModule,
     RouterModule,
     FormsModule,
-    RouterLink,
     MatDialogContent,
     ReactiveFormsModule,
     InputAddUsersComponent,
-    AvatarComponent,
-    CloseComponent,
+    CloseComponent
   ],
   templateUrl: './channel-create.component.html',
   styleUrl: './channel-create.component.scss',

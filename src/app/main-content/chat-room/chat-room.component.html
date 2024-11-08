@@ -1,6 +1,6 @@
 <section>
  @if(chat.currentChannelData) {
-  <header class="fontNunito">
+  <header>
 
     <button class="header-left-container" (click)="openTeam(chat)">
       <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,13 +27,15 @@
     </button>
 
     <div class="header-right-container">
-      <div class="user-container">
-        @for (user of chat.currentChannelData.specificPeople; track $index) {
-          {{ user.userName }}
-        <!-- <img src="{{ user }}" alt="userProfilPhoto"> -->
+      <ul class="user-container">
+        @for (user of this.userService.userList; track $index) {
+          <li>
+              <app-avatar [user]="user" [userList]="true"></app-avatar>
+          </li>
         }
-        <div class="font-nunito"> {{ usersInChat.length }}</div>
-      </div>
+
+        <div class=""> + {{ userService.userList.length}}</div>
+      </ul>
       <button (click)="openAddUsers()">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="20" fill="#ECEEFE"/>

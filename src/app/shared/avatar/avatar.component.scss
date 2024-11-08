@@ -74,3 +74,22 @@
     }
   }
 }
+
+::ng-deep {
+  .header-right-container {
+      app-avatar {
+        .user-avatar {
+          display: flex;
+          justify-content: center;
+          .avatar {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+          }
+          .online {
+            display: none;
+          }
+        }
+      }
+  }
+}
