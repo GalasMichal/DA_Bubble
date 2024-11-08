@@ -3,17 +3,14 @@ import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
 import { MessageAnswerComponent } from '../../shared/message-answer/message-answer.component';
-import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ChannelEditComponent } from './channel-edit/channel-edit.component';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from '../../models/interfaces/channel.model';
 import { Message } from '../../models/interfaces/message.model';
 import { Subscription } from 'rxjs';
-import { MessageNewComponent } from '../../shared/component/message-new/message-new.component';
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
-import { LoaderComponent } from '../../shared/component/loader/loader.component';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { AvatarComponent } from '../../shared/avatar/avatar.component';
 
@@ -21,14 +18,9 @@ import { AvatarComponent } from '../../shared/avatar/avatar.component';
   selector: 'app-chat-room',
   standalone: true,
   imports: [
-    AddUsersComponent,
     MessageFieldComponent,
     MessageAnswerComponent,
-    EmojiComponent,
-    ChannelEditComponent,
-    MessageNewComponent,
     CommonModule,
-    LoaderComponent,
     AvatarComponent
   ],
   templateUrl: './chat-room.component.html',
@@ -52,7 +44,8 @@ export class ChatRoomComponent {
 
 
   ngOnInit() {}
-  constructor() {}
+  constructor() {
+  }
 
   ngOnDestroy(): void {
     if (this.chat.unsubscribe) {

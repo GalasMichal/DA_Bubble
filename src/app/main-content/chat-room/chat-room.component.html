@@ -28,7 +28,7 @@
 
     <div class="header-right-container">
       <ul class="user-container">
-        @for (user of this.userService.userList; track $index) {
+        @for (user of this.chat.currentChannelData.specificPeople; track $index) {
           <li>
               <app-avatar [user]="user" [userList]="true"></app-avatar>
           </li>
