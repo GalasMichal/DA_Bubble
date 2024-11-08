@@ -66,6 +66,9 @@ export class ChatRoomComponent {
     });
   }
 
+  restOfUser() {
+    return this.chat.currentChannelData.specificPeople.length - 3;
+  }
   openTeam(chat: Object) {
     // const currentChannelID = this.chat.currentChannel
     // console.log('ID', currentChannelID);
