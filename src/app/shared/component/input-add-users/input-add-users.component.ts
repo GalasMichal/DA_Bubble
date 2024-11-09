@@ -19,15 +19,13 @@ export class InputAddUsersComponent {
 
   listOfAllUsers: User[] = [];
 
-  bottom: number = -290;
-
   @Output() activeButton: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   activeReactiveButton(para: boolean = true) {
     this.activeButton.emit(para);
   }
 
-  ngOnInit(): void {
+  constructor() {
     this.loadOfListOfAllUsers()
   }
 
@@ -44,16 +42,14 @@ export class InputAddUsersComponent {
     const indexListOfAllUsers = this.listOfAllUsers[index];
     this.stateServer.choosenUser.push(indexListOfAllUsers);
     this.activeReactiveButton();
-    this.removeUserFromListOfAllUsers(index);
-    // this.addPxToList();
+    this.removeUserFromListOfAllUsers(index)
   }
 
   removeUser(index: number, event: Event) {
     event.preventDefault();
-    // this.removePxFromList();
     const indexChoosenUser = this.stateServer.choosenUser[index];
     this.listOfAllUsers.push(indexChoosenUser);
-    this.removeUserFromChoosenUser(index);
+    this.removeUserFromChoosenUser(index)
     this.makeButtonActiveReactive()
   }
 
@@ -63,27 +59,18 @@ export class InputAddUsersComponent {
       }
   }
 
-  removeUserFromChoosenUser(index: number) {
-    this.stateServer.choosenUser.splice(index, 1);
-  }
-
   removeUserFromListOfAllUsers(index: number) {
     this.listOfAllUsers.splice(index, 1);
   }
 
+  removeUserFromChoosenUser(index: number) {
+    this.stateServer.choosenUser.splice(index, 1);
+  }
+
+
   addPxToList() {
-    this.bottom -= 40;
-    // if(this.listOfAllUsers.length === 0) {
-    //   this.bottom += 0;
-    // } else {
-    // }
   }
 
   removePxFromList() {
-    if(this.listOfAllUsers.length === 0) {
-      this.bottom -= 0;
-    } else {
-      this.bottom = 40;
-    }
   }
 }
