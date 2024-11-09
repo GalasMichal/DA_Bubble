@@ -19,6 +19,8 @@ export class InputAddUsersComponent {
 
   listOfAllUsers: User[] = [];
 
+  top: number = 40;
+
   @Output() activeButton: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   activeReactiveButton(para: boolean = true) {
@@ -43,6 +45,7 @@ export class InputAddUsersComponent {
     this.stateServer.choosenUser.push(indexListOfAllUsers);
     this.activeReactiveButton();
     this.removeUserFromListOfAllUsers(index)
+    this.addPxToList()
   }
 
   removeUser(index: number, event: Event) {
@@ -51,6 +54,7 @@ export class InputAddUsersComponent {
     this.listOfAllUsers.push(indexChoosenUser);
     this.removeUserFromChoosenUser(index)
     this.makeButtonActiveReactive()
+    this.removePxFromList()
   }
 
   makeButtonActiveReactive() {
@@ -69,8 +73,10 @@ export class InputAddUsersComponent {
 
 
   addPxToList() {
+    this.top += 54;
   }
 
   removePxFromList() {
+    this.top -= 54;
   }
 }

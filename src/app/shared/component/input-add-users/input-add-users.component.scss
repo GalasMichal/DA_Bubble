@@ -3,9 +3,9 @@
 @import "./../../../../styles.scss";
 
 .team {
+  position: relative;
   display: flex;
   flex-direction: column;
-  position: relative;
   max-width: 20rem;
   width: 100%;
   color: $black;
@@ -48,11 +48,8 @@
   }
 
   .list-of-user-container {
-    display: block;
+    display: none;
     position: absolute;
-    left: 15px;
-    bottom: -290px;
-    z-index: 900;
     max-width: 320px;
     width: 100%;
     max-height: 300px;
@@ -71,7 +68,7 @@
     }
 
     .list-of-user-content {
-      overflow-y: scroll;
+      overflow-y: auto;
       max-height: 270px;
     }
 
