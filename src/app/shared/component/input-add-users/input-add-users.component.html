@@ -17,9 +17,10 @@
     <input type="text" id="name-input" placeholder="Name eingeben" autocomplete="off" />
   </div>
 
-  <ul class="list-of-user" [ngStyle]="{'bottom': bottom + 'px'}">
+  <div class="list-of-user-container" [ngStyle]="{'bottom': bottom + 'px'}">
+    <ul class="list-of-user-content">
       @for(user of this.listOfAllUsers; track $index) {
-          <li (click)="addUser($index, $event)">
+        <li (click)="addUser($index, $event)">
             <button class="single-user">
               <div class="user-img">
                 <app-avatar [user]="user" [userList]="true"></app-avatar>
@@ -33,5 +34,6 @@
             Du hast alle Benutzer ausgewählt.
           </li>
         }
-  </ul>
+    </ul>  
+  </div>
 </div>

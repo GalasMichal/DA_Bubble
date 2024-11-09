@@ -40,8 +40,8 @@ export class MenuSideLeftComponent {
   }
 
   ngOnDestroy(): void {
-    this.chat.unsubscribe();
-    this.userService.unsubscribe();
+    // this.chat.unsubscribe();
+    // this.userService.unsubscribe();
   }
 
   async toogleDropDown1() {

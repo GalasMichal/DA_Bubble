@@ -19,7 +19,7 @@ export class InputAddUsersComponent {
 
   listOfAllUsers: User[] = [];
 
-  bottom: number = -135;
+  bottom: number = -290;
 
   @Output() activeButton: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -45,12 +45,12 @@ export class InputAddUsersComponent {
     this.stateServer.choosenUser.push(indexListOfAllUsers);
     this.activeReactiveButton();
     this.removeUserFromListOfAllUsers(index);
-    this.addPxToList();
+    // this.addPxToList();
   }
 
   removeUser(index: number, event: Event) {
     event.preventDefault();
-    this.removePxFromList();
+    // this.removePxFromList();
     const indexChoosenUser = this.stateServer.choosenUser[index];
     this.listOfAllUsers.push(indexChoosenUser);
     this.removeUserFromChoosenUser(index);
@@ -72,18 +72,18 @@ export class InputAddUsersComponent {
   }
 
   addPxToList() {
-    if(this.listOfAllUsers.length === 0) {
-      this.bottom += 0;
-    } else {
-      this.bottom += 58;
-    }
+    this.bottom -= 40;
+    // if(this.listOfAllUsers.length === 0) {
+    //   this.bottom += 0;
+    // } else {
+    // }
   }
 
   removePxFromList() {
     if(this.listOfAllUsers.length === 0) {
       this.bottom -= 0;
     } else {
-      this.bottom -= 58;
+      this.bottom = 40;
     }
   }
 }
