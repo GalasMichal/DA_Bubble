@@ -2,12 +2,6 @@
 @import "./../../../../styles.scss";
 @import "./../../../../fonts.scss";
 
-.fontNunito {
-  font-weight: 700;
-  font-size: 1.25rem;
-  line-height: 27px;
-}
-
 .side-nav-wrapper {
   padding: 2rem 1.875rem;
   height: 100%;
@@ -15,25 +9,17 @@
   flex-direction: column;
   gap: 1.5625rem;
   overflow: hidden auto;
-  nav {
+  .devspace {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     width: 19.125rem;
-    justify-content: space-between;
-
-    div {
-      display: flex;
-      align-items: center;
-      padding-right: 1.25rem;
-      gap: 0.9375rem;
-
-      & h2 {
+      h2 {
         font-size: 1.5rem;
         font-weight: 700;
         line-height: 32.7px;
         margin: 0;
       }
-    }
     button {
       background: none;
       border: solid 1px transparent;
@@ -89,12 +75,17 @@
     &:hover svg path {
       fill: $primary-hover;
     }
-    &:hover div {
+    &:hover .section-title {
       color: $primary-hover;
     }
 
     & .drop-down {
       width: 0.6875rem;
+    }
+    .section-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      line-height: 27px;
     }
   }
 }
@@ -153,21 +144,11 @@
   display: flex;
   flex-direction: column;
   gap: 1.5625rem;
-
-  > div {
-    > span {
-      margin-top: 3px;
-    }
+  .section-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 27px;
   }
-
-  // & .user-img {
-  //   width: 3.125rem;
-  //   position: relative;
-  // }
-}
-
-.padding-l-35 {
-  padding-left: 35px;
 }
 
 .channels-inner-position {
