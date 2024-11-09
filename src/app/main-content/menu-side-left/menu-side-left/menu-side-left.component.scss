@@ -64,9 +64,14 @@
   gap: 1.5625rem;
 }
 
-.drop-down {
+.drop-down-right {
   transform: rotate(-90deg);
 }
+
+.drop-down {
+  transform: rotate(0deg);
+}
+
 
 .channels-navbar {
   display: flex;
@@ -188,10 +193,12 @@
 
 .menu-title {
   display: flex;
+  align-items: center;
+  background: none;
   padding: 0.25rem;
   min-width: 12.875rem;
   gap: 1.3125rem;
-  cursor: pointer;
+
 }
 
 .bg-channels {
