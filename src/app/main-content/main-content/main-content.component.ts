@@ -33,7 +33,7 @@ export class MainContentComponent {
   private auth = inject(Auth);
 
   constructor() {
-    this.stateServer.showMainContent = true;
+    this.stateServer.isUserLoggedIn = true;
   }
 
   ngOnInit(): void {

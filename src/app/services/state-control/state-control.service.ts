@@ -10,7 +10,7 @@ export class StateControlService {
   showArrow: boolean = false;
   showToastText: string = '';
   choosenUser: User[] = [];
-  showMainContent: boolean = true;
+  isUserLoggedIn: boolean = false;
 
   removeShowToast() {
     setTimeout(() => {
