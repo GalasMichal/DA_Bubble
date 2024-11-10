@@ -3,6 +3,7 @@ import {
   collection,
   doc,
   Firestore,
+  getDoc,
   onSnapshot,
   setDoc,
   updateDoc,
@@ -12,12 +13,14 @@ import { User as AppUser } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import { addDoc, DocumentData, QuerySnapshot } from 'firebase/firestore';
+import { StateControlService } from '../state-control/state-control.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatRoomService {
   private firestore = inject(Firestore);
+  state = inject(StateControlService);
   private router = inject(Router);
   public currentChannel: string = '';
   public unsubscribe: any;
@@ -128,6 +131,32 @@ export class ChatRoomService {
         this.answers.sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
       }
     );
+  }
+
+  async updateSpecificPeopleInChannelFromState() {
+    if (!this.currentChannelData.chanId) {
+      console.error('Kein Channel-Daten verfügbar!');
+      return;
+    }
+
+    const channelId = this.currentChannelData.chanId;
+    const channelRef = doc(this.firestore, 'channels', channelId); // Referenz zum Channel
+
+    try {
+      // Hole die aktuellen Daten des Channels mit getDoc()
+      const docSnap = await getDoc(channelRef);
+      if (docSnap.exists()) {
+                // Setze den specificPeople-Array mit dem aktuellen User-Array aus dem StateControlService
+        const updatedSpecificPeople = this.state.choosenUser; // Array aus dem Service
+        // Aktualisiere den Channel mit dem neuen specificPeople-Array
+        await updateDoc(channelRef, { specificPeople: updatedSpecificPeople });
+        console.log('specificPeople erfolgreich überschrieben');
+      } else {
+        console.error('Channel nicht gefunden');
+      }
+    } catch (error) {
+      console.error('Fehler beim Überschreiben der specificPeople:', error);
+    }
   }
 
 }

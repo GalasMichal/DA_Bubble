@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { doc, updateDoc } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
+import { UserServiceService } from '../../services/user-service/user-service.service';
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -28,7 +30,7 @@ export class EditProfileComponent {
   readonly dialog = inject(MatDialogRef<EditProfileComponent>);
   fb = inject(FirebaseService);
   firestore = inject(Firestore);
-
+  user = inject(UserServiceService);
   userForm: FormGroup;
 
   constructor() {
@@ -48,16 +50,22 @@ export class EditProfileComponent {
   saveDialogEdit() {
     const uId = this.fb.currentUser()?.uId;
     let newNameNewEmail;
+    let inputNameValue = this.userForm.get('userName')?.value;
+    let inputEmailValue = this.userForm.get('userEmail')?.value;
 
     if (uId) {
       newNameNewEmail = doc(this.firestore, 'users', uId);
-    } 
-    
+    }
+
     if (newNameNewEmail) {
+
       updateDoc(newNameNewEmail, {
-        displayName: this.userForm.get('userName')?.value,
-        email: this.userForm.get('userEmail')?.value,
+        displayName: inputNameValue,
+        email: inputEmailValue,
       });
+
+      this.user.updateCurrentUser(this.fb.currentUser()!);
+      this.user.updateCurrentUserToFirebase(inputNameValue, inputEmailValue);
     }
 
     this.closeDialogEdit();

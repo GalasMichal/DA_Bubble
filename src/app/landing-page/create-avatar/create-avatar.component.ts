@@ -20,9 +20,7 @@ interface ProfileAvatar {
     CommonModule,
     RouterLink,
     RouterModule,
-    LogoComponent,
     BackComponent,
-    FooterComponent,
   ],
   templateUrl: './create-avatar.component.html',
   styleUrls: [
@@ -80,7 +78,7 @@ export class CreateAvatarComponent {
         this.selectedAvatar = downloadUrl;
       }
     }else {
-      
+
     }
     this.user.updateUserAvatar(this.db.currentUser()!.uId, this.selectedAvatar);
     await this.user.updateCurrentUser(this.db.currentUser()!);

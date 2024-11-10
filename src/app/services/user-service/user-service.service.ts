@@ -4,6 +4,7 @@ import { User as AppUser, User } from '../../models/interfaces/user.model';
 import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { StorageService } from '../storage/storage.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
+import { getAuth, updateEmail, updateProfile } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UserServiceService {
   public userList: AppUser[] = [];
   private readonly storageService = inject(StorageService);
   messageReceiver: User | null = null;
-
+  auth = getAuth();
 
 
   constructor() {
@@ -58,8 +59,24 @@ export class UserServiceService {
     }
   }
 
- async getUserAvatarFromStorage(userId: string) {
+  async updateCurrentUserToFirebase(userName: string, userEmail: string) {
+    if (this.auth.currentUser) {
+      try {
+        // Aktualisiere den displayName und das Avatar-Bild (photoURL)
+        await updateProfile(this.auth.currentUser, {
+          displayName: userName,
+                });
+        console.log("Profile updated successfully!");
 
+        // Aktualisiere die E-Mail separat
+        await updateEmail(this.auth.currentUser, userEmail);
+        console.log("Email updated successfully!");
+      } catch (error) {
+        console.error("An error occurred while updating the user information:", error);
+      }
+    } else {
+      console.error("No authenticated user found to update the profile.");
+    }
   }
 
 
