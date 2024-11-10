@@ -1,4 +1,4 @@
-@if (!stateControl.showMainContent) {
+@if (!stateControl.isUserLoggedIn) {
  
   <div class="wrapper">
     <div class="router-outlet">
@@ -16,7 +16,7 @@
 
 }
 
-@if (stateControl.showMainContent) { 
+@if (stateControl.isUserLoggedIn) { 
   <div class="wrapper">
     <div class="router-outlet">
           <router-outlet> </router-outlet>

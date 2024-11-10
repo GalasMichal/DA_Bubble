@@ -15,7 +15,7 @@
         </button> -->
 
     </div>
-    <div [ngClass]="state.isThreadOpen ? 'thread-container' : 'd-none'" [class.animate]="state.isThreadOpen">
+    <div [ngClass]="stateServer.isThreadOpen ? 'thread-container' : 'd-none'" [class.animate]="stateServer.isThreadOpen">
       <app-thread-answer></app-thread-answer>
     </div>
 

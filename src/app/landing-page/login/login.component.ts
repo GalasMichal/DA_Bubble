@@ -61,7 +61,7 @@ export class LoginComponent {
   async createNewUserWithGoogle() {
     await this.fb.createGoogleUser();
     this.fb.loadAllBackendData();
-    this.stateControl.showMainContent = true;
+    this.stateControl.isUserLoggedIn = true;
 
   }
 
@@ -78,7 +78,7 @@ export class LoginComponent {
           this.fb.currentUser()?.displayName
         );
         this.fb.loadAllBackendData();
-        this.stateControl.showMainContent = true;
+        this.stateControl.isUserLoggedIn = true;
       });
     } else {
       console.log('Formular ist ungültig');
@@ -87,7 +87,7 @@ export class LoginComponent {
 
   navigateToMainContent() {
     this.fb.loadAllBackendData();
-    this.stateControl.showMainContent = true;
+    this.stateControl.isUserLoggedIn = true;
     this.router.navigateByUrl('start/main');
   }
 

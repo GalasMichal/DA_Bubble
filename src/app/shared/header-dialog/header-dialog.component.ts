@@ -29,7 +29,7 @@ export class HeaderDialogComponent {
 
   logOut() {
     this.closeDialog.close()
-    this.stateControl.showMainContent = false;
+    this.stateControl.isUserLoggedIn = false;
     this.router.navigateByUrl('/start')
   }
 }

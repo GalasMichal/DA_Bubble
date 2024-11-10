@@ -20,7 +20,4 @@ export class AvatarComponent {
     channels: [],
     avatarUrl: '',
   };
-
-
-
 }

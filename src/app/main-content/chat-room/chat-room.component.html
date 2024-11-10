@@ -1,6 +1,6 @@
 <section>
  @if(chat.currentChannelData) {
-  <header class="fontNunito">
+  <header>
 
     <button class="header-left-container" (click)="openTeam(chat)">
       <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,13 +27,17 @@
     </button>
 
     <div class="header-right-container">
-      <div class="user-container">
-        @for (user of chat.currentChannelData.specificPeople; track $index) {
-          {{ user.userName }}
-        <!-- <img src="{{ user }}" alt="userProfilPhoto"> -->
+      <ul class="user-container">
+        @for (user of this.chat.currentChannelData.specificPeople; track $index) {
+          @if($index < 3){
+            <li>
+              <app-avatar [user]="user" [userList]="true"></app-avatar>
+            </li>
+          } @else {
+            <div class=""> + {{ restOfUser() }}</div>
+          }
         }
-        <div class="font-nunito"> {{ usersInChat.length }}</div>
-      </div>
+      </ul>
       <button (click)="openAddUsers()">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="20" fill="#ECEEFE"/>
@@ -51,6 +55,8 @@
 
     <div class="welcome-container">
 
+      <div class="avatar-container">
+
         <svg  class="avatar" width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_2119_22188)">
         <path d="M64.8307 0H32.6845C29.7768 0 27.4614 2.31538 27.4614 5.16923V31.7692H64.7768C67.6307 31.7692 69.946 29.4538 69.946 26.6V5.16923C69.9999 2.31538 67.6845 0 64.8307 0Z" fill="#92C83E"/>
@@ -66,10 +72,11 @@
       </g>
         <defs>
         <clipPath id="clip0_2119_22188">
-        <rect width="70" height="70" fill="white"/>
-      </clipPath>
+          <rect width="70" height="70" fill="white"/>
+        </clipPath>
       </defs>
-      </svg>
+    </svg>
+  </div>
     <div class="welcome-content">
 
       <div class="user-time">

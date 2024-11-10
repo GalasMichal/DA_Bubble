@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { User } from '../../models/interfaces/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -6,10 +7,10 @@ import { Injectable } from '@angular/core';
 export class StateControlService {
   isThreadOpen = false;
   showToast: boolean = false;
-  showArrow: boolean = false
-  showToastText: string = ''
-  choosenUser: { userName: string; uId: string }[] = [];
-  showMainContent: boolean = true;
+  showArrow: boolean = false;
+  showToastText: string = '';
+  choosenUser: User[] = [];
+  isUserLoggedIn: boolean = false;
 
   removeShowToast() {
     setTimeout(() => {

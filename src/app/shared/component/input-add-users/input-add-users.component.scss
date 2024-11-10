@@ -3,20 +3,20 @@
 @import "./../../../../styles.scss";
 
 .team {
+  position: relative;
   display: flex;
   flex-direction: column;
   max-width: 20rem;
   width: 100%;
   color: $black;
   border-radius: $b-radius-1 $b-radius-1 $b-radius-1 $b-radius-1;
-  &:has(input[type="text"]:focus) .list-of-user {
+  &:has(input[type="text"]:focus) .list-of-user-container {
     display: block;
   }
 
   .search {
     display: flex;
     flex-direction: column;
-    position: relative;
     border: solid 0.0625rem $primary-light;
     border-radius: $b-radius-1;
     .added-user {
@@ -47,12 +47,10 @@
     }
   }
 
-  .list-of-user {
+  .list-of-user-container {
     display: none;
     position: absolute;
-    left: 45px;
-    z-index: 900;
-    max-width: 300px;
+    max-width: 320px;
     width: 100%;
     max-height: 300px;
     border-radius: 0 $b-radius-1 $b-radius-1 $b-radius-1;
@@ -63,10 +61,15 @@
     font-weight: 400;
     font-size: 1.125rem;
     line-height: 24.55px;
-    gap: 0.5rem;
+    overflow: hidden;
 
     &:hover {
       display: block;
+    }
+
+    .list-of-user-content {
+      overflow-y: auto;
+      max-height: 270px;
     }
 
     li {
