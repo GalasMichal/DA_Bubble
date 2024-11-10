@@ -29,11 +29,7 @@ import { StateControlService } from '../../services/state-control/state-control.
     RouterLink,
     ReactiveFormsModule,
     MatDialogModule,
-    InfoBoxComponent,
-    LoginComponent,
-    LogoComponent,
     BackComponent,
-    FooterComponent,
   ],
 
   templateUrl: './register-user.component.html',
@@ -57,7 +53,7 @@ export class RegisterUserComponent {
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
-        Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+( [a-zA-Z]+)*$')
+        Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+( [a-zA-Z]+)*$'),
       ]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password1: new FormControl('', [
@@ -119,6 +115,10 @@ export class RegisterUserComponent {
     });
   }
 
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+
   passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const formGroup = control as FormGroup;
     const password1 = formGroup.get('password1')?.value;
@@ -134,6 +134,6 @@ export class RegisterUserComponent {
 
   togglePasswordVisibilityBottom() {
     this.isPasswordBottomVisible = !this.isPasswordBottomVisible;
-  }
 
+  }
 }

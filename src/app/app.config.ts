@@ -14,6 +14,7 @@ import {
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import localeDe from '@angular/common/locales/de';
 import { registerLocaleData } from '@angular/common';
+import { provideClientHydration } from '@angular/platform-browser';
 
 registerLocaleData(localeDe);
 
@@ -38,6 +39,6 @@ export const appConfig: ApplicationConfig = {
     ScreenTrackingService,
     UserTrackingService,
     provideFirestore(() => getFirestore()),
-    { provide: LOCALE_ID, useValue: 'de-DE' }
+    { provide: LOCALE_ID, useValue: 'de-DE' }, provideClientHydration()
   ],
 }
