@@ -22,7 +22,7 @@ export class MenuSideLeftComponent {
   isFirstDropdownMenuOpen = false;
   isSecondDropdownMenuOpen = true;
   dialog = inject(MatDialog);
-  db = inject(FirebaseService);
+  fb = inject(FirebaseService);
   chat = inject(ChatRoomService);
   ms = inject(MessageService);
   userService = inject(UserServiceService);
