@@ -45,7 +45,8 @@ export class RegisterUserComponent {
 
   myForm: FormGroup; // name - just for now
   isFormSubmitted: boolean = false;
-  isPasswordVisible = false;
+  isPasswordTopVisible: boolean = false;
+  isPasswordBottomVisible: boolean = false;
 
   constructor() {
     this.myForm = new FormGroup({
@@ -55,7 +56,14 @@ export class RegisterUserComponent {
         Validators.pattern('^[a-zA-Z]+ [a-zA-Z]+( [a-zA-Z]+)*$'),
       ]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
+      password1: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(
+          '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%+-/*?&])[A-Za-z0-9@$!%+-/*?&]+$'
+        ),
+      ]),
+      password2: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
         Validators.pattern(
@@ -65,7 +73,11 @@ export class RegisterUserComponent {
       term: new FormControl(false, [
         Validators.requiredTrue, // Checkbox must be checked (i.e., true) to be valid
       ]),
-    });
+
+    },
+    { validators: this.passwordMatchValidator } // Validator als Referenz übergeben, ohne Klammern
+    
+  );
   }
 
   async onSubmit() {
@@ -73,7 +85,7 @@ export class RegisterUserComponent {
 
     if (this.myForm.valid) {
       const email = this.myForm.get('email')?.value; // Hole den Email-Wert
-      const password = this.myForm.get('password')?.value;
+      const password = this.myForm.get('password1')?.value;
       const displayName = this.myForm.get('name')?.value;
 
       try {
@@ -103,7 +115,25 @@ export class RegisterUserComponent {
     });
   }
 
+
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
+
+  passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const formGroup = control as FormGroup;
+    const password1 = formGroup.get('password1')?.value;
+    const password2 = formGroup.get('password2')?.value;
+  
+    // Return null if passwords match, otherwise return error object
+    return password1 === password2 ? null : { passwordMismatch: true };
+  }
+
+  togglePasswordVisibilityTop() {
+    this.isPasswordTopVisible = !this.isPasswordTopVisible;
+  }
+
+  togglePasswordVisibilityBottom() {
+    this.isPasswordBottomVisible = !this.isPasswordBottomVisible;
+
   }
 }

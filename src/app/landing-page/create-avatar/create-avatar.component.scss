@@ -27,6 +27,7 @@
     width: 100%;
     gap: 32px;
     .profile-icon {
+      object-fit: cover;
       border-radius: 50%;
       margin-top: 16px;
       width: 168px;
