@@ -5,6 +5,8 @@ import { CloseComponent } from '../close/close.component';
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { User } from '../../../models/interfaces/user.model';
+import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
+import { log } from 'console';
 
 @Component({
   selector: 'app-input-add-users',
@@ -16,8 +18,12 @@ import { User } from '../../../models/interfaces/user.model';
 export class InputAddUsersComponent {
   userService = inject(UserServiceService);
   stateServer = inject(StateControlService)
+  chat = inject(ChatRoomService)
+
 
   listOfAllUsers: User[] = [];
+  listOfUsersChoosen: User[] = [];
+
 
   top: number = 40;
 
@@ -28,13 +34,26 @@ export class InputAddUsersComponent {
   }
 
   constructor() {
-    this.loadOfListOfAllUsers()
+    this.loadListOfAllUsers();
+    this.loadListOfAllChoosenUsers()
   }
 
-  loadOfListOfAllUsers() {
+  loadListOfAllUsers() {
     const listOfUsers = this.userService.userList;
+    console.log(listOfUsers);
+
     for (let i = 0; i < listOfUsers.length; i++) {
       const object = listOfUsers[i];
+      this.listOfAllUsers.push(object);
+    }
+  }
+
+  loadListOfAllChoosenUsers() {
+    const listOfUsersChoosen = this.chat.currentChannelData.specificPeople
+    console.log(listOfUsersChoosen);
+    
+    for (let i = 0; i < listOfUsersChoosen.length; i++) {
+      const object = listOfUsersChoosen[i];
       this.listOfAllUsers.push(object);
     }
   }
