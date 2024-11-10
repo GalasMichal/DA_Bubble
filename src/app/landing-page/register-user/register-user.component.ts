@@ -116,9 +116,6 @@ export class RegisterUserComponent {
   }
 
 
-  togglePasswordVisibility() {
-    this.isPasswordVisible = !this.isPasswordVisible;
-
   passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const formGroup = control as FormGroup;
     const password1 = formGroup.get('password1')?.value;
