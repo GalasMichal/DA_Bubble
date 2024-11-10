@@ -62,6 +62,8 @@ export class UserServiceService {
 
   }
 
+
+  // Update the current user muss noch geändert werden auf realtime verbindung !! wichtig
   async updateCurrentUser(user: AppUser) {
     const userDocRef = doc(this.getUsers(), user.uId);
     const docSnap = await getDoc(userDocRef);

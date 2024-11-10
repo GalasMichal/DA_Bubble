@@ -121,7 +121,7 @@ export class FirebaseService {
         email,
         password
       );
-      const user = userCredential.user as FirebaseUser;
+      let user = userCredential.user as FirebaseUser;
       console.log('user is', user);
       if (user) {
         await this.getUserByUid(user.uid);
