@@ -24,15 +24,13 @@ import { StateControlService } from '../../services/state-control/state-control.
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './login.component.media.scss'],
   imports: [
-    CommonModule,
-    LogoComponent,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    RouterOutlet,
-    RouterLink,
-    FooterComponent,
+     CommonModule,
+    //  LogoComponent,
+     ReactiveFormsModule,
+     FormsModule,
+     RouterModule,
+     RouterLink,
+    // FooterComponent,
   ],
 })
 export class LoginComponent {
@@ -67,8 +65,12 @@ export class LoginComponent {
 
   async loginWithEmailAndPassword() {
     this.isFormSubmitted = true;
-    const email = this.loginForm.get('email')?.value;
-    const password = this.loginForm.get('password')?.value;
+
+      const email = this.loginForm.get('userEmail')?.value;
+      const password = this.loginForm.get('password')?.value;
+
+    console.log('user data:', email, password);
+
     if (this.loginForm.valid) {
       await this.fb.loginWithEmailAndPassword(email, password).then(() => {
         console.log(
