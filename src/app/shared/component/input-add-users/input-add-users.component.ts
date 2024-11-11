@@ -20,9 +20,9 @@ export class InputAddUsersComponent {
   stateServer = inject(StateControlService)
   chat = inject(ChatRoomService)
 
-
+  // Nicht fertig
   listOfAllUsers: User[] = [];
-  listOfUsersChoosen: User[] = [];
+  listOfAllUsersChoosen: User[] = [];
 
 
   top: number = 40;
@@ -38,6 +38,7 @@ export class InputAddUsersComponent {
     this.loadListOfAllChoosenUsers()
   }
 
+  // nicht fetrig
   loadListOfAllUsers() {
     const listOfUsers = this.userService.userList;
     console.log(listOfUsers);
@@ -48,13 +49,14 @@ export class InputAddUsersComponent {
     }
   }
 
+  // nicht fetrig
   loadListOfAllChoosenUsers() {
     const listOfUsersChoosen = this.chat.currentChannelData.specificPeople
     console.log(listOfUsersChoosen);
     
     for (let i = 0; i < listOfUsersChoosen.length; i++) {
       const object = listOfUsersChoosen[i];
-      this.listOfAllUsers.push(object);
+      this.listOfAllUsersChoosen.push(object);
     }
   }
 
