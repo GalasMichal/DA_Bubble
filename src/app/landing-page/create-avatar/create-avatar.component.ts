@@ -88,6 +88,7 @@ export class CreateAvatarComponent {
     this.user.updateUserAvatar(this.db.currentUser()!.uId, this.selectedAvatar);
     await this.user.updateCurrentUser(this.db.currentUser()!);
     this.showToast(text)
+    this.closeEditAvatar()
   }
 
   showToast(text: string) {

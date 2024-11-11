@@ -61,10 +61,8 @@
     font-size: 2rem;
     font-weight: 500;
   }
+  .edit-img,
   .edit {
-    display: none;
-    width: 40px;
-    height: 40px;
     background: none;
     border: solid 1px transparent;
     border-radius: $b-radius-2;
@@ -77,6 +75,9 @@
     &:hover svg path {
       fill: $primary-hover;
     }
+  }
+  .edit-img {
+    display: none;
   }
 }
 
