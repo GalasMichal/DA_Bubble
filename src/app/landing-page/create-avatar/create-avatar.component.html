@@ -1,12 +1,13 @@
 <section class="main-content">
-  <div class="arrow-back-container">
-    <a class="arrow-back" [routerLink]="['/']">
-        <app-back></app-back>
+  <a class="arrow-back" [routerLink]="['/']">
+      <app-back></app-back>
+  </a>
+  <a class="close-btn" (click)="closeEditAvatar()">
+    <app-close></app-close>
+  </a>
 
+    <h1 class="title">Wähle deinen Avatar</h1>
 
-      </a>
-      <h1>Wähle deinen Avatar</h1>
-    </div>
     <div class="avatar-container">
       <img class="profile-icon" #profileIcon  [src]="selectedAvatar"
         alt="a blank user profile icon">

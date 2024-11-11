@@ -19,6 +19,39 @@
   }
 }
 
+.avatar {
+  display: flex;
+  justify-content: center;
+
+  .avatar-img {
+    position: relative;
+    border-radius: $b-radius-2;
+
+    .edit-avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: solid 1px transparent;
+      border-radius: $b-radius-2;
+      @include firstTranistion();
+      &:hover,
+      &:focus-visible {
+        background: $bg-color;
+        outline: none;
+      }
+      &:hover svg path {
+        fill: $primary-hover;
+      }
+    }
+  }
+}
+
 .name {
   display: flex;
   justify-content: space-between;
@@ -28,18 +61,21 @@
     font-size: 2rem;
     font-weight: 500;
   }
-  button {
+  .edit {
+    display: none;
+    width: 40px;
+    height: 40px;
     background: none;
-    padding-inline: 0.625rem;
-    color: $primary-hover;
+    border: solid 1px transparent;
+    border-radius: $b-radius-2;
     @include firstTranistion();
-      &:hover,
-      &:focus {
-        color: $primary;
-        outline: none;
-      }
-    img {
-      display: none;
+    &:hover,
+    &:focus-visible {
+      background: $bg-color;
+      outline: none;
+    }
+    &:hover svg path {
+      fill: $primary-hover;
     }
   }
 }
@@ -70,10 +106,10 @@
       font-size: 1.125rem;
       text-decoration: none;
       color: $e-mail;
-      border: dotted .2rem transparent;
+      border: dotted 0.2rem transparent;
       &:focus {
         outline: none;
-        border: dotted .2rem $e-mail;
+        border: dotted 0.2rem $e-mail;
       }
     }
   }
@@ -128,6 +164,5 @@
     height: 600px;
     top: auto;
     right: auto;
-
   }
 }

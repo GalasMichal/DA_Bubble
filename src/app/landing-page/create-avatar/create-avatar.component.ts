@@ -8,6 +8,8 @@ import { FooterComponent } from '../footer/footer.component';
 import { StorageService } from '../../services/storage/storage.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { StateControlService } from '../../services/state-control/state-control.service';
+import { CloseComponent } from '../../shared/component/close/close.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 interface ProfileAvatar {
   name: string;
@@ -21,6 +23,8 @@ interface ProfileAvatar {
     RouterLink,
     RouterModule,
     BackComponent,
+    CloseComponent,
+    MatDialogModule,
   ],
   templateUrl: './create-avatar.component.html',
   styleUrls: [
@@ -29,6 +33,7 @@ interface ProfileAvatar {
   ],
 })
 export class CreateAvatarComponent {
+  dialog = inject(MatDialogRef<CreateAvatarComponent>, { optional: true });
   db = inject(FirebaseService);
   st = inject(StorageService);
   user = inject(UserServiceService);
@@ -92,5 +97,11 @@ export class CreateAvatarComponent {
     setTimeout(() => {
       this.router.navigate(['/start/main']);
       }, 2200);
+  }
+
+  closeEditAvatar() {
+    if (this.dialog) {
+      this.dialog.close();
+    }
   }
 }

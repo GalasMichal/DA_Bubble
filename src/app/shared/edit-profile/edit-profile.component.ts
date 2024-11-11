@@ -70,4 +70,6 @@ export class EditProfileComponent {
 
     this.closeDialogEdit();
   }
+
+
 }

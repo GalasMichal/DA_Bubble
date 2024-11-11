@@ -18,7 +18,9 @@
 }
 
 ::ng-deep {
-  .profile-card app-avatar {
+  .profile-card 
+  app-avatar {
+    position: relative;
     .user-avatar {
       display: flex;
       justify-content: center;
