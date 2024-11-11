@@ -41,7 +41,7 @@ export class MainContentComponent {
       if (user) {
         this.db.getUserByUid(user.uid); // Laden des Benutzers
       } else {
-        this.router.navigate(['/start/login']);
+        this.router.navigate(['']);
       }
     });
   }
