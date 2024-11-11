@@ -4,6 +4,7 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { CloseComponent } from '../component/close/close.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
+import { CreateAvatarComponent } from '../../landing-page/create-avatar/create-avatar.component';
 
 @Component({
   selector: 'app-profil',
@@ -25,6 +26,12 @@ export class ProfileComponent {
     console.log(this.fb.currentUser());
     this.editDialog.open(EditProfileComponent, {
       panelClass: 'edit-profile-container', // Custom class for profile dialog
+    });
+  }
+
+  editAvatar() {
+    this.editDialog.open(CreateAvatarComponent, {
+      panelClass: 'create-profile-container', // Custom class for profile dialog
     });
   }
 
