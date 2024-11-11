@@ -10,6 +10,7 @@ import {
   User as FirebaseUser,
   fetchSignInMethodsForEmail,
   onAuthStateChanged,
+  signOut,
 } from '@angular/fire/auth';
 import {
   collection,
@@ -230,4 +231,16 @@ export class FirebaseService {
       return user;
     });
   }
+  logoutUser(){
+
+     // Methode zum Ausloggen des Benutzers
+    signOut(this.auth)
+      .then(() => {
+        console.log('User logged out successfully');
+      })
+      .catch((error) => {
+        console.error('Error logging out:', error);
+      });
+  }
+
 }
