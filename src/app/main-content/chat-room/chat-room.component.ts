@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { AvatarComponent } from '../../shared/avatar/avatar.component';
+import { log } from 'console';
 
 @Component({
   selector: 'app-chat-room',
@@ -41,6 +42,7 @@ export class ChatRoomComponent {
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
   userService = inject(UserServiceService);
+  sumrestOfUser: number = 0
 
 
   ngOnInit() {}
@@ -69,6 +71,7 @@ export class ChatRoomComponent {
   restOfUser() {
     return this.chat.currentChannelData.specificPeople.length - 3;
   }
+
   openTeam(chat: Object) {
     // const currentChannelID = this.chat.currentChannel
     // console.log('ID', currentChannelID);

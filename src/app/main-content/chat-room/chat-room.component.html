@@ -33,9 +33,10 @@
             <li>
               <app-avatar [user]="user" [userList]="true"></app-avatar>
             </li>
-          } @else {
-            <div class=""> + {{ restOfUser() }}</div>
           }
+        }
+        @if(restOfUser() > 0) {
+          <div class=""> + {{ restOfUser() }}</div>
         }
       </ul>
       <button (click)="openAddUsers()">

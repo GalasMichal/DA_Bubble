@@ -16,7 +16,8 @@ import { StateControlService } from '../../services/state-control/state-control.
 export class AddUsersComponent {
   readonly dialog = inject(MatDialogRef <AddUsersComponent>)
   chat = inject(ChatRoomService);
-  state = inject(StateControlService);
+  stateServer = inject(StateControlService)
+
   activeButton: boolean = false
 
   closeAddUsers() {
@@ -28,5 +29,6 @@ export class AddUsersComponent {
   async addUserToChat() {
     await this.chat.updateSpecificPeopleInChannelFromState();
     this.closeAddUsers()
+    this.stateServer.choosenUser = [];
   }
 }
