@@ -34,9 +34,9 @@ export class HeaderDialogComponent {
   logOut() {
     this.firebase.logoutUser();
     this.firebase.currentUser()!.status = false;
-    // noch dazu muss kommen update signal to firebase oder update profile tu firebase 
+    // noch dazu muss kommen update signal to firebase oder update profile tu firebase
     this.closeDialog.close()
     this.stateControl.isUserLoggedIn = false;
-    this.router.navigateByUrl('/start')
+    this.router.navigateByUrl('')
   }
 }
