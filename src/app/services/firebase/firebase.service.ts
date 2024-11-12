@@ -30,6 +30,7 @@ import { Channel } from '../../models/interfaces/channel.model';
 import { Router } from '@angular/router';
 import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 
 @Injectable({
@@ -231,8 +232,8 @@ export class FirebaseService {
       return user;
     });
   }
-  logoutUser(){
 
+  logoutUser(){
      // Methode zum Ausloggen des Benutzers
     signOut(this.auth)
       .then(() => {
@@ -242,5 +243,18 @@ export class FirebaseService {
         console.error('Error logging out:', error);
       });
   }
+
+  resetEmail(email: string) {
+    // 
+    sendPasswordResetEmail (this.auth, email).then(() => {
+      console.log("Password reset email sent!");
+      
+  })  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+}
+  
 
 }

@@ -43,22 +43,25 @@ export class PwdRecoveryComponent {
   isFormValid: boolean = false;
 
   constructor() {
-    // this.recoveryForm = this.formBuilder.group({
-    //   email: ['', [Validators.required, Validators.email]],
-    // });
-
     this.recoveryForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
     });
   }
 
-  onSubmit(text: string) {
+  sendEmail(event: Event, text: string) {
+    event.preventDefault();
+
+    const email = this.recoveryForm.get("email")?.value
+    console.log(email);
+    
+    this.fb.resetEmail(email)
     this.isFormValid = true;
     this.stateControl.showArrow = true
     this.stateControl.showToast = true
     this.stateControl.showToastText = text
     this.stateControl.removeShowToast()
   }
+
 
   goBack(): void {
     this.location.back(); // Navigate to the previous page

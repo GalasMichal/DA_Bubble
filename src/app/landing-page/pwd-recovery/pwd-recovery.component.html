@@ -8,7 +8,7 @@
     </h1>
     
   </div>  
-    <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit('E-Mail gesendet')">
+    <form [formGroup]="recoveryForm" (ngSubmit)="sendEmail($event, 'E-Mail gesendet')">
       <div class="input-container">
 
         <label for="name">Bitte gib deine E-Mail ein:</label>
@@ -36,7 +36,7 @@
       </p>
 
       <div class="btn-container" >
-        <button class="forward-btn" routerLink='/login'>E-Mail senden</button>
+        <button class="forward-btn" type="submit" [disabled]="!recoveryForm.valid">E-Mail senden</button>
       </div>
     </form>
 </section>
