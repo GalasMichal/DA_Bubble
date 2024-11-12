@@ -74,7 +74,13 @@ export class PwdResetComponent {
     return password1 === password2 ? null : { passwordMismatch: true };
   }
 
-  onSubmit(text: string) {
+  pwdReset(text: string) {
+
+    const password = this.resetForm.get('password1')?.value
+    console.log(password);
+    
+    this.fb.confirmPassword(password)
+
     this.isFormValid = true;
     this.stateControl.showToast = true
     this.stateControl.showToastText = text
@@ -97,4 +103,5 @@ export class PwdResetComponent {
   togglePasswordVisibilityBottom() {
     this.isPasswordBottomVisible = !this.isPasswordBottomVisible;
   }
+  
 }

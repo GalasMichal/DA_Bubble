@@ -52,9 +52,8 @@ export class PwdRecoveryComponent {
     event.preventDefault();
 
     const email = this.recoveryForm.get("email")?.value
-    console.log(email);
-    
-    this.fb.resetEmail(email)
+    this.fb.sendEmailToUser(email)
+
     this.isFormValid = true;
     this.stateControl.showArrow = true
     this.stateControl.showToast = true

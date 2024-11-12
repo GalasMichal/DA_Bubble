@@ -15,7 +15,7 @@
       </button>
   </div>
 
-  <form [formGroup]="resetForm" (ngSubmit)="onSubmit('Anmelden')">
+  <form [formGroup]="resetForm" (ngSubmit)="pwdReset('Das Passwort wurde erfolgreich zurückgesetzt.')">
     <div class="input-container"> 
       <label class="visually-hidden" for="password1">Passwort</label>
         <input name="password1" id="password1" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password1" autocomplete="on"/>

@@ -27,10 +27,10 @@ import {
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Channel } from '../../models/interfaces/channel.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
-import { sendPasswordResetEmail } from 'firebase/auth';
+import { confirmPasswordReset, sendPasswordResetEmail, updatePassword } from 'firebase/auth';
 
 
 @Injectable({
@@ -47,7 +47,10 @@ export class FirebaseService {
   public currentUser = signal<AppUser | null>(null);
   public errorMessageLogin = signal('');
 
-  constructor() {}
+  constructor(
+    private route: ActivatedRoute,
+  ) {}
+
 
   async loadAllBackendData() {
     this.chat.subChannelList();
@@ -244,17 +247,41 @@ export class FirebaseService {
       });
   }
 
-  resetEmail(email: string) {
-    // 
-    sendPasswordResetEmail (this.auth, email).then(() => {
-      console.log("Password reset email sent!");
-      
+  sendEmailToUser(email: string) {
+    const actionCodeSettings = {
+      url: 'http://localhost:4200/reset', // Hier ersetzt du den Link durch die URL zu deiner Anwendung
+      handleCodeInApp: true // Aktiviert die Weiterleitung zur Anwendung
+  };
+  console.log(actionCodeSettings.url);
+  
+    sendPasswordResetEmail (this.auth, email)
+    .then(() => {
   })  .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
     // ..
   });
-}
+
+  }
   
+  confirmPassword(password: string) {
+    // Hole den oobCode aus der URL
+    const oobCode = this.route.snapshot.queryParamMap.get('oobCode');
+
+    if (oobCode) {
+        confirmPasswordReset(this.auth, oobCode, password)
+            .then(() => {
+                console.log('Password has been reset successfully.');
+                // Weitere Aktionen nach dem erfolgreichen Zurücksetzen
+            })
+            .catch((error) => {
+                console.error('Error resetting password:', error);
+                // Fehlerbehandlung hier hinzufügen
+            });
+    } else {
+        console.error('No oobCode provided.');
+        // Fehlermeldung, falls kein oobCode vorhanden ist
+    }
+  }
 
 }
