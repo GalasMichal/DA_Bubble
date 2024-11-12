@@ -247,13 +247,7 @@ export class FirebaseService {
       });
   }
 
-  sendEmailToUser(email: string) {
-    const actionCodeSettings = {
-      url: 'http://localhost:4200/reset', // Hier ersetzt du den Link durch die URL zu deiner Anwendung
-      handleCodeInApp: true // Aktiviert die Weiterleitung zur Anwendung
-  };
-  console.log(actionCodeSettings.url);
-  
+  sendEmailToUser(email: string) { 
     sendPasswordResetEmail (this.auth, email)
     .then(() => {
   })  .catch((error) => {
