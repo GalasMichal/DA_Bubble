@@ -11,11 +11,13 @@ export class StateControlService {
   showToastText: string = '';
   choosenUser: User[] = [];
   isUserLoggedIn: boolean = false;
+  showError: boolean = false
 
   removeShowToast() {
     setTimeout(() => {
     this.showToast = false
     this.showArrow = false
+    this.showError = false;
     }, 2000);
   }
 

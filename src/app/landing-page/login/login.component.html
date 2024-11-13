@@ -6,7 +6,7 @@
   <p class="description">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
 
   <!-- form container -->
-  <form [formGroup]="loginForm" (ngSubmit)="loginWithEmailAndPassword()">
+  <form [formGroup]="loginForm" (ngSubmit)="loginWithEmailAndPassword('Du bist angemeldet')">
     <div class="input-container">
       <label class="visually-hidden" for="userEmail">E-Mail-Adresse</label>
       <input class="input-field" id="userEmail" type="email" formControlName="userEmail"

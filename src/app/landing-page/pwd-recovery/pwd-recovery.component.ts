@@ -50,15 +50,9 @@ export class PwdRecoveryComponent {
 
   sendEmail(event: Event, text: string) {
     event.preventDefault();
-
     const email = this.recoveryForm.get("email")?.value
-    this.fb.sendEmailToUser(email)
-
+    this.fb.sendEmailToUser(email, text)
     this.isFormValid = true;
-    this.stateControl.showArrow = true
-    this.stateControl.showToast = true
-    this.stateControl.showToastText = text
-    this.stateControl.removeShowToast()
   }
 
 

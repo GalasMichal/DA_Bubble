@@ -76,18 +76,9 @@ export class PwdResetComponent {
 
   pwdReset(text: string) {
 
-    const password = this.resetForm.get('password1')?.value
-    console.log(password);
-    
-    this.fb.confirmPassword(password)
-
+    const password = this.resetForm.get('password1')?.value    
+    this.fb.confirmPassword(password, text)
     this.isFormValid = true;
-    this.stateControl.showToast = true
-    this.stateControl.showToastText = text
-    this.stateControl.removeShowToast()
-    setTimeout(() => {
-      this.router.navigate(['start']);
-      }, 2200);
   }
 
   openInfoBox() {

@@ -60,19 +60,19 @@ export class LoginComponent {
     await this.fb.createGoogleUser();
     this.fb.loadAllBackendData();
     this.stateControl.isUserLoggedIn = true;
-
   }
 
-  async loginWithEmailAndPassword() {
-    this.isFormSubmitted = true;
-
+  async loginWithEmailAndPassword(text: string) {
+      this.isFormSubmitted = true;
       const email = this.loginForm.get('userEmail')?.value;
       const password = this.loginForm.get('password')?.value;
 
     console.log('user data:', email, password);
 
     if (this.loginForm.valid) {
-      await this.fb.loginWithEmailAndPassword(email, password).then(() => {
+      this.stateControl.showToast = true;
+      this.stateControl.showToastText = text;
+      await this.fb.loginWithEmailAndPassword(email, password, text).then(() => {
         console.log(
           'user is eingeloggot',
           this.fb.currentUser()?.uId,

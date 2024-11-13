@@ -7,7 +7,7 @@
       <div class="main-container">
         <router-outlet> </router-outlet>
       </div>
-      <app-toast [ngClass]="{ 'show-success': stateControl.showToast }"></app-toast>
+      <app-toast [ngClass]="{ 'show-success': stateControl.showToast, 'show-error': stateControl.showError}"></app-toast>
     </div>
     <app-footer></app-footer>
   </div>

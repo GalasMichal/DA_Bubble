@@ -30,8 +30,12 @@ import { Channel } from '../../models/interfaces/channel.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
-import { confirmPasswordReset, sendPasswordResetEmail, updatePassword } from 'firebase/auth';
-
+import {
+  confirmPasswordReset,
+  sendPasswordResetEmail,
+  updatePassword,
+} from 'firebase/auth';
+import { StateControlService } from '../state-control/state-control.service';
 
 @Injectable({
   providedIn: 'root',
@@ -43,14 +47,12 @@ export class FirebaseService {
   router = inject(Router);
   chat = inject(ChatRoomService);
   userService = inject(UserServiceService);
+  stateControl = inject(StateControlService);
 
   public currentUser = signal<AppUser | null>(null);
   public errorMessageLogin = signal('');
 
-  constructor(
-    private route: ActivatedRoute,
-  ) {}
-
+  constructor(private route: ActivatedRoute) {}
 
   async loadAllBackendData() {
     this.chat.subChannelList();
@@ -109,9 +111,7 @@ export class FirebaseService {
       });
   }
 
-  async loginWithEmailAndPassword(
-    email: string,
-    password: string
+  async loginWithEmailAndPassword(email: string, password: string, text: string
   ): Promise<any> {
     try {
       const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
@@ -191,7 +191,7 @@ export class FirebaseService {
         email: googleUser.email ?? '',
         displayName: displayName,
       };
-      if (!(await this.userExistFirestore(user.uId)))  {
+      if (!(await this.userExistFirestore(user.uId))) {
         // Benutzer existiert nicht, also Avatar-Seite anzeigen
         await this.addUserToFirestore(user);
         this.currentUser.set(user);
@@ -220,7 +220,7 @@ export class FirebaseService {
       });
   }
 
- async userExistFirestore(uId: string): Promise<boolean> {
+  async userExistFirestore(uId: string): Promise<boolean> {
     return getDocs(
       query(collection(this.firestore, 'users'), where('uId', '==', uId))
     ).then((querySnapshot) => {
@@ -236,8 +236,8 @@ export class FirebaseService {
     });
   }
 
-  logoutUser(){
-     // Methode zum Ausloggen des Benutzers
+  logoutUser() {
+    // Methode zum Ausloggen des Benutzers
     signOut(this.auth)
       .then(() => {
         console.log('User logged out successfully');
@@ -247,35 +247,73 @@ export class FirebaseService {
       });
   }
 
-  sendEmailToUser(email: string) { 
-    sendPasswordResetEmail (this.auth, email)
-    .then(() => {
-  })  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
-
+  sendEmailToUser(email: string, text: string) {
+    sendPasswordResetEmail(this.auth, email)
+      .then(() => {
+        this.stateControl.showArrow = true;
+        this.stateControl.showToast = true;
+        this.stateControl.showToastText = text;
+        this.stateControl.removeShowToast();
+      })
+      .catch((error) => {
+        this.stateControl.showToast = true;
+        this.stateControl.showError = true;
+        switch (error.code) {
+          case 'auth/invalid-email':
+            this.stateControl.showToastText =
+              'Ungültige E-Mail-Adresse. Bitte überprüfen Sie die Eingabe.';
+            break;
+          case 'auth/user-not-found':
+            this.stateControl.showToastText =
+              'Kein Benutzer mit dieser E-Mail-Adresse gefunden.';
+            break;
+          default:
+            this.stateControl.showToastText =
+              'Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.';
+        }
+        this.stateControl.removeShowToast();
+      });
   }
-  
-  confirmPassword(password: string) {
+
+  confirmPassword(password: string, text:string) {
     // Hole den oobCode aus der URL
     const oobCode = this.route.snapshot.queryParamMap.get('oobCode');
 
-    if (oobCode) {
-        confirmPasswordReset(this.auth, oobCode, password)
-            .then(() => {
-                console.log('Password has been reset successfully.');
-                // Weitere Aktionen nach dem erfolgreichen Zurücksetzen
-            })
-            .catch((error) => {
-                console.error('Error resetting password:', error);
-                // Fehlerbehandlung hier hinzufügen
-            });
-    } else {
-        console.error('No oobCode provided.');
-        // Fehlermeldung, falls kein oobCode vorhanden ist
+    if (!oobCode) {
+      console.error('No oobCode provided.');
+      this.stateControl.showToast = true;
+      this.stateControl.showError = true;
+      this.stateControl.showToastText =
+        'Es gab ein Problem mit dem Link. Bitte versuchen Sie es erneut.';
+      return;
     }
-  }
 
+    confirmPasswordReset(this.auth, oobCode, password)
+      .then(() => {
+        this.stateControl.showToast = true;
+        this.stateControl.showToastText = text;
+        this.stateControl.removeShowToast();
+        setTimeout(() => {
+          this.router.navigate(['start']);
+          }, 2200);
+      })
+      .catch((error) => {
+        this.stateControl.showToast = true;
+        this.stateControl.showError = true;
+        switch (error.code) {
+          case 'auth/invalid-action-code':
+            this.stateControl.showToastText =
+              'Der Link ist ungültig oder abgelaufen.';
+            break;
+          case 'auth/weak-password':
+            this.stateControl.showToastText =
+              'Das Passwort ist zu schwach. Bitte verwenden Sie ein stärkeres Passwort.';
+            break;
+          default:
+            this.stateControl.showToastText =
+              'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
+        }
+        this.stateControl.removeShowToast();
+      });
+  }
 }

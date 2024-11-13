@@ -222,6 +222,9 @@ app-toast {
   @include firstTranistion();
 }
 
+.show-error {
+  background-color: $red;
+}
 .show-success {
   opacity: 1;
   transform: translateX(0);
