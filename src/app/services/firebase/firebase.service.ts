@@ -115,33 +115,36 @@ export class FirebaseService {
   ): Promise<any> {
     try {
       const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
-      if (!exists) {
+      if (exists) {
         this.errorMessageLogin.set(
           'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
         );
       }
-      // Wenn der Benutzer existiert, führe die Anmeldung durch
-      const userCredential = await signInWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      );
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       let user = userCredential.user as FirebaseUser;
       console.log('user is', user);
       if (user) {
+        this.stateControl.showToast = true;
+        this.stateControl.showToastText = text;
+        this.stateControl.removeShowToast();
         await this.getUserByUid(user.uid);
-        this.router.navigate(['/start/main']);
+        setTimeout(() => {
+          this.router.navigate(['/start/main']);
+          }, 2200);
       }
 
       console.log('User is logged in:', user);
       this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
     } catch (error) {
+        this.stateControl.showError = true;
+        this.stateControl.showToast = true;
       if (error === 'auth/wrong-password') {
         this.errorMessageLogin.set('Falsches Passwort.');
       } else {
-        this.errorMessageLogin.set('Fehler beim Anmelden: ' + error);
+        this.stateControl.showToastText = 'Versuche bitte noch einmal';
+        this.errorMessageLogin.set('E-Mail oder Passwort falsch');
       }
-
+      this.stateControl.removeShowToast();
       // Falls es einen allgemeinen Fehler gibt (bei der Benutzerabfrage oder Anmeldung)
       console.error('Fehler beim Login:', error);
     }

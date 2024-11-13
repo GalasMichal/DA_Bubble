@@ -70,8 +70,6 @@ export class LoginComponent {
     console.log('user data:', email, password);
 
     if (this.loginForm.valid) {
-      this.stateControl.showToast = true;
-      this.stateControl.showToastText = text;
       await this.fb.loginWithEmailAndPassword(email, password, text).then(() => {
         console.log(
           'user is eingeloggot',
@@ -80,7 +78,6 @@ export class LoginComponent {
           this.fb.currentUser()?.displayName
         );
         this.fb.loadAllBackendData();
-        this.stateControl.isUserLoggedIn = true;
       });
     } else {
       console.log('Formular ist ungültig');
@@ -90,7 +87,7 @@ export class LoginComponent {
   navigateToMainContent() {
     this.fb.loadAllBackendData();
     this.stateControl.isUserLoggedIn = true;
-    this.router.navigateByUrl('start/main');
+    this.router.navigate(['/start/main']);
   }
 
   togglePasswordVisibility() {
