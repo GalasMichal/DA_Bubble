@@ -84,10 +84,8 @@ export class LoginComponent {
     }
   }
 
-  navigateToMainContent() {
-    this.fb.loadAllBackendData();
-    this.stateControl.isUserLoggedIn = true;
-    this.router.navigate(['/start/main']);
+  navigateToMainContentAsGuest(email: string, password:string, text: string) {
+    this.fb.loginWithEmailAndPassword(email, password, text )
   }
 
   togglePasswordVisibility() {

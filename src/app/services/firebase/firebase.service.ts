@@ -111,8 +111,8 @@ export class FirebaseService {
       });
   }
 
-  async loginWithEmailAndPassword(email: string, password: string, text: string
-  ): Promise<any> {
+  async loginWithEmailAndPassword(email: string, password: string, text: string): Promise<any> {
+    
     try {
       const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
       if (exists) {
