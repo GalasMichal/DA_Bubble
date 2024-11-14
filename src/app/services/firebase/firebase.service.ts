@@ -60,17 +60,26 @@ export class FirebaseService {
   }
 
   // Methode zum Erstellen eines neuen Benutzers
-  async createUser(
-    email: string,
-    password: string,
-    displayName: string
-  ): Promise<any> {
+  async createUser(email: string, password: string, displayName: string): Promise<any> {
+
+    // if (displayName === 'Guest') {
+    //   // Gast-Benutzer-Objekt direkt erstellen
+    //   const user: AppUser = {
+    //     status: true,
+    //     channels: [],
+    //     uId: 'guest-id',
+    //     email: 'guest@guest.com',
+    //     displayName: 'Guest',
+    //   };
+    //   console.log('Gastbenutzer ist', user);
+    //   this.addUserToFirestore(user);
+    //   return user; // Rückgabe des Gastbenutzers
+    // } else {
+   
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         const firebaseUser = userCredential.user;
-        return updateProfile(firebaseUser, {
-          displayName: displayName,
-        }).then(() => {
+        return updateProfile(firebaseUser, {displayName: displayName }).then(() => {
           const user: AppUser = {
             status: true,
             channels: [],
@@ -109,6 +118,7 @@ export class FirebaseService {
             ); // Standardfehlermeldung
         }
       });
+    // }
   }
 
   async loginWithEmailAndPassword(email: string, password: string, text: string): Promise<any> {

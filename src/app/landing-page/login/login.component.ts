@@ -17,6 +17,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
+import { User } from '../../models/interfaces/user.model';
 
 @Component({
   selector: 'app-login',
@@ -67,9 +68,9 @@ export class LoginComponent {
       const email = this.loginForm.get('userEmail')?.value;
       const password = this.loginForm.get('password')?.value;
 
-    console.log('user data:', email, password);
-
     if (this.loginForm.valid) {
+
+
       await this.fb.loginWithEmailAndPassword(email, password, text).then(() => {
         console.log(
           'user is eingeloggot',
@@ -84,8 +85,23 @@ export class LoginComponent {
     }
   }
 
-  navigateToMainContentAsGuest(email: string, password:string, text: string) {
-    this.fb.loginWithEmailAndPassword(email, password, text )
+  async navigateToMainContentAsGuest(email: string, password: string, displayName: string) {
+    try {
+      const user: User = await this.fb.createUser(
+        email,
+        password,
+        displayName
+      );
+
+      if (user) {
+        console.log('User successfully registered:', user);
+        this.fb.currentUser.update(() => user);
+        this.router.navigate(['/start/avatar']); // Navigation nach der Registrierung
+      }
+    } catch (error) {
+      // Hier kannst du eine spezifische Fehlerbehandlung vornehmen
+      console.error('Error during user registration:', error);
+    }
   }
 
   togglePasswordVisibility() {
