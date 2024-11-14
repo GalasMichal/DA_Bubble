@@ -87,7 +87,7 @@ export class FirebaseService {
       } catch (error: any) {
         if (error.code === 'auth/email-already-in-use') {
           // E-Mail bereits in Verwendung, generiere neue E-Mail
-          attemptEmail = `guest${counter++}.com`;
+          attemptEmail = `guest${counter++}@guest.com`;
         } else {
           // Fehlerbehandlung für andere Fälle
           switch (error.code) {
