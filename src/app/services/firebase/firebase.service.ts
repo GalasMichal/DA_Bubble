@@ -62,23 +62,28 @@ export class FirebaseService {
   }
 
   // Methode zum Erstellen eines neuen Benutzers
-  async createUser(email: string, password: string, displayName: string): Promise<any> {
+  async createUser(
+    email: string,
+    password: string,
+    displayName: string
+  ): Promise<any> {
     return createUserWithEmailAndPassword(this.auth, email, password)
-    
-    .then((userCredential) => {
+      .then((userCredential) => {
         const firebaseUser = userCredential.user;
-        return updateProfile(firebaseUser, {displayName: displayName }).then(() => {
-          const user: AppUser = {
-            status: true,
-            channels: [],
-            uId: firebaseUser.uid,
-            email: firebaseUser.email || '',
-            displayName: firebaseUser.displayName || '',
-          };
-          console.log('Registrierter User ist', user);
-          this.addUserToFirestore(user);
-          return user;
-        });
+        return updateProfile(firebaseUser, { displayName: displayName }).then(
+          () => {
+            const user: AppUser = {
+              status: true,
+              channels: [],
+              uId: firebaseUser.uid,
+              email: firebaseUser.email || '',
+              displayName: firebaseUser.displayName || '',
+            };
+            console.log('Registrierter User ist', user);
+            this.addUserToFirestore(user);
+            return user;
+          }
+        );
       })
       .catch((error) => {
         switch (error.code) {
@@ -108,7 +113,11 @@ export class FirebaseService {
       });
   }
 
-  async loginWithEmailAndPassword(email: string, password: string, text: string): Promise<any> {
+  async loginWithEmailAndPassword(
+    email: string,
+    password: string,
+    text: string
+  ): Promise<any> {
     try {
       const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
       if (exists) {
@@ -116,7 +125,11 @@ export class FirebaseService {
           'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
         );
       }
-      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
       let user = userCredential.user as FirebaseUser;
       console.log('user is', user);
       if (user) {
@@ -126,12 +139,12 @@ export class FirebaseService {
         await this.getUserByUid(user.uid);
         setTimeout(() => {
           this.router.navigate(['/start/main']);
-          }, 2200);
+        }, 2200);
       }
       this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
     } catch (error) {
-        this.stateControl.showError = true;
-        this.stateControl.showToast = true;
+      this.stateControl.showError = true;
+      this.stateControl.showToast = true;
       if (error === 'auth/wrong-password') {
         this.errorMessageLogin.set('Falsches Passwort.');
       } else {
@@ -272,7 +285,7 @@ export class FirebaseService {
       });
   }
 
-  confirmPassword(password: string, text:string) {
+  confirmPassword(password: string, text: string) {
     // Hole den oobCode aus der URL
     const oobCode = this.route.snapshot.queryParamMap.get('oobCode');
 
@@ -292,7 +305,7 @@ export class FirebaseService {
         this.stateControl.removeShowToast();
         setTimeout(() => {
           this.router.navigate(['start']);
-          }, 2200);
+        }, 2200);
       })
       .catch((error) => {
         this.stateControl.showToast = true;
@@ -314,26 +327,34 @@ export class FirebaseService {
       });
   }
 
-  signInAsGuest(): Promise<void> {
-  return signInAnonymously(this.auth)
-    .then((userCredential) => {
-      
-      const firebaseUser = userCredential.user;
+  signInAsGuest(text: string): Promise<void> {
+    this.stateControl.showToast = true;
+    this.stateControl.showToastText = text;
 
-      const user: AppUser = {
-        avatarUrl: 'assets/media/icons/profile-icons/profile-icon.svg',
-        status: true,
-        channels: [],
-        uId: firebaseUser.uid,
-        email: 'guest@gast.com',
-        displayName: 'Gast',
-      };
-      this.router.navigate(['/start/main']);
-      return this.addUserToFirestore(user);
-    })
-    .catch((error) => {
-      console.error('Error during anonymous sign-in:', error.code, error.message);
-      throw error;
-    });
-}
+
+    return signInAnonymously(this.auth)
+      .then((userCredential) => {
+        const firebaseUser = userCredential.user;
+
+        const user: AppUser = {
+          avatarUrl: 'assets/media/icons/profile-icons/profile-icon.svg',
+          status: true,
+          channels: [],
+          uId: firebaseUser.uid,
+          email: 'guest@gast.com',
+          displayName: 'Gast',
+        };
+        this.stateControl.removeShowToast();
+        this.router.navigate(['/start/main']);
+        return this.addUserToFirestore(user);
+      })
+      .catch((error) => {
+        console.error(
+          'Error during anonymous sign-in:',
+          error.code,
+          error.message
+        );
+        throw error;
+      });
+  }
 }

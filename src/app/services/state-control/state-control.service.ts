@@ -18,6 +18,7 @@ export class StateControlService {
     this.showToast = false
     this.showArrow = false
     this.showError = false;
+    this.showToastText = ""
     }, 2000);
   }
 
