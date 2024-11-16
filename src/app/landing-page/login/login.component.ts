@@ -88,9 +88,9 @@ export class LoginComponent {
   async navigateToMainContentAsGuest() {
     try {
       const user: User = await this.fb.createUser(
-        'guest@guest.com',
-        'Guest2024!',
-        'Guest'
+        'gast@gast.com',
+        'gast2024!',
+        'gast'
       );
 
       if (user) {
