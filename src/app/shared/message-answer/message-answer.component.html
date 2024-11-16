@@ -19,7 +19,7 @@
         </div>
 
         <div class="answer-container">
-          <div (click)="openThread()" class="answer">{{userMessage.time}}</div>
+          <div (click)="openThread(userMessage)" class="answer">{{userMessage.time}} <a class="answer">Antworten</a></div>
           @if (!hideDetails) {
             <div class="time-stamp">{{userMessage.lastAnswer}}</div>
           } @else {

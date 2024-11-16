@@ -10,6 +10,8 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { Router, RouterModule } from '@angular/router';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
+import { UserServiceService } from '../../services/user-service/user-service.service';
+import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 
 @Component({
   selector: 'app-main-content',
@@ -27,10 +29,13 @@ import { Auth } from '@angular/fire/auth';
 export class MainContentComponent {
   readonly userDialog = inject(MatDialog);
   stateServer: StateControlService = inject(StateControlService);
+  user = inject(UserServiceService);
+  chat = inject(ChatRoomService)
   isMenuOpen = true;
   public db = inject(FirebaseService);
   router = inject(Router);
   private auth = inject(Auth);
+
 
   constructor() {
     this.stateServer.isUserLoggedIn = true;

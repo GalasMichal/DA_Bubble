@@ -5,6 +5,7 @@ import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { StorageService } from '../storage/storage.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
 import { getAuth, updateEmail, updateProfile } from '@angular/fire/auth';
+import { Message } from '../../models/interfaces/message.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export class UserServiceService {
   private readonly storageService = inject(StorageService);
   messageReceiver: User | null = null;
   auth = getAuth();
+  answerChatMessage: Message | null = null;
+  selectedUserMessage: Message | null = null;
 
 
   constructor() {

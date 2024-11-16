@@ -13,6 +13,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { User } from '../../models/interfaces/user.model';
 import { ReactionCloudComponent } from '../component/reaction-cloud/reaction-cloud.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
+import { UserServiceService } from '../../services/user-service/user-service.service';
 
 @Component({
   selector: 'app-message-answer',
@@ -35,11 +36,14 @@ export class MessageAnswerComponent {
   fb = inject(FirebaseService);
   today: number = Date.now();
   state = inject(StateControlService);
+  user = inject(UserServiceService);
 
   meUser: boolean = false;
 
   @Input() hideDetails: boolean = false;
   @Input() index: number = 0;
+  @Input() selectedUserMessage: Message | null = null;
+
 
   @Input() userMessage: Message = {
     text: '',
@@ -89,23 +93,17 @@ export class MessageAnswerComponent {
   constructor() {}
 
   ngOnInit() {
+    if(this.selectedUserMessage) {
+      this.userMessage = this.selectedUserMessage
+    }
     if (this.userMessage.messageSendBy.uId === this.fb.currentUser()?.uId) {
       this.meUser = true;
     }
-    // if(this.userId) {
-    //   this.getUserFromAnswer(this.userId);
-    // }
   }
 
-  // getUserFromAnswer(userId: string) {
-  //   if (userId) {
-  //     this.user = this.chat.userList.find((user) => user.uId === userId);
-  //     console.log('User:', this.user);
-  //   }
-  // }
-
-  openThread() {
-    this.state.isThreadOpen = true;
+  openThread(userMessage: Message) {
+    this.user.selectedUserMessage = userMessage; // Nachricht speichern
+    this.state.isThreadOpen = true; // Thread öffnen
   }
 
   // Methode zum Aktualisieren der Reaktionen in Firestore
