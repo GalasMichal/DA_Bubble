@@ -86,22 +86,17 @@ export class LoginComponent {
   }
 
   async navigateToMainContentAsGuest() {
-    try {
-      const user: User = await this.fb.createUser(
-        'guest@guest.com',
-        'Guest2024!',
-        'Guest'
-      );
+    const user: User = {
+      avatarUrl: 'assets/media/icons/profile-icons/profile-icon.svg',
+      status: true,
+      channels: [],
+      uId: '',
+      email: 'gast@gast.com',
+      displayName: 'Gast',
+    };
+    this.fb.addUserToFirestore
+    this.router.navigate(['/start/main']); // Navigation nach der Registrierung
 
-      if (user) {
-        console.log('User successfully registered:', user);
-        this.fb.currentUser.update(() => user);
-        this.router.navigate(['/start/avatar']); // Navigation nach der Registrierung
-      }
-    } catch (error) {
-      // Hier kannst du eine spezifische Fehlerbehandlung vornehmen
-      console.error('Error during user registration:', error);
-    }
   }
 
   togglePasswordVisibility() {

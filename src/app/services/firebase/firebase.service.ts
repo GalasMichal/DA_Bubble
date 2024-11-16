@@ -58,64 +58,54 @@ export class FirebaseService {
     this.userService.subUserList();
   }
 
-  // Methode zum Erstellen eines neuen Benutzers
   async createUser(email: string, password: string, displayName: string): Promise<any> {
-    let attemptEmail = email;   // Anfangs-E-Mail, die ggf. angepasst wird
-    let counter = 1;
-  
-    while (true) {
-      try {
-        const userCredential = await createUserWithEmailAndPassword(this.auth, attemptEmail, password);
+    return createUserWithEmailAndPassword(this.auth, email, password)
+    
+    .then((userCredential) => {
         const firebaseUser = userCredential.user;
-  
-        // Profil des Benutzers aktualisieren
-        await updateProfile(firebaseUser, { displayName: displayName });
-        
-        // Benutzerobjekt erstellen
-        const user: AppUser = {
-          status: true,
-          channels: [],
-          uId: firebaseUser.uid,
-          email: firebaseUser.email || '',
-          displayName: firebaseUser.displayName || '',
-        };
-  
-        console.log('Registrierter User ist', user);
-        this.addUserToFirestore(user);
-        return user; // Erfolgreiche Registrierung, beende die Schleife
-  
-      } catch (error: any) {
-        if (error.code === 'auth/email-already-in-use') {
-          // E-Mail bereits in Verwendung, generiere neue E-Mail
-          attemptEmail = `guest${counter++}@guest.com`;
-        } else {
-          // Fehlerbehandlung für andere Fälle
-          switch (error.code) {
-            case 'auth/invalid-email':
-              this.errorMessageLogin.set('Die E-Mail-Adresse ist ungültig.');
-              break;
-            case 'auth/operation-not-allowed':
-              this.errorMessageLogin.set(
-                'Die Anmeldung mit E-Mail und Passwort ist nicht erlaubt.'
-              );
-              break;
-            case 'auth/weak-password':
-              this.errorMessageLogin.set(
-                'Das Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.'
-              );
-              break;
-            default:
-              this.errorMessageLogin.set('Ein unbekannter Fehler ist aufgetreten.');
-          }
-          throw error; // Fehler weitergeben, um ggf. weitere Verarbeitung zu ermöglichen
+        return updateProfile(firebaseUser, {displayName: displayName }).then(() => {
+          const user: AppUser = {
+            status: true,
+            channels: [],
+            uId: firebaseUser.uid,
+            email: firebaseUser.email || '',
+            displayName: firebaseUser.displayName || '',
+          };
+          console.log('Registrierter User ist', user);
+          this.addUserToFirestore(user);
+          return user;
+        });
+      })
+      .catch((error) => {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            this.errorMessageLogin.set(
+              'Diese E-Mail-Adresse wird bereits verwendet.'
+            );
+            break;
+          case 'auth/invalid-email':
+            this.errorMessageLogin.set('Die E-Mail-Adresse ist ungültig.');
+            break;
+          case 'auth/operation-not-allowed':
+            this.errorMessageLogin.set(
+              'Die Anmeldung mit E-Mail und Passwort ist nicht erlaubt.'
+            );
+            break;
+          case 'auth/weak-password':
+            this.errorMessageLogin.set(
+              'Das Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.'
+            );
+            break;
+          default:
+            this.errorMessageLogin.set(
+              'Ein unbekannter Fehler ist aufgetreten.'
+            ); // Standardfehlermeldung
         }
-      }
-    }
+      });
   }
   
 
   async loginWithEmailAndPassword(email: string, password: string, text: string): Promise<any> {
-    
     try {
       const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
       if (exists) {
@@ -135,8 +125,6 @@ export class FirebaseService {
           this.router.navigate(['/start/main']);
           }, 2200);
       }
-
-      console.log('User is logged in:', user);
       this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
     } catch (error) {
         this.stateControl.showError = true;
