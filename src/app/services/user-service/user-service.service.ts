@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Firestore, getDoc, updateDoc } from '@angular/fire/firestore';
 import { User as AppUser, User } from '../../models/interfaces/user.model';
 import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
@@ -18,11 +18,15 @@ export class UserServiceService {
   messageReceiver: User | null = null;
   auth = getAuth();
   answerChatMessage: Message | null = null;
-  selectedUserMessage: Message | null = null;
+  selectedUserMessage = signal<Message | null>(null);
 
 
   constructor() {
 
+  }
+
+  setThreadMessage(message: Message) {
+    this.selectedUserMessage.set(message); // Nachricht setzen
   }
 
   subUserList() {

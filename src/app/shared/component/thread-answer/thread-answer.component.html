@@ -2,7 +2,7 @@
   <header class="fontNunito">
     <div class="header-left-container">
       <h1 class="font-nunito">{{ currentChat?.channelName }}</h1>
-      <h5># Entwicklerteam </h5>
+
     </div>
     <button (click)="closeThread()" class="close-btn">
       <app-close></app-close>
@@ -10,7 +10,8 @@
 
   </header>
   <div class="thread-content">
-    <app-message-answer [selectedUserMessage]="userMessage"  [hideDetails]="true"></app-message-answer>
+    @if (this.user.selectedUserMessage() !== null) {}
+    <app-message-answer [userMessage]="this.user.selectedUserMessage()" [hideDetails]="true"></app-message-answer>
 
   </div>
   <app-message-field class="padding-25"></app-message-field>

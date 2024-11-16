@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, computed, inject, Input } from '@angular/core';
 import { MessageAnswerComponent } from '../../message-answer/message-answer.component';
 import { MessageFieldComponent } from '../message-field/message-field.component';
 
@@ -21,7 +21,7 @@ export class ThreadAnswerComponent {
   state = inject(StateControlService);
   user = inject(UserServiceService);
   chat = inject(ChatRoomService)
-  @Input() userMessage: Message | null = null;
+
   @Input() currentChat: Channel | null = null
 
 
@@ -29,7 +29,7 @@ export class ThreadAnswerComponent {
 
    }
    ngOnInit(): void {
-    
+
    }
   closeThread() {
     this.state.isThreadOpen = false;

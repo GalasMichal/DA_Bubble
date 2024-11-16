@@ -15,9 +15,9 @@
         </button> -->
 
     </div>
-    @if (stateServer.isThreadOpen && this.user.selectedUserMessage && this.chat.currentChannelData) {
+    @if (stateServer.isThreadOpen && this.user.selectedUserMessage() && this.chat.currentChannelData) {
       <div [ngClass]="stateServer.isThreadOpen ? 'thread-container' : 'd-none'" [class.animate]="stateServer.isThreadOpen">
-        <app-thread-answer  [userMessage]="this.user.selectedUserMessage" [currentChat]="this.chat.currentChannelData"></app-thread-answer>
+        <app-thread-answer  [currentChat]="this.chat.currentChannelData"></app-thread-answer>
       </div>
     }
 

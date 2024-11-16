@@ -4,7 +4,7 @@ import { TimeSeparatorComponent } from './time-separator/time-separator.componen
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { FormsModule } from '@angular/forms';
+
 import { CommonModule, DatePipe } from '@angular/common';
 import { Message } from '../../models/interfaces/message.model';
 import { doc, Timestamp, updateDoc } from 'firebase/firestore';
@@ -22,8 +22,8 @@ import { UserServiceService } from '../../services/user-service/user-service.ser
     CommonModule,
     ReactionBarComponent,
     TimeSeparatorComponent,
-    EmojiComponent,
-    PickerComponent,
+    // EmojiComponent,
+    // PickerComponent,
     DatePipe,
     ReactionCloudComponent,
   ],
@@ -42,30 +42,9 @@ export class MessageAnswerComponent {
 
   @Input() hideDetails: boolean = false;
   @Input() index: number = 0;
-  @Input() selectedUserMessage: Message | null = null;
 
-
-  @Input() userMessage: Message = {
-    text: '',
-    chatId: '',
-    timestamp: Timestamp.now(),
-    messageSendBy: {
-      uId: '',
-      email: '',
-      status: false,
-      displayName: '',
-      avatarUrl: '',
-      channels: [],
-    },
-    reactions: [],
-    threadId: '',
-    answerCount: 0,
-    lastAnswer: '',
-    editCount: 0,
-    lastEdit: '',
-    storageData: '',
-    taggedUser: [],
-  };
+  @Input() userMessage: Message | null = null;
+  
 
   emojis: { symbol: string; count: number }[] = [];
 
@@ -73,14 +52,14 @@ export class MessageAnswerComponent {
     const currentUser = this.fb.currentUser()?.displayName;
 
     // Überprüfe, ob das Emoji bereits existiert
-    const existingReaction = this.userMessage.reactions.find(
+    const existingReaction = this.userMessage?.reactions.find(
       (e) => e.symbol === emoji
     );
 
     if (existingReaction) {
       existingReaction.count++; // Erhöhe den Zähler
     } else {
-      this.userMessage.reactions.push({
+      this.userMessage?.reactions.push({
         userName: currentUser,
         symbol: emoji,
         count: 1,
@@ -93,23 +72,23 @@ export class MessageAnswerComponent {
   constructor() {}
 
   ngOnInit() {
-    if(this.selectedUserMessage) {
-      this.userMessage = this.selectedUserMessage
-    }
-    if (this.userMessage.messageSendBy.uId === this.fb.currentUser()?.uId) {
+
+    if (this.userMessage?.messageSendBy.uId === this.fb.currentUser()?.uId) {
       this.meUser = true;
     }
   }
 
   openThread(userMessage: Message) {
-    this.user.selectedUserMessage = userMessage; // Nachricht speichern
-    this.state.isThreadOpen = true; // Thread öffnen
+    this.user.setThreadMessage(userMessage); // Nachricht setzen
+    if (!this.state.isThreadOpen) {
+      this.state.isThreadOpen = true; // Thread öffnen
+    }
   }
 
   // Methode zum Aktualisieren der Reaktionen in Firestore
   async updateReactionsInFirestore() {
     const channelId = this.chat.currentChannelData.chanId;
-    const messageId = this.userMessage.threadId;
+    const messageId = this.userMessage!.threadId;
 
     const messageDocRef = doc(
       this.firestore,
@@ -120,6 +99,6 @@ export class MessageAnswerComponent {
     );
 
     // Aktualisiere die Reaktionen im Firestore-Dokument
-    await updateDoc(messageDocRef, { reactions: this.userMessage.reactions });
+    await updateDoc(messageDocRef, { reactions: this.userMessage?.reactions });
   }
 }
