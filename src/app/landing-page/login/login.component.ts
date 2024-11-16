@@ -85,23 +85,9 @@ export class LoginComponent {
     }
   }
 
-  async navigateToMainContentAsGuest() {
-    try {
-      const user: User = await this.fb.createUser(
-        'gast@gast.com',
-        'gast2024!',
-        'gast'
-      );
-
-      if (user) {
-        console.log('User successfully registered:', user);
-        this.fb.currentUser.update(() => user);
-        this.router.navigate(['/start/avatar']); // Navigation nach der Registrierung
-      }
-    } catch (error) {
-      // Hier kannst du eine spezifische Fehlerbehandlung vornehmen
-      console.error('Error during user registration:', error);
-    }
+  navigateToMainContentAsGuest() {
+    console.log('Test');
+    
   }
 
   togglePasswordVisibility() {
