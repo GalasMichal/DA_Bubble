@@ -85,9 +85,9 @@ export class LoginComponent {
     }
   }
 
-  navigateToMainContentAsGuest() {
-    console.log('Test');
-    
+  navigateToMainContentAsGuest(event: Event) {
+    event.preventDefault()
+    this.fb.signInAsGuest()
   }
 
   togglePasswordVisibility() {

@@ -34,9 +34,11 @@ import { UserServiceService } from '../user-service/user-service.service';
 import {
   confirmPasswordReset,
   sendPasswordResetEmail,
+  signInAnonymously,
   updatePassword,
 } from 'firebase/auth';
 import { StateControlService } from '../state-control/state-control.service';
+import { log } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -311,4 +313,27 @@ export class FirebaseService {
         this.stateControl.removeShowToast();
       });
   }
+
+  signInAsGuest(): Promise<void> {
+  return signInAnonymously(this.auth)
+    .then((userCredential) => {
+      
+      const firebaseUser = userCredential.user;
+
+      const user: AppUser = {
+        avatarUrl: 'assets/media/icons/profile-icons/profile-icon.svg',
+        status: true,
+        channels: [],
+        uId: firebaseUser.uid,
+        email: 'guest@gast.com',
+        displayName: 'Gast',
+      };
+      this.router.navigate(['/start/main']);
+      return this.addUserToFirestore(user);
+    })
+    .catch((error) => {
+      console.error('Error during anonymous sign-in:', error.code, error.message);
+      throw error;
+    });
+}
 }
