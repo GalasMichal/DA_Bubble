@@ -19,7 +19,7 @@
 
   <div class="list-of-user-container" [ngStyle]="{'top': top + 'px'}">
     <ul class="list-of-user-content">
-      @for(user of this.listOfAllUsers; track $index) {
+      @for(user of this.filterOnlyAvaliableUser(); track $index) {
         <li (click)="addUser($index, $event)">
             <button class="single-user">
               <div class="user-img">

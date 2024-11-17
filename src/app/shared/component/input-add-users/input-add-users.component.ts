@@ -22,7 +22,6 @@ export class InputAddUsersComponent {
 
   // Nicht fertig
   listOfAllUsers: User[] = [...this.userService.userList];
-  listOfAllChoosenUsers: User[] = [...this.chat.currentChannelData.specificPeople];
 
   top: number = 40;
 
@@ -33,13 +32,25 @@ export class InputAddUsersComponent {
   }
 
   constructor() {
+    this.showAllChoosenUsers()
+    this.addPxToList()
   }
 
+  showAllChoosenUsers() {
+    this.stateServer.choosenUser = [];
+    const listOfAllChoosenUsers= this.chat.currentChannelData.specificPeople;
+    for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+      const object = listOfAllChoosenUsers[i];
+      this.stateServer.choosenUser.push(object)
+    }
+  }
+
+
   filterOnlyAvaliableUser() {
-    const listOfAllUser = this.listOfAllUsers.map((user) => user.uId);
+    const listOfAllUserId = this.listOfAllUsers.map((user) => user.uId);
     
-    const commonUsers = this.listOfAllChoosenUsers.filter((user) =>
-      listOfAllUser.includes(user.uId)
+    const commonUsers = this.stateServer.choosenUser.filter((user) =>
+      listOfAllUserId.includes(user.uId)
     );
 
     let updatedListOfAllUsers = this.listOfAllUsers.filter(
@@ -51,31 +62,27 @@ export class InputAddUsersComponent {
 
   addUser(index: number, event: Event) {
     event.preventDefault();
-    this.filterOnlyAvaliableUser();
-    const indexListOfAllUsers = this.listOfAllUsers[index];
+    const indexListOfAllUsers = this.filterOnlyAvaliableUser()[index];
     this.stateServer.choosenUser.push(indexListOfAllUsers);
     this.activeReactiveButton();
-    this.removeUserFromListOfAllUsers(index);
+    this.filterOnlyAvaliableUser()
     this.addPxToList();
   }
 
   removeUser(index: number, event: Event) {
     event.preventDefault();
-    const indexChoosenUser = this.stateServer.choosenUser[index];
-    this.listOfAllUsers.push(indexChoosenUser);
-    this.removeUserFromChoosenUser(index);
+    this.removeUserFromChoosenUser(index)
     this.makeButtonActiveReactive();
+    this.filterOnlyAvaliableUser()
     this.removePxFromList();
   }
 
   makeButtonActiveReactive() {
     if (this.stateServer.choosenUser.length === 0) {
       this.activeReactiveButton(false);
+    } else {
+      this.activeReactiveButton(true);
     }
-  }
-
-  removeUserFromListOfAllUsers(index: number) {
-    this.listOfAllUsers.splice(index, 1);
   }
 
   removeUserFromChoosenUser(index: number) {
@@ -83,9 +90,12 @@ export class InputAddUsersComponent {
   }
 
   addPxToList() {
+    if(this.stateServer.choosenUser.length != 0) {
+    this.top = 54 + (54 * this.stateServer.choosenUser.length)
+  } else {
     this.top += 54;
   }
-
+}
   removePxFromList() {
     this.top -= 54;
   }
