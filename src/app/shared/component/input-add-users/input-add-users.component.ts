@@ -23,7 +23,6 @@ export class InputAddUsersComponent {
   // Nicht fertig
   listOfAllUsers: User[] = [...this.userService.userList];
   listOfAllChoosenUsers: User[] = [...this.chat.currentChannelData.specificPeople];
-  listOfAllChoosenCopy: User[] = this.chat.currentChannelData.specificPeople
 
   top: number = 40;
 
