@@ -1,43 +1,106 @@
 <mat-dialog-content class="profile-card">
-    <div class="profil">
-        <h1 class="title">Profil</h1>
-        <button class="close-btn" (click)="closeDialogProfile()">
-            <app-close></app-close>             
-        </button>
-    </div>
+  <div class="profil">
+    <h1 class="title">Profil</h1>
+    <button class="close-btn" (click)="closeDialogProfile()">
+      <app-close></app-close>
+    </button>
+  </div>
 
-    <div class="avatar">
-        <div class="avatar-img">
-            <app-avatar></app-avatar>
-            <button class="edit-avatar" (click)="editAvatar()">
-                <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3043 0.75 14.863 0.75C15.421 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.571 18.275 4.113C18.2917 4.65433 18.1083 5.11667 17.725 5.5L16.3 6.925ZM1 19C0.716667 19 0.479333 18.904 0.288 18.712C0.0960001 18.5207 0 18.2833 0 18V15.175C0 15.0417 0.025 14.9127 0.075 14.788C0.125 14.6627 0.2 14.55 0.3 14.45L10.6 4.15L14.85 8.4L4.55 18.7C4.45 18.8 4.33767 18.875 4.213 18.925C4.08767 18.975 3.95833 19 3.825 19H1Z" fill="#1C1B1F"/>
-                </svg>
-            </button>
-        </div>
+  <div class="avatar">
+    <div class="avatar-img">
+      <app-avatar></app-avatar>
+      <button class="edit-avatar" (click)="editAvatar()">
+        <svg
+          width="19"
+          height="19"
+          viewBox="0 0 19 19"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3043 0.75 14.863 0.75C15.421 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.571 18.275 4.113C18.2917 4.65433 18.1083 5.11667 17.725 5.5L16.3 6.925ZM1 19C0.716667 19 0.479333 18.904 0.288 18.712C0.0960001 18.5207 0 18.2833 0 18V15.175C0 15.0417 0.025 14.9127 0.075 14.788C0.125 14.6627 0.2 14.55 0.3 14.45L10.6 4.15L14.85 8.4L4.55 18.7C4.45 18.8 4.33767 18.875 4.213 18.925C4.08767 18.975 3.95833 19 3.825 19H1Z"
+            fill="#1C1B1F"
+          />
+        </svg>
+      </button>
     </div>
-    
-    <div class="name">
-        <h2>{{ this.fb.currentUser()?.displayName }}</h2>
-        <button class="edit" (click)="openDialogEdit()">Bearbeiten
-        </button>
-        <button class="edit-img" (click)="openDialogEdit()">
-            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3043 0.75 14.863 0.75C15.421 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.571 18.275 4.113C18.2917 4.65433 18.1083 5.11667 17.725 5.5L16.3 6.925ZM1 19C0.716667 19 0.479333 18.904 0.288 18.712C0.0960001 18.5207 0 18.2833 0 18V15.175C0 15.0417 0.025 14.9127 0.075 14.788C0.125 14.6627 0.2 14.55 0.3 14.45L10.6 4.15L14.85 8.4L4.55 18.7C4.45 18.8 4.33767 18.875 4.213 18.925C4.08767 18.975 3.95833 19 3.825 19H1Z" fill="#1C1B1F"/>
-            </svg>
-        </button>
-    </div>
-    
-    <div class="active">
-        <img src="./assets/media/icons/online-without-circle.svg" alt="active">
-        <span class="status">Aktive</span>
-    </div>
+  </div>
 
-    <div class="e-mail">
-        <img src="./assets/media/icons/mail.svg" alt="email" srcset="">
-        <div>
-            <span>E-Mail-Adresse</span>
-            <a href="mailto:" class="email">{{ this.fb.currentUser()?.email }}</a>
-        </div>
+  <div class="name">
+    <h2>{{ this.fb.currentUser()?.displayName }}</h2>
+    <button class="edit" (click)="openDialogEdit()">Bearbeiten</button>
+    <button class="edit-img" (click)="openDialogEdit()">
+      <svg
+        width="19"
+        height="19"
+        viewBox="0 0 19 19"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M2 17H3.4L12.025 8.375L10.625 6.975L2 15.6V17ZM16.3 6.925L12.05 2.725L13.45 1.325C13.8333 0.941667 14.3043 0.75 14.863 0.75C15.421 0.75 15.8917 0.941667 16.275 1.325L17.675 2.725C18.0583 3.10833 18.2583 3.571 18.275 4.113C18.2917 4.65433 18.1083 5.11667 17.725 5.5L16.3 6.925ZM1 19C0.716667 19 0.479333 18.904 0.288 18.712C0.0960001 18.5207 0 18.2833 0 18V15.175C0 15.0417 0.025 14.9127 0.075 14.788C0.125 14.6627 0.2 14.55 0.3 14.45L10.6 4.15L14.85 8.4L4.55 18.7C4.45 18.8 4.33767 18.875 4.213 18.925C4.08767 18.975 3.95833 19 3.825 19H1Z"
+          fill="#1C1B1F"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <div class="active">
+    <img src="./assets/media/icons/online-without-circle.svg" alt="active" />
+    <span class="status">Aktive</span>
+  </div>
+
+  <div class="e-mail">
+    <svg
+      width="30"
+      height="30"
+      viewBox="0 0 30 30"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask
+        id="mask0_74618_4707"
+        style="mask-type: alpha"
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="30"
+        height="30"
+      >
+        <rect width="30" height="30" fill="#D9D9D9" />
+      </mask>
+      <g mask="url(#mask0_74618_4707)">
+        <path
+          d="M5 25C4.3125 25 3.72417 24.7554 3.235 24.2663C2.745 23.7763 2.5 23.1875 2.5 22.5V7.5C2.5 6.8125 2.745 6.22417 3.235 5.735C3.72417 5.245 4.3125 5 5 5H25C25.6875 5 26.2763 5.245 26.7663 5.735C27.2554 6.22417 27.5 6.8125 27.5 7.5V22.5C27.5 23.1875 27.2554 23.7763 26.7663 24.2663C26.2763 24.7554 25.6875 25 25 25H5ZM25 10L15.6562 15.8438C15.5521 15.9062 15.4425 15.9529 15.3275 15.9837C15.2133 16.0154 15.1042 16.0312 15 16.0312C14.8958 16.0312 14.7867 16.0154 14.6725 15.9837C14.5575 15.9529 14.4479 15.9062 14.3438 15.8438L5 10V22.5H25V10ZM15 13.75L25 7.5H5L15 13.75ZM5 10.3125V8.46875V8.5V8.48375V10.3125Z"
+          fill="black"
+        />
+      </g>
+    </svg>
+    <div>
+      <span>E-Mail-Adresse</span>
+      <a href="mailto:" class="email">{{ this.fb.currentUser()?.email }}</a>
     </div>
+  </div>
+
+  <div class="password">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="30"
+      height="30"
+      viewBox="0 0 30 30"
+      fill="none"
+      stroke="black"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="icon icon-tabler icons-tabler-outline icon-tabler-key"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path
+        d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z"
+      />
+      <path d="M15 9h.01" />
+    </svg>
+    <button (click)="pwdRecovery()">Passwort ändern</button>
+  </div>
 </mat-dialog-content>

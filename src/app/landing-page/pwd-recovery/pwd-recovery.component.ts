@@ -15,6 +15,9 @@ import { BackComponent } from '../../shared/component/back/back.component';
 import { LogoComponent } from '../../shared/logo/logo.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { ToastComponent } from '../../shared/component/toast/toast.component';
+import { CloseComponent } from '../../shared/component/close/close.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { CreateAvatarComponent } from '../create-avatar/create-avatar.component';
 
 @Component({
   selector: 'app-pwd-recovery',
@@ -28,12 +31,15 @@ import { ToastComponent } from '../../shared/component/toast/toast.component';
     FooterComponent,
     BackComponent,
     LogoComponent,
-    ToastComponent
+    ToastComponent,
+    CloseComponent
   ],
   templateUrl: './pwd-recovery.component.html',
   styleUrl: './pwd-recovery.component.scss',
 })
 export class PwdRecoveryComponent {
+  dialog = inject(MatDialogRef<CreateAvatarComponent>, { optional: true });
+
   readonly location = inject(Location);
   fb = inject(FirebaseService);
   formBuilder = inject(FormBuilder);
@@ -55,8 +61,13 @@ export class PwdRecoveryComponent {
     this.isFormValid = true;
   }
 
-
   goBack(): void {
     this.location.back(); // Navigate to the previous page
+  }
+  closePwdRecovery(event: Event) {
+    event.preventDefault()
+    if (this.dialog) {
+      this.dialog.close();
+    }
   }
 }
