@@ -64,14 +64,14 @@ export class InputAddUsersComponent {
     event.preventDefault();
     const indexListOfAllUsers = this.filterOnlyAvaliableUser()[index];
     this.stateServer.choosenUser.push(indexListOfAllUsers);
-    this.activeReactiveButton();
+    this.makeButtonActiveReactive();
     this.filterOnlyAvaliableUser()
     this.addPxToList();
   }
 
   removeUser(index: number, event: Event) {
     event.preventDefault();
-    this.removeUserFromChoosenUser(index)
+    this.stateServer.choosenUser.splice(index, 1);
     this.makeButtonActiveReactive();
     this.filterOnlyAvaliableUser()
     this.removePxFromList();
@@ -83,10 +83,6 @@ export class InputAddUsersComponent {
     } else {
       this.activeReactiveButton(true);
     }
-  }
-
-  removeUserFromChoosenUser(index: number) {
-    this.stateServer.choosenUser.splice(index, 1);
   }
 
   addPxToList() {
