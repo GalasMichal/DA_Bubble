@@ -79,6 +79,7 @@
   }
 }
 
+
 .single-emoij {
   position: relative;
   background-color: transparent;
@@ -131,7 +132,11 @@
   transition-timing-function: ease-in-out;
   transition-duration: 175ms;
   transform: translateX(5%);
+  &:hover ~ .message-content .message-container .messages-main-chat {
+      background: $white !important;
+  }
 }
+
 
 
 .message-content-right {
