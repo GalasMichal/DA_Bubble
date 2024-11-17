@@ -27,7 +27,7 @@ export class UserServiceService {
       this.userList = [];
       list.forEach((element) => {
         const userData = element.data() as User;
-        console.log('userData List', userData);
+        // console.log('userData List', userData);
         this.userList.push(userData);
       });
     });
