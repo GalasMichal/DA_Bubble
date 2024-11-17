@@ -248,6 +248,10 @@ app-toast {
   font-size: 0.75rem;
 }
 
+.overflow-y {
+  overflow-y: hidden !important;
+}
+
 [disabled] {
   cursor: auto !important;
   background-color: $gray !important;
