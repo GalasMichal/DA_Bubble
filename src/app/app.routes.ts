@@ -24,7 +24,8 @@ export const routes: Routes = [
   { path: 'start', component: LoginComponent },
   { path: 'start/register', component: RegisterUserComponent },
   { path: 'start/avatar', component: CreateAvatarComponent },
-  { path: 'start/imprint', component: ConfirmationComponent },
+  { path: 'start/imprint', component: ImprintComponent },
+  { path: 'start/confirmation', component: ConfirmationComponent },
   { path: 'start/legal', component: LegalComponent },
   {
     path: 'start/main',
