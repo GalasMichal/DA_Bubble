@@ -10,6 +10,7 @@ import { CloseComponent } from '../component/close/close.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { CreateAvatarComponent } from '../../landing-page/create-avatar/create-avatar.component';
 import { PwdRecoveryComponent } from '../../landing-page/pwd-recovery/pwd-recovery.component';
+import { DeleteAccountComponent } from '../component/delete-account/delete-account.component';
 
 @Component({
   selector: 'app-profil',
@@ -52,7 +53,7 @@ export class ProfileComponent {
     });
   }
   deleteAccount() {
-    this.openDialog.open(PwdRecoveryComponent, {
+    this.openDialog.open(DeleteAccountComponent, {
       panelClass: 'delete-container', // Custom class for profile dialog
     });
   }
