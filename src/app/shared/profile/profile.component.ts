@@ -26,7 +26,7 @@ import { PwdRecoveryComponent } from '../../landing-page/pwd-recovery/pwd-recove
 export class ProfileComponent {
   readonly dialog = inject(MatDialogRef<ProfileComponent>);
   readonly editDialog = inject(MatDialog);
-  readonly pwdDialog = inject(MatDialog);
+  readonly openDialog = inject(MatDialog);
 
   fb = inject(FirebaseService);
 
@@ -35,24 +35,24 @@ export class ProfileComponent {
   }
 
   openDialogEdit() {
-    this.editDialog.open(EditProfileComponent, {
+    this.openDialog.open(EditProfileComponent, {
       panelClass: 'edit-profile-container', // Custom class for profile dialog
     });
   }
 
   editAvatar() {
-    this.editDialog.open(CreateAvatarComponent, {
+    this.openDialog.open(CreateAvatarComponent, {
       panelClass: 'create-profile-container', // Custom class for profile dialog
     });
   }
 
   pwdRecovery() {
-    this.pwdDialog.open(PwdRecoveryComponent, {
+    this.openDialog.open(PwdRecoveryComponent, {
       panelClass: 'pwdrecovery-container', // Custom class for profile dialog
     });
   }
   deleteAccount() {
-    this.pwdDialog.open(PwdRecoveryComponent, {
+    this.openDialog.open(PwdRecoveryComponent, {
       panelClass: 'delete-container', // Custom class for profile dialog
     });
   }
