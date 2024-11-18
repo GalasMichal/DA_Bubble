@@ -86,6 +86,9 @@ export class FirebaseService {
         );
       })
       .catch((error) => {
+        this.stateControl.showError = true;
+        this.stateControl.showToast = true;
+        this.stateControl.showToastText = 'Versuche bitte noch einmal';
         switch (error.code) {
           case 'auth/email-already-in-use':
             this.errorMessageLogin.set(
@@ -110,52 +113,55 @@ export class FirebaseService {
               'Ein unbekannter Fehler ist aufgetreten.'
             ); // Standardfehlermeldung
         }
-      });
-  }
-
-  async loginWithEmailAndPassword(
-    email: string,
-    password: string,
-    text: string
-  ): Promise<any> {
-    try {
-      const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
-      if (exists) {
-        this.errorMessageLogin.set(
-          'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
-        );
-      }
-      const userCredential = await signInWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      );
-      let user = userCredential.user as FirebaseUser;
-      console.log('user is', user);
-      if (user) {
-        this.stateControl.showToast = true;
-        this.stateControl.showToastText = text;
         this.stateControl.removeShowToast();
-        await this.getUserByUid(user.uid);
-        setTimeout(() => {
-          this.router.navigate(['/start/main']);
-        }, 2200);
+      });
+  } 
+    async loginWithEmailAndPassword(
+      email: string,
+      password: string,
+      text: string
+    ): Promise<any> {
+      try {
+        const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
+        if (exists) {
+          this.errorMessageLogin.set(
+            'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
+          );
+        }
+        const userCredential = await signInWithEmailAndPassword(
+          this.auth,
+          email,
+          password
+        );
+        let user = userCredential.user as FirebaseUser;
+        console.log('user is', user);
+        if (user) {
+          this.stateControl.showToast = true;
+          this.stateControl.showToastText = text;
+          this.stateControl.removeShowToast();
+          await this.getUserByUid(user.uid);
+          setTimeout(() => {
+            this.router.navigate(['/start/main']);
+          }, 2200);
+        }
+        this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
+      } catch (error) {
+        this.stateControl.showError = true;
+        this.stateControl.showToast = true;
+        if (error === 'auth/wrong-password') {
+          this.errorMessageLogin.set('Falsches Passwort.');
+        } else {
+          this.stateControl.showToastText = 'Versuche bitte noch einmal';
+          this.errorMessageLogin.set('E-Mail oder Passwort falsch');
+        }
+        this.stateControl.removeShowToast();
+        // Falls es einen allgemeinen Fehler gibt (bei der Benutzerabfrage oder Anmeldung)
+        console.error('Fehler beim Login:', error);
       }
-      this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
-    } catch (error) {
-      this.stateControl.showError = true;
-      this.stateControl.showToast = true;
-      if (error === 'auth/wrong-password') {
-        this.errorMessageLogin.set('Falsches Passwort.');
-      } else {
-        this.stateControl.showToastText = 'Versuche bitte noch einmal';
-        this.errorMessageLogin.set('E-Mail oder Passwort falsch');
-      }
-      this.stateControl.removeShowToast();
-      // Falls es einen allgemeinen Fehler gibt (bei der Benutzerabfrage oder Anmeldung)
-      console.error('Fehler beim Login:', error);
     }
-  }
+
+  
+
   async getUserByUid(uid: string): Promise<AppUser | null> {
     try {
       const userDocRef = doc(this.firestore, `users/${uid}`); // Referenz zum Dokument

@@ -18,9 +18,6 @@ import { ToastComponent } from '../../shared/component/toast/toast.component';
 import { CloseComponent } from '../../shared/component/close/close.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CreateAvatarComponent } from '../create-avatar/create-avatar.component';
-import { ProfileComponent } from '../../shared/profile/profile.component';
-import { HeaderComponent } from '../../shared/header/header.component';
-import { HeaderDialogComponent } from '../../shared/header-dialog/header-dialog.component';
 
 @Component({
   selector: 'app-pwd-recovery',
