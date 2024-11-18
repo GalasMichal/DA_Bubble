@@ -62,14 +62,14 @@ export class PwdRecoveryComponent {
     this.fb.sendEmailToUser(email, text);
     this.isFormValid = true;
     this.stateControl.isUserLoggedIn = false;
-    this.closePwdRecovery(event);
+    this.dialogRef.closeAll();
     this.router.navigate(['/start/confirmation']);
   }
 
   closePwdRecovery(event: Event) {
     event.preventDefault();
     if (this.dialog) {
-      this.dialogRef.closeAll();
+      this.dialog.close();
     }
   }
 }

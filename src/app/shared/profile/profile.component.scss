@@ -4,7 +4,7 @@
 .profile-card {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: $padding-dialog;
   .profil {
     display: flex;
@@ -117,22 +117,32 @@
   }
 }
 
-.password {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  button {
-    font-size: 1.125rem;
-    text-decoration: none;
-    background: none;
-    color: $primary-hover;
-    border: dotted 0.2rem transparent;
-    &:hover{
-      color: $primary;
-    }
-    &:focus {
-      outline: none;
-      border: dotted 0.2rem $e-mail;
+ul {
+  li {
+    .password,
+    .account {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      height: 2.1875rem;
+      width: 100%;
+      border-radius: $b-radius-1;
+      font-size: 1.25rem;
+      background: none;
+      border: dotted 0.2rem transparent;
+      .icon {
+        padding-top: 2px;
+      }
+      &:hover {
+        color: $primary;
+        background: $bg-color;
+        transform: scale(1.05);
+      }
+      &:focus-visible {
+        outline: none;
+        border: dotted 0.2rem $e-mail;
+      }
     }
   }
 }
