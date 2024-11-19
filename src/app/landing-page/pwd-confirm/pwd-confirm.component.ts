@@ -25,10 +25,7 @@ export class PwdConfirmComponent {
   fb = inject(FirebaseService);
   formBuilder = inject(FormBuilder);
   readonly dialogAddMembers = inject(MatDialog);
-  stateControl = inject(StateControlService)
-  router = inject(Router);
   isPasswordTopVisible:boolean = false;
-  isPasswordBottomVisible: boolean = false;
 
   resetForm: FormGroup;
 
@@ -55,9 +52,5 @@ export class PwdConfirmComponent {
 
   togglePasswordVisibilityTop() {
     this.isPasswordTopVisible = !this.isPasswordTopVisible;
-  }
-
-  togglePasswordVisibilityBottom() {
-    this.isPasswordBottomVisible = !this.isPasswordBottomVisible;
   }
 }
