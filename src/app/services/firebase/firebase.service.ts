@@ -368,6 +368,37 @@ export class FirebaseService {
   }
 
   confirmDeleteAccount() {
+    const user = this.auth.currentUser; // Hole den aktuellen Benutzer
+    console.log(user);
     
+
+    if (!user) {
+      console.error('No authenticated user or email found.');
+      return;
+    }
+
+    deleteUser(user)
+      .then(() => {
+        console.log('User deleted successfully');
+        this.router.navigate(['start']); // Navigiere nach der Löschung zur Startseite
+      })
+      .catch((error) => {
+        console.error('Error deleting user:', error.code, error.message);
+        // Fehlerbehandlung hier hinzufügen
+      });
   }
+
+  confirmDeleteAccountWithPassword() {
+
+    
+    // const credential = promptForCredential();
+    
+    // reauthenticateWithCredential(test, credential).then(() => {
+      // User re-authenticated.
+    // }).catch((error) => {
+      // An error ocurred
+      // ...
+    // });
+  }
+
 }
