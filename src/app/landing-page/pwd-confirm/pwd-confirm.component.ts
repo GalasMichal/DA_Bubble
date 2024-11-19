@@ -2,8 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { StateControlService } from '../../services/state-control/state-control.service';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { BackComponent } from '../../shared/component/back/back.component';
 import { CommonModule } from '@angular/common';
 

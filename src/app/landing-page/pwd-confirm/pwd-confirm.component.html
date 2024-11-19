@@ -17,15 +17,15 @@
 
   <form [formGroup]="resetForm" (ngSubmit)="pwdReset('Das Passwort wurde erfolgreich geändert.')">
     <div class="input-container"> 
-      <label class="visually-hidden" for="password1">Passwort</label>
-        <input name="password1" id="password1" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password1" autocomplete="on"/>
+      <label class="visually-hidden" for="password">Passwort</label>
+        <input name="password" id="password" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" autocomplete="on"/>
         <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordTopVisible, 'eye-open': isPasswordTopVisible}" (click)="togglePasswordVisibilityTop()"></i>
         <div class="input-icon">
           <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
         </div>
         <div class="warn-txt">
-        @if (resetForm.controls['password1'].invalid && (isFormValid || resetForm.controls['password1'].dirty || resetForm.controls['password1'].touched)) {
-            @if (resetForm.controls['password1'].errors?.['required']) {
+        @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
+            @if (resetForm.controls['password'].errors?.['required']) {
               <span >Password ist ein Pflichtfeld.</span>
             }
             @if (resetForm.controls['password1'].errors?.['pattern']) {
@@ -35,13 +35,6 @@
         </div>
       </div>
       
-      <div class="warn-txt">       
-        @if(resetForm.errors?.['passwordMismatch'] && (resetForm.controls['password2'].dirty || resetForm.controls['password2'].touched)) {
-          <span>
-            Passwörter stimmen nicht überein.
-          </span>  
-        }
-      </div>
 
     <div class="btn-container">
       <button class="forward-btn" [disabled]="!resetForm.valid">Passwort ändern</button>
