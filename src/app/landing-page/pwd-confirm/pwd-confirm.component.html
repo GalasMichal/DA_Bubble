@@ -28,7 +28,7 @@
             @if (resetForm.controls['password'].errors?.['required']) {
               <span >Password ist ein Pflichtfeld.</span>
             }
-            @if (resetForm.controls['password1'].errors?.['pattern']) {
+            @if (resetForm.controls['password'].errors?.['pattern']) {
               <span id="password-error">Password ist unvollständig/inkorrekt, siehe Info-box.</span>
             }
           }
