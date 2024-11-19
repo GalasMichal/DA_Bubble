@@ -44,7 +44,9 @@ export class MessageAnswerComponent {
   @Input() index: number = 0;
 
   @Input() userMessage: Message | null = null;
-  
+
+
+  isThreadOpen = this.state.isThreadOpen;
 
   emojis: { symbol: string; count: number }[] = [];
 
@@ -80,7 +82,7 @@ export class MessageAnswerComponent {
 
   openThread(userMessage: Message) {
     this.user.setThreadMessage(userMessage); // Nachricht setzen
-    if (!this.state.isThreadOpen) {
+    if (!this.isThreadOpen) {
       this.state.isThreadOpen = true; // Thread öffnen
     }
   }

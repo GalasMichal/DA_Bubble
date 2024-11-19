@@ -11,8 +11,8 @@
   </header>
   <div class="thread-content">
     @if (this.user.selectedUserMessage() !== null) {}
-    <app-message-answer [userMessage]="this.user.selectedUserMessage()" [hideDetails]="true"></app-message-answer>
+    <app-message-answer  [userMessage]="this.user.selectedUserMessage()" [hideDetails]="true"></app-message-answer>
 
   </div>
-  <app-message-field class="padding-25"></app-message-field>
+  <app-message-field [isThreadAnswerOpen]="true" class="padding-25"></app-message-field>
 </section>

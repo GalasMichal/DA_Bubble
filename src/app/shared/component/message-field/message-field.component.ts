@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { HeaderComponent } from '../../header/header.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -14,10 +14,8 @@ import { Timestamp } from '@angular/fire/firestore';
   standalone: true,
   imports: [
     FormsModule,
-    HeaderComponent,
     PickerComponent,
     CommonModule,
-    EmojiComponent,
   ],
   templateUrl: './message-field.component.html',
   styleUrl: './message-field.component.scss',
@@ -27,7 +25,8 @@ export class MessageFieldComponent {
   fb = inject(FirebaseService);
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
-
+  currentChannelId = this.chat.currentChannelData.chanId
+  @Input() isThreadAnswerOpen = false;
 
   async sendMessage() {
 
@@ -35,7 +34,7 @@ export class MessageFieldComponent {
     if(currentUser){
       const newMessage: Message = {
         text: this.textArea,
-        chatId: this.chat.currentChannelData.chanId,
+        chatId: this.currentChannelId,
         timestamp: Timestamp.now(),
         messageSendBy: currentUser, // Hier den aktuellen Benutzer dynamisch setzen
         reactions: [],
@@ -48,9 +47,14 @@ export class MessageFieldComponent {
         taggedUser: [],
       };
       if(this.textArea !== "") {
-        const messageDocRef = await this.chat.addMessageToChannel(newMessage);
-        await this.chat.updateMessageThreadId(messageDocRef);
-        this.textArea = ''; // Leere das Eingabefeld nach dem Senden
+        if(this.isThreadAnswerOpen) {
+
+        }else {
+          const messageDocRef = await this.chat.addMessageToChannel(newMessage);
+          await this.chat.updateMessageThreadId(messageDocRef);
+          // Leere das Eingabefeld nach dem Senden
+        }
+        this.textArea = ''; 
       }
     }
   }

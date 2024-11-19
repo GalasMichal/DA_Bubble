@@ -56,6 +56,18 @@ export class ChatRoomService {
     await updateDoc(messageDocRef, { threadId: messageId });
   }
 
+  addAnswerToMessage(messageId: string, answer: Message) {
+    const channelId = this.currentChannelData.chanId;
+    const messageCollectionRef = collection(
+      this.firestore,
+      'channels',
+      channelId,
+      'messages',
+      messageId,
+      'answers'
+    );
+    addDoc(messageCollectionRef, answer);
+  }
 
 
   subChannelList() {

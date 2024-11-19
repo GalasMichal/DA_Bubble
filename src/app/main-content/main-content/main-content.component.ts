@@ -44,7 +44,9 @@ export class MainContentComponent {
   ngOnInit(): void {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        this.db.getUserByUid(user.uid); // Laden des Benutzers
+        this.db.getUserByUid(user.uid);
+          
+         // Laden des Benutzers
       } else {
         this.router.navigate(['']);
       }
