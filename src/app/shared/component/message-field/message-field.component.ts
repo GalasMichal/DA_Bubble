@@ -8,6 +8,7 @@ import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Message } from '../../../models/interfaces/message.model';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { Timestamp } from '@angular/fire/firestore';
+import { UserServiceService } from '../../../services/user-service/user-service.service';
 
 @Component({
   selector: 'app-message-field',
@@ -23,9 +24,11 @@ import { Timestamp } from '@angular/fire/firestore';
 export class MessageFieldComponent {
   chat = inject(ChatRoomService);
   fb = inject(FirebaseService);
+  user = inject(UserServiceService);
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
-  currentChannelId = this.chat.currentChannelData.chanId
+
+
   @Input() isThreadAnswerOpen = false;
 
   async sendMessage() {
@@ -34,7 +37,7 @@ export class MessageFieldComponent {
     if(currentUser){
       const newMessage: Message = {
         text: this.textArea,
-        chatId: this.currentChannelId,
+        chatId: this.chat.currentChannelData.chanId,
         timestamp: Timestamp.now(),
         messageSendBy: currentUser, // Hier den aktuellen Benutzer dynamisch setzen
         reactions: [],
@@ -48,13 +51,16 @@ export class MessageFieldComponent {
       };
       if(this.textArea !== "") {
         if(this.isThreadAnswerOpen) {
-
+          const selectedMessage = this.user.selectedUserMessage();
+          if(selectedMessage) {
+              this.chat.addAnswerToMessage(selectedMessage.threadId, newMessage);
+          }
         }else {
           const messageDocRef = await this.chat.addMessageToChannel(newMessage);
           await this.chat.updateMessageThreadId(messageDocRef);
           // Leere das Eingabefeld nach dem Senden
         }
-        this.textArea = ''; 
+        this.textArea = '';
       }
     }
   }

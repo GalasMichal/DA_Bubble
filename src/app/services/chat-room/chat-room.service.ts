@@ -67,6 +67,7 @@ export class ChatRoomService {
       'answers'
     );
     addDoc(messageCollectionRef, answer);
+    console.log('Answer verschickt', answer);
   }
 
 
