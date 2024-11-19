@@ -33,6 +33,9 @@ import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
 import {
   confirmPasswordReset,
+  deleteUser,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInAnonymously,
   updatePassword,
@@ -362,5 +365,9 @@ export class FirebaseService {
         );
         throw error;
       });
+  }
+
+  confirmDeleteAccount() {
+    
   }
 }

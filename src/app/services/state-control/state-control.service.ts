@@ -12,6 +12,7 @@ export class StateControlService {
   choosenUser: User[] = [];
   isUserLoggedIn: boolean = false;
   showError: boolean = false
+  deleteAccountConfirm: boolean = false
 
   removeShowToast() {
     setTimeout(() => {

@@ -11,13 +11,13 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { CreateAvatarComponent } from '../../landing-page/create-avatar/create-avatar.component';
 import { PwdRecoveryComponent } from '../../landing-page/pwd-recovery/pwd-recovery.component';
 import { DeleteAccountComponent } from '../component/delete-account/delete-account.component';
+import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-profil',
   standalone: true,
   imports: [
     MatDialogContent,
-    EditProfileComponent,
     AvatarComponent,
     CloseComponent,
   ],
@@ -28,9 +28,8 @@ export class ProfileComponent {
   readonly dialog = inject(MatDialogRef<ProfileComponent>);
   readonly editDialog = inject(MatDialog);
   readonly openDialog = inject(MatDialog);
-
   fb = inject(FirebaseService);
-
+  
   closeDialogProfile() {
     this.dialog.close();
   }
@@ -52,9 +51,11 @@ export class ProfileComponent {
       panelClass: 'pwdrecovery-container', // Custom class for profile dialog
     });
   }
+
   deleteAccount() {
     this.openDialog.open(DeleteAccountComponent, {
       panelClass: 'delete-container', // Custom class for profile dialog
     });
+
   }
 }
