@@ -7,7 +7,7 @@
       <app-back></app-back>
     </a>
 
-    <h1 class="form-title-name">Passwort zurücksetzen</h1>
+    <h1 class="form-title-name">Konto löschen</h1>
 
       <button class="info-container" >
         <img id="info-icon" class="pulse info-icon"
@@ -15,10 +15,10 @@
       </button>
   </div>
 
-  <form [formGroup]="resetForm" (ngSubmit)="pwdReset('Das Passwort wurde erfolgreich geändert.')">
+  <form [formGroup]="resetForm" (ngSubmit)="confirmPasswort('Das Passwort wurde erfolgreich geändert.')">
     <div class="input-container"> 
       <label class="visually-hidden" for="password">Passwort</label>
-        <input name="password" id="password" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Neues Passwort" formControlName="password" autocomplete="on"/>
+        <input name="password" id="password" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Dein Passwort" formControlName="password" autocomplete="on"/>
         <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordTopVisible, 'eye-open': isPasswordTopVisible}" (click)="togglePasswordVisibilityTop()"></i>
         <div class="input-icon">
           <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
@@ -37,7 +37,7 @@
       
 
     <div class="btn-container">
-      <button class="forward-btn" [disabled]="!resetForm.valid">Passwort ändern</button>
+      <button class="forward-btn" [disabled]="!resetForm.valid">Bestätigen</button>
     </div>
   </form>
 </section>

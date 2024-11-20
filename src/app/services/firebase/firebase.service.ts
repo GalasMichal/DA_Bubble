@@ -118,52 +118,50 @@ export class FirebaseService {
         }
         this.stateControl.removeShowToast();
       });
-  } 
-    async loginWithEmailAndPassword(
-      email: string,
-      password: string,
-      text: string
-    ): Promise<any> {
-      try {
-        const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
-        if (exists) {
-          this.errorMessageLogin.set(
-            'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
-          );
-        }
-        const userCredential = await signInWithEmailAndPassword(
-          this.auth,
-          email,
-          password
+  }
+  async loginWithEmailAndPassword(
+    email: string,
+    password: string,
+    text: string
+  ): Promise<any> {
+    try {
+      const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
+      if (exists) {
+        this.errorMessageLogin.set(
+          'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
         );
-        let user = userCredential.user as FirebaseUser;
-        console.log('user is', user);
-        if (user) {
-          this.stateControl.showToast = true;
-          this.stateControl.showToastText = text;
-          this.stateControl.removeShowToast();
-          await this.getUserByUid(user.uid);
-          setTimeout(() => {
-            this.router.navigate(['/start/main']);
-          }, 2200);
-        }
-        this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
-      } catch (error) {
-        this.stateControl.showError = true;
-        this.stateControl.showToast = true;
-        if (error === 'auth/wrong-password') {
-          this.errorMessageLogin.set('Falsches Passwort.');
-        } else {
-          this.stateControl.showToastText = 'Versuche bitte noch einmal';
-          this.errorMessageLogin.set('E-Mail oder Passwort falsch');
-        }
-        this.stateControl.removeShowToast();
-        // Falls es einen allgemeinen Fehler gibt (bei der Benutzerabfrage oder Anmeldung)
-        console.error('Fehler beim Login:', error);
       }
+      const userCredential = await signInWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
+      let user = userCredential.user as FirebaseUser;
+      console.log('user is', user);
+      if (user) {
+        this.stateControl.showToast = true;
+        this.stateControl.showToastText = text;
+        this.stateControl.removeShowToast();
+        await this.getUserByUid(user.uid);
+        setTimeout(() => {
+          this.router.navigate(['/start/main']);
+        }, 2200);
+      }
+      this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
+    } catch (error) {
+      this.stateControl.showError = true;
+      this.stateControl.showToast = true;
+      if (error === 'auth/wrong-password') {
+        this.errorMessageLogin.set('Falsches Passwort.');
+      } else {
+        this.stateControl.showToastText = 'Versuche bitte noch einmal';
+        this.errorMessageLogin.set('E-Mail oder Passwort falsch');
+      }
+      this.stateControl.removeShowToast();
+      // Falls es einen allgemeinen Fehler gibt (bei der Benutzerabfrage oder Anmeldung)
+      console.error('Fehler beim Login:', error);
     }
-
-  
+  }
 
   async getUserByUid(uid: string): Promise<AppUser | null> {
     try {
@@ -340,7 +338,6 @@ export class FirebaseService {
     this.stateControl.showToast = true;
     this.stateControl.showToastText = text;
 
-
     return signInAnonymously(this.auth)
       .then((userCredential) => {
         const firebaseUser = userCredential.user;
@@ -367,20 +364,11 @@ export class FirebaseService {
       });
   }
 
-  confirmDeleteAccount() {
-    const user = this.auth.currentUser; // Hole den aktuellen Benutzer
-    console.log(user);
-    
-
-    if (!user) {
-      console.error('No authenticated user or email found.');
-      return;
-    }
-
+  confirmDeleteAccount(user: any) {
     deleteUser(user)
       .then(() => {
         console.log('User deleted successfully');
-        this.router.navigate(['start']); // Navigiere nach der Löschung zur Startseite
+        this.router.navigate(['start/confirmation']); // Navigiere nach der Löschung zur Startseite
       })
       .catch((error) => {
         console.error('Error deleting user:', error.code, error.message);
@@ -388,17 +376,23 @@ export class FirebaseService {
       });
   }
 
-  confirmDeleteAccountWithPassword() {
+  confirmDeleteAccountWithPassword(password: string) {
+    const user = this.auth.currentUser;
 
-    
-    // const credential = promptForCredential();
-    
-    // reauthenticateWithCredential(test, credential).then(() => {
-      // User re-authenticated.
-    // }).catch((error) => {
-      // An error ocurred
-      // ...
-    // });
+    if (!user || !user.email) {
+      console.error('No authenticated user found.');
+      return;
+    }
+
+    const credential = EmailAuthProvider.credential(user.email, password);
+
+    reauthenticateWithCredential(user, credential)
+      .then(() => {
+        this.confirmDeleteAccount(user);
+      })
+      .catch((error) => {
+        // An error ocurred
+        // ...
+      });
   }
-
 }

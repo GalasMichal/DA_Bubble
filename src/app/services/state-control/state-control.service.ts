@@ -9,10 +9,11 @@ export class StateControlService {
   showToast: boolean = false;
   showArrow: boolean = false;
   showToastText: string = '';
+  showConfirmationText: string = '';
   choosenUser: User[] = [];
   isUserLoggedIn: boolean = false;
   showError: boolean = false
-  deleteAccountConfirm: boolean = false
+  saveGlobaPassword: string = ''
 
   removeShowToast() {
     setTimeout(() => {
