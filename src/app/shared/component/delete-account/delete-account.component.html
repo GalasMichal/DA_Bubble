@@ -1,20 +1,43 @@
 <section class="main-content">
-  <button class="close-btn" (click)="closeDelete()">
-    <app-close></app-close>
-  </button>
 
-  <div class="content">
-    <h1 class="title-name">Konto löschen</h1>
+    
+    <div class="form-title ">
 
-    <p class="description">
-      Bist du es dir sicher, dass du dein Kont löschen möchtest?
-    </p>
+    <a class="arrow-back" routerLink="/start">
+      <app-back></app-back>
+    </a>
+
+    <h1 class="form-title-name">Konto löschen</h1>
+
+      <button class="info-container" >
+        <img id="info-icon" class="pulse info-icon"
+        src="/assets/media/icons/info_symbol-icon.png" alt="info icon">
+      </button>
+  </div>
+
+  <form [formGroup]="resetForm" (ngSubmit)="confirmPasswort('Das Passwort wurde erfolgreich geändert.')">
+    <div class="input-container"> 
+      <label class="visually-hidden" for="password">Passwort</label>
+        <input name="password" id="password" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Dein Passwort" formControlName="password" autocomplete="on"/>
+        <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordTopVisible, 'eye-open': isPasswordTopVisible}" (click)="togglePasswordVisibilityTop()"></i>
+        <div class="input-icon">
+          <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
+        </div>
+        <div class="warn-txt">
+        @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
+            @if (resetForm.controls['password'].errors?.['required']) {
+              <span >Password ist ein Pflichtfeld.</span>
+            }
+            @if (resetForm.controls['password'].errors?.['pattern']) {
+              <span id="password-error">Password ist unvollständig/inkorrekt, siehe Info-box.</span>
+            }
+          }
+        </div>
+      </div>
+      
 
     <div class="btn-container">
-      <button class="login-btn" (click)="confirmDeleteAccount()">
-        Löschen
-      </button>
-      <a class="guest-btn" (click)="closeDelete()">Zurück</a>
+      <button class="forward-btn" [disabled]="!resetForm.valid">Bestätigen</button>
     </div>
-  </div>
+  </form>
 </section>

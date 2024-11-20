@@ -270,7 +270,8 @@ export class FirebaseService {
         this.stateControl.showArrow = true;
         this.stateControl.showToast = true;
         this.stateControl.showToastText = text;
-        this.stateControl.showConfirmationText = 'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.'
+        this.stateControl.showConfirmationText =
+          'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
         this.stateControl.removeShowToast();
       })
       .catch((error) => {
@@ -310,7 +311,8 @@ export class FirebaseService {
       .then(() => {
         this.stateControl.showToast = true;
         this.stateControl.showToastText = text;
-        this.stateControl.showConfirmationText = 'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.'
+        this.stateControl.showConfirmationText =
+          'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
         this.stateControl.removeShowToast();
         setTimeout(() => {
           this.router.navigate(['start']);
@@ -370,7 +372,8 @@ export class FirebaseService {
     deleteUser(user)
       .then(() => {
         console.log('User deleted successfully');
-        this.stateControl.showConfirmationText = 'Dein Konto wurde erfolgreich gelöscht.'
+        this.stateControl.showConfirmationText =
+          'Dein Konto wurde erfolgreich gelöscht.';
         this.router.navigate(['start/confirmation']); // Navigiere nach der Löschung zur Startseite
       })
       .catch((error) => {
@@ -379,7 +382,7 @@ export class FirebaseService {
       });
   }
 
-  confirmDeleteAccountWithPassword(password: string) {
+  confirmDeleteAccountWithPassword() {
     const user = this.auth.currentUser;
 
     if (!user || !user.email) {
@@ -387,11 +390,12 @@ export class FirebaseService {
       return;
     }
 
-    const credential = EmailAuthProvider.credential(user.email, password);
+   // TODO(you): prompt the user to re-provide their sign-in credentials
+    const credential = promptForCredentials();
 
     reauthenticateWithCredential(user, credential)
       .then(() => {
-        this.confirmDeleteAccount(user);
+        this.confirmDeleteAccount(user)
       })
       .catch((error) => {
         // An error ocurred

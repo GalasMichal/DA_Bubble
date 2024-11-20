@@ -10,9 +10,7 @@ import { CloseComponent } from '../component/close/close.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { CreateAvatarComponent } from '../../landing-page/create-avatar/create-avatar.component';
 import { PwdRecoveryComponent } from '../../landing-page/pwd-recovery/pwd-recovery.component';
-import { DeleteAccountComponent } from '../component/delete-account/delete-account.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
-import { ConfirmDeleteComponent } from '../component/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-profil',

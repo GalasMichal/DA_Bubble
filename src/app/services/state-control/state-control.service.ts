@@ -13,7 +13,6 @@ export class StateControlService {
   choosenUser: User[] = [];
   isUserLoggedIn: boolean = false;
   showError: boolean = false
-  saveGlobaPassword: string = ''
 
   removeShowToast() {
     setTimeout(() => {
