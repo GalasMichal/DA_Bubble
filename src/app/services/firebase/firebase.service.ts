@@ -32,6 +32,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
 import {
+  AuthCredential,
   confirmPasswordReset,
   deleteUser,
   EmailAuthProvider,
@@ -42,6 +43,9 @@ import {
 } from 'firebase/auth';
 import { StateControlService } from '../state-control/state-control.service';
 import { log } from 'console';
+import { DeleteAccountComponent } from '../../shared/component/delete-account/delete-account.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteAccountComponent } from '../../shared/component/confirm-delete-account/confirm-delete-account.component';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +60,7 @@ export class FirebaseService {
   stateControl = inject(StateControlService);
   public currentUser = signal<AppUser | null>(null);
   public errorMessageLogin = signal('');
+  dialog = inject(MatDialog);
 
   constructor(private route: ActivatedRoute) {}
 
@@ -369,37 +374,83 @@ export class FirebaseService {
   }
 
   confirmDeleteAccount(user: any) {
-    deleteUser(user)
-      .then(() => {
-        console.log('User deleted successfully');
-        this.stateControl.showConfirmationText =
+
+    const confirmDialogRef = this.dialog.open(ConfirmDeleteAccountComponent, {
+      panelClass: 'confirm-delete-container',
+    });
+    
+    confirmDialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+
+        deleteUser(user)
+        .then(() => {
+          console.log('User deleted successfully');
+          this.stateControl.showConfirmationText =
           'Dein Konto wurde erfolgreich gelöscht.';
-        this.router.navigate(['start/confirmation']); // Navigiere nach der Löschung zur Startseite
-      })
-      .catch((error) => {
-        console.error('Error deleting user:', error.code, error.message);
-        // Fehlerbehandlung hier hinzufügen
-      });
+          this.router.navigate(['start/confirmation']); // Navigiere nach der Löschung zur Startseite
+        })
+        .catch((error) => {
+          console.error('Error deleting user:', error.code, error.message);
+          // Fehlerbehandlung hier hinzufügen
+        });
+      } else {
+       confirmDialogRef.close(result)
+
+      }
+    })
   }
 
   confirmDeleteAccountWithPassword() {
     const user = this.auth.currentUser;
-
-    if (!user || !user.email) {
-      console.error('No authenticated user found.');
+    if (!user) {
+      console.error('Kein authentifizierter Benutzer gefunden.');
       return;
     }
-
-   // TODO(you): prompt the user to re-provide their sign-in credentials
-    const credential = promptForCredentials();
-
-    reauthenticateWithCredential(user, credential)
+  
+    this.promptForCredentials()
+      .then((credential) => {
+        return reauthenticateWithCredential(user, credential);
+      })
       .then(() => {
-        this.confirmDeleteAccount(user)
+        console.log('Reauthentication erfolgreich.');
+        return this.confirmDeleteAccount(user);
       })
       .catch((error) => {
-        // An error ocurred
-        // ...
+        console.error('Fehler während der Reauthentication:', error);
+        if (error.message === 'Passwortabfrage abgebrochen.') {
+          alert('Die Passwortabfrage wurde abgebrochen.');
+        } else if (error.code === 'auth/wrong-password') {
+          alert('Das eingegebene Passwort ist falsch.');
+        } else {
+          alert('Ein Fehler ist aufgetreten.');
+        }
       });
+  }
+
+  promptForCredentials(): Promise<AuthCredential> {
+    return new Promise((resolve, reject) => {
+      // Dialog öffnen
+      const dialogRef = this.dialog.open(DeleteAccountComponent, {
+        panelClass: 'delete-container',
+      });
+  
+      // Warte auf die Rückgabe des Passworts
+      dialogRef.afterClosed().subscribe((password: string | null) => {
+        if (password) {
+          const user = this.auth.currentUser;
+  
+          if (!user || !user.email) {
+            reject(new Error('Kein authentifizierter Benutzer gefunden.'));
+            return;
+          }
+  
+          // Erstelle Firebase-Credential mit E-Mail und Passwort
+          const credential = EmailAuthProvider.credential(user.email, password);
+          resolve(credential);
+        } else {
+          reject(new Error('Passwortabfrage abgebrochen.'));
+        }
+      });
+    });
   }
 }

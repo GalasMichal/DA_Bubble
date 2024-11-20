@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule } from '@angular/router';
 import { BackComponent } from '../back/back.component';
@@ -24,17 +24,14 @@ import { BackComponent } from '../back/back.component';
 export class DeleteAccountComponent {
   fb = inject(FirebaseService);
   stateControl = inject(StateControlService)
-
   formBuilder = inject(FormBuilder);
-  readonly dialogAddMembers = inject(MatDialog);
   isPasswordTopVisible:boolean = false;
-  readonly dialogDeleteAccount = inject(MatDialog);
 
   resetForm: FormGroup;
 
   isFormValid: boolean = false;
 
-  constructor() {
+  constructor(public dialogRef: MatDialogRef<DeleteAccountComponent>) {
     this.resetForm = new FormGroup(
       {
         password: new FormControl('', [
@@ -50,16 +47,11 @@ export class DeleteAccountComponent {
   confirmPasswort(text: string) {
     const password = this.resetForm.get('password')?.value 
     this.isFormValid = true;
-    this.deleteAccountConfirmPopUp()
+    this.dialogRef.close(password)
   }
 
   togglePasswordVisibilityTop() {
     this.isPasswordTopVisible = !this.isPasswordTopVisible;
   }
 
-  deleteAccountConfirmPopUp() {
-    this.dialogDeleteAccount.open(DeleteAccountComponent, {
-      panelClass: 'confirm-delete-container', // Custom class for profile dialog
-    });
-  }
 }

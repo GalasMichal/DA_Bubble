@@ -11,6 +11,7 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { CreateAvatarComponent } from '../../landing-page/create-avatar/create-avatar.component';
 import { PwdRecoveryComponent } from '../../landing-page/pwd-recovery/pwd-recovery.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
+import { DeleteAccountComponent } from '../component/delete-account/delete-account.component';
 
 @Component({
   selector: 'app-profil',
@@ -51,9 +52,9 @@ export class ProfileComponent {
   }
 
   deleteAccount() {
-    this.openDialog.open(ConfirmDeleteComponent, {
-      panelClass: 'confirm-delete-container', // Custom class for profile dialog
-    });
-
+    // this.openDialog.open(DeleteAccountComponent, {
+    //   panelClass: 'delete-container', // Custom class for profile dialog
+    // });
+    this.fb.confirmDeleteAccountWithPassword()
   }
 }
