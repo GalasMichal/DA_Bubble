@@ -60,7 +60,6 @@ export class LoginComponent {
   async createNewUserWithGoogle() {
     await this.fb.createGoogleUser();
     this.fb.loadAllBackendData();
-    this.stateControl.isUserLoggedIn = true;
   }
 
   async loginWithEmailAndPassword(text: string) {
