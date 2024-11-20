@@ -270,6 +270,7 @@ export class FirebaseService {
         this.stateControl.showArrow = true;
         this.stateControl.showToast = true;
         this.stateControl.showToastText = text;
+        this.stateControl.showConfirmationText = 'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.'
         this.stateControl.removeShowToast();
       })
       .catch((error) => {
