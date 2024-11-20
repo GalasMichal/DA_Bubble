@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BackComponent } from '../../shared/component/back/back.component';
 import { RouterLink } from '@angular/router';
+import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-confirmation',
@@ -10,5 +11,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './confirmation.component.scss'
 })
 export class ConfirmationComponent {
+
+  stateControl = inject(StateControlService)
 
 }

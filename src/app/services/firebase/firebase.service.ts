@@ -309,6 +309,7 @@ export class FirebaseService {
       .then(() => {
         this.stateControl.showToast = true;
         this.stateControl.showToastText = text;
+        this.stateControl.showConfirmationText = 'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.'
         this.stateControl.removeShowToast();
         setTimeout(() => {
           this.router.navigate(['start']);
@@ -368,6 +369,7 @@ export class FirebaseService {
     deleteUser(user)
       .then(() => {
         console.log('User deleted successfully');
+        this.stateControl.showConfirmationText = 'Dein Konto wurde erfolgreich gelöscht.'
         this.router.navigate(['start/confirmation']); // Navigiere nach der Löschung zur Startseite
       })
       .catch((error) => {
