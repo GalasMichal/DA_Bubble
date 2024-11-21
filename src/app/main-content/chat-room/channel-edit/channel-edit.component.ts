@@ -1,6 +1,6 @@
 import { Component, inject, Input, input } from '@angular/core';
 import { CloseComponent } from '../../../shared/component/close/close.component';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Channel } from '../../../models/interfaces/channel.model';
@@ -9,6 +9,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { ToastComponent } from '../../../shared/component/toast/toast.component';
+import { ConfirmDeleteChannelComponent } from '../confirm-delete-channel/confirm-delete-channel.component';
 
 @Component({
   selector: 'app-channel-edit',
@@ -19,6 +20,8 @@ import { ToastComponent } from '../../../shared/component/toast/toast.component'
 })
 export class ChannelEditComponent {
   readonly dialog = inject(MatDialogRef<ChannelEditComponent>);
+  dialogConfirm = inject(MatDialog);
+
   channelEditTitel: boolean = false;
   channelEditDescription: boolean = false;
   chat = inject(ChatRoomService);
@@ -69,10 +72,17 @@ export class ChannelEditComponent {
   }
 
   deleteChannel(chanId: string) {
-    "Tylko przejsciowo"
-    if (window.confirm('Bist du dir sicher?')) {
-      deleteDoc(doc(this.firestore, "channels", chanId));
-    }
+    const confirmDialogRef = this.dialogConfirm.open(ConfirmDeleteChannelComponent, {
+      panelClass: 'confirm-delete-container',
+    });
+
+    confirmDialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        deleteDoc(doc(this.firestore, "channels", chanId));
+      } else {
+        confirmDialogRef.close()
+      }
+    })
   }
   
 }
