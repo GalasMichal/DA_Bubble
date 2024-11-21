@@ -73,12 +73,13 @@ export class ChannelEditComponent {
 
   deleteChannel(chanId: string) {
     const confirmDialogRef = this.dialogConfirm.open(ConfirmDeleteChannelComponent, {
-      panelClass: 'confirm-delete-container',
+      panelClass: 'confirm-delete-channel',
     });
 
     confirmDialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         deleteDoc(doc(this.firestore, "channels", chanId));
+        this.dialogConfirm.closeAll()
       } else {
         confirmDialogRef.close()
       }

@@ -90,17 +90,15 @@
   }
   
   ::ng-deep
-    .confirm-delete-container
+    .confirm-delete-channel
     .mat-mdc-dialog-container
     .mdc-dialog__container
     .mat-mdc-dialog-surface {
-    border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
+    border-radius: $b-radius-1;
     position: absolute;
     max-width: 37.875rem;
     width: 100%;
     max-height: 20rem;
-    top: 6.25rem;
-    right: 2.5rem;
   
     .main-content {
       position: relative;
