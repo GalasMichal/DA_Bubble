@@ -383,8 +383,8 @@ export class FirebaseService {
         deleteUser(user)
           .then(() => {
             console.log('User deleted successfully');
-            this.stateControl.showConfirmationText =
-              'Dein Konto wurde erfolgreich gelöscht.';
+            this.stateControl.showConfirmationText = 'Dein Konto wurde erfolgreich gelöscht.';
+            this.stateControl.isUserLoggedIn = false;
             this.router.navigate(['start/confirmation']); // Navigiere nach der Löschung zur Startseite
           })
           .catch((error) => {
@@ -397,32 +397,18 @@ export class FirebaseService {
     });
   }
 
-  confirmDeleteAccountWithPassword() {
+  async confirmDeleteAccountWithPassword() {
     const user = this.auth.currentUser;
-    if (!user) {
-      console.error('Kein authentifizierter Benutzer gefunden.');
-      return;
+
+    try {
+      await this.promptForCredentials();
+      return this.confirmDeleteAccount(user)
+    } catch (error) {
+      // this.handleError(error)
     }
 
-    this.promptForCredentials()
-      .then((credential) => {
-        return reauthenticateWithCredential(user, credential);
-      })
-      .then(() => {
-        console.log('Reauthentication erfolgreich.');
-        return this.confirmDeleteAccount(user);
-      })
-      .catch((error) => {
-        console.error('Fehler während der Reauthentication:', error);
-        if (error.message === 'Passwortabfrage abgebrochen.') {
-          alert('Die Passwortabfrage wurde abgebrochen.');
-        } else if (error.code === 'auth/wrong-password') {
-          alert('Das eingegebene Passwort ist falsch.');
-        } else {
-          alert('Ein Fehler ist aufgetreten.');
-        }
-      });
   }
+
 
   async promptForCredentials() {
     const dialogRef = this.dialog.open(DeleteAccountComponent, {
