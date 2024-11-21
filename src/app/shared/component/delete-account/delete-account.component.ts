@@ -27,25 +27,22 @@ export class DeleteAccountComponent {
   formBuilder = inject(FormBuilder);
   isPasswordTopVisible:boolean = false;
 
-  resetForm: FormGroup;
+  deleteForm: FormGroup;
 
   isFormValid: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<DeleteAccountComponent>) {
-    this.resetForm = new FormGroup(
+    this.deleteForm = new FormGroup(
       {
         password: new FormControl('', [
           Validators.required,
-          Validators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-8])(?=.*[@$!%+-/*?&])[A-Za-z0-9@$!%+-/*?&]+$'
-          ),
         ]),
       },
     );
   }
   
   confirmPasswort(text: string) {
-    const password = this.resetForm.get('password')?.value 
+    const password = this.deleteForm.get('password')?.value 
     this.isFormValid = true;
     this.dialogRef.close(password)
   }

@@ -15,7 +15,7 @@
       </button>
   </div>
 
-  <form [formGroup]="resetForm" (ngSubmit)="confirmPasswort('Das Passwort wurde erfolgreich geändert.')">
+  <form [formGroup]="deleteForm" (ngSubmit)="confirmPasswort('Das Passwort wurde erfolgreich geändert.')">
     <div class="input-container"> 
       <label class="visually-hidden" for="password">Passwort</label>
         <input name="password" id="password" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Dein Passwort" formControlName="password" autocomplete="on"/>
@@ -24,11 +24,11 @@
           <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
         </div>
         <div class="warn-txt">
-        @if (resetForm.controls['password'].invalid && (isFormValid || resetForm.controls['password'].dirty || resetForm.controls['password'].touched)) {
-            @if (resetForm.controls['password'].errors?.['required']) {
+        @if (deleteForm.controls['password'].invalid && (isFormValid || deleteForm.controls['password'].dirty || deleteForm.controls['password'].touched)) {
+            @if (deleteForm.controls['password'].errors?.['required']) {
               <span >Password ist ein Pflichtfeld.</span>
             }
-            @if (resetForm.controls['password'].errors?.['pattern']) {
+            @if (deleteForm.controls['password'].errors?.['pattern']) {
               <span id="password-error">Password ist unvollständig/inkorrekt, siehe Info-box.</span>
             }
           }
@@ -37,7 +37,7 @@
       
 
     <div class="btn-container">
-      <button class="forward-btn" [disabled]="!resetForm.valid">Bestätigen</button>
+      <button class="forward-btn" [disabled]="!deleteForm.valid">Bestätigen</button>
     </div>
   </form>
 </section>
