@@ -49,7 +49,6 @@ export class DeleteAccountComponent {
   
   closeDeleteAccount() {
     this.dialogRef.close()
-
   }
 
   togglePasswordVisibilityTop() {

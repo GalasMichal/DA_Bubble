@@ -46,6 +46,7 @@ import { log } from 'console';
 import { DeleteAccountComponent } from '../../shared/component/delete-account/delete-account.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteAccountComponent } from '../../shared/component/confirm-delete-account/confirm-delete-account.component';
+import { deleteDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -374,6 +375,7 @@ export class FirebaseService {
   }
 
   confirmDeleteAccount(user: any) {
+    const userId = user.uid
     const confirmDialogRef = this.dialog.open(ConfirmDeleteAccountComponent, {
       panelClass: 'confirm-delete-container',
     });
@@ -382,6 +384,7 @@ export class FirebaseService {
       if (result) {
         deleteUser(user)
           .then(() => {
+            deleteDoc(doc(this.firestore, "users", userId));
             console.log('User deleted successfully');
             this.stateControl.showConfirmationText = 'Dein Konto wurde erfolgreich gelöscht.';
             this.stateControl.isUserLoggedIn = false;
