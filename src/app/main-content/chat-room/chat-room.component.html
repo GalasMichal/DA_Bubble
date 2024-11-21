@@ -87,7 +87,9 @@
 
 
         <h1>Willkommen in eurem privaten Channel!</h1>
-        
+        @for(channel of this.chat.currentChannelData.specificPeople; track $index) {
+            <div>{{channel.displayName}}</div>
+        }
         <p>
           Das ist der Anfang eurer Diskussion. Bitte bemüht euch, stets freundlich und respektvoll miteinander zu sprechen. Versucht, Probleme zunächst gemeinsam im Team zu lösen. Diese Fähigkeit wird euch in eurer zukünftigen beruflichen Laufbahn erhebliche Vorteile bringen. Falls ihr gemeinsam keine Lösung finden solltet, stehen euch unsere DABubble-Team jederzeit gerne zur Verfügung.
         </p>
