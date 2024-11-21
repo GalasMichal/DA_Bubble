@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule } from '@angular/router';
 import { BackComponent } from '../back/back.component';
+import { CloseComponent } from "../close/close.component";
 
 @Component({
   selector: 'app-delete-account',
@@ -13,11 +14,10 @@ import { BackComponent } from '../back/back.component';
   imports: [
     CommonModule,
     RouterModule,
-    RouterLink,
     FormsModule,
     ReactiveFormsModule,
-    BackComponent
-  ],
+    CloseComponent
+],
   templateUrl: './delete-account.component.html',
   styleUrl: './delete-account.component.scss'
 })
@@ -45,6 +45,11 @@ export class DeleteAccountComponent {
     const password = this.deleteForm.get('password')?.value 
     this.isFormValid = true;
     this.dialogRef.close(password)
+  }
+  
+  closeDeleteAccount() {
+    this.dialogRef.close()
+
   }
 
   togglePasswordVisibilityTop() {

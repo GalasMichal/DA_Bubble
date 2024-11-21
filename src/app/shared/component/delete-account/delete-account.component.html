@@ -1,19 +1,11 @@
 <section class="main-content">
 
+  <a class="close-btn"(click)="closeDeleteAccount()">
+    <app-close></app-close>
+  </a>
     
-    <div class="form-title ">
+  <h1 class="form-title-name">Konto löschen</h1>
 
-    <a class="arrow-back" routerLink="/start">
-      <app-back></app-back>
-    </a>
-
-    <h1 class="form-title-name">Konto löschen</h1>
-
-      <button class="info-container" >
-        <img id="info-icon" class="pulse info-icon"
-        src="/assets/media/icons/info_symbol-icon.png" alt="info icon">
-      </button>
-  </div>
 
   <form [formGroup]="deleteForm" (ngSubmit)="confirmPasswort('Das Passwort wurde erfolgreich geändert.')">
     <div class="input-container"> 
