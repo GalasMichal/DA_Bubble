@@ -28,9 +28,6 @@
             @if (deleteForm.controls['password'].errors?.['required']) {
               <span >Password ist ein Pflichtfeld.</span>
             }
-            @if (deleteForm.controls['password'].errors?.['pattern']) {
-              <span id="password-error">Password ist unvollständig/inkorrekt, siehe Info-box.</span>
-            }
           }
         </div>
       </div>
