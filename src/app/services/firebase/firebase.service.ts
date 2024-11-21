@@ -404,9 +404,27 @@ export class FirebaseService {
       await this.promptForCredentials();
       return this.confirmDeleteAccount(user)
     } catch (error) {
-      // this.handleError(error)
+      this.handleError(error)
     }
 
+  }
+
+  handleError(error: any) {
+    if (!error) {
+      alert('Ein unbekannter Fehler ist aufgetreten.');
+      return;
+    }
+    if (error.message === 'Passwortabfrage abgebrochen.') {
+      alert('Die Passwortabfrage wurde abgebrochen.');
+    } else if (error.code === 'auth/wrong-password') {
+      alert('Das eingegebene Passwort ist falsch.');
+    } else if (error.code === 'auth/user-not-found') {
+      alert('Der Benutzer konnte nicht gefunden werden.');
+    } else if (error.code === 'auth/requires-recent-login') {
+      alert('Ihre Anmeldung ist zu lange her. Bitte melden Sie sich erneut an, um fortzufahren.');
+    } else {
+      alert('Ein unerwarteter Fehler ist aufgetreten.');
+    }
   }
 
 
