@@ -385,15 +385,13 @@ export class FirebaseService {
             console.log('User deleted successfully');
             this.stateControl.showConfirmationText = 'Dein Konto wurde erfolgreich gelöscht.';
             this.stateControl.isUserLoggedIn = false;
-            this.router.navigate(['start/confirmation']); // Navigiere nach der Löschung zur Startseite
+            this.router.navigate(['start/confirmation']); 
           })
           .catch((error) => {
-            console.error('Error deleting user:', error.code, error.message);
-            // Fehlerbehandlung hier hinzufügen
+            this.handleError(error)
           });
-      } else {
-        confirmDialogRef.close(result);
       }
+        this.dialog.closeAll();
     });
   }
 
