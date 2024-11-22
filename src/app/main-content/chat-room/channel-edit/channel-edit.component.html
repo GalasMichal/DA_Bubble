@@ -11,7 +11,7 @@
       <div class="channel-name-container" [ngClass]="{'d-none': channelEditTitel}">
         <div class="edit-name-container">
           <h3>Channel-Name</h3>
-          <button (click)="editChannelTittle()" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Bearbeiten</button>
+          <button (click)="editChannelTittle()" class="edit" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Bearbeiten</button>
         </div>
         <p><span style="font-weight: bold;">#  </span>{{chat.currentChannelData.channelName}}</p>
       </div>
@@ -33,7 +33,7 @@
       <div class="channel-info-container" [ngClass]="{'d-none': channelEditDescription}">
         <div class="edit-name-container">
           <h3>Beschreibung</h3>
-          <button (click)="editChannelDescription()" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Bearbeiten</button>
+          <button (click)="editChannelDescription()" class="edit" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Bearbeiten</button>
         </div>
         
         <p>
@@ -74,7 +74,7 @@
         <button class="channel-btn" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId" routerLink="main" (click)="deleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
       <!-- } -->
       <button class="channel-btn" routerLink="main">Channel verlassen</button>
-      <button class="change-btn" routerLink="main" (click)="updateChannel(chat.currentChannelData.chanId, 'Änderungen wurden gespeichert')">Änderungen speichern</button>
+      <button class="change-btn" routerLink="main" (click)="updateChannel(chat.currentChannelData.chanId, 'Änderungen wurden gespeichert')" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Änderungen speichern</button>
     </div>
     <app-toast [ngClass]="{ 'show-success': stateControl.showToast }"></app-toast>
     

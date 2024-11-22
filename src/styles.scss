@@ -38,7 +38,8 @@ app-main-content {
   flex: 1;
 }
 
-app-chat-room, app-direct-message {
+app-chat-room,
+app-direct-message {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -252,10 +253,12 @@ app-toast {
   overflow-y: hidden !important;
 }
 
-[disabled] {
+
+:disabled {
   cursor: auto !important;
   background-color: $gray !important;
   border: solid 0.0625rem $gray !important;
+  color: $white !important;
 }
 
 .input-focus:focus {

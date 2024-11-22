@@ -87,7 +87,7 @@
     align-items: baseline;
     width: 100%;
     height: fit-content;
-    button {
+    .edit {
       font-size: 1.125rem;
       font-weight: 600;
       line-height: 1.5344rem;
@@ -102,7 +102,7 @@
         outline: none;
       }
       &:disabled {
-        color: gray;
+        color: gray !important;
         background: none !important;
         border: none !important;
       }
