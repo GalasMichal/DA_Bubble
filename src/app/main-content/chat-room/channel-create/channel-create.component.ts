@@ -99,7 +99,7 @@ export class ChannelCreateComponent {
       allMembers: formValues.member,
       specificPeople: this.stateServer.choosenUser,
       createdAt: new Date().toISOString(),
-      createdBy: this.fb.currentUser()?.displayName,
+      createdBy: this.fb.currentUser()!
     };
     this.createChannel(event, newChannel);
   }
