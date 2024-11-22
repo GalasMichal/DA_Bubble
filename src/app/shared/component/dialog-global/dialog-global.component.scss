@@ -1,0 +1,114 @@
+@import "./../../../../colors.scss";
+@import "./../../../../fonts.scss";
+@import "./../../../../styles.scss";
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .close-btn {
+      align-self: flex-end;
+      width: fit-content;
+      text-decoration: none;
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 40px;
+      gap: 1rem;
+      .title-name {
+        color: $primary;
+        font-size: 1.875rem;
+        font-weight: 700;
+        line-height: normal;
+        text-align: center;
+      }
+    }
+    .description {
+      text-align: center;
+    }
+  
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 1.875rem;
+      margin-bottom: 1.875rem;
+      width: 100%;
+  
+      .login-btn,
+      .guest-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        max-width: 10.375rem;
+        width: 100%;
+        font-weight: 700;
+        font-size: 1.125rem;
+        gap: 10px;
+        padding: 12px 25px;
+        border-radius: $b-radius-2;
+        color: $white;
+      }
+      .e-mail-button {
+        width: fit-content;
+        margin-left: auto;
+      }
+      .login-btn {
+        background-color: $primary;
+        transition: all 175ms ease-in-out;
+        &:hover {
+          background-color: $primary-hover;
+        }
+        &:focus {
+          background-color: $primary-hover;
+          outline: $primary-hover;
+        }
+      }
+      .guest-btn {
+        border: 1px solid $primary;
+        color: $primary;
+        background-color: $white;
+        transition: all 175ms ease-in-out;
+        &:hover {
+          background-color: $primary-hover;
+          color: $white;
+          border: solid 1px $primary-hover;
+        }
+        &:focus {
+          background-color: $primary-hover;
+          color: $white;
+          border: solid 1px $primary-hover;
+          outline: $secondary;
+        }
+      }
+    }
+  }
+  
+  ::ng-deep
+    .dialog-global-container
+    .mat-mdc-dialog-container
+    .mdc-dialog__container
+    .mat-mdc-dialog-surface {
+    border-radius: $b-radius-1;
+    position: absolute;
+    max-width: 37.875rem;
+    width: 100%;
+    max-height: 20rem;
+  
+    .main-content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      max-height: 46rem;
+      background-color: $white;
+      border-radius: $b-radius-3;
+      padding: 40px;
+      margin: 10px;
+      gap: 1rem;
+    }
+  }

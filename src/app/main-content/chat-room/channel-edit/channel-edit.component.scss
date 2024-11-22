@@ -101,10 +101,10 @@
         color: $primary;
         outline: none;
       }
-      &:disabled {
-        color: gray !important;
-        background: none !important;
-        border: none !important;
+      &.disabled {
+        color: gray;
+        background: none;
+        border: none;
       }
     }
   }

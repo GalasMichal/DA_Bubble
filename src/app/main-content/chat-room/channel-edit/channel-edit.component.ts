@@ -11,6 +11,7 @@ import { StateControlService } from '../../../services/state-control/state-contr
 import { ToastComponent } from '../../../shared/component/toast/toast.component';
 import { ConfirmDeleteChannelComponent } from '../confirm-delete-channel/confirm-delete-channel.component';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
+import { DialogGlobalComponent } from '../../../shared/component/dialog-global/dialog-global.component';
 
 @Component({
   selector: 'app-channel-edit',
@@ -23,6 +24,7 @@ export class ChannelEditComponent {
   readonly dialog = inject(MatDialogRef<ChannelEditComponent>);
   dialogConfirm = inject(MatDialog);
 
+
   channelEditTitel: boolean = false;
   channelEditDescription: boolean = false;
   chat = inject(ChatRoomService);
@@ -34,10 +36,48 @@ export class ChannelEditComponent {
   currentDescription = this.chat.currentChannelData.channelDescription
   newTitle: string = ""
   newDescription: string = ""
+  counter: number = 0;
 
 
   closeChannelEdit() {
     this.dialog.close();
+  }
+
+  onEditTittle() {
+    const isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId;
+    this.counter++;
+
+    if (isDisabled) {
+      if(this.counter > 3) {
+        this.showDialog();
+        this.counter = 0;
+      }
+    } else {
+      // Perform the normal action
+      this.editChannelTittle();
+    }
+  }
+
+  onEditDescription() {
+    const isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId;
+    this.counter++;
+
+    if (isDisabled) {
+      if(this.counter > 3) {
+        this.showDialog();
+        this.counter = 0;
+      }
+    } else {
+      // Perform the normal action
+      this.editChannelDescription();
+    }
+  }
+  
+  
+  showDialog() {
+    this.dialogConfirm.open(DialogGlobalComponent, {
+      panelClass: 'dialog-global-container',
+    });
   }
 
   editChannelTittle() {

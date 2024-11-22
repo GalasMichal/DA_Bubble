@@ -11,8 +11,8 @@
       <div class="channel-name-container" [ngClass]="{'d-none': channelEditTitel}">
         <div class="edit-name-container">
           <h3>Channel-Name</h3>
-          <button (click)="editChannelTittle()" class="edit" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Bearbeiten</button>
-        </div>
+            <button (click)="onEditTittle()" class="edit"  [class.disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Bearbeiten</button>
+          </div>
         <p><span style="font-weight: bold;">#  </span>{{chat.currentChannelData.channelName}}</p>
       </div>
 
@@ -20,7 +20,7 @@
       <div class="input-container" [ngClass]="{'d-none': !channelEditTitel}">
         <div class="edit-name-container">
           <label for="channel-name">Channel-Name</label>
-          <button (click)="saveChannelTittle()">Speichern</button>
+          <button (click)="saveChannelTittle()" class="edit">Speichern</button>
         </div>
         <input type="text" #channelName class="input-field-hash-icon" placeholder="z.B. Kooperationsprojekte" name="channelName" [(ngModel)]="chat.currentChannelData.channelName" autocomplete="off"/>
       </div>
@@ -33,7 +33,7 @@
       <div class="channel-info-container" [ngClass]="{'d-none': channelEditDescription}">
         <div class="edit-name-container">
           <h3>Beschreibung</h3>
-          <button (click)="editChannelDescription()" class="edit" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Bearbeiten</button>
+          <button (click)="onEditDescription()" class="edit" [class.disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Bearbeiten</button>
         </div>
         
         <p>
@@ -53,7 +53,7 @@
       <div class="input-container" [ngClass]="{'d-none': !channelEditDescription}">
         <div class="edit-info-container">
           <label for="description">Speichern</label>
-          <button (click)="saveChannelDescription()">Speichern</button>
+          <button (click)="saveChannelDescription()" class="edit">Speichern</button>
         </div>
         <input #description type="text"
           placeholder="Dein Text hier" name="description" [(ngModel)]="chat.currentChannelData.channelDescription" autocomplete="off"/>
