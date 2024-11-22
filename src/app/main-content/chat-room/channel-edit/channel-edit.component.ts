@@ -37,6 +37,7 @@ export class ChannelEditComponent {
   newTitle: string = ""
   newDescription: string = ""
   counter: number = 0;
+  isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId
 
 
   closeChannelEdit() {
@@ -44,10 +45,9 @@ export class ChannelEditComponent {
   }
 
   onEditTittle() {
-    const isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId;
     this.counter++;
 
-    if (isDisabled) {
+    if (this.isDisabled) {
       if(this.counter > 3) {
         this.showDialog();
         this.counter = 0;
@@ -59,10 +59,9 @@ export class ChannelEditComponent {
   }
 
   onEditDescription() {
-    const isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId;
     this.counter++;
 
-    if (isDisabled) {
+    if (this.isDisabled) {
       if(this.counter > 3) {
         this.showDialog();
         this.counter = 0;

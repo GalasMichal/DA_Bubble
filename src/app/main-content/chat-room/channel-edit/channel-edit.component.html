@@ -11,7 +11,7 @@
       <div class="channel-name-container" [ngClass]="{'d-none': channelEditTitel}">
         <div class="edit-name-container">
           <h3>Channel-Name</h3>
-            <button (click)="onEditTittle()" class="edit"  [class.disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Bearbeiten</button>
+            <button (click)="onEditTittle()" class="edit"  [class.disabled]="isDisabled">Bearbeiten</button>
           </div>
         <p><span style="font-weight: bold;">#  </span>{{chat.currentChannelData.channelName}}</p>
       </div>
@@ -33,7 +33,7 @@
       <div class="channel-info-container" [ngClass]="{'d-none': channelEditDescription}">
         <div class="edit-name-container">
           <h3>Beschreibung</h3>
-          <button (click)="onEditDescription()" class="edit" [class.disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Bearbeiten</button>
+          <button (click)="onEditDescription()" class="edit" [class.disabled]="isDisabled">Bearbeiten</button>
         </div>
         
         <p>
@@ -71,7 +71,7 @@
   
     <div class="btn-container">
       <!-- @if(chat.currentChannelData.createdBy === ) { -->
-        <button class="channel-btn" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId" routerLink="main" (click)="deleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
+        <button class="channel-btn" [disabled]="isDisabled" routerLink="main" (click)="deleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
       <!-- } -->
       <button class="channel-btn" routerLink="main">Channel verlassen</button>
       <button class="change-btn" routerLink="main" (click)="updateChannel(chat.currentChannelData.chanId, 'Änderungen wurden gespeichert')" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Änderungen speichern</button>
