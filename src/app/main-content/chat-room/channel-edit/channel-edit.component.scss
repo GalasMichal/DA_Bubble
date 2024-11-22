@@ -99,8 +99,12 @@
       &:hover,
       &:focus {
         color: $primary;
-        font-weight: 700;
         outline: none;
+      }
+      &:disabled {
+        color: gray;
+        background: none !important;
+        border: none !important;
       }
     }
   }
