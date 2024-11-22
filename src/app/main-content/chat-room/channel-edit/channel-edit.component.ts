@@ -10,6 +10,7 @@ import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { ToastComponent } from '../../../shared/component/toast/toast.component';
 import { ConfirmDeleteChannelComponent } from '../confirm-delete-channel/confirm-delete-channel.component';
+import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 @Component({
   selector: 'app-channel-edit',
@@ -27,6 +28,7 @@ export class ChannelEditComponent {
   chat = inject(ChatRoomService);
   firestore = inject(Firestore)
   stateControl = inject(StateControlService)
+  fb = inject(FirebaseService);
 
   currentTitle = this.chat.currentChannelData.channelName
   currentDescription = this.chat.currentChannelData.channelDescription

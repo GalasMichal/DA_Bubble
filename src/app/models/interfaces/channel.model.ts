@@ -7,5 +7,5 @@ export interface Channel {
   allMembers: string
   specificPeople: User[];
   createdAt: string;
-  createdBy: User
+  createdBy: User[]
 }

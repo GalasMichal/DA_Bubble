@@ -88,9 +88,10 @@
 
         <h1>Willkommen in eurem privaten Channel!</h1>
         <div class="added-user-container">
-
-          @for(channel of this.chat.currentChannelData.specificPeople; track $index) {
-            <button class="added-user"><span>&commat;</span>{{channel.displayName}}</button>
+          @if (this.chat.currentChannelData.specificPeople.length !== 0) {
+            @for(channel of this.chat.currentChannelData.specificPeople; track $index) {
+              <button class="added-user"><span>&commat;</span>{{channel.displayName}}</button>
+            }
           }
         </div>
         <p>

@@ -15,7 +15,8 @@
         </div>
         <p><span style="font-weight: bold;">#  </span>{{chat.currentChannelData.channelName}}</p>
       </div>
-      
+
+      <!-- EDIT -->
       <div class="input-container" [ngClass]="{'d-none': !channelEditTitel}">
         <div class="edit-name-container">
           <label for="channel-name">Channel-Name</label>
@@ -43,11 +44,12 @@
         
         <div class="creat-user">
           <h3>Erstellt von</h3>
-          <div class="user-link">{{ chat.currentChannelData.createdBy }}</div>
+          <div class="user-link">{{ chat.currentChannelData.createdBy[0].displayName }}</div>
         </div>
       </div>
       <!-- Beschreibung END-->
-  
+      
+      <!-- EDIT -->
       <div class="input-container" [ngClass]="{'d-none': !channelEditDescription}">
         <div class="edit-info-container">
           <label for="description">Speichern</label>
@@ -60,7 +62,7 @@
   
           <div class="creat-user">
             <h3>Erstellt von</h3>
-            <div class="user-link">{{ chat.currentChannelData.createdBy }}</div>
+            <div class="user-link">{{ chat.currentChannelData.createdBy[0].displayName }}</div>
           </div>
         
       </div>
@@ -69,7 +71,7 @@
   
     <div class="btn-container">
       <!-- @if(chat.currentChannelData.createdBy === ) { -->
-        <button class="channel-btn" routerLink="main" (click)="deleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
+        <button class="channel-btn" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId" routerLink="main" (click)="deleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
       <!-- } -->
       <button class="channel-btn" routerLink="main">Channel verlassen</button>
       <button class="change-btn" routerLink="main" (click)="updateChannel(chat.currentChannelData.chanId, 'Änderungen wurden gespeichert')">Änderungen speichern</button>
