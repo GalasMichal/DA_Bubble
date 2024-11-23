@@ -3,15 +3,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { AvatarComponent } from '../avatar/avatar.component';
 
+
 @Component({
-  selector: 'app-user-profile',
+  selector: 'app-profile-single-user',
   standalone: true,
   imports: [MatDialogContent, AvatarComponent],
-  templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.scss',
+  templateUrl: './profile-single-user.component.html',
+  styleUrl: './profile-single-user.component.scss'
 })
-export class UserProfileComponent {
-  readonly dialog = inject(MatDialogRef<UserProfileComponent>);
+export class ProfileSingleUserComponent {
+  readonly dialog = inject(MatDialogRef<ProfileSingleUserComponent>);
 
   closeUserProfile() {
     this.dialog.close();

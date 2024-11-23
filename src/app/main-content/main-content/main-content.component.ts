@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
-import { MatDialog } from '@angular/material/dialog';
-import { UserProfileComponent } from '../../shared/user-profile/user-profile.component';
 import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-side-left.component';
 import { ThreadAnswerComponent } from '../../shared/component/thread-answer/thread-answer.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -25,7 +23,6 @@ import { Auth } from '@angular/fire/auth';
   styleUrl: './main-content.component.scss',
 })
 export class MainContentComponent {
-  readonly userDialog = inject(MatDialog);
   stateServer: StateControlService = inject(StateControlService);
   isMenuOpen = true;
   public db = inject(FirebaseService);
@@ -46,9 +43,4 @@ export class MainContentComponent {
     });
   }
 
-  openUserProfile() {
-    this.userDialog.open(UserProfileComponent, {
-      panelClass: 'user-profile-container',
-    });
-  }
 }

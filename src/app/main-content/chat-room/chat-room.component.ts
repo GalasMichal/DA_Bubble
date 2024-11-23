@@ -14,6 +14,7 @@ import { StateControlService } from '../../services/state-control/state-control.
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { AvatarComponent } from '../../shared/avatar/avatar.component';
 import { log } from 'console';
+import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -38,6 +39,7 @@ export class ChatRoomComponent {
     'assets/media/icons/profile-icons/user-4-steffen.svg',
   ];
   dialog = inject(MatDialog);
+  readonly userDialog = inject(MatDialog);
   channelData: Channel | null = null;
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
@@ -86,5 +88,11 @@ export class ChatRoomComponent {
 
   showId(id: object) {
     console.log('ThreatID:', id);
+  }
+
+  openProfileUserSingle() {
+    this.userDialog.open(ProfileSingleUserComponent, {
+      panelClass: 'profile-single-user-container',
+    });
   }
 }
