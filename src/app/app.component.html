@@ -8,6 +8,11 @@
         <router-outlet> </router-outlet>
       </div>
       <app-toast [ngClass]="{ 'show-success': stateControl.showToast, 'show-error': stateControl.showError}"></app-toast>
+    
+      <div class="new-user-link-responsive">
+        <p>Neu bei DABubble?</p>
+        <button routerLink='/start/register'>Konto erstellen</button>
+      </div>
     </div>
     <app-footer></app-footer>
   </div>
