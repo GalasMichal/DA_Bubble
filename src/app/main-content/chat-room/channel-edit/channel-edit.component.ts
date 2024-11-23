@@ -12,6 +12,7 @@ import { ToastComponent } from '../../../shared/component/toast/toast.component'
 import { ConfirmDeleteChannelComponent } from '../confirm-delete-channel/confirm-delete-channel.component';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../../shared/component/dialog-global/dialog-global.component';
+import { setTimeout } from 'node:timers';
 
 @Component({
   selector: 'app-channel-edit',
@@ -43,15 +44,18 @@ export class ChannelEditComponent {
   closeChannelEdit() {
     this.dialog.close();
   }
+  onCounter() {
+    if(this.counter >= 2) {
+      this.showDialog();
+      this.counter = 0;
+    }
+  }
 
   onEditTittle() {
     this.counter++;
 
     if (this.isDisabled) {
-      if(this.counter > 3) {
-        this.showDialog();
-        this.counter = 0;
-      }
+      this.onCounter()
     } else {
       // Perform the normal action
       this.editChannelTittle();
@@ -62,10 +66,7 @@ export class ChannelEditComponent {
     this.counter++;
 
     if (this.isDisabled) {
-      if(this.counter > 3) {
-        this.showDialog();
-        this.counter = 0;
-      }
+      this.onCounter()
     } else {
       // Perform the normal action
       this.editChannelDescription();
@@ -96,6 +97,17 @@ export class ChannelEditComponent {
     this.channelEditDescription = !this.channelEditDescription;
     this.newDescription = this.chat.currentChannelData.channelDescription
   }
+
+  onUpdateChannel(chanId: string, text:string) {
+    this.counter++;
+
+    if (this.isDisabled) {
+      this.onCounter()
+    } else {
+      // Perform the normal action
+      this.updateChannel(chanId, text);
+    }
+  }
   
   updateChannel(chanId: string, text:string) {
 
@@ -110,6 +122,20 @@ export class ChannelEditComponent {
     this.stateControl.showToastText = text
 
     this.stateControl.removeShowToast();
+    setTimeout(() => {
+      this.dialog.close()
+    }, 2200);
+  }
+
+  onDeleteChannel(chanId: string) {
+    this.counter++;
+
+    if (this.isDisabled) {
+      this.onCounter()
+    } else {
+      // Perform the normal action
+      this.deleteChannel(chanId);
+    }
   }
 
   deleteChannel(chanId: string) {

@@ -70,11 +70,11 @@
     </div>  
   
     <div class="btn-container">
-      <!-- @if(chat.currentChannelData.createdBy === ) { -->
-        <button class="channel-btn" [disabled]="isDisabled" routerLink="main" (click)="deleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
-      <!-- } -->
-      <button class="channel-btn" routerLink="main">Channel verlassen</button>
-      <button class="change-btn" routerLink="main" (click)="updateChannel(chat.currentChannelData.chanId, 'Änderungen wurden gespeichert')" [disabled]="chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId">Änderungen speichern</button>
+
+      <button class="channel-btn" [class.disabled]="isDisabled" (click)="onDeleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
+
+      <button class="channel-btn" >Channel verlassen</button>
+      <button class="change-btn" [class.disabled]="isDisabled" (click)="onUpdateChannel(chat.currentChannelData.chanId, 'Änderungen wurden gespeichert')">Änderungen speichern</button>
     </div>
     <app-toast [ngClass]="{ 'show-success': stateControl.showToast }"></app-toast>
     
