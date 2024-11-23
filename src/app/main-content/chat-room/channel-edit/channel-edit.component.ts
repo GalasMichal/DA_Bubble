@@ -12,7 +12,6 @@ import { ToastComponent } from '../../../shared/component/toast/toast.component'
 import { ConfirmDeleteChannelComponent } from '../confirm-delete-channel/confirm-delete-channel.component';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../../shared/component/dialog-global/dialog-global.component';
-import { setTimeout } from 'node:timers';
 
 @Component({
   selector: 'app-channel-edit',
