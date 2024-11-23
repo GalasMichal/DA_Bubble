@@ -5,6 +5,7 @@ import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { StorageService } from '../storage/storage.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
 import { getAuth, updateEmail, updateProfile } from '@angular/fire/auth';
+import { tick } from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class UserServiceService {
   private readonly storageService = inject(StorageService);
   messageReceiver: User | null = null;
   auth = getAuth();
+  profileSingleUser!: User
 
 
   constructor() {
@@ -90,4 +92,12 @@ export class UserServiceService {
     }
   }
 
+  async showProfileUserSingle(userId: string) {
+    this.profileSingleUser = null as unknown as User;
+    const userDocRef = doc(this.getUsers(), userId);
+    const docSnap = await getDoc(userDocRef);
+    if (docSnap.exists()) {
+    this.profileSingleUser = docSnap.data() as User;
+    }
+  }
 }

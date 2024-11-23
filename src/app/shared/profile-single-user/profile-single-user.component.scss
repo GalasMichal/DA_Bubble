@@ -69,13 +69,16 @@
     }
   }
 
-  .active {
+  .status {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 1rem;
-    span {
+    .online {
       color: $active;
+    }
+    .offline {
+      color: $gray;
     }
   }
 
