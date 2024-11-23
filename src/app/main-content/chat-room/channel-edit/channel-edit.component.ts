@@ -56,7 +56,6 @@ export class ChannelEditComponent {
     if (this.isDisabled) {
       this.onCounter()
     } else {
-      // Perform the normal action
       this.editChannelTittle();
     }
   }
@@ -67,7 +66,6 @@ export class ChannelEditComponent {
     if (this.isDisabled) {
       this.onCounter()
     } else {
-      // Perform the normal action
       this.editChannelDescription();
     }
   }
@@ -103,7 +101,6 @@ export class ChannelEditComponent {
     if (this.isDisabled) {
       this.onCounter()
     } else {
-      // Perform the normal action
       this.updateChannel(chanId, text);
     }
   }
@@ -132,7 +129,6 @@ export class ChannelEditComponent {
     if (this.isDisabled) {
       this.onCounter()
     } else {
-      // Perform the normal action
       this.deleteChannel(chanId);
     }
   }
