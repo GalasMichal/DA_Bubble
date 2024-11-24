@@ -6,6 +6,8 @@ import { StorageService } from '../storage/storage.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
 import { getAuth, updateEmail, updateProfile } from '@angular/fire/auth';
 import { Message } from '../../models/interfaces/message.model';
+import { tick } from '@angular/core/testing';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,8 @@ export class UserServiceService {
   auth = getAuth();
   answerChatMessage: Message | null = null;
   selectedUserMessage = signal<Message | null>(null);
+  profileSingleUser!: User
+
 
 
   constructor() {
@@ -34,7 +38,7 @@ export class UserServiceService {
       this.userList = [];
       list.forEach((element) => {
         const userData = element.data() as User;
-        console.log('userData List', userData);
+        // console.log('userData List', userData);
         this.userList.push(userData);
       });
     });
@@ -97,4 +101,12 @@ export class UserServiceService {
     }
   }
 
+  async showProfileUserSingle(userId: string) {
+    this.profileSingleUser = null as unknown as User;
+    const userDocRef = doc(this.getUsers(), userId);
+    const docSnap = await getDoc(userDocRef);
+    if (docSnap.exists()) {
+    this.profileSingleUser = docSnap.data() as User;
+    }
+  }
 }

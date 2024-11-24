@@ -17,13 +17,11 @@ import { log } from 'console';
 })
 export class InputAddUsersComponent {
   userService = inject(UserServiceService);
-  stateServer = inject(StateControlService)
-  chat = inject(ChatRoomService)
+  stateServer = inject(StateControlService);
+  chat = inject(ChatRoomService);
 
   // Nicht fertig
-  listOfAllUsers: User[] = [];
-  listOfAllUsersChoosen: User[] = [];
-
+  listOfAllUsers: User[] = [...this.userService.userList];
 
   top: number = 40;
 
@@ -34,69 +32,66 @@ export class InputAddUsersComponent {
   }
 
   constructor() {
-    this.loadListOfAllUsers();
-    this.loadListOfAllChoosenUsers()
+    this.showAllChoosenUsers()
+    this.addPxToList()
   }
 
-  // nicht fetrig
-  loadListOfAllUsers() {
-    const listOfUsers = this.userService.userList;
-    console.log(listOfUsers);
-
-    for (let i = 0; i < listOfUsers.length; i++) {
-      const object = listOfUsers[i];
-      this.listOfAllUsers.push(object);
+  showAllChoosenUsers() {
+    this.stateServer.choosenUser = [];
+    const listOfAllChoosenUsers= this.chat.currentChannelData.specificPeople;
+    for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+      const object = listOfAllChoosenUsers[i];
+      this.stateServer.choosenUser.push(object)
     }
   }
 
-  // nicht fetrig
-  loadListOfAllChoosenUsers() {
-    const listOfUsersChoosen = this.chat.currentChannelData.specificPeople
-    console.log(listOfUsersChoosen);
+
+  filterOnlyAvaliableUser() {
+    const listOfAllUserId = this.listOfAllUsers.map((user) => user.uId);
     
-    for (let i = 0; i < listOfUsersChoosen.length; i++) {
-      const object = listOfUsersChoosen[i];
-      this.listOfAllUsersChoosen.push(object);
-    }
+    const commonUsers = this.stateServer.choosenUser.filter((user) =>
+      listOfAllUserId.includes(user.uId)
+    );
+
+    let updatedListOfAllUsers = this.listOfAllUsers.filter(
+      (user) => !commonUsers.some((commonUser) => commonUser.uId === user.uId)
+    );
+
+    return updatedListOfAllUsers
   }
 
   addUser(index: number, event: Event) {
-    event.preventDefault()
-    const indexListOfAllUsers = this.listOfAllUsers[index];
+    event.preventDefault();
+    const indexListOfAllUsers = this.filterOnlyAvaliableUser()[index];
     this.stateServer.choosenUser.push(indexListOfAllUsers);
-    this.activeReactiveButton();
-    this.removeUserFromListOfAllUsers(index)
-    this.addPxToList()
+    this.makeButtonActiveReactive();
+    this.filterOnlyAvaliableUser()
+    this.addPxToList();
   }
 
   removeUser(index: number, event: Event) {
     event.preventDefault();
-    const indexChoosenUser = this.stateServer.choosenUser[index];
-    this.listOfAllUsers.push(indexChoosenUser);
-    this.removeUserFromChoosenUser(index)
-    this.makeButtonActiveReactive()
-    this.removePxFromList()
+    this.stateServer.choosenUser.splice(index, 1);
+    this.makeButtonActiveReactive();
+    this.filterOnlyAvaliableUser()
+    this.removePxFromList();
   }
 
   makeButtonActiveReactive() {
     if (this.stateServer.choosenUser.length === 0) {
-        this.activeReactiveButton(false);
-      }
+      this.activeReactiveButton(false);
+    } else {
+      this.activeReactiveButton(true);
+    }
   }
-
-  removeUserFromListOfAllUsers(index: number) {
-    this.listOfAllUsers.splice(index, 1);
-  }
-
-  removeUserFromChoosenUser(index: number) {
-    this.stateServer.choosenUser.splice(index, 1);
-  }
-
 
   addPxToList() {
+    if(this.stateServer.choosenUser.length != 0) {
+    this.top = 54 + (54 * this.stateServer.choosenUser.length)
+  } else {
     this.top += 54;
   }
-
+}
   removePxFromList() {
     this.top -= 54;
   }

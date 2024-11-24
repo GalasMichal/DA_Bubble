@@ -87,7 +87,7 @@
     align-items: baseline;
     width: 100%;
     height: fit-content;
-    button {
+    .edit {
       font-size: 1.125rem;
       font-weight: 600;
       line-height: 1.5344rem;
@@ -99,8 +99,13 @@
       &:hover,
       &:focus {
         color: $primary;
-        font-weight: 700;
         outline: none;
+      }
+      &.disabled {
+        color: gray;
+        background: none;
+        border: none;
+        cursor: auto;
       }
     }
   }
@@ -142,6 +147,12 @@
         background-color: $primary-hover;
         outline: $primary-hover;
       }
+      &.disabled {
+        cursor: auto;
+        background-color: $gray !important;
+        border: solid 0.0625rem $gray;
+        color: $white;
+      }
     }
     .change-btn {
       border: 1px solid $primary;
@@ -158,6 +169,12 @@
         color: $white;
         border: solid 1px $primary-hover;
         outline: $secondary;
+      }
+      &.disabled {
+        cursor: auto;
+        background-color: $gray !important;
+        border: solid 0.0625rem $gray;
+        color: $white;
       }
     }
   }

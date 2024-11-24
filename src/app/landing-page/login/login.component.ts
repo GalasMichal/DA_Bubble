@@ -17,6 +17,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
+import { User } from '../../models/interfaces/user.model';
 
 @Component({
   selector: 'app-login',
@@ -59,20 +60,17 @@ export class LoginComponent {
   async createNewUserWithGoogle() {
     await this.fb.createGoogleUser();
     this.fb.loadAllBackendData();
-    this.stateControl.isUserLoggedIn = true;
-
   }
 
-  async loginWithEmailAndPassword() {
-    this.isFormSubmitted = true;
-
+  async loginWithEmailAndPassword(text: string) {
+      this.isFormSubmitted = true;
       const email = this.loginForm.get('userEmail')?.value;
       const password = this.loginForm.get('password')?.value;
 
-    console.log('user data:', email, password);
-
     if (this.loginForm.valid) {
-      await this.fb.loginWithEmailAndPassword(email, password).then(() => {
+
+
+      await this.fb.loginWithEmailAndPassword(email, password, text).then(() => {
         console.log(
           'user is eingeloggot',
           this.fb.currentUser()?.uId,
@@ -80,17 +78,15 @@ export class LoginComponent {
           this.fb.currentUser()?.displayName
         );
         this.fb.loadAllBackendData();
-        this.stateControl.isUserLoggedIn = true;
       });
     } else {
       console.log('Formular ist ungültig');
     }
   }
 
-  navigateToMainContent() {
-    this.fb.loadAllBackendData();
-    this.stateControl.isUserLoggedIn = true;
-    this.router.navigateByUrl('start/main');
+  navigateToMainContentAsGuest(event: Event, text: string) {
+    event.preventDefault()
+    this.fb.signInAsGuest(text)
   }
 
   togglePasswordVisibility() {

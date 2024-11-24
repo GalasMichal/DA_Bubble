@@ -88,6 +88,14 @@
 
         <h1>Willkommen in eurem privaten Channel!</h1>
 
+        <div class="added-user-container">
+          @if (this.chat.currentChannelData.specificPeople.length !== 0) {
+            @for(channel of this.chat.currentChannelData.specificPeople; track $index) {
+              <button (click)="openProfileUserSingle(channel.uId)" class="added-user"><span>&commat;</span>{{channel.displayName}}</button>
+            }
+          }
+        </div>
+
         <p>
           Das ist der Anfang eurer Diskussion. Bitte bemüht euch, stets freundlich und respektvoll miteinander zu sprechen. Versucht, Probleme zunächst gemeinsam im Team zu lösen. Diese Fähigkeit wird euch in eurer zukünftigen beruflichen Laufbahn erhebliche Vorteile bringen. Falls ihr gemeinsam keine Lösung finden solltet, stehen euch unsere DABubble-Team jederzeit gerne zur Verfügung.
         </p>

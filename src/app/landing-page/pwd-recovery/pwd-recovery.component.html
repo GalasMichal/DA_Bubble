@@ -1,14 +1,14 @@
 <section class="main-content">
-  <div class="form-title">
-    <a class="arrow-back" (click)="goBack()">
-      <app-back></app-back>
-    </a>
-    <h1 class="form-title-name">
-      Passwort zurücksetzen
-    </h1>
-    
-  </div>  
-    <form [formGroup]="recoveryForm" (ngSubmit)="onSubmit('E-Mail gesendet')">
+  <a class="arrow-back" routerLink="/start">
+    <app-back></app-back>
+  </a>
+  <button class="close-btn" (click)="closePwdRecovery($event)">
+    <app-close></app-close>
+  </button>
+  <h1 class="title">
+    Passwort zurücksetzen
+  </h1>  
+    <form [formGroup]="recoveryForm" (ngSubmit)="sendEmail($event, 'E-Mail gesendet')">
       <div class="input-container">
 
         <label for="name">Bitte gib deine E-Mail ein:</label>
@@ -36,7 +36,7 @@
       </p>
 
       <div class="btn-container" >
-        <button class="forward-btn" routerLink='/login'>E-Mail senden</button>
+        <button class="forward-btn" type="submit" [disabled]="!recoveryForm.valid">E-Mail senden</button>
       </div>
     </form>
 </section>

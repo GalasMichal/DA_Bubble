@@ -72,3 +72,11 @@ emoji-mart {
   visibility: visible;
   transform: translateY(0);
 }
+
+app-reaction-bar:hover .message-content .message-container .messages-main-chat {
+  background: red !important;
+}
+
+.reaction-bar:hover .message-content .message-container .messages-main-chat {
+  background: red !important;
+}

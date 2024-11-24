@@ -14,34 +14,37 @@
     </div>
 
     <div class="avatar">
-        <app-avatar></app-avatar>
+        <div class="user-img">
+            <app-avatar [user]="userService.profileSingleUser" ></app-avatar>
+          </div>
     </div>
 
     <div class="name">
-        <h2>Frederik Beck</h2>
-        <button>
-            <span>Bearbeiten</span>
-            <img src="./assets/media/icons/edit.svg" alt="edit">
-        </button>
+        <h2>{{ userService.profileSingleUser.displayName }}</h2>
     </div>
 
-    <div class="active">
-        <img src="./assets/media/icons/online-without-circle.svg" alt="active">
-        <span class="status">Aktive</span>
+    <div class="status">
+        @if(userService.profileSingleUser.status) {
+            <img src="./assets/media/icons/online-without-circle.svg" alt="online">
+            <span class="online">Aktive</span>
+        } @else {
+            <img src="./assets/media/icons/offline-without-circle.svg" alt="offline">
+            <span class="offline">Abwesend</span>
+        }
     </div>
 
     <div class="e-mail">
-        <img src="./assets/media/icons/mail.svg" alt="email" srcset="">
+        <img src="./assets/media/icons/mail.svg" alt="email">
         <div>
             <span>E-Mail-Adresse</span>
-            <a href="mailto:" class="email">fred.beckemail.com</a>
+            <a href="mailto:" class="email">{{userService.profileSingleUser.email}}</a>
         </div>
     </div>
 
     <div class="buttons">
         <button (click)="closeUserProfile()">
             <img src="./assets/media/icons/mode-comment.svg" alt="">
-            Speichern
+            Nachricht
         </button>
     </div>
 </mat-dialog-content>

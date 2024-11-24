@@ -5,9 +5,12 @@
       <img class="online" src="/assets/media/icons/online.svg" alt="online">
     }@else {
       <img class="online" src="/assets/media/icons/offline.svg" alt="offline">}
-
 </div>
-}@else {
+} @else if (this.userService.profileSingleUser) {
+  <div class="user-avatar">
+    <img class="avatar" [src]="user.avatarUrl" alt="avatar">
+  </div>
+} @else {
   <div class="user-avatar">
     <img [src]="this.db.currentUser()?.avatarUrl" alt="avatar">
     <img class="online" src="/assets/media/icons/online.svg" alt="online">

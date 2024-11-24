@@ -8,12 +8,6 @@
 
     <div class="main-content">
       <router-outlet></router-outlet>
-
-      <!-- <button (click)="openUserProfile()">
-          Open Dialog User
-
-        </button> -->
-
     </div>
     @if (stateServer.isThreadOpen && this.user.selectedUserMessage() && this.chat.currentChannelData) {
       <div [ngClass]="stateServer.isThreadOpen ? 'thread-container' : 'd-none'" [class.animate]="stateServer.isThreadOpen">

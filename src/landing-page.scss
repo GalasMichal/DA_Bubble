@@ -25,6 +25,9 @@
       padding: 40px;
       margin: 10px;
     }
+    .new-user-link-responsive {
+      display: none
+    }
 }
 
 @media (max-width: 500px) {
@@ -32,6 +35,43 @@
     .main-container {
       padding: 0.50rem;
       margin: 0;
+    }
+    .new-user-link-responsive {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      width: 11.25rem;
+      margin-block: auto;
+      padding-block: 20px;
+      p {
+        font-weight: 400;
+        font-size: 1.125rem;
+        line-height: 24.55px;
+        text-align: center;
+        color: $black;
+      }
+      button {
+        background-color: $bg-color;
+        text-align: center;
+        padding: 0.625rem 0.9375rem;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 21.6px;
+        color: $primary-hover;
+        border: solid 1px transparent;
+        border-radius: $b-radius-2;
+        text-decoration: none;
+        @include firstTranistion();
+        &:hover {
+          border: $primary-hover 1px solid;
+          border-radius: $b-radius-2;
+          color: $primary;
+        }
+        &:focus {
+          border: solid 0.0625rem $secondary;
+          outline: $secondary;
+        }
+      }
     }
   }
 }

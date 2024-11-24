@@ -11,6 +11,7 @@ import {
   fetchSignInMethodsForEmail,
   onAuthStateChanged,
   signOut,
+  user,
 } from '@angular/fire/auth';
 import {
   collection,
@@ -27,10 +28,25 @@ import {
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Channel } from '../../models/interfaces/channel.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
-
+import {
+  AuthCredential,
+  confirmPasswordReset,
+  deleteUser,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  sendPasswordResetEmail,
+  signInAnonymously,
+  updatePassword,
+} from 'firebase/auth';
+import { StateControlService } from '../state-control/state-control.service';
+import { log } from 'console';
+import { DeleteAccountComponent } from '../../shared/component/delete-account/delete-account.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteAccountComponent } from '../../shared/component/confirm-delete-account/confirm-delete-account.component';
+import { deleteDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -42,11 +58,12 @@ export class FirebaseService {
   router = inject(Router);
   chat = inject(ChatRoomService);
   userService = inject(UserServiceService);
-
+  stateControl = inject(StateControlService);
   public currentUser = signal<AppUser | null>(null);
   public errorMessageLogin = signal('');
+  dialog = inject(MatDialog);
 
-  constructor() {}
+  constructor(private route: ActivatedRoute) {}
 
   async loadAllBackendData() {
     this.chat.subChannelList();
@@ -62,22 +79,25 @@ export class FirebaseService {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         const firebaseUser = userCredential.user;
-        return updateProfile(firebaseUser, {
-          displayName: displayName,
-        }).then(() => {
-          const user: AppUser = {
-            status: true,
-            channels: [],
-            uId: firebaseUser.uid,
-            email: firebaseUser.email || '',
-            displayName: firebaseUser.displayName || '',
-          };
-          console.log('Registrierter User ist', user);
-          this.addUserToFirestore(user);
-          return user;
-        });
+        return updateProfile(firebaseUser, { displayName: displayName }).then(
+          () => {
+            const user: AppUser = {
+              status: true,
+              channels: [],
+              uId: firebaseUser.uid,
+              email: firebaseUser.email || '',
+              displayName: firebaseUser.displayName || '',
+            };
+            console.log('Registrierter User ist', user);
+            this.addUserToFirestore(user);
+            return user;
+          }
+        );
       })
       .catch((error) => {
+        this.stateControl.showError = true;
+        this.stateControl.showToast = true;
+        this.stateControl.showToastText = 'Versuche bitte noch einmal';
         switch (error.code) {
           case 'auth/email-already-in-use':
             this.errorMessageLogin.set(
@@ -102,21 +122,21 @@ export class FirebaseService {
               'Ein unbekannter Fehler ist aufgetreten.'
             ); // Standardfehlermeldung
         }
+        this.stateControl.removeShowToast();
       });
   }
-
   async loginWithEmailAndPassword(
     email: string,
-    password: string
+    password: string,
+    text: string
   ): Promise<any> {
     try {
       const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
-      if (!exists) {
+      if (exists) {
         this.errorMessageLogin.set(
           'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
         );
       }
-      // Wenn der Benutzer existiert, führe die Anmeldung durch
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
         email,
@@ -125,23 +145,30 @@ export class FirebaseService {
       let user = userCredential.user as FirebaseUser;
       console.log('user is', user);
       if (user) {
+        this.stateControl.showToast = true;
+        this.stateControl.showToastText = text;
+        this.stateControl.removeShowToast();
         await this.getUserByUid(user.uid);
-        this.router.navigate(['/start/main']);
+        setTimeout(() => {
+          this.router.navigate(['/start/main']);
+        }, 2200);
       }
-
-      console.log('User is logged in:', user);
       this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
     } catch (error) {
+      this.stateControl.showError = true;
+      this.stateControl.showToast = true;
       if (error === 'auth/wrong-password') {
         this.errorMessageLogin.set('Falsches Passwort.');
       } else {
-        this.errorMessageLogin.set('Fehler beim Anmelden: ' + error);
+        this.stateControl.showToastText = 'Versuche bitte noch einmal';
+        this.errorMessageLogin.set('E-Mail oder Passwort falsch');
       }
-
+      this.stateControl.removeShowToast();
       // Falls es einen allgemeinen Fehler gibt (bei der Benutzerabfrage oder Anmeldung)
       console.error('Fehler beim Login:', error);
     }
   }
+
   async getUserByUid(uid: string): Promise<AppUser | null> {
     try {
       const userDocRef = doc(this.firestore, `users/${uid}`); // Referenz zum Dokument
@@ -187,7 +214,7 @@ export class FirebaseService {
         email: googleUser.email ?? '',
         displayName: displayName,
       };
-      if (!(await this.userExistFirestore(user.uId)))  {
+      if (!(await this.userExistFirestore(user.uId))) {
         // Benutzer existiert nicht, also Avatar-Seite anzeigen
         await this.addUserToFirestore(user);
         this.currentUser.set(user);
@@ -216,7 +243,7 @@ export class FirebaseService {
       });
   }
 
- async userExistFirestore(uId: string): Promise<boolean> {
+  async userExistFirestore(uId: string): Promise<boolean> {
     return getDocs(
       query(collection(this.firestore, 'users'), where('uId', '==', uId))
     ).then((querySnapshot) => {
@@ -231,9 +258,9 @@ export class FirebaseService {
       return user;
     });
   }
-  logoutUser(){
 
-     // Methode zum Ausloggen des Benutzers
+  logoutUser() {
+    // Methode zum Ausloggen des Benutzers
     signOut(this.auth)
       .then(() => {
         console.log('User logged out successfully');
@@ -243,4 +270,176 @@ export class FirebaseService {
       });
   }
 
+  sendEmailToUser(email: string, text: string) {
+    sendPasswordResetEmail(this.auth, email)
+      .then(() => {
+        this.stateControl.showArrow = true;
+        this.stateControl.showToast = true;
+        this.stateControl.showToastText = text;
+        this.stateControl.showConfirmationText =
+          'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
+        this.stateControl.removeShowToast();
+      })
+      .catch((error) => {
+        this.stateControl.showToast = true;
+        this.stateControl.showError = true;
+        switch (error.code) {
+          case 'auth/invalid-email':
+            this.stateControl.showToastText =
+              'Ungültige E-Mail-Adresse. Bitte überprüfen Sie die Eingabe.';
+            break;
+          case 'auth/user-not-found':
+            this.stateControl.showToastText =
+              'Kein Benutzer mit dieser E-Mail-Adresse gefunden.';
+            break;
+          default:
+            this.stateControl.showToastText =
+              'Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.';
+        }
+        this.stateControl.removeShowToast();
+      });
+  }
+
+  confirmPassword(password: string, text: string) {
+    // Hole den oobCode aus der URL
+    const oobCode = this.route.snapshot.queryParamMap.get('oobCode');
+
+    if (!oobCode) {
+      console.error('No oobCode provided.');
+      this.stateControl.showToast = true;
+      this.stateControl.showError = true;
+      this.stateControl.showToastText =
+        'Es gab ein Problem mit dem Link. Bitte versuchen Sie es erneut.';
+      return;
+    }
+
+    confirmPasswordReset(this.auth, oobCode, password)
+      .then(() => {
+        this.stateControl.showToast = true;
+        this.stateControl.showToastText = text;
+        this.stateControl.showConfirmationText =
+          'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
+        this.stateControl.removeShowToast();
+        setTimeout(() => {
+          this.router.navigate(['start']);
+        }, 2200);
+      })
+      .catch((error) => {
+        this.stateControl.showToast = true;
+        this.stateControl.showError = true;
+        switch (error.code) {
+          case 'auth/invalid-action-code':
+            this.stateControl.showToastText =
+              'Der Link ist ungültig oder abgelaufen.';
+            break;
+          case 'auth/weak-password':
+            this.stateControl.showToastText =
+              'Das Passwort ist zu schwach. Bitte verwenden Sie ein stärkeres Passwort.';
+            break;
+          default:
+            this.stateControl.showToastText =
+              'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
+        }
+        this.stateControl.removeShowToast();
+      });
+  }
+
+  signInAsGuest(text: string): Promise<void> {
+    this.stateControl.showToast = true;
+    this.stateControl.showToastText = text;
+
+    return signInAnonymously(this.auth)
+      .then((userCredential) => {
+        const firebaseUser = userCredential.user;
+
+        const user: AppUser = {
+          avatarUrl: 'assets/media/icons/profile-icons/profile-icon.svg',
+          status: true,
+          channels: [],
+          uId: firebaseUser.uid,
+          email: 'guest@gast.com',
+          displayName: 'Gast',
+        };
+        this.stateControl.removeShowToast();
+        this.router.navigate(['/start/main']);
+        return this.addUserToFirestore(user);
+      })
+      .catch((error) => {
+        console.error(
+          'Error during anonymous sign-in:',
+          error.code,
+          error.message
+        );
+        throw error;
+      });
+  }
+
+  confirmDeleteAccount(user: any) {
+    const userId = user.uid
+    const confirmDialogRef = this.dialog.open(ConfirmDeleteAccountComponent, {
+      panelClass: 'confirm-delete-container',
+    });
+
+    confirmDialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        deleteUser(user)
+          .then(() => {
+            deleteDoc(doc(this.firestore, "users", userId));
+            console.log('User deleted successfully');
+            this.stateControl.showConfirmationText = 'Dein Konto wurde erfolgreich gelöscht.';
+            this.stateControl.isUserLoggedIn = false;
+            this.router.navigate(['start/confirmation']); 
+          })
+          .catch((error) => {
+            this.handleError(error)
+          });
+      }
+        this.dialog.closeAll();
+    });
+  }
+
+  async confirmDeleteAccountWithPassword() {
+    const user = this.auth.currentUser;
+
+    try {
+      await this.promptForCredentials();
+      return this.confirmDeleteAccount(user)
+    } catch (error) {
+      this.handleError(error)
+    }
+
+  }
+
+  handleError(error: any) {
+    if (!error) {
+      alert('Ein unbekannter Fehler ist aufgetreten.');
+      return;
+    }
+    if (error.message === 'Passwortabfrage abgebrochen.') {
+      alert('Die Passwortabfrage wurde abgebrochen.');
+    } else if (error.code === 'auth/wrong-password') {
+      alert('Das eingegebene Passwort ist falsch.');
+    } else if (error.code === 'auth/user-not-found') {
+      alert('Der Benutzer konnte nicht gefunden werden.');
+    } else if (error.code === 'auth/requires-recent-login') {
+      alert('Ihre Anmeldung ist zu lange her. Bitte melden Sie sich erneut an, um fortzufahren.');
+    } else {
+      alert('Ein unerwarteter Fehler ist aufgetreten.');
+    }
+  }
+
+
+  async promptForCredentials() {
+    const dialogRef = this.dialog.open(DeleteAccountComponent, {
+      panelClass: 'delete-container',
+    });
+
+    const password = await dialogRef.afterClosed().toPromise();
+    if (!password) {
+      throw new Error('Passwortabfrage abgebrochen.');
+    }
+
+    const user = this.auth.currentUser!;
+    return EmailAuthProvider.credential(user.email!, password);
+  }
 }

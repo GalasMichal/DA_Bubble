@@ -38,7 +38,8 @@ app-main-content {
   flex: 1;
 }
 
-app-chat-room, app-direct-message {
+app-chat-room,
+app-direct-message {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -222,6 +223,9 @@ app-toast {
   @include firstTranistion();
 }
 
+.show-error {
+  background-color: $red;
+}
 .show-success {
   opacity: 1;
   transform: translateX(0);
@@ -245,10 +249,16 @@ app-toast {
   font-size: 0.75rem;
 }
 
-[disabled] {
+.overflow-y {
+  overflow-y: hidden !important;
+}
+
+
+:disabled {
   cursor: auto !important;
   background-color: $gray !important;
   border: solid 0.0625rem $gray !important;
+  color: $white !important;
 }
 
 .input-focus:focus {
@@ -297,7 +307,7 @@ app-toast {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 /* Track */

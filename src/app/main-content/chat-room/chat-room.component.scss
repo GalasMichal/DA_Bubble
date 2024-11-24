@@ -30,15 +30,29 @@ app-message-field {
       max-height: 50vh;
     }
   }
+  .welcome-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
   .user-time {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
-  .welcome-content {
+  .added-user-container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 0.3rem;
+    .added-user {
+      color: #4954c5;
+      background-color: #e4dcdb;
+      padding-inline: .125rem;
+      &:hover {
+        color: $white;
+        background-color: #5865F2;
+      }
+    }
   }
 }
 

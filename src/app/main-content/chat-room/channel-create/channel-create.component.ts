@@ -97,15 +97,16 @@ export class ChannelCreateComponent {
       channelName: formValues.channelName,
       channelDescription: formValues.channelDescription || '',
       allMembers: formValues.member,
-      specificPeople: this.stateServer.choosenUser,
+      specificPeople: this.stateServer.choosenUser || [],
       createdAt: new Date().toISOString(),
-      createdBy: this.fb.currentUser()?.displayName,
+      createdBy: [this.fb.currentUser()!]
+      
     };
+    this.stateServer.choosenUser = []
     this.createChannel(event, newChannel);
   }
 
   createChannel(event: Event, newChannel: Channel) {
-    console.log(newChannel);
     this.chat.addChannelToFirestore(newChannel);
     this.closeDialogAddMembers(event);
   }

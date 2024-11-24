@@ -53,6 +53,7 @@ header {
 @media (max-width: 500px) {
   header {
     justify-content: center;
+    margin-block: 20px;
     .new-user-link {
       display: none;
     }
