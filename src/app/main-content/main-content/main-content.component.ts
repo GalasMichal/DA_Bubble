@@ -42,7 +42,7 @@ export class MainContentComponent {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.db.getUserByUid(user.uid);
-          
+
          // Laden des Benutzers
       } else {
         this.router.navigate(['']);
