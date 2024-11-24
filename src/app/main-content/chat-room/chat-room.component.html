@@ -39,7 +39,7 @@
           <div class=""> + {{ restOfUser() }}</div>
         }
       </ul>
-      <button (click)="openAddUsers()">
+      <button (click)="onOpenAddUsers()" class="add-user" [class.disabled]="chat.currentChannelData.createdBy[0].uId === fb.currentUser()?.uId">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="20" fill="#ECEEFE"/>
           <mask id="mask0_754_13277" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">

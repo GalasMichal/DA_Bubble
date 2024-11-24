@@ -15,6 +15,8 @@ import { UserServiceService } from '../../services/user-service/user-service.ser
 import { AvatarComponent } from '../../shared/avatar/avatar.component';
 import { log } from 'console';
 import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
+import { FirebaseService } from '../../services/firebase/firebase.service';
+import { DialogGlobalComponent } from '../../shared/component/dialog-global/dialog-global.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -39,14 +41,47 @@ export class ChatRoomComponent {
     'assets/media/icons/profile-icons/user-4-steffen.svg',
   ];
   dialog = inject(MatDialog);
+  dialogConfirm = inject(MatDialog);
   readonly userDialog = inject(MatDialog);
   channelData: Channel | null = null;
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
   userService = inject(UserServiceService);
-  sumrestOfUser: number = 0
+  fb = inject(FirebaseService);
+  sumrestOfUser: number = 0;
+  counter: number = 0;
+
 
   constructor() {
+  }
+
+  closeChannelEdit() {
+    this.dialogConfirm.closeAll()
+  }
+
+  onOpenAddUsers() {
+    const isDisabled = this.chat.currentChannelData.createdBy[0].uId === this.fb.currentUser()?.uId
+    this.counter++;
+
+    if (isDisabled) {
+      this.onCounter()
+    } else {
+      this.openAddUsers();
+    }
+  }
+  
+
+  onCounter() {
+    if(this.counter >= 2) {
+      this.showDialog();
+      this.counter = 0;
+    }
+  }
+
+  showDialog() {
+    this.dialogConfirm.open(DialogGlobalComponent, {
+      panelClass: 'dialog-global-container',
+    });
   }
 
   ngOnDestroy(): void {

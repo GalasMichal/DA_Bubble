@@ -117,7 +117,7 @@ header {
         padding: 0.1875rem 0.625rem;
       }
     }
-    button {
+    .add-user {
       background: none;
       border-radius: $b-radius-2;
       scale: 1;
@@ -132,6 +132,14 @@ header {
       img {
         width: 2.5rem;
         height: 2.5rem;
+      }
+      &.disabled svg path {
+        fill: gray;
+        background: none;
+        border: none;
+      }
+      &:hover {
+        scale: 1;
       }
     }
   }
