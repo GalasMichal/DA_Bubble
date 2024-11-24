@@ -14,7 +14,7 @@
     <app-message-answer [userMessage]="this.user.selectedUserMessage()" [hideDetails]="true"></app-message-answer>
 
     }
-    @for (answer of answers(); track $index) {
+    @for ( answer of answers(); track $index) {
       <app-message-answer [threadAnswerOpen]="true" [answer]="answer" [hideDetails]="true"></app-message-answer>
     }
         </div>

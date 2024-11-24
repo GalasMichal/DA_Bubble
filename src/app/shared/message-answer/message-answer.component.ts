@@ -80,8 +80,10 @@ export class MessageAnswerComponent {
 
   constructor() {}
 
-  ngOnInit() {
+ async ngOnInit() {
+   await this.chat.getAnswersFromMessage()
     this.updateCurrentMessage();
+
 
     // Prüfen, ob der aktuelle Benutzer die Nachricht gesendet hat
     if (this.currentMessage?.messageSendBy.uId === this.fb.currentUser()?.uId) {
@@ -94,11 +96,13 @@ export class MessageAnswerComponent {
     this.currentMessage = this.answer || this.userMessage;
   }
 
-  openThread(userMessage: Message) {
+ async openThread(userMessage: Message) {
+    // this.state.isThreadOpen = false;
+    this.chat.currentMessageId = userMessage.threadId;
+    await this.chat.getAnswersFromMessage();
+    this.state.isThreadOpen = true;
     this.user.setThreadMessage(userMessage); // Nachricht setzen
-    if (!this.state.isThreadOpen) {
-      this.state.isThreadOpen = true; // Thread öffnen
-    }
+    this.updateCurrentMessage();
   }
 
   // Methode zum Aktualisieren der Reaktionen in Firestore
