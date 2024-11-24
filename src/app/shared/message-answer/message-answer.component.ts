@@ -1,10 +1,10 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, SimpleChanges } from '@angular/core';
 import { ReactionBarComponent } from '../component/reaction-bar/reaction-bar.component';
 import { TimeSeparatorComponent } from './time-separator/time-separator.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { FormsModule } from '@angular/forms';
+
 import { CommonModule, DatePipe } from '@angular/common';
 import { Message } from '../../models/interfaces/message.model';
 import { doc, Timestamp, updateDoc } from 'firebase/firestore';
@@ -13,6 +13,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { User } from '../../models/interfaces/user.model';
 import { ReactionCloudComponent } from '../component/reaction-cloud/reaction-cloud.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
+import { UserServiceService } from '../../services/user-service/user-service.service';
 
 @Component({
   selector: 'app-message-answer',
@@ -21,8 +22,8 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
     CommonModule,
     ReactionBarComponent,
     TimeSeparatorComponent,
-    EmojiComponent,
-    PickerComponent,
+    // EmojiComponent,
+    // PickerComponent,
     DatePipe,
     ReactionCloudComponent,
   ],
@@ -35,33 +36,17 @@ export class MessageAnswerComponent {
   fb = inject(FirebaseService);
   today: number = Date.now();
   state = inject(StateControlService);
+  user = inject(UserServiceService);
 
   meUser: boolean = false;
 
   @Input() hideDetails: boolean = false;
   @Input() index: number = 0;
+  @Input() threadAnswerOpen: boolean = false;
+  @Input() userMessage: Message | null = null;
+  @Input() answer: Message | null = null;
 
-  @Input() userMessage: Message = {
-    text: '',
-    chatId: '',
-    timestamp: Timestamp.now(),
-    messageSendBy: {
-      uId: '',
-      email: '',
-      status: false,
-      displayName: '',
-      avatarUrl: '',
-      channels: [],
-    },
-    reactions: [],
-    threadId: '',
-    answerCount: 0,
-    lastAnswer: '',
-    editCount: 0,
-    lastEdit: '',
-    storageData: '',
-    taggedUser: [],
-  };
+  currentMessage: Message | null = null;
 
   emojis: { symbol: string; count: number }[] = [];
 
@@ -69,14 +54,14 @@ export class MessageAnswerComponent {
     const currentUser = this.fb.currentUser()?.displayName;
 
     // Überprüfe, ob das Emoji bereits existiert
-    const existingReaction = this.userMessage.reactions.find(
+    const existingReaction = this.userMessage?.reactions.find(
       (e) => e.symbol === emoji
     );
 
     if (existingReaction) {
       existingReaction.count++; // Erhöhe den Zähler
     } else {
-      this.userMessage.reactions.push({
+      this.userMessage?.reactions.push({
         userName: currentUser,
         symbol: emoji,
         count: 1,
@@ -86,32 +71,44 @@ export class MessageAnswerComponent {
     this.updateReactionsInFirestore();
   }
 
-  constructor() {}
-
-  ngOnInit() {
-    if (this.userMessage.messageSendBy.uId === this.fb.currentUser()?.uId) {
-      this.meUser = true;
+  ngOnChanges(changes: SimpleChanges): void {
+    // Prüfen, ob answer oder userMessage aktualisiert wurde
+    if (changes['answer'] || changes['userMessage']) {
+      this.updateCurrentMessage();
     }
-    // if(this.userId) {
-    //   this.getUserFromAnswer(this.userId);
-    // }
   }
 
-  // getUserFromAnswer(userId: string) {
-  //   if (userId) {
-  //     this.user = this.chat.userList.find((user) => user.uId === userId);
-  //     console.log('User:', this.user);
-  //   }
-  // }
+  constructor() {}
 
-  openThread() {
+ async ngOnInit() {
+   await this.chat.getAnswersFromMessage()
+    this.updateCurrentMessage();
+
+
+    // Prüfen, ob der aktuelle Benutzer die Nachricht gesendet hat
+    if (this.currentMessage?.messageSendBy.uId === this.fb.currentUser()?.uId) {
+      this.meUser = true;
+    }
+  }
+
+  updateCurrentMessage() {
+    // Priorisiere answer, falls vorhanden
+    this.currentMessage = this.answer || this.userMessage;
+  }
+
+ async openThread(userMessage: Message) {
+    // this.state.isThreadOpen = false;
+    this.chat.currentMessageId = userMessage.threadId;
+    await this.chat.getAnswersFromMessage();
     this.state.isThreadOpen = true;
+    this.user.setThreadMessage(userMessage); // Nachricht setzen
+    this.updateCurrentMessage();
   }
 
   // Methode zum Aktualisieren der Reaktionen in Firestore
   async updateReactionsInFirestore() {
     const channelId = this.chat.currentChannelData.chanId;
-    const messageId = this.userMessage.threadId;
+    const messageId = this.userMessage!.threadId;
 
     const messageDocRef = doc(
       this.firestore,
@@ -122,6 +119,6 @@ export class MessageAnswerComponent {
     );
 
     // Aktualisiere die Reaktionen im Firestore-Dokument
-    await updateDoc(messageDocRef, { reactions: this.userMessage.reactions });
+    await updateDoc(messageDocRef, { reactions: this.userMessage?.reactions });
   }
 }

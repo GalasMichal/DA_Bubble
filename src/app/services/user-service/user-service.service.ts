@@ -1,11 +1,13 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Firestore, getDoc, updateDoc } from '@angular/fire/firestore';
 import { User as AppUser, User } from '../../models/interfaces/user.model';
 import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { StorageService } from '../storage/storage.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
 import { getAuth, updateEmail, updateProfile } from '@angular/fire/auth';
+import { Message } from '../../models/interfaces/message.model';
 import { tick } from '@angular/core/testing';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +19,18 @@ export class UserServiceService {
   private readonly storageService = inject(StorageService);
   messageReceiver: User | null = null;
   auth = getAuth();
+  answerChatMessage: Message | null = null;
+  selectedUserMessage = signal<Message | null>(null);
   profileSingleUser!: User
+
 
 
   constructor() {
 
+  }
+
+  setThreadMessage(message: Message) {
+    this.selectedUserMessage.set(message); // Nachricht setzen
   }
 
   subUserList() {

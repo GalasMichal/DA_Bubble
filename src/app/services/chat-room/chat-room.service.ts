@@ -1,10 +1,12 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import {
   collection,
   doc,
   Firestore,
   getDoc,
+  getDocs,
   onSnapshot,
+  query,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
@@ -14,6 +16,7 @@ import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import { addDoc, DocumentData, QuerySnapshot } from 'firebase/firestore';
 import { StateControlService } from '../state-control/state-control.service';
+
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +31,9 @@ export class ChatRoomService {
   public channelList: Channel[] = [];
   public currentChannelData!: Channel;
   public answers: Message[] = [];
+  public messageAnswerList = signal<Message[]>([]);
   unsub: any;
+  public currentMessageId: string | null = null;
 
   constructor() {}
 
@@ -42,6 +47,7 @@ export class ChatRoomService {
     );
     const messageDocRef = await addDoc(channelCollectionRef, message);
     console.log('Message verschickt', message);
+    this.currentMessageId = messageDocRef.id;
     return messageDocRef.id; // Rückgabe der generierten Message-ID
   }
 
@@ -56,6 +62,52 @@ export class ChatRoomService {
     await updateDoc(messageDocRef, { threadId: messageId });
   }
 
+  addAnswerToMessage(messageId: string, answer: Message) {
+    const channelId = this.currentChannelData.chanId;
+    const messageCollectionRef = collection(
+      this.firestore,
+      'channels',
+      channelId,
+      'messages',
+      messageId,
+      'answers'
+    );
+    addDoc(messageCollectionRef, answer);
+    this.currentMessageId = messageId;
+    this.getAnswersFromMessage();
+    console.log('Answer verschickt', answer);
+  }
+
+  async getAnswersFromMessage() {
+    if (this.currentMessageId) {
+      const messageId = this.currentMessageId;
+      const channelId = this.currentChannelData.chanId;
+      const messageCollectionRef = collection(
+        this.firestore,
+        'channels',
+        channelId,
+        'messages',
+        messageId,
+        'answers'
+      );
+
+      try {
+        const querySnapshot = await getDocs(messageCollectionRef);
+        const newAnswers: Message[] = [];
+
+        querySnapshot.forEach((doc) => {
+          newAnswers.push(doc.data() as Message);
+        });
+
+        // Signal mit neuen Daten aktualisieren
+        this.messageAnswerList.set(newAnswers);
+
+        console.log('Antworten aktualisiert:', this.messageAnswerList());
+      } catch (error) {
+        console.error('Fehler beim Abrufen der Antworten:', error);
+      }
+    }
+  }
 
 
   subChannelList() {
