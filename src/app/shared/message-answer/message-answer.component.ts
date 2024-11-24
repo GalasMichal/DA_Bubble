@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, SimpleChanges } from '@angular/core';
 import { ReactionBarComponent } from '../component/reaction-bar/reaction-bar.component';
 import { TimeSeparatorComponent } from './time-separator/time-separator.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -42,11 +42,11 @@ export class MessageAnswerComponent {
 
   @Input() hideDetails: boolean = false;
   @Input() index: number = 0;
-
+  @Input() threadAnswerOpen: boolean = false;
   @Input() userMessage: Message | null = null;
+  @Input() answer: Message | null = null;
 
-
-  isThreadOpen = this.state.isThreadOpen;
+  currentMessage: Message | null = null;
 
   emojis: { symbol: string; count: number }[] = [];
 
@@ -71,18 +71,32 @@ export class MessageAnswerComponent {
     this.updateReactionsInFirestore();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    // Prüfen, ob answer oder userMessage aktualisiert wurde
+    if (changes['answer'] || changes['userMessage']) {
+      this.updateCurrentMessage();
+    }
+  }
+
   constructor() {}
 
   ngOnInit() {
+    this.updateCurrentMessage();
 
-    if (this.userMessage?.messageSendBy.uId === this.fb.currentUser()?.uId) {
+    // Prüfen, ob der aktuelle Benutzer die Nachricht gesendet hat
+    if (this.currentMessage?.messageSendBy.uId === this.fb.currentUser()?.uId) {
       this.meUser = true;
     }
   }
 
+  updateCurrentMessage() {
+    // Priorisiere answer, falls vorhanden
+    this.currentMessage = this.answer || this.userMessage;
+  }
+
   openThread(userMessage: Message) {
     this.user.setThreadMessage(userMessage); // Nachricht setzen
-    if (!this.isThreadOpen) {
+    if (!this.state.isThreadOpen) {
       this.state.isThreadOpen = true; // Thread öffnen
     }
   }

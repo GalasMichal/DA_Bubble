@@ -10,9 +10,16 @@
 
   </header>
   <div class="thread-content">
-    @if (this.user.selectedUserMessage() !== null) {}
-    <app-message-answer  [userMessage]="this.user.selectedUserMessage()" [hideDetails]="true"></app-message-answer>
+    @if (this.user.selectedUserMessage() !== null) {
+    <app-message-answer [userMessage]="this.user.selectedUserMessage()" [hideDetails]="true"></app-message-answer>
 
-  </div>
-  <app-message-field [isThreadAnswerOpen]="true" class="padding-25"></app-message-field>
+    }
+    @for (answer of answers(); track $index) {
+      <app-message-answer [threadAnswerOpen]="true" [answer]="answer" [hideDetails]="true"></app-message-answer>
+    }
+        </div>
+      <app-message-field [isThreadAnswerOpen]="true" class="padding-25"></app-message-field>
 </section>
+
+
+

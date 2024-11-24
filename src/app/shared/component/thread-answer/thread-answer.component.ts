@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input } from '@angular/core';
+import { Component, computed, inject, Input, Signal } from '@angular/core';
 import { MessageAnswerComponent } from '../../message-answer/message-answer.component';
 import { MessageFieldComponent } from '../message-field/message-field.component';
 
@@ -9,11 +9,12 @@ import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Message } from '../../../models/interfaces/message.model';
 import { PrivateChat } from '../../../models/interfaces/privateChat.class';
 import { Channel } from '../../../models/interfaces/channel.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-thread-answer',
   standalone: true,
-  imports: [MessageAnswerComponent, MessageFieldComponent, CloseComponent],
+  imports: [MessageAnswerComponent, MessageFieldComponent, CloseComponent, CommonModule],
   templateUrl: './thread-answer.component.html',
   styleUrl: './thread-answer.component.scss',
 })
@@ -23,19 +24,20 @@ export class ThreadAnswerComponent {
   chat = inject(ChatRoomService)
 
   @Input() currentChat: Channel | null = null
+  public answers: Signal<Message[]> = computed(() => this.chat.messageAnswerList());
 
 
   constructor() {
 
    }
    ngOnInit(): void {
-
+    this.chat.getAnswersFromMessage();
    }
   closeThread() {
     this.state.isThreadOpen = false;
   }
 
   getUserMessage() {
-    
+
   }
 }
