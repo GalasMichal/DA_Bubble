@@ -37,7 +37,10 @@
     display: flex;
     justify-content: center;
     img {
-      height: 200px;
+      width: 12.5rem;
+      height: 12.5rem;
+      object-fit: cover;
+      border-radius: 50%;
     }
   }
 

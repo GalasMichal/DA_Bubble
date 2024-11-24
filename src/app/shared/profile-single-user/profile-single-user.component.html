@@ -15,7 +15,8 @@
 
     <div class="avatar">
         <div class="user-img">
-            <app-avatar [user]="userService.profileSingleUser" ></app-avatar>
+            <!-- <app-avatar></app-avatar> -->
+            <img [src]="userService.profileSingleUser.avatarUrl" alt="">
           </div>
     </div>
 
