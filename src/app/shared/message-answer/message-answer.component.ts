@@ -14,6 +14,8 @@ import { User } from '../../models/interfaces/user.model';
 import { ReactionCloudComponent } from '../component/reaction-cloud/reaction-cloud.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileSingleUserComponent } from '../profile-single-user/profile-single-user.component';
 
 @Component({
   selector: 'app-message-answer',
@@ -36,7 +38,8 @@ export class MessageAnswerComponent {
   fb = inject(FirebaseService);
   today: number = Date.now();
   state = inject(StateControlService);
-  user = inject(UserServiceService);
+  userService = inject(UserServiceService);
+  readonly userDialog = inject(MatDialog);
 
   meUser: boolean = false;
 
@@ -101,7 +104,7 @@ export class MessageAnswerComponent {
     this.chat.currentMessageId = userMessage.threadId;
     await this.chat.getAnswersFromMessage();
     this.state.isThreadOpen = true;
-    this.user.setThreadMessage(userMessage); // Nachricht setzen
+    this.userService.setThreadMessage(userMessage); // Nachricht setzen
     this.updateCurrentMessage();
   }
 
@@ -121,4 +124,12 @@ export class MessageAnswerComponent {
     // Aktualisiere die Reaktionen im Firestore-Dokument
     await updateDoc(messageDocRef, { reactions: this.userMessage?.reactions });
   }
+
+  async openProfileUserSingle(userId: string) {
+    await this.userService.showProfileUserSingle(userId)
+    this.userDialog.open(ProfileSingleUserComponent, {
+      panelClass: 'profile-single-user-container',
+    });
+  }
+
 }

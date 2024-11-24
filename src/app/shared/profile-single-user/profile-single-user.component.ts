@@ -9,7 +9,7 @@ import { UserServiceService } from '../../services/user-service/user-service.ser
 @Component({
   selector: 'app-profile-single-user',
   standalone: true,
-  imports: [MatDialogContent, AvatarComponent],
+  imports: [MatDialogContent],
   templateUrl: './profile-single-user.component.html',
   styleUrl: './profile-single-user.component.scss'
 })
@@ -17,7 +17,6 @@ export class ProfileSingleUserComponent {
   readonly dialog = inject(MatDialogRef<ProfileSingleUserComponent>);
   chat = inject(ChatRoomService);
   userService = inject(UserServiceService)
-
 
   closeUserProfile() {
     this.dialog.close();
