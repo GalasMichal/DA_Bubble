@@ -60,7 +60,7 @@ export class ChatRoomComponent {
   }
 
   onOpenAddUsers() {
-    const isDisabled = this.chat.currentChannelData.createdBy[0].uId === this.fb.currentUser()?.uId
+    const isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId
     this.counter++;
 
     if (isDisabled) {
