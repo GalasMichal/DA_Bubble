@@ -19,11 +19,13 @@
   border-radius: $b-radius-1;
   background-color: $white;
   width: 0;
-  transition: width 400ms;
+  transition: width 200ms;
+  opacity: 0;
 }
 
 .sidenav.animate {
   width: 22.875rem;
+  opacity: 1;
 }
 
 .wrapper {
@@ -95,14 +97,14 @@
   border-style: solid;
 }
 
-.thread-container{
+.thread-container {
   border-radius: $b-radius-1;
   background-color: $white;
   width: 0;
   transition: width 500ms;
 }
 
-.thread-container.animate{
+.thread-container.animate {
   max-width: 30.3125rem;
   width: 100%;
 }
