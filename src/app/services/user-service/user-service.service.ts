@@ -5,9 +5,8 @@ import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { StorageService } from '../storage/storage.service';
 import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
 import { getAuth, updateEmail, updateProfile } from '@angular/fire/auth';
-import { Message } from '../../models/interfaces/message.model';
 import { tick } from '@angular/core/testing';
-
+import { Message } from '../../models/interfaces/message.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,6 @@ export class UserServiceService {
   answerChatMessage: Message | null = null;
   selectedUserMessage = signal<Message | null>(null);
   profileSingleUser!: User
-
 
 
   constructor() {

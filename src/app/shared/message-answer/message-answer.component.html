@@ -15,7 +15,7 @@
           <div class="message-container">
 
             <div class="user-time" [ngClass]="{'user-time-right': meUser}">
-              <h2> {{currentMessage.messageSendBy.displayName}}</h2>
+              <button (click)="openProfileUserSingle(currentMessage.messageSendBy.uId)"> {{currentMessage.messageSendBy.displayName}}</button>
               <span>{{ currentMessage.timestamp.toDate() | date: 'H:mm' }} Uhr</span>
             </div>
 

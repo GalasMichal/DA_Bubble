@@ -45,9 +45,7 @@ export class ChatRoomComponent {
   route = inject(ActivatedRoute);
   userService = inject(UserServiceService);
   sumrestOfUser: number = 0
-  user = inject(UserServiceService)
 
-  ngOnInit() {}
   constructor() {
   }
 
@@ -90,8 +88,8 @@ export class ChatRoomComponent {
     console.log('ThreatID:', id);
   }
 
-  openProfileUserSingle(userId: string) {
-    this.user.showProfileUserSingle(userId)
+  async openProfileUserSingle(userId: string) {
+    await this.userService.showProfileUserSingle(userId)
     this.userDialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',
     });
