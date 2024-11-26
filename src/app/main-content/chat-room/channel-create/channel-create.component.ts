@@ -97,11 +97,11 @@ export class ChannelCreateComponent {
       channelName: formValues.channelName,
       channelDescription: formValues.channelDescription || '',
       allMembers: formValues.member,
-      specificPeople: this.stateServer.choosenUser || [],
+      specificPeople: this.stateServer.choosenUserFirbase,
       createdAt: new Date().toISOString(),
-      createdBy: [this.fb.currentUser()!]
-      
+      createdBy: [this.fb.currentUser()!] 
     };
+    this.stateServer.choosenUserFirbase.push(this.fb.currentUser()!.uId)
     this.stateServer.choosenUser = []
     this.createChannel(event, newChannel);
   }

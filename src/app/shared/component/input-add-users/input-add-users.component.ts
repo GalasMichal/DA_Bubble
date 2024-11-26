@@ -23,7 +23,6 @@ export class InputAddUsersComponent {
   // Nicht fertig
   listOfAllUsers: User[] = [...this.userService.userList];
 
-  top: number = 40;
 
   @Output() activeButton: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -33,40 +32,35 @@ export class InputAddUsersComponent {
 
   constructor() {
     this.showAllChoosenUsers()
-    this.addPxToList()
   }
 
   showAllChoosenUsers() {
     this.stateServer.choosenUser = [];
-    const listOfAllChoosenUsers= this.chat.currentChannelData.specificPeople;
-    for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-      const object = listOfAllChoosenUsers[i];
-      this.stateServer.choosenUser.push(object)
+
+    if (this.chat.currentChannelData !== undefined){
+      const listOfAllChoosenUsers= this.chat.currentChannelData.specificPeople;
+      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+        const object = listOfAllChoosenUsers[i];
+        // this.stateServer.choosenUser.push(object)
+      }
     }
   }
 
 
   filterOnlyAvaliableUser() {
-    const listOfAllUserId = this.listOfAllUsers.map((user) => user.uId);
-    
-    const commonUsers = this.stateServer.choosenUser.filter((user) =>
-      listOfAllUserId.includes(user.uId)
-    );
+    const choosenUsers = new Set(this.stateServer.choosenUser.map(user => user.uId));
+    return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId));
 
-    let updatedListOfAllUsers = this.listOfAllUsers.filter(
-      (user) => !commonUsers.some((commonUser) => commonUser.uId === user.uId)
-    );
-
-    return updatedListOfAllUsers
   }
 
-  addUser(index: number, event: Event) {
+  addUser(index: number, event: Event, uId: string) {
     event.preventDefault();
     const indexListOfAllUsers = this.filterOnlyAvaliableUser()[index];
     this.stateServer.choosenUser.push(indexListOfAllUsers);
+    this.stateServer.choosenUserFirbase.push(uId);
     this.makeButtonActiveReactive();
     this.filterOnlyAvaliableUser()
-    this.addPxToList();
+
   }
 
   removeUser(index: number, event: Event) {
@@ -74,7 +68,6 @@ export class InputAddUsersComponent {
     this.stateServer.choosenUser.splice(index, 1);
     this.makeButtonActiveReactive();
     this.filterOnlyAvaliableUser()
-    this.removePxFromList();
   }
 
   makeButtonActiveReactive() {
@@ -83,16 +76,5 @@ export class InputAddUsersComponent {
     } else {
       this.activeReactiveButton(true);
     }
-  }
-
-  addPxToList() {
-    if(this.stateServer.choosenUser.length != 0) {
-    this.top = 54 + (54 * this.stateServer.choosenUser.length)
-  } else {
-    this.top += 54;
-  }
-}
-  removePxFromList() {
-    this.top -= 54;
   }
 }

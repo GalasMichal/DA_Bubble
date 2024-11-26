@@ -14,7 +14,7 @@ import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
-import { addDoc, DocumentData, QuerySnapshot } from 'firebase/firestore';
+import { addDoc, DocumentData, QuerySnapshot, where } from 'firebase/firestore';
 import { StateControlService } from '../state-control/state-control.service';
 
 
@@ -29,6 +29,7 @@ export class ChatRoomService {
   public unsubscribe: any;
   public userList: AppUser[] = [];
   public channelList: Channel[] = [];
+  public currentUserChannels: Channel[] = [];
   public currentChannelData!: Channel;
   public answers: Message[] = [];
   public messageAnswerList = signal<Message[]>([]);
@@ -36,6 +37,26 @@ export class ChatRoomService {
   public currentMessageId: string | null = null;
 
   constructor() {}
+
+  // Ta metoda pokazuje wszytskie kanaly gdzie jest dany uzytkownik
+  checkUserInChannels(currentUserId: string | undefined): void {
+    if (!currentUserId) {
+      console.error('currentUserId ist undefined');
+      return;
+    }
+    const channelsRef = collection(this.firestore, 'channels'); // 'channels' ist der Name der Collection
+    const q = query(channelsRef, where('specificPeople', 'array-contains', currentUserId));
+
+    // Real-Time Listener
+    onSnapshot(q, (querySnapshot) => {
+      this.currentUserChannels = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data() as Channel;
+        this.currentUserChannels.push(data);
+      });
+
+    });
+  }
 
   async addMessageToChannel(message: Message) {
     const channelId = this.currentChannelData.chanId;

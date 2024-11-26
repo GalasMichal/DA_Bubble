@@ -11,6 +11,7 @@ export class StateControlService {
   showToastText: string = '';
   showConfirmationText: string = '';
   choosenUser: User[] = [];
+  choosenUserFirbase: string[] = [];
   isUserLoggedIn: boolean = false;
   showError: boolean = false
 
