@@ -89,11 +89,10 @@
         <h1>Willkommen in eurem privaten Channel!</h1>
 
         <div class="added-user-container">
-          @if (this.chat.currentChannelData.specificPeople.length !== 0) {
             @for(channel of this.chat.currentChannelData.specificPeople; track $index) {
               <button (click)="openProfileUserSingle(channel)" class="added-user"><span>&commat;</span>{{channel}}</button>
             }
-          }
+
         </div>
 
         <p>
