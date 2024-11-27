@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import { addDoc, DocumentData, QuerySnapshot, where } from 'firebase/firestore';
 import { StateControlService } from '../state-control/state-control.service';
+import { log } from 'node:console';
+import { User } from 'firebase/auth';
 
 
 @Injectable({
@@ -28,8 +30,14 @@ export class ChatRoomService {
   public currentChannel: string = '';
   public unsubscribe: any;
   public userList: AppUser[] = [];
+  // Wszystkie kanaly
   public channelList: Channel[] = [];
+
+  // Kanal tylko zalogowangeo uzytkownika
   public currentUserChannels: Channel[] = [];
+  public currentUserChannelsSpecificPeopleUid: string[] = [];
+  public currentUserChannelsSpecificPeopleObject: User[] = [];
+
   public currentChannelData!: Channel;
   public answers: Message[] = [];
   public messageAnswerList = signal<Message[]>([]);
@@ -37,26 +45,6 @@ export class ChatRoomService {
   public currentMessageId: string | null = null;
 
   constructor() {}
-
-  // Ta metoda pokazuje wszytskie kanaly gdzie jest dany uzytkownik
-  checkUserInChannels(currentUserId: string | undefined): void {
-    if (!currentUserId) {
-      console.error('currentUserId ist undefined');
-      return;
-    }
-    const channelsRef = collection(this.firestore, 'channels'); // 'channels' ist der Name der Collection
-    const q = query(channelsRef, where('specificPeople', 'array-contains', currentUserId));
-
-    // Real-Time Listener
-    onSnapshot(q, (querySnapshot) => {
-      this.currentUserChannels = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data() as Channel;
-        this.currentUserChannels.push(data);
-      });
-
-    });
-  }
 
   async addMessageToChannel(message: Message) {
     const channelId = this.currentChannelData.chanId;
@@ -174,12 +162,15 @@ export class ChatRoomService {
       if (doc.exists()) {
         const channelData = doc.data() as Channel;
         this.currentChannelData = channelData;
+        this.currentUserChannelsSpecificPeopleUid = this.currentChannelData.specificPeople || [];
+      
       } else {
         console.log('No such document!');
       }
     });
     this.loadCurrentChatData(currentChannel)
     this.router.navigate(['start/main/chat/', currentChannel]);
+    this.loadSpecificPeopleFromUser()
   }
 
   loadCurrentChatData(currentChannel: string) {
@@ -232,4 +223,39 @@ export class ChatRoomService {
     }
   }
 
+
+    // Ta metoda pokazuje wszytskie kanaly gdzie jest dany uzytkownik
+    checkUserInChannels(currentUserId: string | undefined): void {
+      if (!currentUserId) {
+        console.error('currentUserId ist undefined');
+        return;
+      }
+      const channelsRef = collection(this.firestore, 'channels'); // 'channels' ist der Name der Collection
+      const q = query(channelsRef, where('specificPeople', 'array-contains', currentUserId));
+      // Real-Time Listener
+      onSnapshot(q, (querySnapshot) => {
+        this.currentUserChannels = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data() as Channel;
+          this.currentUserChannels.push(data);
+        });
+      });
+    }
+
+    async loadSpecificPeopleFromUser() {
+      this.currentUserChannelsSpecificPeopleObject = [];
+      try {
+        const usersRef = collection(this.firestore, 'users');
+        const q = query(usersRef, where('uId', 'in', this.currentUserChannelsSpecificPeopleUid));
+        
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          const userData = doc.data() as User;
+          this.currentUserChannelsSpecificPeopleObject.push(userData);
+        });
+        console.log(this.currentUserChannelsSpecificPeopleObject);
+      } catch (error) {
+        console.error('Fehler beim Laden der Benutzer:', error);
+      }
+    }
 }

@@ -65,7 +65,6 @@ export class MenuSideLeftComponent {
   openChannel(chanId: string) {
     this.state.isThreadOpen = false
     this.chat.openChatById(chanId);
-    console.log('chat.currentChannel: ', this.chat.channelList);
   }
 
   writeMessage() {

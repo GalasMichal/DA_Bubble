@@ -108,8 +108,4 @@ export class UserServiceService {
     }
   }
 
-  showUserInFirstMessage() {
-    
-  }
-
 }
