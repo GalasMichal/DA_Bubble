@@ -108,11 +108,11 @@ export class ChatRoomComponent {
   }
 
   openTeam(chat: Object) {
-    // const currentChannelID = this.chat.currentChannel
-    // console.log('ID', currentChannelID);
+    const currentChannelID = this.chat.currentChannel
+    console.log('ID', currentChannelID);
 
-    // const currentChannelName = this.chat.currentChannelData
-    // console.log('Name', currentChannelName);
+    const currentChannelName = this.chat.currentChannelData
+    console.log('Name', currentChannelName);
 
     this.dialog.open(ChannelEditComponent, {
       panelClass: 'team-container',
@@ -124,6 +124,7 @@ export class ChatRoomComponent {
   }
 
   async openProfileUserSingle(userId: string) {
+    console.log('this.chat.currentChannelData: ', this.chat.currentChannelData);
     await this.userService.showProfileUserSingle(userId)
     this.userDialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',

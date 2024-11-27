@@ -19,7 +19,6 @@ import { StateControlService } from '../state-control/state-control.service';
 import { log } from 'node:console';
 import { User } from 'firebase/auth';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -65,7 +64,12 @@ export class ChatRoomService {
 
     const channelId = this.currentChannelData.chanId;
     const messageDocRef = doc(
-      this.firestore, 'channels', channelId, 'messages', messageId);
+      this.firestore,
+      'channels',
+      channelId,
+      'messages',
+      messageId
+    );
 
     // Aktualisiere das Dokument mit der Firestore-generierten ID als threadId
     await updateDoc(messageDocRef, { threadId: messageId });
@@ -118,7 +122,6 @@ export class ChatRoomService {
     }
   }
 
-
   subChannelList() {
     this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
       this.channelList = [];
@@ -155,22 +158,21 @@ export class ChatRoomService {
   }
 
   openChatById(currentChannel: string) {
-
     this.currentChannel = currentChannel;
     const channelRef = doc(this.firestore, 'channels', currentChannel);
     this.unsubscribe = onSnapshot(channelRef, (doc) => {
       if (doc.exists()) {
         const channelData = doc.data() as Channel;
         this.currentChannelData = channelData;
-        this.currentUserChannelsSpecificPeopleUid = this.currentChannelData.specificPeople || [];
-      
+        this.currentUserChannelsSpecificPeopleUid =
+          this.currentChannelData.specificPeople || [];
       } else {
         console.log('No such document!');
       }
     });
-    this.loadCurrentChatData(currentChannel)
+    this.loadCurrentChatData(currentChannel);
     this.router.navigate(['start/main/chat/', currentChannel]);
-    this.loadSpecificPeopleFromUser()
+    this.loadSpecificPeopleFromChannel();
   }
 
   loadCurrentChatData(currentChannel: string) {
@@ -210,7 +212,7 @@ export class ChatRoomService {
       // Hole die aktuellen Daten des Channels mit getDoc()
       const docSnap = await getDoc(channelRef);
       if (docSnap.exists()) {
-                // Setze den specificPeople-Array mit dem aktuellen User-Array aus dem StateControlService
+        // Setze den specificPeople-Array mit dem aktuellen User-Array aus dem StateControlService
         const updatedSpecificPeople = this.state.choosenUser; // Array aus dem Service
         // Aktualisiere den Channel mit dem neuen specificPeople-Array
         await updateDoc(channelRef, { specificPeople: updatedSpecificPeople });
@@ -223,39 +225,50 @@ export class ChatRoomService {
     }
   }
 
-
-    // Ta metoda pokazuje wszytskie kanaly gdzie jest dany uzytkownik
-    checkUserInChannels(currentUserId: string | undefined): void {
-      if (!currentUserId) {
-        console.error('currentUserId ist undefined');
-        return;
-      }
-      const channelsRef = collection(this.firestore, 'channels'); // 'channels' ist der Name der Collection
-      const q = query(channelsRef, where('specificPeople', 'array-contains', currentUserId));
-      // Real-Time Listener
-      onSnapshot(q, (querySnapshot) => {
-        this.currentUserChannels = [];
-        querySnapshot.forEach((doc) => {
-          const data = doc.data() as Channel;
-          this.currentUserChannels.push(data);
-        });
+  // Ta metoda pokazuje wszytskie kanaly gdzie jest dany uzytkownik
+  checkUserInChannels(currentUserId: string | undefined): void {
+    if (!currentUserId) {
+      console.error('currentUserId ist undefined');
+      return;
+    }
+    const channelsRef = collection(this.firestore, 'channels'); // 'channels' ist der Name der Collection
+    const q = query(
+      channelsRef,
+      where('specificPeople', 'array-contains', currentUserId)
+    );
+    // Real-Time Listener
+    onSnapshot(q, (querySnapshot) => {
+      this.currentUserChannels = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data() as Channel;
+        this.currentUserChannels.push(data);
       });
+    });
+  }
+
+  async loadSpecificPeopleFromChannel() {
+    this.currentUserChannelsSpecificPeopleObject = [];
+
+    if (this.currentUserChannelsSpecificPeopleUid.length === 0) {
+      return;
     }
 
-    async loadSpecificPeopleFromUser() {
-      this.currentUserChannelsSpecificPeopleObject = [];
-      try {
-        const usersRef = collection(this.firestore, 'users');
-        const q = query(usersRef, where('uId', 'in', this.currentUserChannelsSpecificPeopleUid));
-        
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          const userData = doc.data() as User;
-          this.currentUserChannelsSpecificPeopleObject.push(userData);
-        });
-        console.log(this.currentUserChannelsSpecificPeopleObject);
-      } catch (error) {
-        console.error('Fehler beim Laden der Benutzer:', error);
-      }
+    try {
+      const usersRef = collection(this.firestore, 'users');
+      const q = query(
+        usersRef,
+        where('uId', 'in', this.currentUserChannelsSpecificPeopleUid)
+      );
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach((doc) => {
+        const userData = doc.data() as User;
+        this.currentUserChannelsSpecificPeopleObject.push(userData);
+      });
+
+      console.log(this.currentUserChannelsSpecificPeopleObject);
+    } catch (error) {
+      console.error('Fehler beim Laden der Benutzer:', error);
     }
+  }
 }
