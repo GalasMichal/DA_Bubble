@@ -44,6 +44,7 @@ export class CreateAvatarComponent {
   isSelected: boolean = false;
 
   profileAvatars: ProfileAvatar[] = [
+    { name: 'assets/media/icons/profile-icons/user-1-elise.svg' },
     { name: 'assets/media/icons/profile-icons/user-2-elias.svg' },
     { name: 'assets/media/icons/profile-icons/user-3-frederick.svg' },
     { name: 'assets/media/icons/profile-icons/user-4-steffen.svg' },
