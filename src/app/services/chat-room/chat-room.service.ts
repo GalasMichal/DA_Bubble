@@ -35,7 +35,7 @@ export class ChatRoomService {
   // Kanal tylko zalogowangeo uzytkownika
   public currentUserChannels: Channel[] = [];
   public currentUserChannelsSpecificPeopleUid: string[] = [];
-  public currentUserChannelsSpecificPeopleObject: User[] = [];
+  public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
 
   public currentChannelData!: Channel;
   public answers: Message[] = [];
@@ -262,11 +262,11 @@ export class ChatRoomService {
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
-        const userData = doc.data() as User;
+        const userData = doc.data() as AppUser;
         this.currentUserChannelsSpecificPeopleObject.push(userData);
       });
 
-      console.log(this.currentUserChannelsSpecificPeopleObject);
+      console.log('currentUserChannelsSpecificPeopleObject:', this.currentUserChannelsSpecificPeopleObject);
     } catch (error) {
       console.error('Fehler beim Laden der Benutzer:', error);
     }
