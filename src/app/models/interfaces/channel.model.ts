@@ -4,7 +4,7 @@ export interface Channel {
   chanId: string;
   channelName: string;
   channelDescription: string;
-  allMembers: string
+  allMembers: User []
   specificPeople: string[];
   createdAt: string;
   createdBy: User[]
