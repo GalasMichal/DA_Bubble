@@ -104,7 +104,7 @@ export class ChatRoomComponent {
   }
 
   restOfUser() {
-    return this.chat.currentChannelData.specificPeople.length - 3;
+    return this.chat.currentUserChannelsSpecificPeopleUid.length - 3;
   }
 
   openTeam(chat: Object) {
