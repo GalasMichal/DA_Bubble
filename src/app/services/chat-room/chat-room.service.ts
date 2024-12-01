@@ -213,7 +213,7 @@ export class ChatRoomService {
       const docSnap = await getDoc(channelRef);
       if (docSnap.exists()) {
         // Setze den specificPeople-Array mit dem aktuellen User-Array aus dem StateControlService
-        const updatedSpecificPeople = this.state.choosenUser; // Array aus dem Service
+        const updatedSpecificPeople = this.state.choosenUserFirbase; // Array aus dem Service
         // Aktualisiere den Channel mit dem neuen specificPeople-Array
         await updateDoc(channelRef, { specificPeople: updatedSpecificPeople });
         console.log('specificPeople erfolgreich überschrieben');

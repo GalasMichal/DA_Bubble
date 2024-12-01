@@ -60,6 +60,8 @@ export class ChatRoomComponent {
   }
 
   onOpenAddUsers() {
+    console.log(this.stateServer.choosenUserFirbase);
+    
     const isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId
     this.counter++;
 

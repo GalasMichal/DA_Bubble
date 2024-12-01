@@ -36,12 +36,15 @@ export class InputAddUsersComponent {
 
   showAllChoosenUsers() {
     this.stateServer.choosenUser = [];
+    this.stateServer.choosenUserFirbase = []
 
     if (this.chat.currentChannelData !== undefined){
-      const listOfAllChoosenUsers= this.chat.currentChannelData.specificPeople;
+      const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
       for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
         const object = listOfAllChoosenUsers[i];
-        // this.stateServer.choosenUser.push(object)
+        this.stateServer.choosenUser.push(object)
+        this.stateServer.choosenUserFirbase.push(object.uId);
+
       }
     }
   }
@@ -58,14 +61,17 @@ export class InputAddUsersComponent {
     const indexListOfAllUsers = this.filterOnlyAvaliableUser()[index];
     this.stateServer.choosenUser.push(indexListOfAllUsers);
     this.stateServer.choosenUserFirbase.push(uId);
+    
     this.makeButtonActiveReactive();
     this.filterOnlyAvaliableUser()
+    console.log(this.stateServer.choosenUserFirbase);
 
   }
 
   removeUser(index: number, event: Event) {
     event.preventDefault();
     this.stateServer.choosenUser.splice(index, 1);
+    this.stateServer.choosenUserFirbase.splice(index, 1);
     this.makeButtonActiveReactive();
     this.filterOnlyAvaliableUser()
   }
