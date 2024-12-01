@@ -3,8 +3,8 @@
     <label for="name-input" class="visually-hidden">Name:</label>
     <ul class="added-user">
       @for (user of this.stateServer.choosenUser; track $index) {
-        <li>
-          <div class="user-img">
+          <li>
+            <div class="user-img">
             <app-avatar [user]="user" [userList]="true"></app-avatar>
           </div>
           <div>{{user.displayName}}</div>

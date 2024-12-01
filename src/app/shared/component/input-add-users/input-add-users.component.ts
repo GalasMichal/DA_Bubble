@@ -7,6 +7,7 @@ import { StateControlService } from '../../../services/state-control/state-contr
 import { User } from '../../../models/interfaces/user.model';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { log } from 'console';
+import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 @Component({
   selector: 'app-input-add-users',
@@ -19,6 +20,7 @@ export class InputAddUsersComponent {
   userService = inject(UserServiceService);
   stateServer = inject(StateControlService);
   chat = inject(ChatRoomService);
+  fireService = inject(FirebaseService)
 
   // Nicht fertig
   listOfAllUsers: User[] = [...this.userService.userList];
@@ -34,6 +36,7 @@ export class InputAddUsersComponent {
     if(this.stateServer.addChannelActiveInput) {
       this.showAllChoosenUsers()
     }
+
   }
 
   showAllChoosenUsers() {
@@ -54,8 +57,7 @@ export class InputAddUsersComponent {
 
   filterOnlyAvaliableUser() {
     const choosenUsers = new Set(this.stateServer.choosenUser.map(user => user.uId));
-    return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId));
-
+    return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId) && user.uId !== this.fireService.currentUser()?.uId);    
   }
 
   addUser(index: number, event: Event, uId: string) {
@@ -67,7 +69,7 @@ export class InputAddUsersComponent {
     this.makeButtonActiveReactive();
     this.filterOnlyAvaliableUser()
     console.log(this.stateServer.choosenUserFirbase);
-
+    console.log(this.stateServer.choosenUser);
   }
 
   removeUser(index: number, event: Event) {
