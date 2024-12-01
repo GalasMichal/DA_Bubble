@@ -32,7 +32,7 @@ export class ChatRoomService {
   // Wszystkie kanaly
   public channelList: Channel[] = [];
 
-  // Kanal tylko zalogowangeo uzytkownika
+  // Kanaly tylko zalogowangeo uzytkownika
   public currentUserChannels: Channel[] = [];
   public currentUserChannelsSpecificPeopleUid: string[] = [];
   public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
@@ -225,7 +225,7 @@ export class ChatRoomService {
     }
   }
 
-  // Ta metoda pokazuje wszytskie kanaly gdzie jest dany uzytkownik
+  // Ta metoda pokazuje wszystkie kanaly gdzie jest dany uzytkownik
   checkUserInChannels(currentUserId: string | undefined): void {
     if (!currentUserId) {
       console.error('currentUserId ist undefined');

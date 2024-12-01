@@ -45,7 +45,7 @@ export class ChannelCreateComponent {
   selectedOption: string = '';
   isSpecificPeople: boolean = false;
   allMembers: boolean = false;
-  allMembersInChannel: User[] = [];
+  allMembersInChannel: string[] = [];
 
 
   dialog = inject(MatDialogRef<ChannelCreateComponent>);
@@ -57,13 +57,19 @@ export class ChannelCreateComponent {
   userService = inject(UserServiceService);
 
   onRadioChange(event: any) {
+    console.log('VOLL: ', this.stateServer.choosenUserFirbase);
+    
     if (event.target.value === 'specificPeople') {
+      this.stateServer.choosenUserFirbase = [];
+    console.log('LEER: ', this.stateServer.choosenUserFirbase);
+
       this.isSpecificPeople = true;
       this.allMembers = true;
     } else if (event.target.value === 'allMembers') {
       this.isSpecificPeople = false;
       this.allMembers = true;
-      this.allMembersInChannel = this.userService.userList
+      this.allMembersInChannel = this.userService.userListUid
+      this.stateServer.choosenUserFirbase = this.userService.userListUid
     }
   }
 
@@ -102,7 +108,7 @@ export class ChannelCreateComponent {
       chanId: '',
       channelName: formValues.channelName,
       channelDescription: formValues.channelDescription || '',
-      allMembers: this.allMembersInChannel || [],
+      allMembers: this.allMembersInChannel,
       specificPeople: this.stateServer.choosenUserFirbase,
       createdAt: new Date().toISOString(),
       createdBy: [this.fb.currentUser()!] 

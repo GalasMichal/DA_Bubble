@@ -50,6 +50,8 @@ export class MenuSideLeftComponent {
     const userId = this.fb.currentUser()!.uId
     this.chat.checkUserInChannels(userId)
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
+    console.log(this.chat.channelList);
+    
   }
 
   toogleDropDown2() {
