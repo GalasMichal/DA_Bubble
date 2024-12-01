@@ -30,5 +30,6 @@ export class AddUsersComponent {
     await this.chat.updateSpecificPeopleInChannelFromState();
     this.closeAddUsers()
     this.stateServer.choosenUser = [];
+    
   }
 }

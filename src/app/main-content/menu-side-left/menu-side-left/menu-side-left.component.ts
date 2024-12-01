@@ -51,7 +51,6 @@ export class MenuSideLeftComponent {
     this.chat.checkUserInChannels(userId)
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
     console.log(this.chat.channelList);
-    
   }
 
   toogleDropDown2() {
@@ -60,6 +59,7 @@ export class MenuSideLeftComponent {
 
   addChannel() {
     this.state.isThreadOpen = false
+    this.state.addChannelActiveInput = false;
     this.dialog.open(ChannelCreateComponent, {
       panelClass: 'channel-create-container',
     });

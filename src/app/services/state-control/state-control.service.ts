@@ -5,6 +5,7 @@ import { User } from '../../models/interfaces/user.model';
   providedIn: 'root'
 })
 export class StateControlService {
+  addChannelActiveInput: boolean = true
   isThreadOpen = false;
   showToast: boolean = false;
   showArrow: boolean = false;

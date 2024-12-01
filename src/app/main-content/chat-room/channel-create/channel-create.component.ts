@@ -34,7 +34,7 @@ import { User } from '../../../models/interfaces/user.model';
     MatDialogContent,
     ReactiveFormsModule,
     InputAddUsersComponent,
-    CloseComponent
+    CloseComponent,
   ],
   templateUrl: './channel-create.component.html',
   styleUrl: './channel-create.component.scss',
@@ -47,7 +47,6 @@ export class ChannelCreateComponent {
   allMembers: boolean = false;
   allMembersInChannel: string[] = [];
 
-
   dialog = inject(MatDialogRef<ChannelCreateComponent>);
   stateServer = inject(StateControlService);
   readonly dialogAddMembers = inject(MatDialog);
@@ -57,19 +56,16 @@ export class ChannelCreateComponent {
   userService = inject(UserServiceService);
 
   onRadioChange(event: any) {
-    console.log('VOLL: ', this.stateServer.choosenUserFirbase);
-    
+    this.stateServer.choosenUser = [];
+    this.stateServer.choosenUserFirbase = [];
     if (event.target.value === 'specificPeople') {
-      this.stateServer.choosenUserFirbase = [];
-    console.log('LEER: ', this.stateServer.choosenUserFirbase);
-
       this.isSpecificPeople = true;
       this.allMembers = true;
     } else if (event.target.value === 'allMembers') {
       this.isSpecificPeople = false;
       this.allMembers = true;
-      this.allMembersInChannel = this.userService.userListUid
-      this.stateServer.choosenUserFirbase = this.userService.userListUid
+      this.allMembersInChannel = this.userService.userListUid;
+      this.stateServer.choosenUserFirbase = this.userService.userListUid;
     }
   }
 
@@ -111,13 +107,12 @@ export class ChannelCreateComponent {
       allMembers: this.allMembersInChannel,
       specificPeople: this.stateServer.choosenUserFirbase,
       createdAt: new Date().toISOString(),
-      createdBy: [this.fb.currentUser()!] 
+      createdBy: [this.fb.currentUser()!],
     };
-    this.stateServer.choosenUserFirbase.push(this.fb.currentUser()!.uId)
-    this.stateServer.choosenUser = []
+    this.stateServer.choosenUserFirbase.push(this.fb.currentUser()!.uId);
+    this.stateServer.choosenUser = [];
+    this.stateServer.addChannelActiveInput = true
     this.createChannel(event, newChannel);
-    console.log(newChannel);
-    
   }
 
   createChannel(event: Event, newChannel: Channel) {

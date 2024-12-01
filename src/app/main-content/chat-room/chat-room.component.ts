@@ -60,8 +60,6 @@ export class ChatRoomComponent {
   }
 
   onOpenAddUsers() {
-    console.log(this.stateServer.choosenUserFirbase);
-    
     const isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId
     this.counter++;
 
@@ -100,6 +98,7 @@ export class ChatRoomComponent {
   }
 
   openAddUsers() {
+    this.stateServer.addChannelActiveInput = true
     this.dialog.open(AddUsersComponent, {
       panelClass: 'add-users-container', // Custom class for profile dialog
     });

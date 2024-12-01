@@ -31,7 +31,9 @@ export class InputAddUsersComponent {
   }
 
   constructor() {
-    this.showAllChoosenUsers()
+    if(this.stateServer.addChannelActiveInput) {
+      this.showAllChoosenUsers()
+    }
   }
 
   showAllChoosenUsers() {
