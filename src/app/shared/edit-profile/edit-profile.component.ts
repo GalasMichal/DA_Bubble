@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MatDialogContent, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { AvatarComponent } from '../avatar/avatar.component';
 import {
   FormControl,
@@ -12,6 +12,7 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { doc, updateDoc } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { UserServiceService } from '../../services/user-service/user-service.service';
+import { DialogEditProfileComponent } from './dialog-edit-profile/dialog-edit-profile.component';
 
 
 @Component({
@@ -28,6 +29,7 @@ import { UserServiceService } from '../../services/user-service/user-service.ser
 })
 export class EditProfileComponent {
   readonly dialog = inject(MatDialogRef<EditProfileComponent>);
+  dialogConfirm = inject(MatDialog);
   fb = inject(FirebaseService);
   firestore = inject(Firestore);
   user = inject(UserServiceService);
@@ -68,9 +70,12 @@ export class EditProfileComponent {
       this.user.updateCurrentUser(this.fb.currentUser()!);
       this.user.updateCurrentUserToFirebase(inputNameValue, inputEmailValue);
     }
-
-    this.closeDialogEdit();
+    this.showDialog()
   }
 
-
+  showDialog() {
+    this.dialogConfirm.open(DialogEditProfileComponent, {
+      panelClass: 'dialog-edit-profile-container',
+    });
+  }
 }

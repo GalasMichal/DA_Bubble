@@ -52,7 +52,7 @@
             <span>Minimum 3 Buchstaben.</span>
         }
         @if (userForm.controls['userName'].errors?.['pattern']) {
-          <span>Sonderzeichen wie sind nicht erlaubt</span>
+          <span>Sonderzeichen sind nicht erlaubt</span>
         }
       }
     </div>
@@ -68,7 +68,7 @@
             <span>Ihre E-Mail ist erforderlich.</span>
         }
         @else if(userForm.controls['userEmail'].errors?.['email']) {
-            <span>Ihr E-Mail is not correct.</span>
+            <span>E-Mail ist unvollständig/inkorrekt.</span>
         }
       }
     </div>
