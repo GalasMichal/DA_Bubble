@@ -33,7 +33,7 @@ export class InputAddUsersComponent {
   }
 
   constructor() {
-    if(this.stateServer.addChannelActiveInput) {
+    if(this.stateServer.createChannelActiveInput) {
       this.showAllChoosenUsers()
     }
 
@@ -57,6 +57,7 @@ export class InputAddUsersComponent {
 
   filterOnlyAvaliableUser() {
     const choosenUsers = new Set(this.stateServer.choosenUser.map(user => user.uId));
+    // If I creat new Channel
     return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId) && user.uId !== this.fireService.currentUser()?.uId);    
   }
 
