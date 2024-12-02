@@ -47,8 +47,10 @@ export class InputAddUsersComponent {
       const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
       for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
         const object = listOfAllChoosenUsers[i];
-        this.stateServer.choosenUser.push(object)
-        this.stateServer.choosenUserFirbase.push(object.uId);
+        if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
+          this.stateServer.choosenUser.push(object)
+          this.stateServer.choosenUserFirbase.push(object.uId);
+        }
 
       }
     }
@@ -57,13 +59,8 @@ export class InputAddUsersComponent {
 
   filterOnlyAvaliableUser() {
     const choosenUsers = new Set(this.stateServer.choosenUser.map(user => user.uId));
-    // If I creat new Channel
-    if(this.stateServer.createChannelActiveInput) {
-      return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId) && user.uId !== this.fireService.currentUser()?.uId);    
-    } else {
-      return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId) && user.uId !== this.chat.currentChannelData.createdBy[0].uId);    
+    return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId) && user.uId !== this.fireService.currentUser()?.uId);    
 
-    }
   }
 
   addUser(index: number, event: Event, uId: string) {

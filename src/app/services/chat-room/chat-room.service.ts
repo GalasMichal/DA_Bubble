@@ -266,7 +266,6 @@ export class ChatRoomService {
         this.currentUserChannelsSpecificPeopleObject.push(userData);
       });
 
-      console.log('currentUserChannelsSpecificPeopleObject:', this.currentUserChannelsSpecificPeopleObject);
     } catch (error) {
       console.error('Fehler beim Laden der Benutzer:', error);
     }

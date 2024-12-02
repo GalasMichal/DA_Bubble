@@ -125,7 +125,6 @@ export class ChatRoomComponent {
   }
 
   async openProfileUserSingle(userId: string) {
-    console.log('this.chat.currentChannelData: ', this.chat.currentChannelData);
     await this.userService.showProfileUserSingle(userId)
     this.userDialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',

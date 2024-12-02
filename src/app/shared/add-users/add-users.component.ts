@@ -27,9 +27,9 @@ export class AddUsersComponent {
     this.activeButton = value;
   }
   async addUserToChat() {
+    this.stateServer.choosenUserFirbase.push(this.chat.currentChannelData.createdBy[0].uId)
     await this.chat.updateSpecificPeopleInChannelFromState();
     this.closeAddUsers()
     this.stateServer.choosenUser = [];
-    
   }
 }

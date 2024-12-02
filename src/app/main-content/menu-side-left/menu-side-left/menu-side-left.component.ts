@@ -50,7 +50,6 @@ export class MenuSideLeftComponent {
     const userId = this.fb.currentUser()!.uId
     this.chat.checkUserInChannels(userId)
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
-    console.log(this.chat.channelList);
   }
 
   toogleDropDown2() {
@@ -68,6 +67,8 @@ export class MenuSideLeftComponent {
   openChannel(chanId: string) {
     this.state.isThreadOpen = false
     this.chat.openChatById(chanId);
+    console.log('currentChannelData: ', this.chat.currentChannelData);
+    
   }
 
   writeMessage() {
