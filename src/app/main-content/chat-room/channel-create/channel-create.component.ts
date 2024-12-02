@@ -111,7 +111,7 @@ export class ChannelCreateComponent {
     };
     this.stateServer.choosenUserFirbase.push(this.fb.currentUser()!.uId);
     this.stateServer.choosenUser = [];
-    this.stateServer.addChannelActiveInput = true
+    this.stateServer.createChannelActiveInput = true
     this.createChannel(event, newChannel);
   }
 

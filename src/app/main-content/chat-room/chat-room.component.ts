@@ -98,7 +98,7 @@ export class ChatRoomComponent {
   }
 
   openAddUsers() {
-    this.stateServer.addChannelActiveInput = true
+    this.stateServer.createChannelActiveInput = true
     this.dialog.open(AddUsersComponent, {
       panelClass: 'add-users-container', // Custom class for profile dialog
     });

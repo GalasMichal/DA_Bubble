@@ -59,7 +59,7 @@ export class MenuSideLeftComponent {
 
   addChannel() {
     this.state.isThreadOpen = false
-    this.state.addChannelActiveInput = false;
+    this.state.createChannelActiveInput = false;
     this.dialog.open(ChannelCreateComponent, {
       panelClass: 'channel-create-container',
     });

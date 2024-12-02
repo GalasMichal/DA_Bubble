@@ -58,7 +58,12 @@ export class InputAddUsersComponent {
   filterOnlyAvaliableUser() {
     const choosenUsers = new Set(this.stateServer.choosenUser.map(user => user.uId));
     // If I creat new Channel
-    return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId) && user.uId !== this.fireService.currentUser()?.uId);    
+    if(this.stateServer.createChannelActiveInput) {
+      return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId) && user.uId !== this.fireService.currentUser()?.uId);    
+    } else {
+      return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId) && user.uId !== this.chat.currentChannelData.createdBy[0].uId);    
+
+    }
   }
 
   addUser(index: number, event: Event, uId: string) {
