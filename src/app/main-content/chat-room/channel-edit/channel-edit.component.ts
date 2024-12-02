@@ -12,6 +12,7 @@ import { ToastComponent } from '../../../shared/component/toast/toast.component'
 import { ConfirmDeleteChannelComponent } from '../confirm-delete-channel/confirm-delete-channel.component';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../../shared/component/dialog-global/dialog-global.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-channel-edit',
@@ -31,6 +32,7 @@ export class ChannelEditComponent {
   firestore = inject(Firestore)
   stateControl = inject(StateControlService)
   fb = inject(FirebaseService);
+  router = inject(Router);
 
   currentTitle = this.chat.currentChannelData.channelName
   currentDescription = this.chat.currentChannelData.channelDescription
@@ -142,6 +144,7 @@ export class ChannelEditComponent {
       if (result) {
         deleteDoc(doc(this.firestore, "channels", chanId));
         this.dialogConfirm.closeAll()
+        this.router.navigate(['/start/main']);
       } else {
         confirmDialogRef.close()
       }
