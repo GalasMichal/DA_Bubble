@@ -28,7 +28,7 @@
 
     <div class="header-right-container">
       <ul class="user-container">
-        @for (user of this.chat.currentChannelData.specificPeople; track $index) {
+        @for (user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
           @if($index < 3){
             <li>
               <app-avatar [user]="user" [userList]="true"></app-avatar>
@@ -89,11 +89,10 @@
         <h1>Willkommen in eurem privaten Channel!</h1>
 
         <div class="added-user-container">
-          @if (this.chat.currentChannelData.specificPeople.length !== 0) {
-            @for(channel of this.chat.currentChannelData.specificPeople; track $index) {
-              <button (click)="openProfileUserSingle(channel.uId)" class="added-user"><span>&commat;</span>{{channel.displayName}}</button>
+            @for(user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
+              <button (click)="openProfileUserSingle(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
             }
-          }
+
         </div>
 
         <p>

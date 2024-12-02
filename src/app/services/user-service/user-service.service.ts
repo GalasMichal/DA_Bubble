@@ -15,6 +15,8 @@ export class UserServiceService {
   firestore = inject(Firestore);
   unsubscribe: any;
   public userList: AppUser[] = [];
+  public userListUid: string[] = [];
+
   private readonly storageService = inject(StorageService);
   messageReceiver: User | null = null;
   auth = getAuth();
@@ -38,6 +40,7 @@ export class UserServiceService {
         const userData = element.data() as User;
         // console.log('userData List', userData);
         this.userList.push(userData);
+        this.userListUid.push(userData.uId);
       });
     });
   }
@@ -107,4 +110,5 @@ export class UserServiceService {
     this.profileSingleUser = docSnap.data() as User;
     }
   }
+
 }

@@ -98,21 +98,22 @@ export class ChatRoomComponent {
   }
 
   openAddUsers() {
+    this.stateServer.createChannelActiveInput = true
     this.dialog.open(AddUsersComponent, {
       panelClass: 'add-users-container', // Custom class for profile dialog
     });
   }
 
   restOfUser() {
-    return this.chat.currentChannelData.specificPeople.length - 3;
+    return this.chat.currentUserChannelsSpecificPeopleObject.length - 3;
   }
 
   openTeam(chat: Object) {
-    // const currentChannelID = this.chat.currentChannel
-    // console.log('ID', currentChannelID);
+    const currentChannelID = this.chat.currentChannel
+    console.log('ID', currentChannelID);
 
-    // const currentChannelName = this.chat.currentChannelData
-    // console.log('Name', currentChannelName);
+    const currentChannelName = this.chat.currentChannelData
+    console.log('Name', currentChannelName);
 
     this.dialog.open(ChannelEditComponent, {
       panelClass: 'team-container',

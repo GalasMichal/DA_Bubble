@@ -47,6 +47,8 @@ export class MenuSideLeftComponent {
   }
 
   async toogleDropDown1() {
+    const userId = this.fb.currentUser()!.uId
+    this.chat.checkUserInChannels(userId)
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
   }
 
@@ -56,6 +58,7 @@ export class MenuSideLeftComponent {
 
   addChannel() {
     this.state.isThreadOpen = false
+    this.state.createChannelActiveInput = false;
     this.dialog.open(ChannelCreateComponent, {
       panelClass: 'channel-create-container',
     });
@@ -64,7 +67,8 @@ export class MenuSideLeftComponent {
   openChannel(chanId: string) {
     this.state.isThreadOpen = false
     this.chat.openChatById(chanId);
-    console.log('chat.currentChannel: ', this.chat.channelList);
+    console.log('currentChannelData: ', this.chat.currentChannelData);
+    
   }
 
   writeMessage() {

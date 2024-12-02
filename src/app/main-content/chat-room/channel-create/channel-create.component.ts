@@ -21,6 +21,8 @@ import { CloseComponent } from '../../../shared/component/close/close.component'
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { StateControlService } from '../../../services/state-control/state-control.service';
+import { UserServiceService } from '../../../services/user-service/user-service.service';
+import { User } from '../../../models/interfaces/user.model';
 
 @Component({
   selector: 'app-channel-create',
@@ -32,7 +34,7 @@ import { StateControlService } from '../../../services/state-control/state-contr
     MatDialogContent,
     ReactiveFormsModule,
     InputAddUsersComponent,
-    CloseComponent
+    CloseComponent,
   ],
   templateUrl: './channel-create.component.html',
   styleUrl: './channel-create.component.scss',
@@ -43,6 +45,7 @@ export class ChannelCreateComponent {
   selectedOption: string = '';
   isSpecificPeople: boolean = false;
   allMembers: boolean = false;
+  allMembersInChannel: string[] = [];
 
   dialog = inject(MatDialogRef<ChannelCreateComponent>);
   stateServer = inject(StateControlService);
@@ -50,14 +53,19 @@ export class ChannelCreateComponent {
   readonly dialogRef = inject(MatDialogRef<ChannelCreateComponent>);
   chat = inject(ChatRoomService);
   fb = inject(FirebaseService);
+  userService = inject(UserServiceService);
 
   onRadioChange(event: any) {
+    this.stateServer.choosenUser = [];
+    this.stateServer.choosenUserFirbase = [];
     if (event.target.value === 'specificPeople') {
       this.isSpecificPeople = true;
       this.allMembers = true;
     } else if (event.target.value === 'allMembers') {
       this.isSpecificPeople = false;
       this.allMembers = true;
+      this.allMembersInChannel = this.userService.userListUid;
+      this.stateServer.choosenUserFirbase = this.userService.userListUid;
     }
   }
 
@@ -96,13 +104,14 @@ export class ChannelCreateComponent {
       chanId: '',
       channelName: formValues.channelName,
       channelDescription: formValues.channelDescription || '',
-      allMembers: formValues.member,
-      specificPeople: this.stateServer.choosenUser || [],
+      allMembers: this.allMembersInChannel,
+      specificPeople: this.stateServer.choosenUserFirbase,
       createdAt: new Date().toISOString(),
-      createdBy: [this.fb.currentUser()!]
-      
+      createdBy: [this.fb.currentUser()!],
     };
-    this.stateServer.choosenUser = []
+    this.stateServer.choosenUserFirbase.push(this.fb.currentUser()!.uId);
+    this.stateServer.choosenUser = [];
+    this.stateServer.createChannelActiveInput = true
     this.createChannel(event, newChannel);
   }
 
