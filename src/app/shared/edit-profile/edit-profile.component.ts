@@ -35,11 +35,12 @@ export class EditProfileComponent {
 
   constructor() {
     this.userForm = new FormGroup({
-      userName: new FormControl('', [
+      userName: new FormControl(this.fb.currentUser()?.displayName, [
         Validators.required,
         Validators.minLength(3),
+        Validators.pattern('^[A-Za-z0-9.-][A-Za-z0-9 .-]*$')
       ]),
-      userEmail: new FormControl('', [Validators.required, Validators.email]),
+      userEmail: new FormControl(this.fb.currentUser()?.email, [Validators.required, Validators.email]),
     });
   }
 
