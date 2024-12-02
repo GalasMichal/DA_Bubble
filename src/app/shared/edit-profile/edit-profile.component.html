@@ -43,13 +43,16 @@
         />
         <label for="name">Vollständiger Name</label>
       </div>
-      <input type="text" placeholder="{{this.fb.currentUser()?.displayName }}" formControlName="userName" name="userName"/>
+      <input type="text" formControlName="userName" name="userName"/>
       @if (userForm.controls['userName'].invalid && (userForm.controls['userName'].touched || userForm.controls['userName'].dirty)) {
         @if(userForm.controls['userName'].errors?.['required']) {
             <span>Ihr Name ist erforderlich.</span>
         }
-        @else if(userForm.controls['userName'].errors?.['minlength']) {
+        @if(userForm.controls['userName'].errors?.['minlength']) {
             <span>Minimum 3 Buchstaben.</span>
+        }
+        @if (userForm.controls['userName'].errors?.['pattern']) {
+          <span>Sonderzeichen sind nicht erlaubt</span>
         }
       }
     </div>
@@ -59,13 +62,13 @@
         <img src="./assets/media/icons/mail.svg" alt="E-Mail-Adresse" />
         <label for="email">E-Mail-Adresse</label>
       </div>
-      <input type="email" placeholder="{{ this.fb.currentUser()?.email }}" formControlName="userEmail" name="userEmail" />
+      <input type="email" formControlName="userEmail" name="userEmail" />
       @if (userForm.controls['userEmail'].invalid && (userForm.controls['userEmail'].touched || userForm.controls['userEmail'].dirty)) {
         @if(userForm.controls['userEmail'].errors?.['required']) {
             <span>Ihre E-Mail ist erforderlich.</span>
         }
         @else if(userForm.controls['userEmail'].errors?.['email']) {
-            <span>Ihr E-Mail is not correct.</span>
+            <span>E-Mail ist unvollständig/inkorrekt.</span>
         }
       }
     </div>
