@@ -15,6 +15,47 @@ app-message-field {
   padding: 0 25px 25px 25px;
 }
 
+.welcome-container {
+  display: flex;
+  min-height: 8.8125rem;
+  padding: 0.625rem 0.8125rem;
+  margin: 0.625rem 1.8125rem;
+  gap: 1.875rem;
+  background-color: rgba(252, 240, 214, 255);
+  .avatar-container {
+    height: fit-content;
+    border-radius: 50%;
+    .avatar {
+      max-width: 50vw;
+      max-height: 50vh;
+    }
+  }
+  .welcome-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .user-time {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .added-user-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    .added-user {
+      color: #4954c5;
+      background-color: #e4dcdb;
+      padding-inline: .125rem;
+      &:hover {
+        color: $white;
+        background-color: #5865F2;
+      }
+    }
+  }
+}
+
 header {
   padding: 1.5625rem 2.8125rem;
   display: flex;
@@ -60,7 +101,7 @@ header {
       &:hover div {
         color: $primary;
       }
-      img {
+      li {
         width: 2.5rem;
         height: 2.5rem;
         margin-left: -1.1rem;
@@ -76,7 +117,7 @@ header {
         padding: 0.1875rem 0.625rem;
       }
     }
-    button {
+    .add-user {
       background: none;
       border-radius: $b-radius-2;
       scale: 1;
@@ -91,6 +132,14 @@ header {
       img {
         width: 2.5rem;
         height: 2.5rem;
+      }
+      &.disabled svg path {
+        fill: gray;
+        background: none;
+        border: none;
+      }
+      &:hover {
+        scale: 1;
       }
     }
   }

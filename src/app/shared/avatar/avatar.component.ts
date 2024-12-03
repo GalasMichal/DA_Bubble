@@ -1,6 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { User } from '../../models/interfaces/user.model';
+import { UserServiceService } from '../../services/user-service/user-service.service';
 
 @Component({
   selector: 'app-avatar',
@@ -11,6 +12,8 @@ import { User } from '../../models/interfaces/user.model';
 })
 export class AvatarComponent {
   db = inject(FirebaseService);
+  userService = inject(UserServiceService);
+
   @Input() userList: boolean = false;
   @Input() user: User = {
     uId: '',
@@ -20,9 +23,6 @@ export class AvatarComponent {
     channels: [],
     avatarUrl: '',
   };
+
   @Input() userMessageReceiver: User | undefined = undefined;
-
-
-
-
 }

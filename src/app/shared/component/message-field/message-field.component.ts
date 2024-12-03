@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { HeaderComponent } from '../../header/header.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -8,16 +8,15 @@ import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Message } from '../../../models/interfaces/message.model';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { Timestamp } from '@angular/fire/firestore';
+import { UserServiceService } from '../../../services/user-service/user-service.service';
 
 @Component({
   selector: 'app-message-field',
   standalone: true,
   imports: [
     FormsModule,
-    HeaderComponent,
     PickerComponent,
     CommonModule,
-    EmojiComponent,
   ],
   templateUrl: './message-field.component.html',
   styleUrl: './message-field.component.scss',
@@ -25,9 +24,12 @@ import { Timestamp } from '@angular/fire/firestore';
 export class MessageFieldComponent {
   chat = inject(ChatRoomService);
   fb = inject(FirebaseService);
+  user = inject(UserServiceService);
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
 
+
+  @Input() isThreadAnswerOpen = false;
 
   async sendMessage() {
 
@@ -48,9 +50,17 @@ export class MessageFieldComponent {
         taggedUser: [],
       };
       if(this.textArea !== "") {
-        const messageDocRef = await this.chat.addMessageToChannel(newMessage);
-        await this.chat.updateMessageThreadId(messageDocRef);
-        this.textArea = ''; // Leere das Eingabefeld nach dem Senden
+        if(this.isThreadAnswerOpen) {
+          const selectedMessage = this.user.selectedUserMessage();
+          if(selectedMessage) {
+              this.chat.addAnswerToMessage(selectedMessage.threadId, newMessage);
+          }
+        }else {
+          const messageDocRef = await this.chat.addMessageToChannel(newMessage);
+          await this.chat.updateMessageThreadId(messageDocRef);
+          // Leere das Eingabefeld nach dem Senden
+        }
+        this.textArea = '';
       }
     }
   }

@@ -4,17 +4,50 @@
 .profile-card {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: $padding-dialog;
   .profil {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    h1 {
+    .title {
       font-size: 1.5rem;
       font-weight: 500;
       color: $black;
       margin: 0;
+    }
+  }
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+
+  .avatar-img {
+    position: relative;
+    border-radius: $b-radius-2;
+
+    .edit-avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: solid 1px transparent;
+      border-radius: $b-radius-2;
+      @include firstTranistion();
+      &:hover,
+      &:focus-visible {
+        background: $bg-color;
+        outline: none;
+      }
+      &:hover svg path {
+        fill: $primary-hover;
+      }
     }
   }
 }
@@ -28,22 +61,25 @@
     font-size: 2rem;
     font-weight: 500;
   }
-  button {
+  .edit-img,
+  .edit {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5344rem;
+    color: $primary-hover;
     background: none;
     padding-inline: 0.625rem;
-    transition: all 175ms ease-in-out;
+    font-weight: 500;
+    @include firstTranistion();
     &:hover,
     &:focus {
       color: $primary;
-      background: $bg-color;
-      font-weight: 700;
-      border-radius: $b-radius-2;
       outline: none;
     }
-    img {
-      display: none;
-    }
   }
+}
+.edit-img {
+  display: none;
 }
 
 .active {
@@ -63,7 +99,7 @@
   div {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
     span {
       font-size: 1.25rem;
       color: $black;
@@ -72,6 +108,44 @@
       font-size: 1.125rem;
       text-decoration: none;
       color: $e-mail;
+      border: dotted 0.2rem transparent;
+      &:focus {
+        outline: none;
+        border: dotted 0.2rem $e-mail;
+      }
+    }
+  }
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  li {
+    .password,
+    .account {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      height: 2.1875rem;
+      width: 100%;
+      border-radius: $b-radius-1;
+      font-size: 1.25rem;
+      background: none;
+      border: dotted 0.2rem transparent;
+      .icon {
+        padding-top: 2px;
+      }
+      &:hover {
+        color: $primary;
+        background: $bg-color;
+        transform: scale(1.05);
+      }
+      &:focus-visible {
+        outline: none;
+        border: dotted 0.2rem $e-mail;
+      }
     }
   }
 }
@@ -92,9 +166,12 @@
   border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
   position: absolute;
   width: 500px;
-  height: 600px;
+  max-height: 650px;
   top: 6.25rem;
   right: 2.5rem;
+  .mat-mdc-dialog-content {
+    overflow: auto;
+  }
 }
 
 @media (max-width: 500px) {

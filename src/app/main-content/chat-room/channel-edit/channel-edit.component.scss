@@ -87,22 +87,25 @@
     align-items: baseline;
     width: 100%;
     height: fit-content;
-    button {
+    .edit {
       font-size: 1.125rem;
       font-weight: 600;
       line-height: 1.5344rem;
-      color: $primary;
+      color: $primary-hover;
       background: none;
       padding-inline: 0.625rem;
       font-weight: 500;
-      transition: all 175ms ease-in-out;
+      @include firstTranistion();
       &:hover,
       &:focus {
         color: $primary;
-        background: $bg-color;
-        font-weight: 700;
-        border-radius: $b-radius-2;
         outline: none;
+      }
+      &.disabled {
+        color: gray;
+        background: none;
+        border: none;
+        cursor: auto;
       }
     }
   }
@@ -117,6 +120,7 @@
   .btn-container {
     margin-top: auto;
     display: flex;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     gap: 1.875rem;
 
@@ -143,6 +147,12 @@
         background-color: $primary-hover;
         outline: $primary-hover;
       }
+      &.disabled {
+        cursor: auto;
+        background-color: $gray !important;
+        border: solid 0.0625rem $gray;
+        color: $white;
+      }
     }
     .change-btn {
       border: 1px solid $primary;
@@ -160,6 +170,12 @@
         border: solid 1px $primary-hover;
         outline: $secondary;
       }
+      &.disabled {
+        cursor: auto;
+        background-color: $gray !important;
+        border: solid 0.0625rem $gray;
+        color: $white;
+      }
     }
   }
 }
@@ -169,15 +185,10 @@
   .mat-mdc-dialog-container
   .mdc-dialog__container
   .mat-mdc-dialog-surface {
+  overflow: hidden;
   border-radius: 0 $b-radius-1 $b-radius-1 $b-radius-1;
 }
 
 .d-none {
   display: none !important;
 }
-
-// @media (max-width: 600px) {
-//   ::ng-deep
-//   .cdk-overlay-pane.mat-mdc-dialog-panel {
-//   }
-// }

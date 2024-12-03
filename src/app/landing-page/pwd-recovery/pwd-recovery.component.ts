@@ -7,14 +7,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { CommonModule, Location } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
 import { BackComponent } from '../../shared/component/back/back.component';
 import { LogoComponent } from '../../shared/logo/logo.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
-import { ToastComponent } from '../../shared/component/acc-success/toast.component';
+import { ToastComponent } from '../../shared/component/toast/toast.component';
+import { CloseComponent } from '../../shared/component/close/close.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CreateAvatarComponent } from '../create-avatar/create-avatar.component';
 
 @Component({
   selector: 'app-pwd-recovery',
@@ -28,39 +31,45 @@ import { ToastComponent } from '../../shared/component/acc-success/toast.compone
     FooterComponent,
     BackComponent,
     LogoComponent,
-    ToastComponent
+    ToastComponent,
+    CloseComponent,
   ],
   templateUrl: './pwd-recovery.component.html',
   styleUrl: './pwd-recovery.component.scss',
 })
 export class PwdRecoveryComponent {
+  dialog = inject(MatDialogRef<CreateAvatarComponent>, { optional: true });
+  dialogRef = inject(MatDialog);
+
   readonly location = inject(Location);
   fb = inject(FirebaseService);
   formBuilder = inject(FormBuilder);
-  stateControl = inject(StateControlService)
+  stateControl = inject(StateControlService);
   // FormGroup für die Anmeldeform
   recoveryForm: FormGroup;
   isFormValid: boolean = false;
+  router = inject(Router);
 
   constructor() {
-    // this.recoveryForm = this.formBuilder.group({
-    //   email: ['', [Validators.required, Validators.email]],
-    // });
-
     this.recoveryForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
     });
   }
 
-  onSubmit(text: string) {
+  sendEmail(event: Event, text: string) {
+    event.preventDefault();
+    const email = this.recoveryForm.get('email')?.value;
+    this.fb.sendEmailToUser(email, text);
     this.isFormValid = true;
-    this.stateControl.showArrow = true
-    this.stateControl.showSuccess = true
-    this.stateControl.showSuccessText = text
-    this.stateControl.removeShowSuccess()
+    this.stateControl.isUserLoggedIn = false;
+    this.dialogRef.closeAll();
+    this.router.navigate(['/start/confirmation']);
   }
 
-  goBack(): void {
-    this.location.back(); // Navigate to the previous page
+  closePwdRecovery(event: Event) {
+    event.preventDefault();
+    if (this.dialog) {
+      this.dialog.close();
+    }
   }
 }

@@ -4,6 +4,10 @@ import { UserServiceService } from '../../../services/user-service/user-service.
 import { CloseComponent } from '../close/close.component';
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../../services/state-control/state-control.service';
+import { User } from '../../../models/interfaces/user.model';
+import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
+import { log } from 'console';
+import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 @Component({
   selector: 'app-input-add-users',
@@ -14,11 +18,13 @@ import { StateControlService } from '../../../services/state-control/state-contr
 })
 export class InputAddUsersComponent {
   userService = inject(UserServiceService);
-  stateServer = inject(StateControlService)
+  stateServer = inject(StateControlService);
+  chat = inject(ChatRoomService);
+  fireService = inject(FirebaseService)
 
-  listOfAllUsers: { userName: string; uId: string }[] = [];
+  // Nicht fertig
+  listOfAllUsers: User[] = [...this.userService.userList];
 
-  bottom: number = -135;
 
   @Output() activeButton: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -26,64 +32,62 @@ export class InputAddUsersComponent {
     this.activeButton.emit(para);
   }
 
-  ngOnInit(): void {
-    this.loadOfListOfAllUsers()
+  constructor() {
+    if(this.stateServer.createChannelActiveInput) {
+      this.showAllChoosenUsers()
+    }
+
   }
 
-  loadOfListOfAllUsers() {
-    const listOfUsers = this.userService.userList;
-    for (let i = 0; i < listOfUsers.length; i++) {
-      const userName = listOfUsers[i].displayName;
-      const userId = listOfUsers[i].uId;
-      this.listOfAllUsers.push({ userName: userName, uId: userId });
+  showAllChoosenUsers() {
+    this.stateServer.choosenUser = [];
+    this.stateServer.choosenUserFirbase = []
+
+    if (this.chat.currentChannelData !== undefined){
+      const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
+      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+        const object = listOfAllChoosenUsers[i];
+        if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
+          this.stateServer.choosenUser.push(object)
+          this.stateServer.choosenUserFirbase.push(object.uId);
+        }
+
+      }
     }
   }
 
-  addUser(index: number, event: Event) {
-    event.preventDefault()
-    const indexListOfAllUsers = this.listOfAllUsers[index];
+
+  filterOnlyAvaliableUser() {
+    const choosenUsers = new Set(this.stateServer.choosenUser.map(user => user.uId));
+    return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId) && user.uId !== this.fireService.currentUser()?.uId);    
+
+  }
+
+  addUser(index: number, event: Event, uId: string) {
+    event.preventDefault();
+    const indexListOfAllUsers = this.filterOnlyAvaliableUser()[index];
     this.stateServer.choosenUser.push(indexListOfAllUsers);
-    this.activeReactiveButton();
-    this.removeUserFromListOfAllUsers(index);
-    this.addPxToList();
+    this.stateServer.choosenUserFirbase.push(uId);
+    
+    this.makeButtonActiveReactive();
+    this.filterOnlyAvaliableUser()
+    console.log(this.stateServer.choosenUserFirbase);
+    console.log(this.stateServer.choosenUser);
   }
 
   removeUser(index: number, event: Event) {
     event.preventDefault();
-    this.removePxFromList();
-    const indexChoosenUser = this.stateServer.choosenUser[index];
-    this.listOfAllUsers.push(indexChoosenUser);
-    this.removeUserFromChoosenUser(index);
-    this.makeButtonActiveReactive()
+    this.stateServer.choosenUser.splice(index, 1);
+    this.stateServer.choosenUserFirbase.splice(index, 1);
+    this.makeButtonActiveReactive();
+    this.filterOnlyAvaliableUser()
   }
 
   makeButtonActiveReactive() {
     if (this.stateServer.choosenUser.length === 0) {
-        this.activeReactiveButton(false);
-      }
-  }
-
-  removeUserFromChoosenUser(index: number) {
-    this.stateServer.choosenUser.splice(index, 1);
-  }
-
-  removeUserFromListOfAllUsers(index: number) {
-    this.listOfAllUsers.splice(index, 1);
-  }
-
-  addPxToList() {
-    if(this.listOfAllUsers.length === 0) {
-      this.bottom += 0;
+      this.activeReactiveButton(false);
     } else {
-      this.bottom += 58;
-    }
-  }
-
-  removePxFromList() {
-    if(this.listOfAllUsers.length === 0) {
-      this.bottom -= 0;
-    } else {
-      this.bottom -= 58;
+      this.activeReactiveButton(true);
     }
   }
 }

@@ -215,9 +215,13 @@
 }
 
 @media (max-width: 500px) {
-  .main-content{
+  .main-content {
     .btn-container {
       gap: 0.875rem;
+      .login-btn,
+      .guest-btn {
+        padding: 10px 5px;
+      }
     }
     .legal-imprint-container {
       gap: 0;

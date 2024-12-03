@@ -1,11 +1,11 @@
-<div class="message-field-container fontNunito" tabindex="0">
+<div class="message-field-container" tabindex="0">
   @if (chat.currentChannelData != undefined) {
     <textarea (click)="closeEmojiWindow()" [(ngModel)]="textArea" name title="Schreib was Nettes :)"
-    class="input-field fontNunito txt" type="text" placeholder="Nachricht an # {{chat.currentChannelData.channelName}} schreiben"
+    class="input-field txt" type="text" placeholder="Nachricht an # {{chat.currentChannelData.channelName}} schreiben"
     wrap="hard"></textarea>
   }@else {
     <textarea (click)="closeEmojiWindow()" [(ngModel)]="textArea" name title="Schreib was Nettes :)"
-    class="input-field fontNunito txt" type="text" placeholder="Nachricht schreiben"
+    class="input-field txt" type="text" placeholder="Nachricht schreiben"
     wrap="hard"></textarea>
   }
 

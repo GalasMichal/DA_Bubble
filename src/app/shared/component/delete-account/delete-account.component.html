@@ -1,0 +1,32 @@
+<section class="main-content">
+
+  <a class="close-btn"(click)="closeDeleteAccount()">
+    <app-close></app-close>
+  </a>
+    
+  <h1 class="form-title-name">Konto löschen</h1>
+
+
+  <form [formGroup]="deleteForm" (ngSubmit)="confirmPasswort('Das Passwort wurde erfolgreich geändert.')">
+    <div class="input-container"> 
+      <label class="visually-hidden" for="password">Passwort</label>
+        <input name="password" id="password" class="input-field" [type]="isPasswordTopVisible ? 'text' : 'password'" placeholder="Dein Passwort" formControlName="password" autocomplete="on"/>
+        <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordTopVisible, 'eye-open': isPasswordTopVisible}" (click)="togglePasswordVisibilityTop()"></i>
+        <div class="input-icon">
+          <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
+        </div>
+        <div class="warn-txt">
+        @if (deleteForm.controls['password'].invalid && (isFormValid || deleteForm.controls['password'].dirty || deleteForm.controls['password'].touched)) {
+            @if (deleteForm.controls['password'].errors?.['required']) {
+              <span >Password ist ein Pflichtfeld.</span>
+            }
+          }
+        </div>
+      </div>
+      
+
+    <div class="btn-container">
+      <button class="forward-btn" [disabled]="!deleteForm.valid">Bestätigen</button>
+    </div>
+  </form>
+</section>

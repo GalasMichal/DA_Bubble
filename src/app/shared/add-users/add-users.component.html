@@ -24,7 +24,7 @@
   <app-input-add-users (activeButton)="onButtonChanged($event)" ></app-input-add-users>
 
 
-  <button class="add" [disabled]="!activeButton">
+  <button class="add" (click)="addUserToChat()" [disabled]="!activeButton">
     Hinzüfugen
   </button>
 </mat-dialog-content>

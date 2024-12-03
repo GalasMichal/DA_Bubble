@@ -1,12 +1,12 @@
 <section class="main-content">
     <div class="form-title">
       <h1 class="form-title-name">Anmeldung</h1>
-  </div>
+    </div>
 
   <p class="description">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
 
   <!-- form container -->
-  <form [formGroup]="loginForm" (ngSubmit)="loginWithEmailAndPassword()">
+  <form [formGroup]="loginForm" (ngSubmit)="loginWithEmailAndPassword('Du bist angemeldet')">
     <div class="input-container">
       <label class="visually-hidden" for="userEmail">E-Mail-Adresse</label>
       <input class="input-field" id="userEmail" type="email" formControlName="userEmail"
@@ -58,7 +58,7 @@
 
     <div class="btn-container">
       <button class="login-btn" type="submit">Anmelden</button>
-      <a class="guest-btn" (click)="navigateToMainContent()" routerLink="main">Gäste-Login</a>
+      <a class="guest-btn" (click)="navigateToMainContentAsGuest($event, 'Du bist als Gast angemeldet')">Gäste-Login</a>
     </div>
     <!-- pwd recovery link -->
     <a class="btn-password" routerLink='/recovery'>Passwort vergessen?</a>

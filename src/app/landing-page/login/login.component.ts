@@ -17,6 +17,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
+import { User } from '../../models/interfaces/user.model';
 
 @Component({
   selector: 'app-login',
@@ -24,15 +25,13 @@ import { StateControlService } from '../../services/state-control/state-control.
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', './login.component.media.scss'],
   imports: [
-    CommonModule,
-    LogoComponent,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    RouterOutlet,
-    RouterLink,
-    FooterComponent,
+     CommonModule,
+    //  LogoComponent,
+     ReactiveFormsModule,
+     FormsModule,
+     RouterModule,
+     RouterLink,
+    // FooterComponent,
   ],
 })
 export class LoginComponent {
@@ -61,16 +60,17 @@ export class LoginComponent {
   async createNewUserWithGoogle() {
     await this.fb.createGoogleUser();
     this.fb.loadAllBackendData();
-    this.stateControl.showMainContent = true;
-
   }
 
-  async loginWithEmailAndPassword() {
-    this.isFormSubmitted = true;
-    const email = this.loginForm.get('email')?.value;
-    const password = this.loginForm.get('password')?.value;
+  async loginWithEmailAndPassword(text: string) {
+      this.isFormSubmitted = true;
+      const email = this.loginForm.get('userEmail')?.value;
+      const password = this.loginForm.get('password')?.value;
+
     if (this.loginForm.valid) {
-      await this.fb.loginWithEmailAndPassword(email, password).then(() => {
+
+
+      await this.fb.loginWithEmailAndPassword(email, password, text).then(() => {
         console.log(
           'user is eingeloggot',
           this.fb.currentUser()?.uId,
@@ -78,17 +78,15 @@ export class LoginComponent {
           this.fb.currentUser()?.displayName
         );
         this.fb.loadAllBackendData();
-        this.stateControl.showMainContent = true;
       });
     } else {
       console.log('Formular ist ungültig');
     }
   }
 
-  navigateToMainContent() {
-    this.fb.loadAllBackendData();
-    this.stateControl.showMainContent = true;
-    this.router.navigateByUrl('start/main');
+  navigateToMainContentAsGuest(event: Event, text: string) {
+    event.preventDefault()
+    this.fb.signInAsGuest(text)
   }
 
   togglePasswordVisibility() {

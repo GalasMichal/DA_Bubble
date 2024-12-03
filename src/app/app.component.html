@@ -1,24 +1,29 @@
-@if (!stateControl.showMainContent) {
+@if (!stateControl.isUserLoggedIn) {
  
   <div class="wrapper">
-  <app-header-landing></app-header-landing>
-   <div class="router-outlet">
+    <div class="router-outlet">
+      <app-header-landing></app-header-landing>
      <div class="landing-page">
       <div class="main-container">
         <router-outlet> </router-outlet>
       </div>
-      <app-toast [ngClass]="{ 'show-success': stateControl.showSuccess }"></app-toast>
+      <app-toast [ngClass]="{ 'show-success': stateControl.showToast, 'show-error': stateControl.showError}"></app-toast>
+    
+      <div class="new-user-link-responsive">
+        <p>Neu bei DABubble?</p>
+        <button routerLink='/start/register'>Konto erstellen</button>
+      </div>
     </div>
-   </div>
-   <app-footer></app-footer>
+    <app-footer></app-footer>
+  </div>
 
 </div>
 
 }
 
-@if (stateControl.showMainContent) { 
+@if (stateControl.isUserLoggedIn) { 
   <div class="wrapper">
-    <div class="router-outlet">
+    <div class="router-outlet" [ngClass]="{'overflow-y': stateControl.isUserLoggedIn}">
           <router-outlet> </router-outlet>
     </div>
   </div>

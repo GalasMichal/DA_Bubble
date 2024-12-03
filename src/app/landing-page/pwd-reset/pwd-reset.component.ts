@@ -74,14 +74,11 @@ export class PwdResetComponent {
     return password1 === password2 ? null : { passwordMismatch: true };
   }
 
-  onSubmit(text: string) {
+  pwdReset(text: string) {
+
+    const password = this.resetForm.get('password1')?.value    
+    this.fb.confirmPassword(password, text)
     this.isFormValid = true;
-    this.stateControl.showSuccess = true
-    this.stateControl.showSuccessText = text
-    this.stateControl.removeShowSuccess()
-    setTimeout(() => {
-      this.router.navigate(['start']);
-      }, 2200);
   }
 
   openInfoBox() {
@@ -97,4 +94,5 @@ export class PwdResetComponent {
   togglePasswordVisibilityBottom() {
     this.isPasswordBottomVisible = !this.isPasswordBottomVisible;
   }
+  
 }

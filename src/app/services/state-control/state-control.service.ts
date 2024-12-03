@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
+import { User } from '../../models/interfaces/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateControlService {
-  isThreadOpen = false;
-  showSuccess: boolean = false;
-  showArrow: boolean = false
-  showSuccessText: string = ''
-  choosenUser: { userName: string; uId: string }[] = [];
-  showMainContent: boolean = false;
+  // Without this variable you will see specific user when you want to create new channel
+  createChannelActiveInput: boolean = true
+  isThreadOpen:boolean = false;
+  showToast: boolean = false;
+  showArrow: boolean = false;
+  showToastText: string = '';
+  showConfirmationText: string = '';
+  choosenUser: User[] = [];
+  choosenUserFirbase: string[] = [];
+  isUserLoggedIn: boolean = false;
+  showError: boolean = false
 
-  removeShowSuccess() {
+  removeShowToast() {
     setTimeout(() => {
-    this.showSuccess = false
+    this.showToast = false
     this.showArrow = false
+    this.showError = false;
+    this.showToastText = ""
     }, 2000);
   }
 

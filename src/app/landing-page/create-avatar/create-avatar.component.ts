@@ -8,6 +8,8 @@ import { FooterComponent } from '../footer/footer.component';
 import { StorageService } from '../../services/storage/storage.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { StateControlService } from '../../services/state-control/state-control.service';
+import { CloseComponent } from '../../shared/component/close/close.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 interface ProfileAvatar {
   name: string;
@@ -20,9 +22,9 @@ interface ProfileAvatar {
     CommonModule,
     RouterLink,
     RouterModule,
-    LogoComponent,
     BackComponent,
-    FooterComponent,
+    CloseComponent,
+    MatDialogModule,
   ],
   templateUrl: './create-avatar.component.html',
   styleUrls: [
@@ -31,6 +33,7 @@ interface ProfileAvatar {
   ],
 })
 export class CreateAvatarComponent {
+  dialog = inject(MatDialogRef<CreateAvatarComponent>, { optional: true });
   db = inject(FirebaseService);
   st = inject(StorageService);
   user = inject(UserServiceService);
@@ -38,8 +41,10 @@ export class CreateAvatarComponent {
   stateControl = inject(StateControlService)
   selectedAvatar: string = 'assets/media/icons/profile-icons/profile-icon.svg';
   file: any;
+  isSelected: boolean = false;
 
   profileAvatars: ProfileAvatar[] = [
+    { name: 'assets/media/icons/profile-icons/user-1-elise.svg' },
     { name: 'assets/media/icons/profile-icons/user-2-elias.svg' },
     { name: 'assets/media/icons/profile-icons/user-3-frederick.svg' },
     { name: 'assets/media/icons/profile-icons/user-4-steffen.svg' },
@@ -49,6 +54,7 @@ export class CreateAvatarComponent {
 
   chooseAvatar(avatarName: string) {
     this.selectedAvatar = avatarName;
+    this.isSelected = true;
   }
 
   uploadUserAvatar(event: any) {
@@ -57,6 +63,7 @@ export class CreateAvatarComponent {
     this.st.uploadMsg.set(file.name);
     this.file = file;
     console.log('file', file);
+    this.isSelected = true;
   }
 
   readURL(file: any) {
@@ -76,18 +83,27 @@ export class CreateAvatarComponent {
       if (downloadUrl) {
         this.selectedAvatar = downloadUrl;
       }
+    }else {
+
     }
     this.user.updateUserAvatar(this.db.currentUser()!.uId, this.selectedAvatar);
     await this.user.updateCurrentUser(this.db.currentUser()!);
-    this.showSuccess(text)
+    this.showToast(text)
+    this.closeEditAvatar()
   }
-  
-  showSuccess(text: string) {
-    this.stateControl.showSuccess = true
-    this.stateControl.showSuccessText = text
-    this.stateControl.removeShowSuccess()
+
+  showToast(text: string) {
+    this.stateControl.showToast = true
+    this.stateControl.showToastText = text
+    this.stateControl.removeShowToast()
     setTimeout(() => {
       this.router.navigate(['/start/main']);
       }, 2200);
+  }
+
+  closeEditAvatar() {
+    if (this.dialog) {
+      this.dialog.close();
+    }
   }
 }

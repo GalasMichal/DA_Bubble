@@ -1,0 +1,43 @@
+@import "../../../fonts.scss";
+@import "../../../colors.scss";
+@import "../../../styles.scss";
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .arrow-back {
+    width: fit-content;
+    text-decoration: none;
+  }
+  .title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 1.875rem;
+    .form-title-name {
+      color: $primary;
+      font-size: 1.875rem;
+      font-weight: 700;
+    }
+  }
+  .content-section {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 1.875rem;
+    gap: 16px;
+    h2 {
+      color: $primary;
+      font-size: 32px;
+      font-weight: 700;
+    }
+    p {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+}

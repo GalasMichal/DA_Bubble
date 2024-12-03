@@ -1,7 +1,7 @@
 <section class="main-content">
   <div class="form-title ">
 
-        <a class="arrow-back" routerLink="start">
+        <a class="arrow-back" routerLink='/start'>
           <app-back></app-back>
         </a>
 
@@ -32,6 +32,9 @@
             }
             @if (myForm.controls['name'].errors?.['minlength']) {
             <span>Mindestens 4 Buchstaben.</span>
+            }
+            @if (myForm.controls['name'].errors?.['pattern']) {
+              <span>Sonderzeichen sind nicht erlaubt.<br> Es muss Vorname und Nachname sein.</span>
             }
           }
         </div>
@@ -65,27 +68,43 @@
 
         <div class="input-container">
           <label class="visually-hidden" for="name">Passwort</label>
-          <input #name id="password" name="password" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
+          <input #name id="password1" name="password1" [type]="isPasswordTopVisible ? 'text' : 'password'" formControlName="password1"
             class="input-field input-field-pwd-icon" placeholder="Passwort"/>
-            <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+            <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordTopVisible, 'eye-open': isPasswordTopVisible}" (click)="togglePasswordVisibilityTop()" ></i>
             <div class="input-icon">
               <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="e-mail">
             </div>
           
-          <div class="warn-txt warn-txt-hight">
-            @if (myForm.controls['password'].invalid && (isFormSubmitted || myForm.controls['password'].touched ||
-            myForm.controls['password'].dirty)) {
+          <div class="warn-txt">
+            @if (myForm.controls['password1'].invalid && (isFormSubmitted || myForm.controls['password1'].touched ||
+            myForm.controls['password1'].dirty)) {
 
-            @if (myForm.controls['password'].errors?.['required']) {
+            @if (myForm.controls['password1'].errors?.['required']) {
             <span>Password ist ein Pflichtfeld.</span>
             }
-            @if (myForm.controls['password'].errors?.['minlength']) {
+            @if (myForm.controls['password1'].errors?.['minlength']) {
             <span>Mindestens 8 Zeichen erforderlich: ein Klein- u. ein
               Großbuchstabe, eine Zahl und ein Sonderzeichen, siehe Info-box.</span>
             }
-            @if ((myForm.controls['password'].errors?.['pattern']) && !(myForm.controls['password'].errors?.['minlength'])) {
+            @if ((myForm.controls['password1'].errors?.['pattern']) && !(myForm.controls['password1'].errors?.['minlength'])) {
             <span>Mindestanforderungen nicht erfüllt, siehe Info-box.</span>
             }
+            }
+          </div>
+
+        </div>
+        <div class="input-container">
+          <label class="visually-hidden" for="password2">Passwort</label>
+          <input name="password2" id="password2" class="input-field" [type]="isPasswordBottomVisible ? 'text' : 'password'" placeholder="Passwort wiederholen" formControlName="password2" autocomplete="on"/>
+          <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordBottomVisible, 'eye-open': isPasswordBottomVisible}" (click)="togglePasswordVisibilityBottom()"></i>
+          <div class="input-icon">
+            <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
+          </div>
+          <div class="warn-txt">       
+            @if(myForm.errors?.['passwordMismatch'] && (myForm.controls['password2'].dirty || myForm.controls['password2'].touched)) {
+              <span>
+                Passwörter stimmen nicht überein.
+              </span>  
             }
           </div>
         </div>

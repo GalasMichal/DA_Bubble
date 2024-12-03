@@ -2,12 +2,12 @@
   <div class="search">
     <label for="name-input" class="visually-hidden">Name:</label>
     <ul class="added-user">
-      @for (user of stateServer.choosenUser; track $index) {
-        <li>
-          <div class="user-img">
-            <app-avatar></app-avatar>
+      @for (user of this.stateServer.choosenUser; track $index) {
+          <li>
+            <div class="user-img">
+            <app-avatar [user]="user" [userList]="true"></app-avatar>
           </div>
-          <div>{{user.userName}}</div>
+          <div>{{user.displayName}}</div>
           <button class="close-btn" (click)="removeUser($index, $event)">
             <app-close></app-close>
           </button>
@@ -16,15 +16,15 @@
     </ul>
     <input type="text" id="name-input" placeholder="Name eingeben" autocomplete="off" />
   </div>
-
-  <ul class="list-of-user" [ngStyle]="{'bottom': bottom + 'px'}">
-      @for(user of this.listOfAllUsers; track $index) {
-          <li (click)="addUser($index, $event)">
+  <div class="list-of-user-container">
+    <ul class="list-of-user-content">
+      @for(user of this.filterOnlyAvaliableUser(); track $index) {
+        <li (click)="addUser($index, $event, user.uId)">
             <button class="single-user">
               <div class="user-img">
-                <app-avatar></app-avatar>
+                <app-avatar [user]="user" [userList]="true"></app-avatar>
               </div>
-              <div>{{user.userName}}</div>
+              <div>{{user.displayName}}</div>
             </button>
           </li>
         }
@@ -33,5 +33,6 @@
             Du hast alle Benutzer ausgewählt.
           </li>
         }
-  </ul>
+    </ul>  
+  </div>
 </div>

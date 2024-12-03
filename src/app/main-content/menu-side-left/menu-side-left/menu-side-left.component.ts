@@ -10,6 +10,7 @@ import { Router, RouterLink } from '@angular/router';
 import { MessageService } from '../../../services/messages/message.service';
 import { PrivateChat } from '../../../models/interfaces/privateChat.class';
 import { User } from '../../../models/interfaces/user.model';
+import { StateControlService } from '../../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-menu-side-left',
@@ -22,11 +23,12 @@ export class MenuSideLeftComponent {
   isFirstDropdownMenuOpen = false;
   isSecondDropdownMenuOpen = true;
   dialog = inject(MatDialog);
-  db = inject(FirebaseService);
+  fb = inject(FirebaseService);
   chat = inject(ChatRoomService);
   ms = inject(MessageService);
   userService = inject(UserServiceService);
   router = inject(Router);
+  state = inject(StateControlService);
 
   ngOnInit() {
     this.chat.subChannelList();
@@ -34,16 +36,18 @@ export class MenuSideLeftComponent {
   }
 
   openMessage(user: User) {
+    this.state.isThreadOpen = false
     this.userService.messageReceiver = user;
     this.router.navigate(['/start/main/messages']);
     // this.ms.newPrivateMessageChannel(user);
   }
 
   ngOnDestroy(): void {
-    
   }
 
   async toogleDropDown1() {
+    const userId = this.fb.currentUser()!.uId
+    this.chat.checkUserInChannels(userId)
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
   }
 
@@ -52,16 +56,22 @@ export class MenuSideLeftComponent {
   }
 
   addChannel() {
+    this.state.isThreadOpen = false
+    this.state.createChannelActiveInput = false;
     this.dialog.open(ChannelCreateComponent, {
       panelClass: 'channel-create-container',
     });
   }
 
   openChannel(chanId: string) {
+    this.state.isThreadOpen = false
     this.chat.openChatById(chanId);
+    console.log('currentChannelData: ', this.chat.currentChannelData);
+    
   }
 
   writeMessage() {
+    this.state.isThreadOpen = false
     this.router.navigate(['/start/main']);
   }
 }

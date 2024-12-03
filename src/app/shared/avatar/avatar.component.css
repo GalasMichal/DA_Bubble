@@ -1,0 +1,81 @@
+::ng-deep .user-avatar {
+  position: relative;
+}
+::ng-deep .user-avatar img {
+  height: 3.125rem;
+  width: 3.125rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+::ng-deep .user-avatar .online {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+::ng-deep .profile-card app-avatar {
+  position: relative;
+}
+::ng-deep .profile-card app-avatar .user-avatar {
+  display: flex;
+  justify-content: center;
+}
+::ng-deep .profile-card app-avatar .user-avatar img {
+  width: 12.5rem;
+  height: 12.5rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+::ng-deep .profile-card app-avatar .user-avatar .online {
+  display: none;
+}
+
+::ng-deep .single-user {
+  display: flex;
+  align-items: center;
+  gap: 0.9375rem;
+}
+::ng-deep .single-user app-avatar .user-avatar {
+  display: flex;
+  justify-content: center;
+}
+::ng-deep .single-user app-avatar .user-avatar img {
+  height: 3.125rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+::ng-deep .single-user app-avatar .user-avatar .online {
+  height: 17px;
+  width: 17px;
+}
+
+::ng-deep .add-user-card app-avatar .user-avatar {
+  display: flex;
+  justify-content: center;
+}
+::ng-deep .add-user-card app-avatar .user-avatar img {
+  height: 3.125rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+::ng-deep .add-user-card app-avatar .user-avatar .online {
+  height: 17px;
+  width: 17px;
+}
+
+::ng-deep .header-right-container app-avatar .user-avatar {
+  display: flex;
+  justify-content: center;
+}
+::ng-deep .header-right-container app-avatar .user-avatar .avatar {
+  width: 36px;
+  height: 36px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+::ng-deep .header-right-container app-avatar .user-avatar .online {
+  display: none;
+}/*# sourceMappingURL=avatar.component.css.map */

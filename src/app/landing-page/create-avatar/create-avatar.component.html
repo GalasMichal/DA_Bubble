@@ -1,12 +1,13 @@
-<section class="main-content">  
-  <div class="arrow-back-container">
-    <a class="arrow-back" [routerLink]="['/']">
-        <app-back></app-back>
+<section class="main-content">
+  <a class="arrow-back" [routerLink]="['/']">
+      <app-back></app-back>
+  </a>
+  <a class="close-btn" (click)="closeEditAvatar()">
+    <app-close></app-close>
+  </a>
 
-        
-      </a>
-      <h1>Wähle deinen Avatar</h1>
-    </div>
+    <h1 class="title">Wähle deinen Avatar</h1>
+
     <div class="avatar-container">
       <img class="profile-icon" #profileIcon  [src]="selectedAvatar"
         alt="a blank user profile icon">
@@ -31,7 +32,7 @@
     </div>
 
     <div class="btn-container">
-      <button class="forward-btn" (click)="closeCreateAvatar('Konto erfolgreich erstellt!')">Weiter</button>
+      <button class="forward-btn" [disabled]="!isSelected" (click)="closeCreateAvatar('Konto erfolgreich erstellt!')">Weiter</button>
     </div>
 
 </section>
