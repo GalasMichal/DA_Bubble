@@ -4,7 +4,7 @@
 
      <button class="header-left-container">
       @if(user.messageReceiver){
-        <app-avatar [user]="user.messageReceiver"></app-avatar>
+        <app-avatar [userMessageReceiver]="user.messageReceiver"></app-avatar>
       }
 
        <h1> {{ user.messageReceiver?.displayName }}</h1>

@@ -1,4 +1,4 @@
-import { Component, inject, input, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { User } from '../../models/interfaces/user.model';
 import { UserServiceService } from '../../services/user-service/user-service.service';
@@ -23,4 +23,6 @@ export class AvatarComponent {
     channels: [],
     avatarUrl: '',
   };
+
+  @Input() userMessageReceiver: User | undefined = undefined;
 }
