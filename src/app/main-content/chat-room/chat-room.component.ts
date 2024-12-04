@@ -32,7 +32,7 @@ import { DialogGlobalComponent } from '../../shared/component/dialog-global/dial
 })
 export class ChatRoomComponent {
   allUserMessages: Message[] = [];
-  private messageSub: Subscription | undefined;
+
   stateServer = inject(StateControlService);
 
   usersInChat = [
@@ -85,16 +85,9 @@ export class ChatRoomComponent {
   }
 
   ngOnDestroy(): void {
-    if (this.chat.unsubscribe) {
-      this.chat.unsubscribe(); // Unsubscribe bei der Zerstörung
-    }
-    if (this.messageSub) {
-      this.messageSub.unsubscribe(); // Unsubscribe bei der Zerstörung
-    }
-    if (this.chat.unsub) {
-      // Unsubscribe bei der Zerstörung
-      this.chat.unsub();
-    }
+
+  this.chat.unsubscribeAll?.();
+
   }
 
   openAddUsers() {

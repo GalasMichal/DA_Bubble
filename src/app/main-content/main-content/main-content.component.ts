@@ -32,6 +32,8 @@ export class MainContentComponent {
   public db = inject(FirebaseService);
   router = inject(Router);
   private auth = inject(Auth);
+  userService = inject(UserServiceService);
+
 
 
   constructor() {
@@ -47,7 +49,13 @@ export class MainContentComponent {
       } else {
         this.router.navigate(['']);
       }
+
     });
+  }
+
+  ngOnDestroy(): void {
+    this.chat.unsubscribeAll();
+    // this.userService.unsubscribe();
   }
 
 }

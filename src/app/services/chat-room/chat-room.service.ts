@@ -14,9 +14,8 @@ import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
-import { addDoc, DocumentData, QuerySnapshot, where } from 'firebase/firestore';
+import { addDoc, DocumentData, QuerySnapshot, Unsubscribe, where } from 'firebase/firestore';
 import { StateControlService } from '../state-control/state-control.service';
-import { log } from 'node:console';
 import { User } from 'firebase/auth';
 
 @Injectable({
@@ -27,7 +26,9 @@ export class ChatRoomService {
   state = inject(StateControlService);
   private router = inject(Router);
   public currentChannel: string = '';
-  public unsubscribe: any;
+  channelUnsubscribe: Unsubscribe | null = null;
+  messageUnsubscribe: Unsubscribe | null = null;
+  channelDataUnsubscribe: Unsubscribe | null = null;
   public userList: AppUser[] = [];
   // Wszystkie kanaly
   public channelList: Channel[] = [];
@@ -39,11 +40,26 @@ export class ChatRoomService {
 
   public currentChannelData!: Channel;
   public answers: Message[] = [];
+
   public messageAnswerList = signal<Message[]>([]);
   unsub: any;
   public currentMessageId: string | null = null;
 
   constructor() {}
+
+  unsubscribe(subscription: Unsubscribe | null) {
+    if (subscription) {
+      subscription();
+      subscription = null;
+    }
+  }
+
+  // Eine Methode zum Beenden aller Subscriptions
+  unsubscribeAll() {
+    this.unsubscribe(this.channelUnsubscribe);
+    this.unsubscribe(this.messageUnsubscribe);
+    // Weitere Subscriptions hier bei Bedarf hinzufügen
+  }
 
   async addMessageToChannel(message: Message) {
     const channelId = this.currentChannelData.chanId;
@@ -74,6 +90,7 @@ export class ChatRoomService {
     // Aktualisiere das Dokument mit der Firestore-generierten ID als threadId
     await updateDoc(messageDocRef, { threadId: messageId });
   }
+
 
   addAnswerToMessage(messageId: string, answer: Message) {
     const channelId = this.currentChannelData.chanId;
@@ -122,7 +139,9 @@ export class ChatRoomService {
     }
   }
 
+
   subChannelList() {
+    this.unsubscribe(this.channelUnsubscribe);
     this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
       this.channelList = [];
       list.forEach((element) => {
@@ -160,7 +179,8 @@ export class ChatRoomService {
   openChatById(currentChannel: string) {
     this.currentChannel = currentChannel;
     const channelRef = doc(this.firestore, 'channels', currentChannel);
-    this.unsubscribe = onSnapshot(channelRef, (doc) => {
+    this.unsubscribe(this.channelDataUnsubscribe);
+    this.channelDataUnsubscribe = onSnapshot(channelRef, (doc) => {
       if (doc.exists()) {
         const channelData = doc.data() as Channel;
         this.currentChannelData = channelData;
@@ -178,8 +198,8 @@ export class ChatRoomService {
   loadCurrentChatData(currentChannel: string) {
     const channelDocRef = doc(this.firestore, 'channels', currentChannel);
     const messageRef = collection(channelDocRef, 'messages');
-
-    this.unsub = onSnapshot(
+    this.unsubscribe(this.messageUnsubscribe);
+    this.messageUnsubscribe = onSnapshot(
       messageRef,
       (snapshot: QuerySnapshot<DocumentData>) => {
         this.answers = [];
@@ -270,4 +290,5 @@ export class ChatRoomService {
       console.error('Fehler beim Laden der Benutzer:', error);
     }
   }
+
 }
