@@ -14,7 +14,7 @@ import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
-import { addDoc, DocumentData, QuerySnapshot, where } from 'firebase/firestore';
+import { addDoc, DocumentData, QuerySnapshot, Unsubscribe, where } from 'firebase/firestore';
 import { StateControlService } from '../state-control/state-control.service';
 import { User } from 'firebase/auth';
 
