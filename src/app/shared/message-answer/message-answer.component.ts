@@ -171,4 +171,13 @@ export class MessageAnswerComponent {
     }
     
   }
+  
+  getUsersForEmoji(emoji: string | undefined) {     
+    // Filtern der Reaktionen, um nur die Benutzer des angegebenen Emojis zu erhalten
+    const usersForEmoji = this.userMessage!.reactions
+      .filter(e => e.symbol === emoji) // Filtern nach dem Emoji
+      .flatMap(e => e.users); // Benutzer aus der gefundenen Reaktion extrahieren
+  
+    return usersForEmoji.map(user => user.userName).join(', ')
+  }
 }

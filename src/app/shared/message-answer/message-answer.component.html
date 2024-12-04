@@ -36,7 +36,7 @@
             @for( emoji of currentMessage.reactions; track emojis[index]) {
               <button (click)="increaseCounter(emoji.symbol)" class="single-emoij">{{emoji.symbol}} {{emoji.count}}
                 <app-reaction-cloud
-                [name]=""
+                [name]="getUsersForEmoji(emoji.symbol)"
                 [symbol]="emoji.symbol"
                 ></app-reaction-cloud>
               </button>
