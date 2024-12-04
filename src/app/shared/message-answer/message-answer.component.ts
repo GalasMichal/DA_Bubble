@@ -173,11 +173,21 @@ export class MessageAnswerComponent {
   }
   
   getUsersForEmoji(emoji: string | undefined) {     
+    const currentUser = this.fb.currentUser(); // Get current user.
     // Filtern der Reaktionen, um nur die Benutzer des angegebenen Emojis zu erhalten
     const usersForEmoji = this.userMessage!.reactions
       .filter(e => e.symbol === emoji) // Filtern nach dem Emoji
       .flatMap(e => e.users); // Benutzer aus der gefundenen Reaktion extrahieren
-  
-    return usersForEmoji.map(user => user.userName).join(', ')
+      
+      const allUsers =  usersForEmoji.map(user => user.userName);
+      const currentUserEmoji = allUsers.includes(currentUser?.displayName);
+
+      if (currentUserEmoji && allUsers.length === 1) {
+        return 'Du hast reagiert';
+      } else if (currentUserEmoji && allUsers.length > 1) {
+        return `Du und ${allUsers.length - 1} andere Personen haben reagiert`;
+      } else {
+        return `${allUsers.join(', ')} hat/haben reagiert`;
+      }
   }
 }

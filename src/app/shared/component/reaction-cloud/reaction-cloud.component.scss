@@ -7,9 +7,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-inline: 10px;
     .name {
         font-weight: 700;
         line-height: 1.2rem;
+        word-break: break-all;
     }
     .reaction {
         font-weight: 500;
