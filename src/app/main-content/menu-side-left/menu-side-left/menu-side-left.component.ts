@@ -43,7 +43,6 @@ export class MenuSideLeftComponent {
   }
 
   ngOnDestroy(): void {
-
   }
 
   async toogleDropDown1() {
