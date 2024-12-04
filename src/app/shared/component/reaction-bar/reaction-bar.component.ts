@@ -29,6 +29,7 @@ export class ReactionBarComponent {
     // Das ausgewählte Emoji wird an die Elternkomponente weitergeleitet
     const emoji = event.emoji.native; // Nimm an, dass das Emoji im "native"-Feld ist
     this.emojiSelected.emit(emoji);  // Emitiere das Emoji an die Elternkomponente
+ 
   }
  
  

@@ -54,7 +54,8 @@ export class MessageAnswerComponent {
   emojis: { symbol: string; count: number }[] = [];
 
   onEmojiSelected(emoji: string) {
-    const currentUser = this.fb.currentUser()?.displayName;
+   
+    const currentUser = this.fb.currentUser();
 
     // Überprüfe, ob das Emoji bereits existiert
     const existingReaction = this.userMessage?.reactions.find(
@@ -65,9 +66,11 @@ export class MessageAnswerComponent {
       existingReaction.count++; // Erhöhe den Zähler
     } else {
       this.userMessage?.reactions.push({
-        userName: currentUser,
         symbol: emoji,
         count: 1,
+        users: [
+          { userName: currentUser?.displayName, uId: currentUser?.uId },
+        ],
       });
     }
 
@@ -132,4 +135,40 @@ export class MessageAnswerComponent {
     });
   }
 
+  increaseCounter(emoji: string | undefined) {
+    if (!emoji) return; // Exit if emoji is undefined.
+
+    const currentUser = this.fb.currentUser(); // Get current user.
+  
+    // Find the existing reaction object (current emoji the user reacted to).
+    const existingEmoji = this.userMessage?.reactions.find(
+      (e) => e.users.some(user => user.uId === currentUser!.uId)      
+    );
+  
+    if (existingEmoji) {
+      // Remove user from the existing emoji's users list.
+      existingEmoji.users = existingEmoji.users.filter(user => user.uId !== currentUser!.uId);
+      existingEmoji.count--;
+  
+      // If no users are left, remove the reaction completely.
+      if (existingEmoji.count === 0) {
+        this.userMessage!.reactions = this.userMessage!.reactions.filter(e => e !== existingEmoji);
+      }
+    }
+  
+    // Add reaction to the new emoji (if it's different from the current one).
+    const newEmoji = this.userMessage?.reactions.find(e => e.symbol === emoji);
+  
+    if (newEmoji) {
+      newEmoji.count++;
+      newEmoji.users.push({ userName: currentUser!.displayName, uId: currentUser!.uId });
+    } else {
+      this.userMessage?.reactions.push({
+        symbol: emoji,
+        count: 1,
+        users: [{ userName: currentUser!.displayName, uId: currentUser!.uId }],
+      });
+    }
+    
+  }
 }
