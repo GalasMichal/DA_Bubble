@@ -185,9 +185,9 @@ export class MessageAnswerComponent {
       if (currentUserEmoji && allUsers.length === 1) {
         return 'Du hast reagiert';
       } else if (currentUserEmoji && allUsers.length > 1) {
-        return `Du und ${allUsers.length - 1} andere Personen haben reagiert`;
+        return 'Du und andere Personen haben reagiert';
       } else {
-        return `${allUsers.join(', ')} hat/haben reagiert`;
+        return `${allUsers[0]} hat reagiert`;
       }
   }
 }
