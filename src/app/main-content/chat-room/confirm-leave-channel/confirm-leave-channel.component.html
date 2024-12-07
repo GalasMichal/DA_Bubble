@@ -1,1 +1,20 @@
-<p>confirm-leave-channel works!</p>
+<section class="main-content">
+    <button class="close-btn" (click)="closeLeaveChannel()">
+      <app-close></app-close>
+    </button>
+  
+    <div class="content">
+      <h1 class="title-name">Channel verlassen</h1>
+  
+      <p class="description">
+        Bist du es dir sicher, dass du der Channel verlassen möchtest?
+      </p>
+  
+      <div class="btn-container">
+        <button class="login-btn" (click)="confirmLeaveChannel()">
+          Verlassen
+        </button>
+        <a class="guest-btn" (click)="closeLeaveChannel()">Zurück</a>
+      </div>
+    </div>
+  </section>
