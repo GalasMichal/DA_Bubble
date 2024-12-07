@@ -30,7 +30,7 @@ export class ChannelEditComponent {
   channelEditDescription: boolean = false;
   chat = inject(ChatRoomService);
   firestore = inject(Firestore)
-  stateControl = inject(StateControlService)
+  stateServer = inject(StateControlService)
   fb = inject(FirebaseService);
   router = inject(Router);
 
@@ -116,10 +116,10 @@ export class ChannelEditComponent {
       channelDescription: this.newDescription === "" ? this.currentDescription : this.newDescription,
     });
 
-    this.stateControl.showToast = true;
-    this.stateControl.showToastText = text
+    this.stateServer.showToast = true;
+    this.stateServer.showToastText = text
 
-    this.stateControl.removeShowToast();
+    this.stateServer.removeShowToast();
     setTimeout(() => {
       this.dialog.close()
     }, 2200);
@@ -149,6 +149,10 @@ export class ChannelEditComponent {
         confirmDialogRef.close()
       }
     })
+  }
+
+  leaveChannel() {
+    this.stateServer
   }
   
 }
