@@ -73,7 +73,7 @@
 
       <button class="channel-btn" [class.disabled]="isDisabled" (click)="onDeleteChannel(chat.currentChannelData.chanId)">Channel löschen</button>
 
-      <button class="channel-btn" [disabled]="isDisabledCurrentUser" (click)="leaveChannel()" >Channel verlassen</button>
+      <button class="channel-btn" [disabled]="isDisabledCreatedBy" (click)="leaveChannel()" >Channel verlassen</button>
       <button class="change-btn" [class.disabled]="isDisabled" (click)="onUpdateChannel(chat.currentChannelData.chanId, 'Änderungen wurden gespeichert')">Änderungen speichern</button>
     </div>
     <app-toast [ngClass]="{ 'show-success': stateServer.showToast }"></app-toast>
