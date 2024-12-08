@@ -19,7 +19,7 @@ export class ConfirmLeaveChannelComponent {
   fb = inject(FirebaseService);
 
   constructor(
-    public confirmDialogRef: MatDialogRef<ConfirmLeaveChannelComponent>
+    public confirmLeaveDialog: MatDialogRef<ConfirmLeaveChannelComponent>
   ) {}
 
   closeLeaveChannel() {
@@ -28,6 +28,6 @@ export class ConfirmLeaveChannelComponent {
 
   confirmLeaveChannel() {
     const result = true;
-    this.confirmDialogRef.close(result);
+    this.confirmLeaveDialog.close(result);
   }
 }

@@ -13,6 +13,7 @@ import { ConfirmDeleteChannelComponent } from '../confirm-delete-channel/confirm
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../../shared/component/dialog-global/dialog-global.component';
 import { Router } from '@angular/router';
+import { ConfirmLeaveChannelComponent } from '../confirm-leave-channel/confirm-leave-channel.component';
 
 @Component({
   selector: 'app-channel-edit',
@@ -172,11 +173,22 @@ export class ChannelEditComponent {
     }
   }
 
-  async leaveChannel() {
+  leaveChannel() {
     const currentUser = this.fb.currentUser();
-    this.stateServer.choosenUserFirbase = this.stateServer.choosenUserFirbase.filter((user) => user !== currentUser!.uId )
-    await this.chat.updateSpecificPeopleInChannelFromState();
-    this.router.navigate(['/start/main']);
+
+    const confirmLeaveDialog = this.dialogConfirm.open(ConfirmLeaveChannelComponent, {
+      panelClass: 'confirm-leave-channel',
+    });
+    confirmLeaveDialog.afterClosed().subscribe((result: boolean) => {
+      if(result) {
+        this.stateServer.choosenUserFirbase = this.stateServer.choosenUserFirbase.filter((user) => user !== currentUser!.uId )
+        this.chat.updateSpecificPeopleInChannelFromState();
+        this.dialogConfirm.closeAll()
+        this.router.navigate(['/start/main']);
+      } else {
+        confirmLeaveDialog.close();
+      }
+    })
       }
   
 }
