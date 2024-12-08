@@ -13,6 +13,7 @@ import { ConfirmDeleteChannelComponent } from '../confirm-delete-channel/confirm
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../../shared/component/dialog-global/dialog-global.component';
 import { Router } from '@angular/router';
+import { ConfirmLeaveChannelComponent } from '../confirm-leave-channel/confirm-leave-channel.component';
 
 @Component({
   selector: 'app-channel-edit',
@@ -30,7 +31,7 @@ export class ChannelEditComponent {
   channelEditDescription: boolean = false;
   chat = inject(ChatRoomService);
   firestore = inject(Firestore)
-  stateControl = inject(StateControlService)
+  stateServer = inject(StateControlService)
   fb = inject(FirebaseService);
   router = inject(Router);
 
@@ -40,7 +41,15 @@ export class ChannelEditComponent {
   newDescription: string = ""
   counter: number = 0;
   isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId
+  isDisabledCreatedBy = this.chat.currentChannelData.createdBy[0].uId === this.fb.currentUser()?.uId
 
+
+
+  constructor() {
+    if(this.stateServer.createChannelActiveInput) {
+      this.showAllChoosenUsers()
+    }
+  }
 
   closeChannelEdit() {
     this.dialog.close();
@@ -116,10 +125,10 @@ export class ChannelEditComponent {
       channelDescription: this.newDescription === "" ? this.currentDescription : this.newDescription,
     });
 
-    this.stateControl.showToast = true;
-    this.stateControl.showToastText = text
+    this.stateServer.showToast = true;
+    this.stateServer.showToastText = text
 
-    this.stateControl.removeShowToast();
+    this.stateServer.removeShowToast();
     setTimeout(() => {
       this.dialog.close()
     }, 2200);
@@ -150,5 +159,38 @@ export class ChannelEditComponent {
       }
     })
   }
+
+
+  showAllChoosenUsers() {
+    this.stateServer.choosenUser = [];
+    this.stateServer.choosenUserFirbase = []
+
+    if (this.chat.currentChannelData !== undefined){
+      const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
+      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+        const object = listOfAllChoosenUsers[i];
+          this.stateServer.choosenUser.push(object)
+          this.stateServer.choosenUserFirbase.push(object.uId);
+      }
+    }
+  }
+
+  leaveChannel() {
+    const currentUser = this.fb.currentUser();
+
+    const confirmLeaveDialog = this.dialogConfirm.open(ConfirmLeaveChannelComponent, {
+      panelClass: 'confirm-leave-channel',
+    });
+    confirmLeaveDialog.afterClosed().subscribe((result: boolean) => {
+      if(result) {
+        this.stateServer.choosenUserFirbase = this.stateServer.choosenUserFirbase.filter((user) => user !== currentUser!.uId )
+        this.chat.updateSpecificPeopleInChannelFromState();
+        this.dialogConfirm.closeAll()
+        this.router.navigate(['/start/main']);
+      } else {
+        confirmLeaveDialog.close();
+      }
+    })
+      }
   
 }
