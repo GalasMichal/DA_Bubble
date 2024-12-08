@@ -41,6 +41,8 @@ export class ChannelEditComponent {
   newDescription: string = ""
   counter: number = 0;
   isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId
+  isDisabledCurrentUser = this.chat.currentChannelData.createdBy[0].uId === this.fb.currentUser()?.uId
+
 
 
   constructor() {
