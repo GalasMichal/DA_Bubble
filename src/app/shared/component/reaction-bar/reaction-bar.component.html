@@ -66,6 +66,11 @@
     </button>
 
     <!-- EDIT MESSAGE -->
-    <app-message-edit [editText]="editText" [index]="index" [ngClass]="{'show-cloud': showCloud}"></app-message-edit>
+    <app-message-edit 
+    [editText]="editText"
+    (edit)="onEditMessage($event)" 
+    [index]="index" 
+    [ngClass]="{'show-cloud': showCloud}">
+    </app-message-edit>
     <!-- EDIT MESSAGE END-->
 </div>

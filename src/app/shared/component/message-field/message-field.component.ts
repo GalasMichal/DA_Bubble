@@ -27,8 +27,6 @@ export class MessageFieldComponent {
   user = inject(UserServiceService);
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
-
-
   @Input() isThreadAnswerOpen = false;
 
   async sendMessage() {

@@ -20,8 +20,13 @@ export class ReactionBarComponent {
 
   @Input() index: number = 0;
   @Input() editText: string = "";
+  @Output() textChange = new EventEmitter<string>();
   @Output() emojiSelected = new EventEmitter<string>();
   isEmojiPickerVisibleMessage: boolean[] = [false];
+
+  onEditMessage(newText: string) {
+    this.textChange.emit(newText);
+  }
 
   addEmoji(event: any) {
     // Das ausgewählte Emoji wird in der aktuellen Komponente in newEmoji gespeichert

@@ -51,6 +51,12 @@ export class ChatRoomComponent {
   sumrestOfUser: number = 0;
   counter: number = 0;
 
+  textArea = ''; // Variable, die mit dem textarea verbunden ist
+
+  onTextUpdate(newText: string) {
+    this.textArea = newText; // Aktualisiere die Variable, wenn Änderungen eintreffen
+  }
+
 
   constructor() {
   }
