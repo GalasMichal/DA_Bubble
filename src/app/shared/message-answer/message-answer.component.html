@@ -8,7 +8,7 @@
       <app-time-separator [userDate]="currentMessage" class="full-width"></app-time-separator>
      }
       <div class="user-message-container" [ngClass]="{'user-message-container-right': meUser}">
-        <app-reaction-bar class="reaction-bar" [ngClass]="{'reaction-bar-right': meUser}" [index]="index" (emojiSelected)="onEmojiSelected($event)"></app-reaction-bar>
+        <app-reaction-bar class="reaction-bar" [editText]="currentMessage.text" [ngClass]="{'reaction-bar-right': meUser}" [index]="index" (emojiSelected)="onEmojiSelected($event)"></app-reaction-bar>
         <img class="avatar" src={{currentMessage.messageSendBy.avatarUrl}} alt="profil-image"/>
 
         <div class="message-content" [ngClass]="{'message-content-right': meUser}">

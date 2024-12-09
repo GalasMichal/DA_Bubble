@@ -9,8 +9,10 @@ import { Component, Input } from '@angular/core';
 })
 export class MessageEditComponent {
   @Input() index: number = 0;
+  @Input() editText: string = "";
+
   
-  editThisMessage() {
-    console.log('editThisMessage()', this.index);
+  editThisMessage(editText: string) {
+    console.log('editThisMessage()', editText);
   }
 }

@@ -19,6 +19,7 @@ export class ReactionBarComponent {
   newEmoji: string = "";
 
   @Input() index: number = 0;
+  @Input() editText: string = "";
   @Output() emojiSelected = new EventEmitter<string>();
   isEmojiPickerVisibleMessage: boolean[] = [false];
 
