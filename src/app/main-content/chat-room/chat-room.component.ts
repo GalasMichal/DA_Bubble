@@ -55,6 +55,8 @@ export class ChatRoomComponent {
 
   onTextUpdate(newText: string) {
     this.textArea = newText; // Aktualisiere die Variable, wenn Änderungen eintreffen
+    console.log('newText: ', newText);
+    
   }
 
 

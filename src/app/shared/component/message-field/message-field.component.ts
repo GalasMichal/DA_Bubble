@@ -28,6 +28,7 @@ export class MessageFieldComponent {
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
   @Input() isThreadAnswerOpen = false;
+  @Input() textToEdited = ''
 
   async sendMessage() {
 
