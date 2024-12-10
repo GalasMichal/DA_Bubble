@@ -5,6 +5,7 @@ import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
+import { text } from 'stream/consumers';
 
 @Component({
   selector: 'app-reaction-bar',
@@ -20,12 +21,14 @@ export class ReactionBarComponent {
 
   @Input() index: number = 0;
   @Input() editText: string = "";
-  @Output() textChange = new EventEmitter<string>();
+  @Input() messageId: string = "";
+
+  @Output() textChange = new EventEmitter<{ textToEdit: string; messageId: string }>();
   @Output() emojiSelected = new EventEmitter<string>();
   isEmojiPickerVisibleMessage: boolean[] = [false];
 
-  onEditMessage(newText: string) {
-    this.textChange.emit(newText);
+  onEditMessage(event: { textToEdit: string, messageId: string }) {
+    this.textChange.emit({ textToEdit: event.textToEdit, messageId: event.messageId });    
   }
 
   addEmoji(event: any) {

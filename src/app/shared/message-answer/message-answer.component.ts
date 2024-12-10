@@ -48,15 +48,14 @@ export class MessageAnswerComponent {
   @Input() threadAnswerOpen: boolean = false;
   @Input() userMessage: Message | null = null;
   @Input() answer: Message | null = null;
-  
-  @Output() finalChange = new EventEmitter<string>();
+  @Output() finalChange = new EventEmitter<{textToEdit: string; messageId: string }>();
 
   currentMessage: Message | null = null;
 
   emojis: { symbol: string; count: number }[] = [];
 
-  onReactionBarChange(newText: string) {
-    this.finalChange.emit(newText); // Weiterleitung an den Parent
+  onReactionBarChange(event: { textToEdit: string, messageId: string}) {
+    this.finalChange.emit({textToEdit: event.textToEdit, messageId: event.messageId}); // Weiterleitung an den Parent
   }
 
   onEmojiSelected(emoji: string) {

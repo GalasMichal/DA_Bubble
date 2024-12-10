@@ -68,6 +68,7 @@
     <!-- EDIT MESSAGE -->
     <app-message-edit 
     [editText]="editText"
+    [messageId]="messageId"
     (edit)="onEditMessage($event)" 
     [index]="index" 
     [ngClass]="{'show-cloud': showCloud}">

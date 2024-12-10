@@ -10,7 +10,8 @@
       <div class="user-message-container" [ngClass]="{'user-message-container-right': meUser}">
         <app-reaction-bar 
         class="reaction-bar" 
-        [editText]="currentMessage.text" 
+        [editText]="currentMessage.text"
+        [messageId]="currentMessage.threadId"
         [ngClass]="{'reaction-bar-right': meUser}" 
         [index]="index" 
         (emojiSelected)="onEmojiSelected($event)"

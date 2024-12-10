@@ -11,10 +11,11 @@ export class MessageEditComponent {
   @Input() index: number = 0;
 
   @Input() editText: string = "";
-  @Output() edit = new EventEmitter<string>();
+  @Input() messageId: string = "";
+  @Output() edit = new EventEmitter<{ textToEdit: string; messageId: string }>();
 
   
-  editThisMessage(newMessage: string) {
-    this.edit.emit(newMessage)
+  editThisMessage(textToEdit: string, messageId: string) {
+    this.edit.emit({ textToEdit, messageId})    
   }
 }
