@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, SimpleChanges } from '@angular/core';
 import { HeaderComponent } from '../../header/header.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -28,7 +28,11 @@ export class MessageFieldComponent {
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
   @Input() isThreadAnswerOpen = false;
-  @Input() textToEdited = ''
+  @Input() textAreaEdit = ''
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    this.textArea = changes['textAreaEdit'].currentValue;
+  }
 
   async sendMessage() {
 
