@@ -11,6 +11,7 @@
         <app-reaction-bar 
         class="reaction-bar" 
         [editText]="currentMessage.text"
+        [channelId]="currentMessage.chatId"
         [messageId]="currentMessage.threadId"
         [ngClass]="{'reaction-bar-right': meUser}" 
         [index]="index" 

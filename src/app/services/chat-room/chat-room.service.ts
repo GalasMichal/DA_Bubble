@@ -91,7 +91,7 @@ export class ChatRoomService {
     await updateDoc(messageDocRef, { threadId: messageId });
   }
 
-
+  
   addAnswerToMessage(messageId: string, answer: Message) {
     const channelId = this.currentChannelData.chanId;
     const messageCollectionRef = collection(

@@ -21,14 +21,15 @@ export class ReactionBarComponent {
 
   @Input() index: number = 0;
   @Input() editText: string = "";
+  @Input() channelId: string = ""
   @Input() messageId: string = "";
 
-  @Output() textChange = new EventEmitter<{ textToEdit: string; messageId: string }>();
+  @Output() textChange = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
   @Output() emojiSelected = new EventEmitter<string>();
   isEmojiPickerVisibleMessage: boolean[] = [false];
 
-  onEditMessage(event: { textToEdit: string, messageId: string }) {
-    this.textChange.emit({ textToEdit: event.textToEdit, messageId: event.messageId });    
+  onEditMessage(event: { textToEdit: string, channelId:string, messageId: string }) {
+    this.textChange.emit({ textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId });    
   }
 
   addEmoji(event: any) {

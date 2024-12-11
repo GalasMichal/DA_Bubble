@@ -29,6 +29,8 @@ export class MessageFieldComponent {
   isEmojiPickerVisible: boolean = false;
   @Input() isThreadAnswerOpen = false;
   @Input() textAreaEdit: string = '';
+  @Input() channelIdEdit: string = '';
+
   @Input() textAreaEditId: string = '';
   @Input() textAreaIsEdited: boolean = false
   

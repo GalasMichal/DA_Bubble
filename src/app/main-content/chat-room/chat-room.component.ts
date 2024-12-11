@@ -53,11 +53,14 @@ export class ChatRoomComponent {
 
   textArea: string = ""; // Variable, die mit dem textarea verbunden ist
   textAreaId: string = "";
+  channelId: string =""
   textAreaEdited: boolean = false;
   
-  onTextUpdate(event: { textToEdit: string, messageId: string }) {
+  onTextUpdate(event: { textToEdit: string, channelId:string, messageId: string }) {
     this.textArea = event.textToEdit; // Aktualisiere die Variable, wenn Änderungen eintreffen
+    this.channelId = event.channelId;
     this.textAreaId = event.messageId;
+
     this.textAreaEdited = true;
   }
 
