@@ -28,8 +28,9 @@ export class MessageFieldComponent {
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
   @Input() isThreadAnswerOpen = false;
-  @Input() textAreaEdit = '';
-  @Input() textAreaEditId = '';
+  @Input() textAreaEdit: string = '';
+  @Input() textAreaEditId: string = '';
+  @Input() textAreaIsEdited: boolean = false
   
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['textAreaEdit'] && changes['textAreaEdit'].currentValue !== undefined) {
@@ -38,9 +39,9 @@ export class MessageFieldComponent {
   }
 
   async sendMessage() {
-
+    
     const currentUser = this.fb.currentUser();
-    if(this.textAreaEdit !== "") {
+    if(this.textAreaIsEdited) {
       console.log('Test');
     }
     if(currentUser){
@@ -72,6 +73,7 @@ export class MessageFieldComponent {
         this.textArea = '';
       }
     }
+    this.textAreaIsEdited = false;
   }
 
   addEmoji(event: any) {
