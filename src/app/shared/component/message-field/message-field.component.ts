@@ -1,4 +1,4 @@
-import { Component, inject, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
 import { HeaderComponent } from '../../header/header.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
@@ -32,19 +32,30 @@ export class MessageFieldComponent {
   @Input() channelIdEdit: string = '';
 
   @Input() textAreaEditId: string = '';
-  @Input() textAreaIsEdited: boolean = false
+  @Input() textAreaIsEdited: boolean = false;
+  @Output() editStatusChange = new EventEmitter<boolean>();
   
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['textAreaEdit'] && changes['textAreaEdit'].currentValue !== undefined) {
       this.textArea = changes['textAreaEdit'].currentValue;
     }
+    // if (changes['textAreaIsEdited']) {
+    //   console.log('textAreaIsEdited hat sich geändert:', changes['textAreaIsEdited'].currentValue);
+    // }
   }
 
   async sendMessage() {
+    console.log(this.textAreaIsEdited);
     
     const currentUser = this.fb.currentUser();
+
     if(this.textAreaIsEdited) {
-      console.log('Test');
+      this.chat.updateMessageTextInFirestore(this.textArea, this.channelIdEdit, this.textAreaEditId)
+      this.textArea = '';
+      this.textAreaIsEdited = false;
+      // this.editStatusChange.emit(false); // Parent-Komponente informieren
+      return
     }
     if(currentUser){
       const newMessage: Message = {
@@ -61,21 +72,23 @@ export class MessageFieldComponent {
         storageData: '',
         taggedUser: [],
       };
+
       if(this.textArea !== "") {
         if(this.isThreadAnswerOpen) {
           const selectedMessage = this.user.selectedUserMessage();
           if(selectedMessage) {
+            this.textArea = '';
+
               this.chat.addAnswerToMessage(selectedMessage.threadId, newMessage);
-          }
-        }else {
-          const messageDocRef = await this.chat.addMessageToChannel(newMessage);
-          await this.chat.updateMessageThreadId(messageDocRef);
+            }
+          }else {
+            this.textArea = '';
+            const messageDocRef = await this.chat.addMessageToChannel(newMessage);
+            await this.chat.updateMessageThreadId(messageDocRef);
           // Leere das Eingabefeld nach dem Senden
         }
-        this.textArea = '';
       }
     }
-    this.textAreaIsEdited = false;
   }
 
   addEmoji(event: any) {

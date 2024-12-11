@@ -108,6 +108,22 @@ export class ChatRoomService {
     console.log('Answer verschickt', answer);
   }
 
+  async updateMessageTextInFirestore(textAreaEdited:string, chanId:string, textAreaEditId:string) {
+    // const channelId = this.chat.currentChannelData.chanId;
+    // const messageId = this.userMessage!.threadId;
+
+    const messageDocRef = doc(
+      this.firestore,
+      'channels',
+      chanId,
+      'messages',
+      textAreaEditId
+    );
+
+    // Aktualisiere die Reaktionen im Firestore-Dokument
+    await updateDoc(messageDocRef, {text: textAreaEdited});
+  }
+
   async getAnswersFromMessage() {
     if (this.currentMessageId) {
       const messageId = this.currentMessageId;
