@@ -21,7 +21,7 @@
 }
 
 @if (stateControl.isUserLoggedIn) { 
-  <div (click)="stateControl.globalEdit = false" [ngClass]="{'edit-container': stateControl.globalEdit}"></div>
+  <div [ngClass]="{'edit-container': stateControl.globalEdit}"></div>
   <div class="wrapper">
     <div class="router-outlet" [ngClass]="{'overflow-y': stateControl.isUserLoggedIn}">
           <router-outlet> </router-outlet>
