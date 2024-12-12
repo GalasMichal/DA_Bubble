@@ -15,6 +15,12 @@ app-message-field {
   padding: 0 25px 25px 25px;
 }
 
+.edit-field {
+  z-index: 3;
+  background: $white;
+  background-clip: content-box; /* <---- */
+}
+
 .welcome-container {
   display: flex;
   min-height: 8.8125rem;

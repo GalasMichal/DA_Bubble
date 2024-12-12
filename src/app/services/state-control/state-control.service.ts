@@ -16,6 +16,7 @@ export class StateControlService {
   choosenUserFirbase: string[] = [];
   isUserLoggedIn: boolean = false;
   showError: boolean = false
+  globalEdit: boolean = false
 
   removeShowToast() {
     setTimeout(() => {

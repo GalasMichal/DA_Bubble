@@ -46,6 +46,7 @@ export class ChatRoomComponent {
   channelData: Channel | null = null;
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
+  stateControl = inject(StateControlService)
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   sumrestOfUser: number = 0;
@@ -65,6 +66,7 @@ export class ChatRoomComponent {
     setTimeout(() => {
     this.textAreaEdited = true;
     },);
+    this.stateServer.globalEdit = true
   }
 
   constructor() {

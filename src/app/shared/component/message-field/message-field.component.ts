@@ -9,6 +9,7 @@ import { Message } from '../../../models/interfaces/message.model';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { Timestamp } from '@angular/fire/firestore';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
+import { StateControlService } from '../../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-message-field',
@@ -23,6 +24,7 @@ import { UserServiceService } from '../../../services/user-service/user-service.
 })
 export class MessageFieldComponent {
   chat = inject(ChatRoomService);
+  stateControl = inject(StateControlService)
   fb = inject(FirebaseService);
   user = inject(UserServiceService);
   textArea: string = '';
@@ -40,9 +42,6 @@ export class MessageFieldComponent {
     if (changes['textAreaEdit'] && changes['textAreaEdit'].currentValue !== undefined) {
       this.textArea = changes['textAreaEdit'].currentValue;
     }
-    // if (changes['textAreaIsEdited']) {
-    //   console.log('textAreaIsEdited hat sich geändert:', changes['textAreaIsEdited'].currentValue);
-    // }
   }
 
   async sendMessage() {
@@ -54,7 +53,7 @@ export class MessageFieldComponent {
       this.chat.updateMessageTextInFirestore(this.textArea, this.channelIdEdit, this.textAreaEditId)
       this.textArea = '';
       this.textAreaIsEdited = false;
-      // this.editStatusChange.emit(false); // Parent-Komponente informieren
+      this.stateControl.globalEdit = false
       return
     }
     if(currentUser){

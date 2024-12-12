@@ -126,7 +126,7 @@
     }
 
   </div>
-  <app-message-field 
+  <app-message-field [ngClass]="{'edit-field': stateControl.globalEdit}"
   [textAreaEdit]="textArea" 
   [channelIdEdit]="channelId" 
   [textAreaEditId]="textAreaId" 
