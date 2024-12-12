@@ -51,7 +51,7 @@ export class MessageFieldComponent {
     
     const currentUser = this.fb.currentUser();
 
-    if(this.textAreaIsEdited) {
+    if(this.textAreaIsEdited && this.textArea !== '') {
       this.chat.updateMessageTextInFirestore(this.textArea, this.channelIdEdit, this.textAreaEditId)
       this.textArea = '';
       this.textAreaIsEdited = false;
