@@ -21,7 +21,7 @@ export interface Message {
   answerCount: number;
   lastAnswer: string;
   editCount: number;
-  lastEdit: string;
+  lastEdit: Timestamp;
   storageData: string;
   taggedUser: string[];
   date?: string;

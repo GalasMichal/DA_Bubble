@@ -30,6 +30,9 @@
             </div>
             
             <div class="messages-main-chat" [ngClass]="{'messages-main-chat-right': meUser}">{{currentMessage.text}}
+              @if(currentMessage.lastEdit) {
+                <span class="message-edited">Bearbeitet {{ currentMessage.lastEdit.toDate() | date: 'H:mm' }}</span>
+              }
             </div>
 
             <div class="answer-container">

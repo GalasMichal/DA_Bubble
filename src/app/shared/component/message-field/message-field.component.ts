@@ -69,7 +69,7 @@ export class MessageFieldComponent {
         answerCount: 0,
         lastAnswer: '',
         editCount: 0,
-        lastEdit: '',
+        lastEdit: Timestamp.now(),
         storageData: '',
         taggedUser: [],
       };
