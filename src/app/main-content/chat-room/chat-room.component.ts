@@ -46,11 +46,28 @@ export class ChatRoomComponent {
   channelData: Channel | null = null;
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
+  stateControl = inject(StateControlService)
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   sumrestOfUser: number = 0;
   counter: number = 0;
 
+  textArea: string = ""; // Variable, die mit dem textarea verbunden ist
+  textAreaId: string = "";
+  channelId: string = "";
+  textAreaEdited: boolean = false;
+  
+  onTextUpdate(event: { textToEdit: string, channelId:string, messageId: string }) {
+    this.textArea = event.textToEdit; // Aktualisiere die Variable, wenn Änderungen eintreffen
+    this.channelId = event.channelId;
+    this.textAreaId = event.messageId;
+    this.textAreaEdited = false;
+    
+    setTimeout(() => {
+    this.textAreaEdited = true;
+    },);
+    this.stateServer.globalEdit = true
+  }
 
   constructor() {
   }

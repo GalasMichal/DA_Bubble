@@ -1,4 +1,4 @@
-import { Component, inject, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
 import { ReactionBarComponent } from '../component/reaction-bar/reaction-bar.component';
 import { TimeSeparatorComponent } from './time-separator/time-separator.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -48,10 +48,15 @@ export class MessageAnswerComponent {
   @Input() threadAnswerOpen: boolean = false;
   @Input() userMessage: Message | null = null;
   @Input() answer: Message | null = null;
+  @Output() finalChange = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
 
   currentMessage: Message | null = null;
 
   emojis: { symbol: string; count: number }[] = [];
+
+  onReactionBarChange(event: { textToEdit: string, channelId:string, messageId: string}) {
+    this.finalChange.emit({textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId}); // Weiterleitung an den Parent
+  }
 
   onEmojiSelected(emoji: string) {
     this.increaseCounter(emoji)

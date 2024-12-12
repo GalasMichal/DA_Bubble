@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-message-edit',
@@ -9,8 +9,14 @@ import { Component, Input } from '@angular/core';
 })
 export class MessageEditComponent {
   @Input() index: number = 0;
+
+  @Input() editText: string = "";
+  @Input() channelId: string = ""
+  @Input() messageId: string = "";
+  @Output() edit = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
+
   
-  editThisMessage() {
-    console.log('editThisMessage()', this.index);
+  editThisMessage(textToEdit: string, channelId:string, messageId: string) {
+    this.edit.emit({ textToEdit, channelId, messageId})    
   }
 }

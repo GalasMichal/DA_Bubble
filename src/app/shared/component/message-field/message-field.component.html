@@ -1,10 +1,19 @@
-<div class="message-field-container" tabindex="0">
+<div class="message-field-container" [ngClass]="{'edit-field': stateControl.globalEdit}" tabindex="0">
+  <div class="edit-field-info"  [ngClass]="{'show-edit-filed': stateControl.globalEdit}">
+    <span>Nachricht bearbeiten</span>
+    <button class="close-btn" (click)="closeEdit()">
+      <app-close></app-close>
+    </button>
+  </div>
+  
   @if (chat.currentChannelData != undefined) {
-    <textarea (click)="closeEmojiWindow()" [(ngModel)]="textArea" name title="Schreib was Nettes :)"
+    <textarea [ngClass]="{'textarea-edit': stateControl.globalEdit}"
+    (click)="closeEmojiWindow()" [(ngModel)]="textArea"
     class="input-field txt" type="text" placeholder="Nachricht an # {{chat.currentChannelData.channelName}} schreiben"
     wrap="hard"></textarea>
   }@else {
-    <textarea (click)="closeEmojiWindow()" [(ngModel)]="textArea" name title="Schreib was Nettes :)"
+    <textarea [ngClass]="{'textarea-edit': stateControl.globalEdit}"
+    (click)="closeEmojiWindow()" [(ngModel)]="textArea"
     class="input-field txt" type="text" placeholder="Nachricht schreiben"
     wrap="hard"></textarea>
   }

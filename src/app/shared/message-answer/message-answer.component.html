@@ -8,7 +8,17 @@
       <app-time-separator [userDate]="currentMessage" class="full-width"></app-time-separator>
      }
       <div class="user-message-container" [ngClass]="{'user-message-container-right': meUser}">
-        <app-reaction-bar class="reaction-bar" [ngClass]="{'reaction-bar-right': meUser}" [index]="index" (emojiSelected)="onEmojiSelected($event)"></app-reaction-bar>
+        <app-reaction-bar 
+        class="reaction-bar" 
+        [editText]="currentMessage.text"
+        [channelId]="currentMessage.chatId"
+        [messageId]="currentMessage.threadId"
+        [ngClass]="{'reaction-bar-right': meUser}" 
+        [index]="index" 
+        (emojiSelected)="onEmojiSelected($event)"
+        (textChange)="onReactionBarChange($event)"
+        >
+      </app-reaction-bar>
         <img class="avatar" src={{currentMessage.messageSendBy.avatarUrl}} alt="profil-image"/>
 
         <div class="message-content" [ngClass]="{'message-content-right': meUser}">
@@ -18,8 +28,11 @@
               <button (click)="openProfileUserSingle(currentMessage.messageSendBy.uId)"> {{currentMessage.messageSendBy.displayName}}</button>
               <span>{{ currentMessage.timestamp.toDate() | date: 'H:mm' }} Uhr</span>
             </div>
-
+            
             <div class="messages-main-chat" [ngClass]="{'messages-main-chat-right': meUser}">{{currentMessage.text}}
+              @if(currentMessage.lastEdit) {
+                <span class="message-edited">Bearbeitet {{ currentMessage.lastEdit.toDate() | date: 'H:mm' }}</span>
+              }
             </div>
 
             <div class="answer-container">

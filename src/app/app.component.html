@@ -1,5 +1,4 @@
 @if (!stateControl.isUserLoggedIn) {
- 
   <div class="wrapper">
     <div class="router-outlet">
       <app-header-landing></app-header-landing>
@@ -16,12 +15,13 @@
     </div>
     <app-footer></app-footer>
   </div>
-
+  
 </div>
 
 }
 
 @if (stateControl.isUserLoggedIn) { 
+  <div [ngClass]="{'edit-container': stateControl.globalEdit}"></div>
   <div class="wrapper">
     <div class="router-outlet" [ngClass]="{'overflow-y': stateControl.isUserLoggedIn}">
           <router-outlet> </router-outlet>
