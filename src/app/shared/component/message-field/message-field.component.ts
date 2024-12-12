@@ -10,6 +10,7 @@ import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { Timestamp } from '@angular/fire/firestore';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
 import { StateControlService } from '../../../services/state-control/state-control.service';
+import { CloseComponent } from '../close/close.component';
 
 @Component({
   selector: 'app-message-field',
@@ -18,6 +19,7 @@ import { StateControlService } from '../../../services/state-control/state-contr
     FormsModule,
     PickerComponent,
     CommonModule,
+    CloseComponent
   ],
   templateUrl: './message-field.component.html',
   styleUrl: './message-field.component.scss',
@@ -88,6 +90,12 @@ export class MessageFieldComponent {
         }
       }
     }
+  }
+
+  closeEdit() {
+    this.stateControl.globalEdit = false
+    this.textArea = ""
+    this.textAreaIsEdited = false;
   }
 
   addEmoji(event: any) {

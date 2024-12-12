@@ -62,7 +62,7 @@ export class ChatRoomComponent {
     this.channelId = event.channelId;
     this.textAreaId = event.messageId;
     this.textAreaEdited = false;
-    console.log('TEST');
+    
     setTimeout(() => {
     this.textAreaEdited = true;
     },);

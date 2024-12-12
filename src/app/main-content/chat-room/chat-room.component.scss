@@ -17,8 +17,7 @@ app-message-field {
 
 .edit-field {
   z-index: 3;
-  background: $white;
-  background-clip: content-box; /* <---- */
+  background: rgba(0, 0, 0, 0);
 }
 
 .welcome-container {

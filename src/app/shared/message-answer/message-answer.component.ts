@@ -56,7 +56,6 @@ export class MessageAnswerComponent {
 
   onReactionBarChange(event: { textToEdit: string, channelId:string, messageId: string}) {
     this.finalChange.emit({textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId}); // Weiterleitung an den Parent
-    console.log('TEST');
   }
 
   onEmojiSelected(emoji: string) {

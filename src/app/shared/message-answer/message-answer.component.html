@@ -28,7 +28,7 @@
               <button (click)="openProfileUserSingle(currentMessage.messageSendBy.uId)"> {{currentMessage.messageSendBy.displayName}}</button>
               <span>{{ currentMessage.timestamp.toDate() | date: 'H:mm' }} Uhr</span>
             </div>
-
+            
             <div class="messages-main-chat" [ngClass]="{'messages-main-chat-right': meUser}">{{currentMessage.text}}
             </div>
 
