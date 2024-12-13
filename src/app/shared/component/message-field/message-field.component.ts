@@ -59,6 +59,8 @@ export class MessageFieldComponent {
       return
     }
     if(currentUser){
+      console.log(this.chat.answers);
+      
       const newMessage: Message = {
         text: this.textArea,
         chatId: this.chat.currentChannelData.chanId,

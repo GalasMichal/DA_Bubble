@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ReactionBarComponent } from '../component/reaction-bar/reaction-bar.component';
 import { TimeSeparatorComponent } from './time-separator/time-separator.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -80,6 +80,7 @@ export class MessageAnswerComponent {
     if (this.currentMessage?.messageSendBy.uId === this.fb.currentUser()?.uId) {
       this.meUser = true;
     }
+
   }
 
   updateCurrentMessage() {
