@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
@@ -8,12 +8,11 @@ import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from '../../models/interfaces/channel.model';
 import { Message } from '../../models/interfaces/message.model';
-import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { AvatarComponent } from '../../shared/avatar/avatar.component';
-import { log } from 'console';
+// import { log } from 'console';
 import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../shared/component/dialog-global/dialog-global.component';
@@ -51,12 +50,21 @@ export class ChatRoomComponent {
   fb = inject(FirebaseService);
   sumrestOfUser: number = 0;
   counter: number = 0;
-
+  
   textArea: string = ""; // Variable, die mit dem textarea verbunden ist
   textAreaId: string = "";
   channelId: string = "";
   textAreaEdited: boolean = false;
-  
+  @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
+    
+
+  ngAfterViewChecked(): void {
+    if (this.scrollToBottom?.nativeElement) {
+      this.scrollToBottom.nativeElement.scrollTop = 
+        this.scrollToBottom.nativeElement.scrollHeight;
+    }
+  }
+    
   onTextUpdate(event: { textToEdit: string, channelId:string, messageId: string }) {
     this.textArea = event.textToEdit; // Aktualisiere die Variable, wenn Änderungen eintreffen
     this.channelId = event.channelId;
@@ -69,8 +77,6 @@ export class ChatRoomComponent {
     this.stateServer.globalEdit = true
   }
 
-  constructor() {
-  }
 
   closeChannelEdit() {
     this.dialogConfirm.closeAll()
@@ -140,4 +146,6 @@ export class ChatRoomComponent {
       panelClass: 'profile-single-user-container',
     });
   }
+
+
 }

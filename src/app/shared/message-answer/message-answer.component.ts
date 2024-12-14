@@ -1,16 +1,13 @@
-import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ReactionBarComponent } from '../component/reaction-bar/reaction-bar.component';
 import { TimeSeparatorComponent } from './time-separator/time-separator.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
-import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 import { CommonModule, DatePipe } from '@angular/common';
 import { Message } from '../../models/interfaces/message.model';
-import { doc, Timestamp, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { Firestore } from '@angular/fire/firestore';
-import { User } from '../../models/interfaces/user.model';
 import { ReactionCloudComponent } from '../component/reaction-cloud/reaction-cloud.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
@@ -24,8 +21,6 @@ import { ProfileSingleUserComponent } from '../profile-single-user/profile-singl
     CommonModule,
     ReactionBarComponent,
     TimeSeparatorComponent,
-    // EmojiComponent,
-    // PickerComponent,
     DatePipe,
     ReactionCloudComponent,
   ],
@@ -70,7 +65,7 @@ export class MessageAnswerComponent {
     }
   }
 
-  constructor() {}
+  constructor() { }
 
   async ngOnInit() {
     await this.chat.getAnswersFromMessage();

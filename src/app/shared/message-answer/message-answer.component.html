@@ -30,7 +30,7 @@
             </div>
             
             <div class="messages-main-chat" [ngClass]="{'messages-main-chat-right': meUser}">{{currentMessage.text}}
-              @if(currentMessage.lastEdit) {
+              @if(currentMessage.editCount > 0) {
                 <span class="message-edited">Bearbeitet {{ currentMessage.lastEdit.toDate() | date: 'H:mm' }}</span>
               }
             </div>

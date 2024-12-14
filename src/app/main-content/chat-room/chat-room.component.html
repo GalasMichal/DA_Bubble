@@ -52,7 +52,7 @@
       </button>
     </div>
   </header>
-  <div class="chat-main-container">
+  <div class="chat-main-container" #scrollToBottom>
 
     <div class="welcome-container">
 
@@ -115,14 +115,14 @@
   </div>
 
     <!-- <app-loader></app-loader> -->
-    @for (singleMessage of this.chat.answers; track this.chat.answers; let index = $index) {
-      <app-message-answer
-      (click)="showId(this.chat)" 
-      [userMessage]="singleMessage"
-      [index]="index"
-      (finalChange)="onTextUpdate($event)"
-      >
-    </app-message-answer>
+    @for (singleMessage of this.chat.answers; track this.chat.answers; let index = $index, let first = $first, last = $last) {
+        <app-message-answer
+        (click)="showId(this.chat)" 
+        [userMessage]="singleMessage"
+        [index]="index"
+        (finalChange)="onTextUpdate($event)"
+        >
+      </app-message-answer>
     }
 
   </div>

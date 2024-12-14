@@ -131,6 +131,7 @@ export class ChatRoomService {
     await updateDoc(messageDocRef, {
       text: textAreaEdited,
       lastEdit: Timestamp.now(),
+      editCount: 1
     });
   }
 
