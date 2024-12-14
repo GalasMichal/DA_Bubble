@@ -55,13 +55,13 @@ export class ChatRoomComponent {
   textAreaId: string = "";
   channelId: string = "";
   textAreaEdited: boolean = false;
-  @ViewChild('targetObserver') targetObserver?: ElementRef;
+  @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
     
 
   ngAfterViewChecked(): void {
-    if (this.targetObserver?.nativeElement) {
-      this.targetObserver.nativeElement.scrollTop = 
-        this.targetObserver.nativeElement.scrollHeight;
+    if (this.scrollToBottom?.nativeElement) {
+      this.scrollToBottom.nativeElement.scrollTop = 
+        this.scrollToBottom.nativeElement.scrollHeight;
     }
   }
     
