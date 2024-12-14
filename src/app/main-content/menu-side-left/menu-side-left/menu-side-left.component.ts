@@ -11,6 +11,7 @@ import { MessageService } from '../../../services/messages/message.service';
 import { PrivateChat } from '../../../models/interfaces/privateChat.class';
 import { User } from '../../../models/interfaces/user.model';
 import { StateControlService } from '../../../services/state-control/state-control.service';
+import { log } from 'console';
 
 @Component({
   selector: 'app-menu-side-left',
@@ -67,8 +68,19 @@ export class MenuSideLeftComponent {
     this.state.isThreadOpen = false
     this.chat.openChatById(chanId);
     console.log('currentChannelData: ', this.chat.currentChannelData);
-    
   }
+
+  sortListOfUser() {
+    const sortAllUser = this.userService.userList
+    sortAllUser.sort((a, b) => {
+      if(a.uId === this.fb.currentUser()?.uId) return -1
+      if(b.uId === this.fb.currentUser()?.uId) return 1
+
+      return a.displayName.localeCompare(b.displayName)
+    })
+    return sortAllUser
+  };
+    
 
   writeMessage() {
     this.state.isThreadOpen = false
