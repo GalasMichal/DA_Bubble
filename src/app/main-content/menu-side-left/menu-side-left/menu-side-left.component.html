@@ -85,7 +85,7 @@
           @if(isSecondDropdownMenuOpen){
 
             <ul>
-            @for(user of this.userService.userList; track $index) {
+            @for(user of this.sortListOfUser(); track $index) {
               @if(user.uId === this.fb.currentUser()?.uId) {
                 <li>
                   <button (click)="openMessage(user)" class="single-user">
