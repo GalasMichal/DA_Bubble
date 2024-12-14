@@ -1,4 +1,4 @@
-<section>
+<section #targetObserver>
  @if(chat.currentChannelData) {
   <header>
 
@@ -115,14 +115,27 @@
   </div>
 
     <!-- <app-loader></app-loader> -->
-    @for (singleMessage of this.chat.answers; track this.chat.answers; let index = $index) {
-      <app-message-answer
-      (click)="showId(this.chat)" 
-      [userMessage]="singleMessage"
-      [index]="index"
-      (finalChange)="onTextUpdate($event)"
-      >
-    </app-message-answer>
+    @for (singleMessage of this.chat.answers; track this.chat.answers; let index = $index, let first = $first, last = $last) {
+      @if (!last) {
+        <app-message-answer
+        (click)="showId(this.chat)" 
+        [userMessage]="singleMessage"
+        [index]="index"
+        (finalChange)="onTextUpdate($event)"
+        >
+      </app-message-answer>
+    }
+
+      @if (last) {
+
+        <app-message-answer #targetObserver [id]="'last-list'"
+        (click)="showId(this.chat)" 
+        [userMessage]="singleMessage"
+        [index]="index"
+        (finalChange)="onTextUpdate($event)"
+        >
+      </app-message-answer>
+    }
     }
 
   </div>

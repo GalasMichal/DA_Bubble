@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, inject, ViewChild, viewChildren, ViewChildren } from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
@@ -56,7 +56,9 @@ export class ChatRoomComponent {
   textAreaId: string = "";
   channelId: string = "";
   textAreaEdited: boolean = false;
-  
+    
+    // This lifecycle hook is triggered after view changes (including after bindings are checked)
+    
   onTextUpdate(event: { textToEdit: string, channelId:string, messageId: string }) {
     this.textArea = event.textToEdit; // Aktualisiere die Variable, wenn Änderungen eintreffen
     this.channelId = event.channelId;
@@ -69,8 +71,6 @@ export class ChatRoomComponent {
     this.stateServer.globalEdit = true
   }
 
-  constructor() {
-  }
 
   closeChannelEdit() {
     this.dialogConfirm.closeAll()
@@ -140,4 +140,7 @@ export class ChatRoomComponent {
       panelClass: 'profile-single-user-container',
     });
   }
+
+  @ViewChild('targetObserver') targetObserver?: ElementRef;
+
 }
