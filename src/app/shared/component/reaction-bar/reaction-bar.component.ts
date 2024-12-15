@@ -28,6 +28,8 @@ export class ReactionBarComponent {
   @Input() editText: string = "";
   @Input() channelId: string = ""
   @Input() messageId: string = "";
+  @Input() createdById: string = "";
+
 
   @Output() textChange = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
   @Output() emojiSelected = new EventEmitter<string>();
@@ -38,7 +40,9 @@ export class ReactionBarComponent {
   
 
   ngOnInit() {
-
+      if (this.createdById === this.fb.currentUser()?.uId) {
+        this.meUser = true;
+      }
   }
 
   onEditMessage(event: { textToEdit: string, channelId:string, messageId: string }) {
