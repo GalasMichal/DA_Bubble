@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { MessageEditComponent } from '../message-edit/message-edit.component';
 import { CommonModule } from '@angular/common';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
@@ -6,16 +6,21 @@ import { StateControlService } from '../../../services/state-control/state-contr
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
 import { text } from 'stream/consumers';
+import { FirebaseService } from '../../../services/firebase/firebase.service';
+import { Message } from '../../../models/interfaces/message.model';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-reaction-bar',
   standalone: true,
-  imports: [MessageEditComponent, CommonModule, EmojiComponent, PickerComponent],
+  imports: [MessageEditComponent, CommonModule, PickerComponent],
   templateUrl: './reaction-bar.component.html',
   styleUrl: './reaction-bar.component.scss'
 })
 export class ReactionBarComponent {
   state = inject(StateControlService)
+  firestore = inject(Firestore);
+  fb = inject(FirebaseService);
   showCloud:boolean = false 
   newEmoji: string = "";
 
@@ -27,6 +32,14 @@ export class ReactionBarComponent {
   @Output() textChange = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
   @Output() emojiSelected = new EventEmitter<string>();
   isEmojiPickerVisibleMessage: boolean[] = [false];
+ 
+  meUser: boolean = false;
+  currentMessage: Message | null = null;
+  
+
+  ngOnInit() {
+
+  }
 
   onEditMessage(event: { textToEdit: string, channelId:string, messageId: string }) {
     this.textChange.emit({ textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId });    
