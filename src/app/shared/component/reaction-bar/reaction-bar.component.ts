@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { FormsModule } from '@angular/forms';
-import { text } from 'stream/consumers';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { Message } from '../../../models/interfaces/message.model';
 import { Firestore } from '@angular/fire/firestore';
