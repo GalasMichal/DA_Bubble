@@ -13,6 +13,7 @@
         [editText]="currentMessage.text"
         [channelId]="currentMessage.chatId"
         [messageId]="currentMessage.threadId"
+        [createdById]="currentMessage.messageSendBy.uId"
         [ngClass]="{'reaction-bar-right': meUser}" 
         [index]="index" 
         (emojiSelected)="onEmojiSelected($event)"
