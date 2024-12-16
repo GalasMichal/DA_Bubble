@@ -3,12 +3,14 @@
 @import "./../../../../fonts.scss";
 
 .side-nav-wrapper {
-  padding: 2rem 1.875rem;
-  height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 2rem 1.875rem;
   gap: 1.5625rem;
   overflow: hidden auto;
+  width: 95%;
+  height: 96%;
+  margin-top: 10px;
   .devspace {
     display: flex;
     justify-content: space-between;
