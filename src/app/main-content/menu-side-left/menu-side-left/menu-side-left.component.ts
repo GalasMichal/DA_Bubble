@@ -67,7 +67,6 @@ export class MenuSideLeftComponent {
   openChannel(chanId: string) {
     this.state.isThreadOpen = false
     this.chat.openChatById(chanId);
-    console.log('currentChannelData: ', this.chat.currentChannelData);
   }
 
   sortListOfUser() {
