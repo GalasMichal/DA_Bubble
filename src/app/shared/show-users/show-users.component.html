@@ -1,0 +1,27 @@
+<mat-dialog-content class="add-user-card">
+  <div class="user">
+    <div class="user-title">
+      <h1>Mitglieder</h1>
+      <button class="close-btn" (click)="closeAddUsers()">
+        <app-close></app-close>
+      </button>
+    </div>
+
+    <ul class="added-user">
+      @for (user of this.stateServer.choosenUser; track $index) {
+      <button>
+        <li>
+          <div class="user-img">
+            <app-avatar [user]="user" [userList]="true"></app-avatar>
+          </div>
+          <div>{{ user.displayName }}</div>
+        </li>
+      </button>
+      }
+    </ul>
+  </div>
+
+  <button class="add" (click)="addUserToChat()" [disabled]="!activeButton">
+    Mitglider hinzüfugen
+  </button>
+</mat-dialog-content>
