@@ -9,6 +9,8 @@ import { User } from '../../models/interfaces/user.model';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { Firestore } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileSingleUserComponent } from '../profile-single-user/profile-single-user.component';
 
 @Component({
   selector: 'app-direct-message',
@@ -24,4 +26,14 @@ export class DirectMessageComponent {
   router = inject(Router);
   user = inject(UserServiceService);
   fb = inject(FirebaseService)
+  userService = inject(UserServiceService);
+    readonly userDialog = inject(MatDialog);
+  
+
+    async openProfileUserSingle(userId: string) {
+      await this.userService.showProfileUserSingle(userId)
+      this.userDialog.open(ProfileSingleUserComponent, {
+        panelClass: 'profile-single-user-container',
+      });
+    }
 }
