@@ -62,19 +62,24 @@
     }
   }
   .add {
-    max-width: 9.375rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 3.125rem;
-    margin-left: auto;
-    background: $primary;
-    color: $white;
+    background: $white;
+    color: $black;
     border-radius: $b-radius-1;
+    gap: 1rem;
     &:hover {
-      background: $primary-hover;
+      background: $bg-color;
+      color: $primary-hover;
     }
-    &[disabled] {
-      cursor: auto;
-      background-color: $gray;
+    &:hover svg path {
+      fill: $primary;
+    }
+    &:hover .add-user {
+      scale: 1.1;
     }
   }
 }
