@@ -75,11 +75,19 @@
       background: $bg-color;
       color: $primary-hover;
     }
+    &.disabled {
+      cursor: auto;
+      background-color: $gray;
+      color: $white;
+    }
     &:hover svg path {
       fill: $primary;
     }
     &:hover .add-user {
       scale: 1.1;
+    }
+    &.disabled .add-user {
+      display: none;
     }
   }
 }
