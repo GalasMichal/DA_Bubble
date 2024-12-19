@@ -27,18 +27,20 @@
     </button>
 
     <div class="header-right-container">
-      <ul class="user-container">
-        @for (user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
-          @if($index < 3){
-            <li>
-              <app-avatar [user]="user" [userList]="true"></app-avatar>
-            </li>
+      <button class="user-container" (click)="openShowUsres()">
+        <ul class="user-container-list">
+          @for (user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
+            @if($index < 3){
+              <li>
+                <app-avatar [user]="user" [userList]="true"></app-avatar>
+              </li>
+            }
           }
-        }
-        @if(restOfUser() > 0) {
-          <div class=""> + {{ restOfUser() }}</div>
-        }
-      </ul>
+          @if(restOfUser() > 0) {
+            <div class=""> + {{ restOfUser() }}</div>
+          }
+        </ul>
+      </button>
       <button (click)="onOpenAddUsers()" class="add-user" [class.disabled]="chat.currentChannelData.createdBy[0].uId !== fb.currentUser()?.uId">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="20" fill="#ECEEFE"/>

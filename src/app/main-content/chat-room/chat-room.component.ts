@@ -16,6 +16,7 @@ import { AvatarComponent } from '../../shared/avatar/avatar.component';
 import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../shared/component/dialog-global/dialog-global.component';
+import { ShowUsersComponent } from '../../shared/show-users/show-users.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -120,6 +121,15 @@ export class ChatRoomComponent {
     });
   }
 
+  openShowUsres() {
+    // this.stateServer.createChannelActiveInput = true
+    this.dialog.open(ShowUsersComponent, {
+      panelClass: 'show-users-container', // Custom class for profile dialog
+    });
+
+    this.showAllChoosenUsers()
+  }
+
   restOfUser() {
     return this.chat.currentUserChannelsSpecificPeopleObject.length - 3;
   }
@@ -147,5 +157,20 @@ export class ChatRoomComponent {
     });
   }
 
+  showAllChoosenUsers() {
+    this.stateServer.choosenUser = [];
+    this.stateServer.choosenUserFirbase = []
 
+    if (this.chat.currentChannelData !== undefined){
+      const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
+      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+        const object = listOfAllChoosenUsers[i];
+        if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
+          this.stateServer.choosenUser.push(object)
+          this.stateServer.choosenUserFirbase.push(object.uId);
+        }
+
+      }
+    }
+  }
 }
