@@ -14,6 +14,24 @@
   }
 }
 
+button {
+  background: none;
+  border: solid 1px transparent;
+  border-radius: $b-radius-2;
+  height: fit-content;
+  transition: all 175ms ease-in-out;
+  margin-block: auto;
+  margin-right: 20px;
+  &:hover,
+  &:focus-visible {
+    background: $primary-light;
+    outline: none;
+  }
+  &:hover svg path {
+    fill: $primary-hover;
+  }
+}
+
 ::ng-deep app-main-content,
 header {
   app-logo {
@@ -25,6 +43,36 @@ header {
     &:focus {
       border: solid 0.0625rem $secondary;
       outline: $secondary;
+    }
+    .responsive {
+      display: none;
+    }
+  }
+}
+
+::ng-deep app-main-content,
+header {
+  app-logo {
+    display: flex;
+    justify-content: center;
+    border: solid 0.0625rem transparent;
+    cursor: pointer;
+    width: 22.875rem;
+    &:focus {
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
+    }
+    .responsive {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  ::ng-deep app-main-content,
+  header {
+    app-logo {
+      justify-content: left;
     }
   }
 }

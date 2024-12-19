@@ -68,6 +68,9 @@ header {
   justify-content: space-between;
   height: 6rem;
   box-shadow: 0px 11px 20px -23px rgba(0, 0, 0, 0.45);
+  .responsive {
+    display: none;
+  }
   .header-left-container {
     display: flex;
     align-items: center;
@@ -150,5 +153,11 @@ header {
         scale: 1;
       }
     }
+  }
+}
+
+@media (max-width: 800px) {
+    .show-responsive {
+      display: flex;
   }
 }

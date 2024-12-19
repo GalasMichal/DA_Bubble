@@ -15,8 +15,9 @@ export class StateControlService {
   choosenUser: User[] = [];
   choosenUserFirbase: string[] = [];
   isUserLoggedIn: boolean = false;
-  showError: boolean = false
-  globalEdit: boolean = false
+  showError: boolean = false;
+  globalEdit: boolean = false;
+  responsiveChat: boolean = false
 
   removeShowToast() {
     setTimeout(() => {

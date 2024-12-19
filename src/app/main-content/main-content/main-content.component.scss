@@ -114,7 +114,16 @@
     .sidenav {
       width: 100%;
     }
+    .show-responsive-sidenav {
+      display: none;
+    }
     .main-content {
+      display: none;
+    }
+    .show-responsive-main-content {
+      display: flex;
+    }
+    .side-menu-btn {
       display: none;
     }
   }
