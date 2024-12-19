@@ -108,3 +108,14 @@
   max-width: 30.3125rem;
   width: 100%;
 }
+
+@media (max-width: 800px) {
+  .wrapper {
+    .sidenav {
+      width: 100%;
+    }
+    .main-content {
+      display: none;
+    }
+  }
+}

@@ -12,11 +12,12 @@ import { PrivateChat } from '../../../models/interfaces/privateChat.class';
 import { User } from '../../../models/interfaces/user.model';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { log } from 'console';
+import { SearchComponent } from '../../../shared/search/search.component';
 
 @Component({
   selector: 'app-menu-side-left',
   standalone: true,
-  imports: [CommonModule, AvatarComponent],
+  imports: [CommonModule, AvatarComponent, SearchComponent],
   templateUrl: './menu-side-left.component.html',
   styleUrl: './menu-side-left.component.scss',
 })

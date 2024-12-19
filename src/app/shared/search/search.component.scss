@@ -2,42 +2,76 @@
 @import "./../../../styles.scss";
 
 .search-container {
-    position: relative;
-    height: 3.375rem;
-    max-width: 56.25rem;
-    flex: 1;
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      margin: -1px;
-      border: 0;
-      padding: 0;
-      
-      white-space: nowrap;
-      clip-path: inset(100%);
-      clip: rect(0 0 0 0);
-      overflow: hidden;
+  position: relative;
+  height: 3.375rem;
+  max-width: 56.25rem;
+  flex: 1;
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+  }
+  input {
+    width: 100%;
+    height: 100%;
+    border-radius: $b-radius-1;
+    padding-left: 1.25rem;
+    border: 1px solid transparent;
+    text-overflow: ellipsis;
+    &:focus {
+      border: 1px solid $secondary;
+      outline: $secondary;
     }
-    input {
-      width: 100%;
-      height: 100%;
-      border-radius: $b-radius-1;
-      padding-left: 1.25rem;
-      border: 1px solid transparent;
-      text-overflow: ellipsis;
-      &:focus {
-        border: 1px solid $secondary;
-        outline: $secondary;
-      }
-      &::-webkit-search-cancel-button{
-        appearance: none;
-      }
-    }
-    img {
-      position: absolute;
-      top: 50%;
-      right: 20px;
-      transform: translateY(-50%);
+    &::-webkit-search-cancel-button {
+      appearance: none;
     }
   }
+  img {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+  }
+}
+
+::ng-deep .main-content-container {
+  .sidenav .side-nav-wrapper {
+    .search-container {
+      display: none
+    }
+  }
+}
+
+
+@media (max-width: 800px) {
+  ::ng-deep header {
+    .search-container {
+      display: none;
+    }
+  }
+  ::ng-deep .main-content-container {
+    .sidenav .side-nav-wrapper {
+      .search-container {
+        display: flex;
+        position: relative;
+        max-width: 56.25rem;
+        flex: 0;
+        input {
+          // Czemu tu musi byc heigh?
+          height: 3.375rem !important;
+          width: 100%;
+          height: 100%;
+          
+        }
+      }
+    }
+  }
+}
