@@ -66,6 +66,10 @@ header {
     .responsive {
       display: none;
     }
+    .responsive svg {
+      max-width: 26vw;
+      max-height: 26vh;
+    }
   }
 }
 
