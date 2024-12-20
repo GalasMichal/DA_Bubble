@@ -3,6 +3,7 @@
 @import "./../../../../fonts.scss";
 
 .side-nav-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 2rem 1.875rem;
@@ -200,7 +201,29 @@
   .side-nav-wrapper {
     padding: 1rem 0.5rem;
     .devspace {
-      display: none;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      bottom: 20px;
+      right: 10px;
+      width: 60px;
+      height: 60px;
+      box-shadow: $shadow;
+      background: $secondary;
+      border-radius: 50%;
+      button {
+        &:hover {
+          background: none;
+        }
+      }
+      img,
+      .responsive {
+        display: none;
+      }
+      button svg path {
+          fill: $white;
+      }
     }
   }
 }
