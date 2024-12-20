@@ -10,4 +10,11 @@
     </svg>
 </button>
 
-<img src="/assets/media/icons/logo-animation.svg" alt="DABubble logo">
+<div class="responsive" [ngClass]="{'show-responsive': stateServer.responsiveChat}">
+    <img src="assets/media/icons/workspace-logo.svg" alt="logo navbar" srcset="">
+    <h2>Devspace</h2>
+</div>
+
+   
+
+<img [ngClass]="{'hide-responsive': stateServer.responsiveChat}" src="/assets/media/icons/logo-animation.svg" alt="DABubble logo">
