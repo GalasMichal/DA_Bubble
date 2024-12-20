@@ -57,7 +57,8 @@ header {
     justify-content: center;
     border: solid 0.0625rem transparent;
     cursor: pointer;
-    width: 22.875rem;
+    width: 100%;
+    max-width: 22.875rem;
     &:focus {
       border: solid 0.0625rem $secondary;
       outline: $secondary;
