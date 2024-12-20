@@ -40,7 +40,7 @@
         </button>
 
       </div>
-      <div class="channels-content fontNunito" [class.animate]="isFirstDropdownMenuOpen">
+      <div class="channels-content" [class.animate]="isFirstDropdownMenuOpen">
         <ul>
           @for (channel of this.chat.currentUserChannels; track $index) {
             <li class="channels-inner-position">

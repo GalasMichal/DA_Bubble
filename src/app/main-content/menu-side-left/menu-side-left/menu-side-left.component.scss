@@ -222,7 +222,17 @@
         display: none;
       }
       button svg path {
-          fill: $white;
+        fill: $white;
+      }
+    }
+  }
+
+  .channels-content {
+    ul {
+      li {
+        button {
+          padding: 0.25rem 0rem;
+        }
       }
     }
   }
