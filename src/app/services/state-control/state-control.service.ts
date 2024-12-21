@@ -6,7 +6,7 @@ import { User } from '../../models/interfaces/user.model';
 })
 export class StateControlService {
   // Without this variable you will see specific user when you want to create new channel
-  createChannelActiveInput: boolean = true
+  createChannelActiveInput: boolean = true;
   isThreadOpen:boolean = false;
   showToast: boolean = false;
   showArrow: boolean = false;
