@@ -19,7 +19,7 @@ export class StateControlService {
   globalEdit: boolean = false;
   responsiveChat: boolean = false;
   responsiveArrow: boolean = false;
-
+  responsiveMenu: boolean = false;
 
   removeShowToast() {
     setTimeout(() => {
