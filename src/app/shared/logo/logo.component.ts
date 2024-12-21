@@ -13,8 +13,14 @@ import { StateControlService } from '../../services/state-control/state-control.
 export class LogoComponent {
     stateServer = inject(StateControlService);  
 
-    showMenu() {
-      this.stateServer.responsiveArrow = false;
-      this.stateServer.responsiveChat = false;
+    showMenu() {      
+      if(this.stateServer.isThreadOpen) {
+        this.stateServer.responsiveChat = true;
+        this.stateServer.isThreadOpen = false;
+      } else {
+        this.stateServer.responsiveArrow = false;
+        this.stateServer.responsiveMenu = false;
+        this.stateServer.responsiveChat = false;
+      }
     }
 }
