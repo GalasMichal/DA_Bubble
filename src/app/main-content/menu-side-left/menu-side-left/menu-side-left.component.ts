@@ -12,11 +12,12 @@ import { PrivateChat } from '../../../models/interfaces/privateChat.class';
 import { User } from '../../../models/interfaces/user.model';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { log } from 'console';
+import { SearchComponent } from '../../../shared/search/search.component';
 
 @Component({
   selector: 'app-menu-side-left',
   standalone: true,
-  imports: [CommonModule, AvatarComponent],
+  imports: [CommonModule, AvatarComponent, SearchComponent],
   templateUrl: './menu-side-left.component.html',
   styleUrl: './menu-side-left.component.scss',
 })
@@ -39,6 +40,9 @@ export class MenuSideLeftComponent {
   openMessage(user: User) {
     this.state.isThreadOpen = false
     this.userService.messageReceiver = user;
+    this.state.responsiveChat = true;
+    this.state.responsiveArrow = true;
+    this.state.responsiveMenu = true;
     this.router.navigate(['/start/main/messages']);
     // this.ms.newPrivateMessageChannel(user);
   }
@@ -63,8 +67,11 @@ export class MenuSideLeftComponent {
       panelClass: 'channel-create-container',
     });
   }
-
+  
   openChannel(chanId: string) {
+    this.state.responsiveChat = true;
+    this.state.responsiveArrow = true;
+    this.state.responsiveMenu = true;
     this.state.isThreadOpen = false
     this.chat.openChatById(chanId);
   }

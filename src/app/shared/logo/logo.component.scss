@@ -2,14 +2,84 @@
 @import "./../../../colors.scss";
 
 ::ng-deep header {
-    app-logo {
-        display: flex;
-        border: solid 0.0625rem transparent;
-        width: fit-content;
-        cursor: pointer;
-        &:focus {
-            border: solid 0.0625rem $secondary;
-            outline: $secondary;
-        }
+  app-logo {
+    display: flex;
+    border: solid 0.0625rem transparent;
+    width: fit-content;
+    cursor: pointer;
+    &:focus {
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
     }
+  }
+}
+
+button {
+  background: none;
+  border: solid 1px transparent;
+  border-radius: $b-radius-2;
+  height: fit-content;
+  transition: all 175ms ease-in-out;
+  margin-block: auto;
+  margin-right: 20px;
+  &:hover,
+  &:focus-visible {
+    background: $primary-light;
+    outline: none;
+  }
+  &:hover svg path {
+    fill: $white;
+  }
+}
+
+::ng-deep app-main-content,
+header {
+  app-logo {
+    display: flex;
+    justify-content: center;
+    border: solid 0.0625rem transparent;
+    cursor: pointer;
+    width: 22.875rem;
+    &:focus {
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
+    }
+    .responsive {
+      display: none;
+      gap: 1rem;
+      align-items: center;
+    }
+  }
+}
+
+::ng-deep app-main-content,
+header {
+  app-logo {
+    display: flex;
+    justify-content: center;
+    border: solid 0.0625rem transparent;
+    cursor: pointer;
+    width: 100%;
+    max-width: 22.875rem;
+    &:focus {
+      border: solid 0.0625rem $secondary;
+      outline: $secondary;
+    }
+    .responsive {
+      display: none;
+    }
+    .responsive svg {
+      max-width: 26vw;
+      max-height: 26vh;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  ::ng-deep app-main-content,
+  header {
+    app-logo {
+      justify-content: left;
+    }
+  }
 }

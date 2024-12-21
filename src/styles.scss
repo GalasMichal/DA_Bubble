@@ -253,7 +253,6 @@ app-toast {
   overflow-y: hidden !important;
 }
 
-
 :disabled {
   cursor: auto !important;
   background-color: $gray !important;
@@ -325,4 +324,15 @@ app-toast {
 ::-webkit-scrollbar-thumb:hover {
   background: $primary-hover;
   border-radius: $b-radius-3;
+}
+
+//////////////////////////////////////
+//////////////////////////////////////
+@media (max-width: 800px) {
+  .show-responsive {
+    display: flex !important;
+  }
+  .hide-responsive {
+    display: none !important;
+  }
 }

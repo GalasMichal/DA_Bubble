@@ -6,7 +6,7 @@ import { User } from '../../models/interfaces/user.model';
 })
 export class StateControlService {
   // Without this variable you will see specific user when you want to create new channel
-  createChannelActiveInput: boolean = true
+  createChannelActiveInput: boolean = true;
   isThreadOpen:boolean = false;
   showToast: boolean = false;
   showArrow: boolean = false;
@@ -15,15 +15,18 @@ export class StateControlService {
   choosenUser: User[] = [];
   choosenUserFirbase: string[] = [];
   isUserLoggedIn: boolean = false;
-  showError: boolean = false
-  globalEdit: boolean = false
+  showError: boolean = false;
+  globalEdit: boolean = false;
+  responsiveChat: boolean = false;
+  responsiveArrow: boolean = false;
+  responsiveMenu: boolean = false;
 
   removeShowToast() {
     setTimeout(() => {
-    this.showToast = false
-    this.showArrow = false
+    this.showToast = false;
+    this.showArrow = false;
     this.showError = false;
-    this.showToastText = ""
+    this.showToastText = "";
     }, 2000);
   }
 

@@ -87,6 +87,7 @@ export class MessageAnswerComponent {
     this.chat.currentMessageId = userMessage.threadId;
     await this.chat.getAnswersFromMessage();
     this.state.isThreadOpen = true;
+    this.state.responsiveChat = false;
     this.userService.setThreadMessage(userMessage); // Nachricht setzen
     this.updateCurrentMessage();
   }

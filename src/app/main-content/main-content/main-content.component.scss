@@ -108,3 +108,26 @@
   max-width: 30.3125rem;
   width: 100%;
 }
+
+@media (max-width: 800px) {
+  .wrapper {
+    .sidenav {
+      width: 100%;
+    }
+    .show-responsive-sidenav {
+      display: none;
+    }
+    .main-content {
+      display: none;
+    }
+    .show-responsive-main-content {
+      display: flex;
+    }
+    .side-menu-btn {
+      display: none;
+    }
+    .thread-container {
+      max-width: 100%;
+    }
+  }
+}
