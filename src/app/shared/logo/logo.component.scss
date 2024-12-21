@@ -1,6 +1,12 @@
 @import "./../../../styles.scss";
 @import "./../../../colors.scss";
 
+::ng-deep app-header-landing header {
+  .responsive {
+    display: none;
+  }
+}
+
 ::ng-deep header {
   app-logo {
     display: flex;
