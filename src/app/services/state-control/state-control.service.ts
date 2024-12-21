@@ -23,10 +23,10 @@ export class StateControlService {
 
   removeShowToast() {
     setTimeout(() => {
-    this.showToast = false
-    this.showArrow = false
+    this.showToast = false;
+    this.showArrow = false;
     this.showError = false;
-    this.showToastText = ""
+    this.showToastText = "";
     }, 2000);
   }
 

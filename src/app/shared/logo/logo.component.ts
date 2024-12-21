@@ -14,7 +14,7 @@ export class LogoComponent {
     stateServer = inject(StateControlService);  
 
     showMenu() {
-      this.stateServer.responsiveArrow = false
-      this.stateServer.responsiveChat = false
+      this.stateServer.responsiveArrow = false;
+      this.stateServer.responsiveChat = false;
     }
 }
