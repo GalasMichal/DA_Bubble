@@ -37,16 +37,26 @@ export class MenuSideLeftComponent {
     this.userService.subUserList();
   }
 
-  openMessage(user: User) {
+ async openMessage(user: User) {
     this.state.isThreadOpen = false;
     this.userService.messageReceiver = user;
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
+
+  // Prüfen, ob ein privater Chat bereits existiert
+  const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
+  console.log('chatID', existingChatId);
+
+  if (existingChatId) {
+    // Wenn der Chat existiert, zur spezifischen Nachricht navigieren
+    this.router.navigate(['/start/main/messages', existingChatId]);
+  } else {
+
     this.router.navigate(['/start/main/messages']);
     // this.ms.newPrivateMessageChannel(user);
   }
-
+  }
   ngOnDestroy(): void {}
 
   async toogleDropDown1() {
@@ -66,7 +76,7 @@ export class MenuSideLeftComponent {
       panelClass: 'channel-create-container',
     });
   }
-  
+
   openChannel(chanId: string) {
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
@@ -85,7 +95,7 @@ export class MenuSideLeftComponent {
     })
     return sortAllUser
   };
-    
+
 
   writeMessage() {
     this.state.isThreadOpen = false;

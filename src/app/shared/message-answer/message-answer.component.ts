@@ -23,6 +23,7 @@ import { ProfileSingleUserComponent } from '../profile-single-user/profile-singl
     TimeSeparatorComponent,
     DatePipe,
     ReactionCloudComponent,
+    
   ],
   templateUrl: './message-answer.component.html',
   styleUrl: './message-answer.component.scss',

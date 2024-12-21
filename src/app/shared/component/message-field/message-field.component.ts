@@ -51,7 +51,7 @@ export class MessageFieldComponent {
 
   async sendMessage() {
     console.log(this.textAreaIsEdited);
-    
+
     const currentUser = this.fb.currentUser();
 
     if(this.textAreaIsEdited && this.textArea !== '') {
@@ -63,7 +63,7 @@ export class MessageFieldComponent {
     }
     if(currentUser){
       console.log(this.chat.answers);
-      
+
       const newMessage: Message = {
         text: this.textArea,
         chatId: this.chat.currentChannelData.chanId,
@@ -115,7 +115,7 @@ export class MessageFieldComponent {
       answerCount: 0,
       lastAnswer: '',
       editCount: 0,
-      lastEdit: '',
+      lastEdit: Timestamp.now(),
       storageData: '',
       taggedUser: [],
     };
