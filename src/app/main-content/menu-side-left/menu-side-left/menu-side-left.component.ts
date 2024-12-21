@@ -11,11 +11,13 @@ import { MessageService } from '../../../services/messages/message.service';
 import { PrivateChat } from '../../../models/interfaces/privateChat.model';
 import { User } from '../../../models/interfaces/user.model';
 import { StateControlService } from '../../../services/state-control/state-control.service';
+import { log } from 'console';
+import { SearchComponent } from '../../../shared/search/search.component';
 
 @Component({
   selector: 'app-menu-side-left',
   standalone: true,
-  imports: [CommonModule, AvatarComponent],
+  imports: [CommonModule, AvatarComponent, SearchComponent],
   templateUrl: './menu-side-left.component.html',
   styleUrl: './menu-side-left.component.scss',
 })
@@ -38,6 +40,9 @@ export class MenuSideLeftComponent {
   openMessage(user: User) {
     this.state.isThreadOpen = false;
     this.userService.messageReceiver = user;
+    this.state.responsiveChat = true;
+    this.state.responsiveArrow = true;
+    this.state.responsiveMenu = true;
     this.router.navigate(['/start/main/messages']);
     // this.ms.newPrivateMessageChannel(user);
   }
@@ -61,12 +66,26 @@ export class MenuSideLeftComponent {
       panelClass: 'channel-create-container',
     });
   }
-
+  
   openChannel(chanId: string) {
-    this.state.isThreadOpen = false;
+    this.state.responsiveChat = true;
+    this.state.responsiveArrow = true;
+    this.state.responsiveMenu = true;
+    this.state.isThreadOpen = false
     this.chat.openChatById(chanId);
-    console.log('currentChannelData: ', this.chat.currentChannelData);
   }
+
+  sortListOfUser() {
+    const sortAllUser = this.userService.userList
+    sortAllUser.sort((a, b) => {
+      if(a.uId === this.fb.currentUser()?.uId) return -1
+      if(b.uId === this.fb.currentUser()?.uId) return 1
+
+      return a.displayName.localeCompare(b.displayName)
+    })
+    return sortAllUser
+  };
+    
 
   writeMessage() {
     this.state.isThreadOpen = false;

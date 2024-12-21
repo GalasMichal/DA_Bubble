@@ -2,11 +2,11 @@
   <app-header></app-header>
 
   <div class="main-content-container">
-    <div class="sidenav" [class.animate]="isMenuOpen">
+    <div class="sidenav" [ngClass]="{'show-responsive-sidenav': stateServer.responsiveMenu}" [class.animate]="isMenuOpen">
       <app-menu-side-left></app-menu-side-left>
     </div>
 
-    <div class="main-content">
+    <div class="main-content" [ngClass]="{'show-responsive-main-content': stateServer.responsiveChat}">
       <router-outlet></router-outlet>
     </div>
     @if (stateServer.isThreadOpen && this.user.selectedUserMessage() && this.chat.currentChannelData) {

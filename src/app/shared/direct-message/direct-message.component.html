@@ -1,6 +1,6 @@
 <section>
 
-   <header class="fontNunito">
+   <header>
 
      <button class="header-left-container">
       @if(user.messageReceiver){
@@ -23,6 +23,16 @@
 
    </header>
    <div class="chat-main-container">
+    <div class="first-message">
+      <div class="first-message-avatar">
+      @if(user.messageReceiver){
+        <app-avatar [userMessageReceiver]="user.messageReceiver"></app-avatar>
+      }
+      <h1> {{ user.messageReceiver?.displayName }}</h1>
+    </div>
+      <p>Diese Unterhaltung findet nur zwischen <button class="you-user" (click)="openProfileUserSingle(user.messageReceiver!.uId)"><span>&commat;</span>{{ user.messageReceiver?.displayName }} </button> und dir statt. <br> 
+        Schaue dir das Profil der Person an, um mehr über sie zu erfahren.</p>
+    </div>
 
      <!-- @for (singleMessage of this.chat.answers; track this.chat.answers; let index = $index) {
        <app-message-answer [userMessage]="singleMessage" [index]="index"></app-message-answer>

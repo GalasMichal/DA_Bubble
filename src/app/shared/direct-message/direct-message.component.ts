@@ -5,8 +5,10 @@ import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { Router } from '@angular/router';
 import { AvatarComponent } from "../avatar/avatar.component";
-import { User } from '../../models/interfaces/user.model';
 import { UserServiceService } from '../../services/user-service/user-service.service';
+import { FirebaseService } from '../../services/firebase/firebase.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileSingleUserComponent } from '../profile-single-user/profile-single-user.component';
 
 @Component({
   selector: 'app-direct-message',
@@ -21,9 +23,15 @@ export class DirectMessageComponent {
   chat = inject(ChatRoomService);
   router = inject(Router);
   user = inject(UserServiceService);
-
+  fb = inject(FirebaseService)
+  userService = inject(UserServiceService);
+    readonly userDialog = inject(MatDialog);
   
 
-
-
+    async openProfileUserSingle(userId: string) {
+      await this.userService.showProfileUserSingle(userId)
+      this.userDialog.open(ProfileSingleUserComponent, {
+        panelClass: 'profile-single-user-container',
+      });
+    }
 }

@@ -1,26 +1,51 @@
-import { Component, ElementRef, EventEmitter, inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { MessageEditComponent } from '../message-edit/message-edit.component';
 import { CommonModule } from '@angular/common';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { FormsModule } from '@angular/forms';
+import { FirebaseService } from '../../../services/firebase/firebase.service';
+import { Message } from '../../../models/interfaces/message.model';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-reaction-bar',
   standalone: true,
-  imports: [MessageEditComponent, CommonModule, EmojiComponent, PickerComponent],
+  imports: [MessageEditComponent, CommonModule, PickerComponent],
   templateUrl: './reaction-bar.component.html',
   styleUrl: './reaction-bar.component.scss'
 })
 export class ReactionBarComponent {
   state = inject(StateControlService)
+  firestore = inject(Firestore);
+  fb = inject(FirebaseService);
   showCloud:boolean = false 
   newEmoji: string = "";
 
   @Input() index: number = 0;
+  @Input() editText: string = "";
+  @Input() channelId: string = ""
+  @Input() messageId: string = "";
+  @Input() createdById: string = "";
+
+
+  @Output() textChange = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
   @Output() emojiSelected = new EventEmitter<string>();
   isEmojiPickerVisibleMessage: boolean[] = [false];
+ 
+  meUser: boolean = false;
+  currentMessage: Message | null = null;
+  
+
+  ngOnInit() {
+      if (this.createdById === this.fb.currentUser()?.uId) {
+        this.meUser = true;
+      }
+  }
+
+  onEditMessage(event: { textToEdit: string, channelId:string, messageId: string }) {
+    this.textChange.emit({ textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId });    
+  }
 
   addEmoji(event: any) {
     // Das ausgewählte Emoji wird in der aktuellen Komponente in newEmoji gespeichert
@@ -29,6 +54,7 @@ export class ReactionBarComponent {
     // Das ausgewählte Emoji wird an die Elternkomponente weitergeleitet
     const emoji = event.emoji.native; // Nimm an, dass das Emoji im "native"-Feld ist
     this.emojiSelected.emit(emoji);  // Emitiere das Emoji an die Elternkomponente
+ 
   }
  
  

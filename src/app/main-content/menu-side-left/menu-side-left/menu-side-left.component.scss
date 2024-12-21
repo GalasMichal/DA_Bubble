@@ -3,23 +3,26 @@
 @import "./../../../../fonts.scss";
 
 .side-nav-wrapper {
-  padding: 2rem 1.875rem;
-  height: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
+  padding: 2rem 1.875rem;
   gap: 1.5625rem;
   overflow: hidden auto;
+  width: 95%;
+  height: 96%;
+  margin-top: 10px;
   .devspace {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 19.125rem;
-      h2 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        line-height: 32.7px;
-        margin: 0;
-      }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 32.7px;
+      margin: 0;
+    }
     button {
       background: none;
       border: solid 1px transparent;
@@ -37,10 +40,10 @@
         outline: transparent;
       }
       &:hover svg path {
-          fill: $primary-hover;
-          scale: 1.02;
-        }
+        fill: $primary-hover;
+        scale: 1.02;
       }
+    }
   }
 }
 
@@ -57,7 +60,6 @@
 .drop-down {
   transform: rotate(0deg);
 }
-
 
 .channels-navbar {
   display: flex;
@@ -112,13 +114,12 @@
         align-items: center;
         width: fit-content;
         padding: 0.25rem 1.75rem;
-        gap: .9375rem;
+        gap: 0.9375rem;
         background: none;
         border-radius: $b-radius-2;
         &:hover {
           background: $bg-color;
         }
-        
       }
     }
   }
@@ -180,7 +181,6 @@
   padding: 0.25rem;
   min-width: 12.875rem;
   gap: 1.3125rem;
-
 }
 
 .bg-channels {
@@ -190,9 +190,50 @@
 
 .channels-content.animate {
   grid-template-rows: 1fr;
-  >div{
+  > div {
     display: flex;
     gap: 15px;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 800px) {
+  .side-nav-wrapper {
+    padding: 1rem 0.5rem;
+    .devspace {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      bottom: 20px;
+      right: 10px;
+      width: 60px;
+      height: 60px;
+      box-shadow: $shadow;
+      background: $secondary;
+      border-radius: 50%;
+      button {
+        &:hover {
+          background: none;
+        }
+      }
+      img,
+      .responsive {
+        display: none;
+      }
+      button svg path {
+        fill: $white;
+      }
+    }
+  }
+
+  .channels-content {
+    ul {
+      li {
+        button {
+          padding: 0.25rem 1.5rem 0.25rem 0;
+        }
+      }
+    }
   }
 }

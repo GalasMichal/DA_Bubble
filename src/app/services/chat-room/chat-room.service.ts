@@ -14,7 +14,14 @@ import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
-import { addDoc, DocumentData, QuerySnapshot, Unsubscribe, where } from 'firebase/firestore';
+import {
+  addDoc,
+  DocumentData,
+  QuerySnapshot,
+  Timestamp,
+  Unsubscribe,
+  where,
+} from 'firebase/firestore';
 import { StateControlService } from '../state-control/state-control.service';
 import { User } from 'firebase/auth';
 
@@ -91,7 +98,6 @@ export class ChatRoomService {
     await updateDoc(messageDocRef, { threadId: messageId });
   }
 
-
   addAnswerToMessage(messageId: string, answer: Message) {
     const channelId = this.currentChannelData.chanId;
     const messageCollectionRef = collection(
@@ -106,6 +112,27 @@ export class ChatRoomService {
     this.currentMessageId = messageId;
     this.getAnswersFromMessage();
     console.log('Answer verschickt', answer);
+  }
+
+  async updateMessageTextInFirestore(
+    textAreaEdited: string,
+    chanId: string,
+    textAreaEditId: string
+  ) {
+    const messageDocRef = doc(
+      this.firestore,
+      'channels',
+      chanId,
+      'messages',
+      textAreaEditId
+    );
+
+    // Aktualisiere die Reaktionen im Firestore-Dokument
+    await updateDoc(messageDocRef, {
+      text: textAreaEdited,
+      lastEdit: Timestamp.now(),
+      editCount: 1
+    });
   }
 
   async getAnswersFromMessage() {
@@ -138,7 +165,6 @@ export class ChatRoomService {
       }
     }
   }
-
 
   subChannelList() {
     this.unsubscribe(this.channelUnsubscribe);
@@ -285,10 +311,8 @@ export class ChatRoomService {
         const userData = doc.data() as AppUser;
         this.currentUserChannelsSpecificPeopleObject.push(userData);
       });
-
     } catch (error) {
       console.error('Fehler beim Laden der Benutzer:', error);
     }
   }
-
 }
