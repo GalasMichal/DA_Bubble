@@ -2,7 +2,6 @@ import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@
 import { HeaderComponent } from '../../header/header.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
-import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { FormsModule } from '@angular/forms';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Message } from '../../../models/interfaces/message.model';
@@ -11,6 +10,8 @@ import { Timestamp } from '@angular/fire/firestore';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { CloseComponent } from '../close/close.component';
+import { MessageService } from '../../../services/messages/message.service';
+
 
 @Component({
   selector: 'app-message-field',
@@ -29,16 +30,18 @@ export class MessageFieldComponent {
   stateControl = inject(StateControlService)
   fb = inject(FirebaseService);
   user = inject(UserServiceService);
+  msg = inject(MessageService);
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
+
   @Input() isThreadAnswerOpen = false;
   @Input() textAreaEdit: string = '';
   @Input() channelIdEdit: string = '';
-
   @Input() textAreaEditId: string = '';
   @Input() textAreaIsEdited: boolean = false;
   @Output() editStatusChange = new EventEmitter<boolean>();
-  
+  @Input() directMessage: boolean = false;
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['textAreaEdit'] && changes['textAreaEdit'].currentValue !== undefined) {
@@ -98,6 +101,24 @@ export class MessageFieldComponent {
     this.stateControl.globalEdit = false
     this.textArea = ""
     this.textAreaIsEdited = false;
+  }
+
+ async sendDirectMessage() {
+ let collref = await this.msg.newPrivateMessageChannel(this.user.messageReceiver!);
+    const newMessage: Message = {
+      text: this.textArea,
+      chatId: '',
+      timestamp: Timestamp.now(),
+      messageSendBy: this.fb.currentUser()!,
+      reactions: [],
+      threadId: '',
+      answerCount: 0,
+      lastAnswer: '',
+      editCount: 0,
+      lastEdit: '',
+      storageData: '',
+      taggedUser: [],
+    };
   }
 
   addEmoji(event: any) {
