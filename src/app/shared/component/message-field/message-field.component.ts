@@ -104,7 +104,7 @@ export class MessageFieldComponent {
   }
 
  async sendDirectMessage() {
- let collref = await this.msg.newPrivateMessageChannel(this.user.messageReceiver!);
+ let collRef = await this.msg.newPrivateMessageChannel(this.user.messageReceiver!);
     const newMessage: Message = {
       text: this.textArea,
       chatId: '',
@@ -119,6 +119,12 @@ export class MessageFieldComponent {
       storageData: '',
       taggedUser: [],
     };
+    if (this.textArea.trim() !== '') {
+      await this.msg.addMessageToSubcollection(collRef.id, newMessage);
+      await this.msg.loadMessagesFromChat(collRef.id);
+      this.textArea = ''; // Leere das Eingabefeld nach dem Senden
+    }
+
   }
 
   addEmoji(event: any) {

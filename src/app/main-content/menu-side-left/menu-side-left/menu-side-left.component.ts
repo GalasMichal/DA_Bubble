@@ -51,6 +51,7 @@ export class MenuSideLeftComponent {
   if (existingChatId) {
     // Wenn der Chat existiert, zur spezifischen Nachricht navigieren
     this.router.navigate(['/start/main/messages', existingChatId]);
+    this.ms.loadMessagesFromChat(existingChatId);
   } else {
 
     this.router.navigate(['/start/main/messages']);
