@@ -41,6 +41,7 @@ export class MenuSideLeftComponent {
     this.state.isThreadOpen = false
     this.userService.messageReceiver = user;
     this.state.responsiveChat = true;
+    this.state.responsiveArrow = true;
     this.router.navigate(['/start/main/messages']);
     // this.ms.newPrivateMessageChannel(user);
   }
@@ -68,6 +69,7 @@ export class MenuSideLeftComponent {
   
   openChannel(chanId: string) {
     this.state.responsiveChat = true;
+    this.state.responsiveArrow = true;
     this.state.isThreadOpen = false
     this.chat.openChatById(chanId);
   }

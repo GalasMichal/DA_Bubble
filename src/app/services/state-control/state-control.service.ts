@@ -17,7 +17,9 @@ export class StateControlService {
   isUserLoggedIn: boolean = false;
   showError: boolean = false;
   globalEdit: boolean = false;
-  responsiveChat: boolean = false
+  responsiveChat: boolean = false;
+  responsiveArrow: boolean = false;
+
 
   removeShowToast() {
     setTimeout(() => {
