@@ -51,7 +51,7 @@ export class MessageFieldComponent {
 
   async sendMessage() {
     console.log(this.textAreaIsEdited);
-    
+
     const currentUser = this.fb.currentUser();
 
     if(this.textAreaIsEdited && this.textArea !== '') {
@@ -63,7 +63,7 @@ export class MessageFieldComponent {
     }
     if(currentUser){
       console.log(this.chat.answers);
-      
+
       const newMessage: Message = {
         text: this.textArea,
         chatId: this.chat.currentChannelData.chanId,
@@ -104,10 +104,12 @@ export class MessageFieldComponent {
   }
 
  async sendDirectMessage() {
- let collref = await this.msg.newPrivateMessageChannel(this.user.messageReceiver!);
+ let collRef = await this.msg.newPrivateMessageChannel(this.user.messageReceiver!);
+ console.log('collRef', collRef);
+if (collRef) {
     const newMessage: Message = {
       text: this.textArea,
-      chatId: '',
+      chatId: collRef,
       timestamp: Timestamp.now(),
       messageSendBy: this.fb.currentUser()!,
       reactions: [],
@@ -115,12 +117,18 @@ export class MessageFieldComponent {
       answerCount: 0,
       lastAnswer: '',
       editCount: 0,
-      lastEdit: '',
+      lastEdit: Timestamp.now(),
       storageData: '',
       taggedUser: [],
     };
-  }
+    if (this.textArea.trim() !== '') {
+      await this.msg.addMessageToSubcollection(collRef, newMessage);
+      await this.msg.loadMessagesFromChat(collRef);
+      this.textArea = ''; // Leere das Eingabefeld nach dem Senden
+    }
 
+  }
+ }
   addEmoji(event: any) {
     this.textArea = `${this.textArea}${event.emoji.native}`;
     this.isEmojiPickerVisible = false;
@@ -134,3 +142,4 @@ export class MessageFieldComponent {
     this.isEmojiPickerVisible = false;
   }
 }
+
