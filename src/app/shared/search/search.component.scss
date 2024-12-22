@@ -58,11 +58,13 @@
       gap: 1.5625rem;
       button {
         background: none;
-        width: 100%;
+        width: fit-content;
         text-align: start;
+        padding: 0.25rem 1.75rem;
         &:hover {
           background: $bg-color;
           border-radius: $b-radius-2;
+          color: $primary-hover;
         }
       }
     }
