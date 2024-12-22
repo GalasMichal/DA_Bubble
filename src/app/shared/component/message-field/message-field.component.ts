@@ -105,9 +105,11 @@ export class MessageFieldComponent {
 
  async sendDirectMessage() {
  let collRef = await this.msg.newPrivateMessageChannel(this.user.messageReceiver!);
+ console.log('collRef', collRef);
+if (collRef) {
     const newMessage: Message = {
       text: this.textArea,
-      chatId: '',
+      chatId: collRef,
       timestamp: Timestamp.now(),
       messageSendBy: this.fb.currentUser()!,
       reactions: [],
@@ -120,13 +122,13 @@ export class MessageFieldComponent {
       taggedUser: [],
     };
     if (this.textArea.trim() !== '') {
-      await this.msg.addMessageToSubcollection(collRef.id, newMessage);
-      await this.msg.loadMessagesFromChat(collRef.id);
+      await this.msg.addMessageToSubcollection(collRef, newMessage);
+      await this.msg.loadMessagesFromChat(collRef);
       this.textArea = ''; // Leere das Eingabefeld nach dem Senden
     }
 
   }
-
+ }
   addEmoji(event: any) {
     this.textArea = `${this.textArea}${event.emoji.native}`;
     this.isEmojiPickerVisible = false;
@@ -140,3 +142,4 @@ export class MessageFieldComponent {
     this.isEmojiPickerVisible = false;
   }
 }
+

@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProfileSingleUserComponent } from '../profile-single-user/profile-single-user.component';
 import { Message } from '../../models/interfaces/message.model';
 import { MessageService } from '../../services/messages/message.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-direct-message',
@@ -18,8 +19,8 @@ import { MessageService } from '../../services/messages/message.service';
   imports: [
     MessageFieldComponent,
     MessageAnswerComponent,
-    EmojiComponent,
     AvatarComponent,
+    CommonModule
   ],
   templateUrl: './direct-message.component.html',
   styleUrl: './direct-message.component.scss',
@@ -41,16 +42,6 @@ export class DirectMessageComponent {
     });
   }
 
-  // async ngOnInit(): Promise<void> {
-  //   if(this.ms.currentMessageChannelId !== ''){
-  //     this.currentChatId = this.ms.currentMessageChannelId
-  //     try {
-  //       this.messages = await this.ms.loadMessagesFromChat(this.currentChatId);
-  //     } catch (error) {
-  //       console.error('Fehler beim Laden der Nachrichten:', error);
-  //     }
-  //   }
 
-  // }
 
 }

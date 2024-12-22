@@ -26,7 +26,7 @@
 
   </header>
   <div class="chat-main-container">
-    <div class="first-message">
+    <!-- <div class="first-message">
       <div class="first-message-avatar">
         @if(user.messageReceiver){
         <app-avatar [userMessageReceiver]="user.messageReceiver"></app-avatar>
@@ -37,13 +37,16 @@
           (click)="openProfileUserSingle(user.messageReceiver!.uId)"><span>&commat;</span>{{
           user.messageReceiver?.displayName }} </button> und dir statt. <br>
         Schaue dir das Profil der Person an, um mehr über sie zu erfahren.</p>
-    </div>
+    </div> -->
 
-    @for (message of this.ms.messages; track messages; let index = $index) {
-    <app-message-answer [userMessage]="message"></app-message-answer>
+    @for (message of this.ms.messages; track this.ms.messages; let index = $index) {
+    <app-message-answer [userMessage]="message"
+    [index]="index">
+
+    </app-message-answer>
 
     }
   </div>
-    <app-message-field [directMessage]="true"></app-message-field>
+  <app-message-field [directMessage]="true"></app-message-field>
 
 </section>
