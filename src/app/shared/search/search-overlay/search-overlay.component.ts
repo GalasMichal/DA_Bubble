@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
@@ -12,13 +12,8 @@ import { SearchBarService } from '../../../services/search.service';
   selector: 'app-search-overlay',
   standalone: true,
   imports: [
-    MatListModule,
-    MatIcon,
     MatDivider,
-    MatIconButton,
-    RouterModule,
-    RecentSearchesListComponent,
-    CUSTOM_ELEMENTS_SCHEMA,
+    
   ],
   templateUrl: './search-overlay.component.html',
   styleUrl: './search-overlay.component.scss'
