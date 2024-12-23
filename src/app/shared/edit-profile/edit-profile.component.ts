@@ -31,7 +31,6 @@ export class EditProfileComponent {
   readonly dialog = inject(MatDialogRef<EditProfileComponent>);
   dialogConfirm = inject(MatDialog);
   fb = inject(FirebaseService);
-  firestore = inject(Firestore);
   user = inject(UserServiceService);
   userForm: FormGroup;
 
@@ -57,7 +56,7 @@ export class EditProfileComponent {
     let inputEmailValue = this.userForm.get('userEmail')?.value;
 
     if (uId) {
-      newNameNewEmail = doc(this.firestore, 'users', uId);
+      newNameNewEmail = doc(this.fb.firestore, 'users', uId);
     }
 
     if (newNameNewEmail) {
@@ -66,9 +65,8 @@ export class EditProfileComponent {
         displayName: inputNameValue,
         email: inputEmailValue,
       });
-
-      this.user.updateCurrentUser(this.fb.currentUser()!);
       this.user.updateCurrentUserToFirebase(inputNameValue, inputEmailValue);
+      this.fb.getUserByUid(uId!);
     }
     this.showDialog()
   }
