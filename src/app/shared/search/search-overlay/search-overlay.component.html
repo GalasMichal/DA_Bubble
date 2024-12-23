@@ -1,1 +1,8 @@
-<p>search-overlay works!</p>
+<div class="overlay-container mat-elevation-z2">
+    <mat-divider />
+    <app-recent-searches-list />
+    @if (searchTerm()) {
+    <mat-divider />
+    <app-quick-results-list />
+    }
+  </div>`
