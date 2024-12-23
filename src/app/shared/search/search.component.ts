@@ -4,6 +4,7 @@ import { MatIcon } from '@angular/material/icon';
 import { CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import { NgClass } from '@angular/common';
 import { SearchBarService } from '../../services/search.service';
+import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
 
 @Component({
   selector: 'app-search',
@@ -13,6 +14,7 @@ import { SearchBarService } from '../../services/search.service';
     MatIcon,
     OverlayModule,
     NgClass,
+    SearchOverlayComponent
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
