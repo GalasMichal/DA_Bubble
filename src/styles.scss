@@ -329,6 +329,9 @@ app-toast {
 //////////////////////////////////////
 //////////////////////////////////////
 @media (max-width: 800px) {
+  ::ng-deep header .search-container {
+      display: none;
+  }
   .show-responsive {
     display: flex !important;
   }
