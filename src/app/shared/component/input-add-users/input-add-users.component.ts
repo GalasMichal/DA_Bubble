@@ -71,8 +71,6 @@ export class InputAddUsersComponent {
     
     this.makeButtonActiveReactive();
     this.filterOnlyAvaliableUser()
-    console.log(this.stateServer.choosenUserFirbase);
-    console.log(this.stateServer.choosenUser);
   }
 
   removeUser(index: number, event: Event) {
