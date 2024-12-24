@@ -1,0 +1,13 @@
+:host {
+    display: block;
+  }
+
+  .overlay-container {
+    border-radius: 0px 0px 32px 32px;
+    max-width: 56.25rem;
+    background: white;
+    padding-bottom: 16px;
+    mat-divider {
+      border-top-style: none !important;
+    }
+  }

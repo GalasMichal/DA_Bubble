@@ -1,21 +1,21 @@
 import { Injectable, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-// import { RecentSearchesService } from './recent-searches.service';
-// import { SearchResultsService } from './search-results.service';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { debounceTime, filter } from 'rxjs';
+import { SearchResultsService } from '../search-results/search-results.service';
+import { RecentSearchesService } from '../recent-searches/recent-searches.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchBarService {
-  public readonly overlayOpen = signal(false);
+  public readonly overlayOpen = signal(true);
 
   public readonly searchTerm = signal('');
 
-  // resultsService = inject(SearchResultsService);
+  resultsService = inject(SearchResultsService);
   router = inject(Router);
-  // recentSearchesService = inject(RecentSearchesService);
+  recentSearchesService = inject(RecentSearchesService);
 
   constructor() {
     toObservable(this.searchTerm)
@@ -32,8 +32,9 @@ export class SearchBarService {
 
   search() {
     this.router.navigate([`/search/${this.searchTerm()}`]);
-    this.overlayOpen.set(false);
-    // this.recentSearchesService.addToRecentSearches(this.searchTerm());
+    // Tu
+    this.overlayOpen.set(true);
+    this.recentSearchesService.addToRecentSearches(this.searchTerm());
   }
 
   clearSearch() {
@@ -43,6 +44,7 @@ export class SearchBarService {
 
   openBookDetail(bookId: string) {
     this.router.navigate([`/book/${bookId}`]);
-    this.overlayOpen.set(false);
+    // TU
+    this.overlayOpen.set(true);
   }
 }

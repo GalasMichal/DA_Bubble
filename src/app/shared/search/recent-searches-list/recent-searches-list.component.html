@@ -1,1 +1,21 @@
-<p>recent-searches-list works!</p>
+@if(recentSearches().length) {
+    <mat-action-list [disableRipple]="true">
+      @for (search of recentSearches(); track $index) {
+      <mat-list-item (click)="searchBarService.searchForTerm(search)">
+        <mat-icon matListItemIcon>history</mat-icon>
+        <h3 matListItemTitle>{{ search }}</h3>
+        <button
+          matListItemMeta
+          mat-icon-button
+          (click)="deleteSearch(search, $event)"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-list-item>
+      }
+    </mat-action-list>
+    } @else {
+
+    <p class="empty">No recent items match your search</p>
+
+    }

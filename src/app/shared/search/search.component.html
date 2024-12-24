@@ -27,9 +27,8 @@
   cdkConnectedOverlay
   [cdkConnectedOverlayOrigin]="trigger"
   [cdkConnectedOverlayOpen]="overlayOpen()"
-  [cdkConnectedOverlayDisableClose]="true"
+  [cdkConnectedOverlayDisableClose]="false"
   (overlayOutsideClick)="clickedOutside($event)"
 >
-hello
   <app-search-overlay />
 </ng-template>

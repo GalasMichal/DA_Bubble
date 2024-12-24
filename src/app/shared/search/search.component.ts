@@ -3,8 +3,8 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import { NgClass } from '@angular/common';
-import { SearchBarService } from '../../services/search.service';
 import { SearchOverlayComponent } from './search-overlay/search-overlay.component';
+import { SearchBarService } from '../../services/search/search.service';
 
 @Component({
   selector: 'app-search',
