@@ -110,5 +110,4 @@ export class UserServiceService {
     this.profileSingleUser = docSnap.data() as User;
     }
   }
-
 }

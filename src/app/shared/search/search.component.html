@@ -29,6 +29,30 @@
           </button>
         </li>
       }
+      <!-- @for(user of this.sortListOfUser(); track $index) {
+        @if(user.uId === this.fb.currentUser()?.uId) {
+          <li>
+            <button (click)="openMessage(user)" class="single-user">
+              <div class="user-img">
+                <app-avatar [user]="user" [userList]="true"></app-avatar>
+              </div>
+              <span>{{user.displayName}} (Du)</span> 
+            </button>
+          </li>
+        } @else () {
+          <li>
+            <button (click)="openMessage(user)" class="single-user">
+              <div class="user-img">
+                <app-avatar [user]="user" [userList]="true"></app-avatar>
+              </div>
+              <span>{{user.displayName}}</span>
+            </button>
+          </li>
+
+        }
+      } -->
+
+
       </ul>
     </div>
 </div>
