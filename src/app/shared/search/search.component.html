@@ -1,21 +1,34 @@
-<form class="search-container" action="#" method="get">
+<div class="search-container">
+  <form action="#" method="get">
     <label for="search" class="visually-hidden">Search</label>
-    <input type="search" id="search" name="search" placeholder="Code learning durchsuchen" required>
+
     <button type="submit" title="Search">
-        <img src="/assets/media/icons/search.svg" alt="Search">
+      <img src="/assets/media/icons/search.svg" alt="Search" />
     </button>
-    <div class="show-found">
-        <ul>
-            <li>
-                <button>
-                    TEST TEST
-                </button>
-            </li>
-            <li>
-                <button>
-                    TEST TEST
-                </button>
-            </li>
-        </ul>
+
+    <input
+      type="search"
+      id="search"
+      name="search"
+      #searchInput
+      [value]="searchTerm()"
+      (input)="searchTerm.set(searchInput.value)"
+      (keydown.ENTER)="search()"
+      placeholder="Code learning durchsuchen"
+      required
+    />
+  </form>
+  
+  <div class="show-found">
+    <ul>
+        @for(channel of this.chat.currentUserChannels; track $index) {
+        <li>
+          <button (click)="openChannel(channel.chanId)">
+            #
+            <span>{{ channel.channelName }}</span>
+          </button>
+        </li>
+      }
+      </ul>
     </div>
-</form>
+</div>
