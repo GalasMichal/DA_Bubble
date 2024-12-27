@@ -11,48 +11,23 @@
       id="search"
       name="search"
       #searchInput
-      [value]="searchTerm()"
-      (input)="searchTerm.set(searchInput.value)"
-      (keydown.ENTER)="search()"
-      placeholder="Code learning durchsuchen"
+      [value]="searchTerm"
+      (keyup)="onKeyUp(searchInput.value)"
       required
     />
   </form>
-  
+
   <div class="show-found">
     <ul>
-        @for(channel of this.chat.currentUserChannels; track $index) {
-        <li>
-          <button (click)="openChannel(channel.chanId)">
-            #
-            <span>{{ channel.channelName }}</span>
-          </button>
-        </li>
-      }
-      <!-- @for(user of this.sortListOfUser(); track $index) {
-        @if(user.uId === this.fb.currentUser()?.uId) {
+      @for(result of results; track $index) { 
+        @if(searchTerm.startsWith('@')) {
           <li>
-            <button (click)="openMessage(user)" class="single-user">
-              <div class="user-img">
-                <app-avatar [user]="user" [userList]="true"></app-avatar>
-              </div>
-              <span>{{user.displayName}} (Du)</span> 
+            <button>
+              <app-avatar [user]="result" [userList]="true"></app-avatar>
+              <span>{{ result.displayName }}</span>
             </button>
           </li>
-        } @else () {
-          <li>
-            <button (click)="openMessage(user)" class="single-user">
-              <div class="user-img">
-                <app-avatar [user]="user" [userList]="true"></app-avatar>
-              </div>
-              <span>{{user.displayName}}</span>
-            </button>
-          </li>
-
-        }
-      } -->
-
-
-      </ul>
-    </div>
+      } }
+    </ul>
+  </div>
 </div>

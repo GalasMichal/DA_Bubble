@@ -8,26 +8,32 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { MessageService } from '../../services/messages/message.service';
 import { Router } from '@angular/router';
 import { User } from '../../models/interfaces/user.model';
+import { FormsModule } from '@angular/forms';
+import { Channel } from '../../models/interfaces/channel.model';
 import { AvatarComponent } from '../avatar/avatar.component';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, AvatarComponent],
+  imports: [CommonModule, FormsModule, AvatarComponent],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
 export class SearchComponent {
   searchService = inject(SearchService);
-  searchTerm = this.searchService.searchTerm;
+
   stateControl = inject(StateControlService)
   chat = inject(ChatRoomService);
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   ms = inject(MessageService);
   router = inject(Router);
-
+  allChannels = this.chat.currentUserChannels
   searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
+
+  searchTerm = ''; // Speichert die Eingabe des Benutzers
+  results: User[] = [];
+
 
   clearSearch() {
     this.searchService.clearSearch();
@@ -52,14 +58,21 @@ export class SearchComponent {
     return sortAllUser
   };
 
-  search() {
-    if (!this.searchTerm()) {
-      return;
+
+
+  onKeyUp(value: string) {
+    this.searchTerm = value; 
+    if (value.startsWith('@')) {
+      this.results = this.sortListOfUser().filter(item =>
+        item.displayName.toLowerCase().includes(value.slice(1).toLowerCase())
+        
+      );
+      console.log('@:', this.results)
+    } else {
+      // Keine Ergebnisse anzeigen, wenn das erste Zeichen weder @ noch #
+      this.results = [];
     }
-
-    this.searchService.search();
   }
-
 
   async openMessage(user: User) {
       this.stateControl.isThreadOpen = false;

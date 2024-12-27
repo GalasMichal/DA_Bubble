@@ -16,7 +16,7 @@ export class SearchService {
   }
 
   search() {
-    this.router.navigate([`/search/${this.searchTerm()}`]);
+    // this.router.navigate([`/search/${this.searchTerm()}`]);
     // this.recentSearchesService.addToRecentSearches(this.searchTerm());
   }
 }
