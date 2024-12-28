@@ -45,10 +45,7 @@ export class SearchComponent {
   }
 
   hideResults() {
-    // Delay hiding to allow button clicks to register
-    setTimeout(() => {
-      this.isResultsVisible = false;
-    }, 200);
+    this.isResultsVisible = false;
   }
 
   openChannel(chanId: string) {
