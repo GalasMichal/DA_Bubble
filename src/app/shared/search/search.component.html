@@ -13,21 +13,32 @@
       #searchInput
       [value]="searchTerm"
       (keyup)="onKeyUp(searchInput.value)"
+      (focus)="showResults()"
+      (blur)="hideResults()"
       required
+      autocomplete="off"
     />
   </form>
 
-  <div class="show-found">
+  <div class="show-found" [class.active]="isResultsVisible">
     <ul>
-      @for(result of results; track $index) { 
-        @if(searchTerm.startsWith('@')) {
-          <li>
-            <button>
-              <app-avatar [user]="result" [userList]="true"></app-avatar>
-              <span>{{ result.displayName }}</span>
-            </button>
-          </li>
-      } }
+      @for(result of userResults; track $index) {
+
+      <li>
+        <button (click)="openMessage(result)">
+          <app-avatar [user]="result" [userList]="true"></app-avatar>
+          <span>{{ result.displayName }}</span>
+        </button>
+      </li>
+      } @for(result of channelResults; track $index) {
+      <li>
+        <button>
+          #
+          <span>{{ result.channelName }}</span>
+        </button>
+      </li>
+      }
+
     </ul>
   </div>
 </div>

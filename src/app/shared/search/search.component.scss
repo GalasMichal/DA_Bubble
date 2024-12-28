@@ -30,6 +30,8 @@
       &:focus {
         border: 1px solid $secondary;
         outline: $secondary;
+        border-radius: $b-radius-1 $b-radius-1 0 0;
+        border-bottom: 0;
       }
       &::-webkit-search-cancel-button {
         appearance: none;
@@ -53,6 +55,8 @@
     background-color: white;
     z-index: 2;
     border-radius: 0 0 $b-radius-1 $b-radius-1;
+    border: 1px solid $secondary;
+    border-top: 0;
     ul {
       display: flex;
       flex-direction: column;
@@ -75,6 +79,15 @@
     }
   }
 }
+
+.show-found {
+  display: none;
+}
+
+.show-found.active {
+  display: block;
+}
+
 
 ::ng-deep .main-content-container {
   .sidenav .side-nav-wrapper {

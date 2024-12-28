@@ -29,14 +29,26 @@ export class SearchComponent {
   ms = inject(MessageService);
   router = inject(Router);
   allChannels = this.chat.currentUserChannels
-  searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
+  isResultsVisible = false;
 
   searchTerm = ''; // Speichert die Eingabe des Benutzers
-  results: User[] = [];
-
-
+  userResults: User[] = [];
+  channelResults: Channel[] = [];
+  allResults: Array<any>= []
+  
   clearSearch() {
     this.searchService.clearSearch();
+  }
+
+  showResults() {
+    this.isResultsVisible = true;
+  }
+
+  hideResults() {
+    // Delay hiding to allow button clicks to register
+    setTimeout(() => {
+      this.isResultsVisible = false;
+    }, 200);
   }
 
   openChannel(chanId: string) {
@@ -60,21 +72,26 @@ export class SearchComponent {
 
 
 
-  onKeyUp(value: string) {
+  onKeyUp(value: string) {    
     this.searchTerm = value; 
     if (value.startsWith('@')) {
-      this.results = this.sortListOfUser().filter(item =>
+      this.userResults = this.sortListOfUser().filter(item =>
         item.displayName.toLowerCase().includes(value.slice(1).toLowerCase())
-        
       );
-      console.log('@:', this.results)
-    } else {
-      // Keine Ergebnisse anzeigen, wenn das erste Zeichen weder @ noch #
-      this.results = [];
+    } else if (value.startsWith('#')) {
+      this.channelResults = this.allChannels.filter(item =>
+        item.channelName.toLowerCase().includes(value.slice(1).toLowerCase())
+      );
+    } else if (value === '') {
+      this.channelResults = [];
+      this.userResults = [];
     }
+
+    // Das kombinierte Array in einer Eigenschaft speichern
   }
 
   async openMessage(user: User) {
+      this.searchTerm = user.displayName;
       this.stateControl.isThreadOpen = false;
       this.userService.messageReceiver = user;
       this.stateControl.responsiveChat = true;
