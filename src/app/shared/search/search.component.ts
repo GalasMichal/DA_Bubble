@@ -28,7 +28,6 @@ export class SearchComponent {
   fb = inject(FirebaseService);
   ms = inject(MessageService);
   router = inject(Router);
-  allChannels = this.chat.currentUserChannels
   isResultsVisible = false;
 
   searchTerm = ''; // Speichert die Eingabe des Benutzers
@@ -67,24 +66,32 @@ export class SearchComponent {
     return sortAllUser
   };
 
-
-
   onKeyUp(value: string) {    
-    this.searchTerm = value; 
-    if (value.startsWith('@')) {
+    this.searchTerm = value;
+    
+    if(!value.startsWith('@') && !value.startsWith('#') && (value !== '')) {
+      this.allResults = [
+        ...this.sortListOfUser().filter(item =>
+          item.displayName.toLowerCase().includes(value.slice(1).toLowerCase())
+        ),
+        ...this.chat.currentUserChannels.filter(item =>
+          item.channelName.toLowerCase().includes(value.slice(1).toLowerCase())
+        ),
+      ];
+      console.log(this.allResults);
+    } else if (value.startsWith('@')) {
       this.userResults = this.sortListOfUser().filter(item =>
         item.displayName.toLowerCase().includes(value.slice(1).toLowerCase())
       );
     } else if (value.startsWith('#')) {
-      this.channelResults = this.allChannels.filter(item =>
+      this.channelResults = this.chat.currentUserChannels.filter(item =>
         item.channelName.toLowerCase().includes(value.slice(1).toLowerCase())
       );
     } else if (value === '') {
       this.channelResults = [];
       this.userResults = [];
+      this.allResults = [];
     }
-
-    // Das kombinierte Array in einer Eigenschaft speichern
   }
 
   async openMessage(user: User) {

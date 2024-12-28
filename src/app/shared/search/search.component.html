@@ -22,7 +22,14 @@
 
   <div class="show-found" [class.active]="isResultsVisible">
     <ul>
-      @for(result of userResults; track $index) {
+      @if(searchTerm !== '') {
+      <li class="looking">
+        <img src="/assets/media/icons/search.svg" alt="Search" />
+        {{ searchTerm }}
+      </li>
+      } @if(searchTerm === '') {
+      <span>Versuche mit &commat; oder #</span>
+      } @for(result of userResults; track $index) {
 
       <li>
         <button (click)="openMessage(result)">
@@ -37,8 +44,25 @@
           <span>{{ result.channelName }}</span>
         </button>
       </li>
-      }
-
+      } 
+      @for(result of allResults; track $index) {   
+      
+        @if(result.displayName !== undefined) {
+      <li>
+        <button (click)="openMessage(result)">
+          <app-avatar [user]="result" [userList]="true"></app-avatar>
+          <span>{{ result.displayName }}</span>
+        </button>
+      </li>
+      } @else if(result.channelName !== undefined) {
+      <li>
+        <button>
+          #
+          <span>{{ result.channelName }}</span>
+        </button>
+      </li>
+      } 
+    }
     </ul>
   </div>
 </div>
