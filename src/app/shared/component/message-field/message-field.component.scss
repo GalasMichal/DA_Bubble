@@ -129,7 +129,42 @@ emoji-mart {
   transform: translateY(100%);
 }
 
+
 .show-emoji {
   visibility: visible;
   transform: translateY(0);
+}
+
+.users-content {
+  display: flex;
+  overflow-y: auto;
+  position: absolute;
+  visibility: visible;
+  background: $white;
+  bottom: 4.0625rem;
+  left: 120px;
+  width: 22.1875rem;
+  height: 26.875rem;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.875rem;
+    gap: 0.5625rem;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: none;
+      width: fit-content;
+      text-align: start;
+      padding: 0.25rem 1.75rem;
+      &:hover {
+        background: $bg-color;
+        border-radius: $b-radius-2;
+        color: $primary-hover;
+      }
+    }
+  }
 }

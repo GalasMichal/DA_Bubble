@@ -78,4 +78,18 @@
 }
 ::ng-deep .header-right-container app-avatar .user-avatar .online {
   display: none;
+}
+
+::ng-deep .search-container app-avatar .user-avatar {
+  display: flex;
+  justify-content: center;
+}
+::ng-deep .search-container app-avatar .user-avatar .avatar {
+  width: 30px;
+  height: 30px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+::ng-deep .search-container app-avatar .user-avatar .online {
+  display: none;
 }/*# sourceMappingURL=avatar.component.css.map */

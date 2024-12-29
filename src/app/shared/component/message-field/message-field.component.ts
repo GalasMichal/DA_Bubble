@@ -11,6 +11,7 @@ import { UserServiceService } from '../../../services/user-service/user-service.
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { CloseComponent } from '../close/close.component';
 import { MessageService } from '../../../services/messages/message.service';
+import { AvatarComponent } from "../../avatar/avatar.component";
 
 
 @Component({
@@ -20,8 +21,9 @@ import { MessageService } from '../../../services/messages/message.service';
     FormsModule,
     PickerComponent,
     CommonModule,
-    CloseComponent
-  ],
+    CloseComponent,
+    AvatarComponent
+],
   templateUrl: './message-field.component.html',
   styleUrl: './message-field.component.scss',
 })
@@ -141,5 +143,16 @@ if (collRef) {
   closeEmojiWindow() {
     this.isEmojiPickerVisible = false;
   }
+
+  sortListOfUser() {
+    const sortAllUser = this.user.userList
+    sortAllUser.sort((a, b) => {
+      if(a.uId === this.fb.currentUser()?.uId) return -1
+      if(b.uId === this.fb.currentUser()?.uId) return 1
+
+      return a.displayName.localeCompare(b.displayName)
+    })
+    return sortAllUser
+  };
 }
 
