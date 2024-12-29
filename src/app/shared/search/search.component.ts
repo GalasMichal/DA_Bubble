@@ -11,11 +11,12 @@ import { User } from '../../models/interfaces/user.model';
 import { FormsModule } from '@angular/forms';
 import { Channel } from '../../models/interfaces/channel.model';
 import { AvatarComponent } from '../avatar/avatar.component';
+import { CloseComponent } from "../component/close/close.component";
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, FormsModule, AvatarComponent],
+  imports: [CommonModule, FormsModule, AvatarComponent, CloseComponent],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
@@ -36,7 +37,7 @@ export class SearchComponent {
   allResults: Array<any>= []
   
   clearSearch() {
-    this.searchService.clearSearch();
+    this.searchTerm = '';
   }
 
   showResults() {

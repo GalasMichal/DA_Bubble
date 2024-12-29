@@ -2,7 +2,7 @@
   <form action="#" method="get">
     <label for="search" class="visually-hidden">Search</label>
 
-    <button type="submit" title="Search">
+    <button class="search-btn" type="submit" title="Search">
       <img src="/assets/media/icons/search.svg" alt="Search" />
     </button>
 
@@ -18,6 +18,9 @@
       required
       autocomplete="off"
     />
+    <button class="close-btn" (click)="clearSearch()">
+      <app-close></app-close>
+    </button>
   </form>
 
   <div class="show-found" [class.active]="isResultsVisible">
