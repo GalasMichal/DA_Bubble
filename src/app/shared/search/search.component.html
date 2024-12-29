@@ -39,7 +39,7 @@
       </li>
       } @for(result of channelResults; track $index) {
       <li>
-        <button>
+        <button (click)="openChannel(result.chanId, result.channelName)">
           #
           <span>{{ result.channelName }}</span>
         </button>
@@ -56,7 +56,7 @@
       </li>
       } @else if(result.channelName !== undefined) {
       <li>
-        <button>
+        <button (click)="openChannel(result.chanId, result.channelName)">
           #
           <span>{{ result.channelName }}</span>
         </button>

@@ -44,10 +44,13 @@ export class SearchComponent {
   }
 
   hideResults() {
-    this.isResultsVisible = false;
+    setTimeout(() => {
+      this.isResultsVisible = false;
+    }, 200);
   }
 
-  openChannel(chanId: string) {
+  openChannel(chanId: string, name: string) {
+    this.searchTerm = name;
     this.stateControl.responsiveChat = true;
     this.stateControl.responsiveArrow = true;
     this.stateControl.responsiveMenu = true;
