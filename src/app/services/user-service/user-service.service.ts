@@ -42,17 +42,17 @@ export class UserServiceService {
     });
   }
 
-  setUserObject(obj: any, id: string): AppUser {
-    return {
-      status: obj.status || false,
-      channels: obj.channels || [],
-      uId: id || '',
-      email: obj.email || '',
-      displayName: obj.displayName || '',
-      avatarUrl: obj.avatarUrl || '',
-      birthdate: obj.birthdate || '',
-    };
-  }
+  // setUserObject(obj: any, id: string): AppUser {
+  //   return {
+  //     status: obj.status || false,
+  //     channels: obj.channels || [],
+  //     uId: id || '',
+  //     email: obj.email || '',
+  //     displayName: obj.displayName || '',
+  //     avatarUrl: obj.avatarUrl || '',
+  //     birthdate: obj.birthdate || '',
+  //   };
+  // }
 
   getUsers() {
     return collection(this.firestore, 'users');

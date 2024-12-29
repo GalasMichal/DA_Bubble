@@ -24,6 +24,7 @@ import {
 } from 'firebase/firestore';
 import { StateControlService } from '../state-control/state-control.service';
 import { User } from 'firebase/auth';
+import { FirebaseService } from '../firebase/firebase.service';
 
 @Injectable({
   providedIn: 'root',
@@ -52,7 +53,8 @@ export class ChatRoomService {
   unsub: any;
   public currentMessageId: string | null = null;
 
-  constructor() {}
+  constructor() {
+  }
 
   unsubscribe(subscription: Unsubscribe | null) {
     if (subscription) {
@@ -171,25 +173,26 @@ export class ChatRoomService {
     this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
       this.channelList = [];
       list.forEach((element) => {
-        const channelData = element.data();
+        const channelData = element.data() as Channel;
         const channelId = element.id;
-        const channelObject = this.setChannelObject(channelData, channelId);
-        this.channelList.push(channelObject);
+        // const channelObject = this.setChannelObject(channelData, channelId);
+        this.channelList.push(channelData);
       });
     });
+    // this.checkUserInChannels(this.currentUserId: string | undefined)
   }
 
-  setChannelObject(obj: any, id: string): Channel {
-    return {
-      chanId: id || '',
-      channelName: obj.channelName || '',
-      channelDescription: obj.channelDescription || '',
-      allMembers: obj.allMembers || '',
-      specificPeople: obj.specificPeople || [],
-      createdAt: obj.createdAt || '',
-      createdBy: obj.createdBy || '',
-    };
-  }
+  // setChannelObject(obj: any, id: string): Channel {
+  //   return {
+  //     chanId: id || '',
+  //     channelName: obj.channelName || '',
+  //     channelDescription: obj.channelDescription || '',
+  //     allMembers: obj.allMembers || '',
+  //     specificPeople: obj.specificPeople || [],
+  //     createdAt: obj.createdAt || '',
+  //     createdBy: obj.createdBy || '',
+  //   };
+  // }
 
   addChannelToFirestore(channel: Channel) {
     const channelCollectionRef = collection(this.firestore, 'channels');

@@ -1,7 +1,73 @@
-<form class="search-container" action="#" method="get">
+<div class="search-container">
+  <form action="#" method="get">
     <label for="search" class="visually-hidden">Search</label>
-    <input type="search" id="search" name="search" placeholder="Code learning durchsuchen" required>
-    <button type="submit" title="Search">
-        <img src="/assets/media/icons/search.svg" alt="Search">
+
+    <button class="search-btn" type="submit" title="Search">
+      <img src="/assets/media/icons/search.svg" alt="Search" />
     </button>
-</form>
+
+    <input
+      type="search"
+      id="search"
+      name="search"
+      #searchInput
+      [value]="searchTerm"
+      (keyup)="onKeyUp(searchInput.value)"
+      (focus)="showResults()"
+      (blur)="hideResults()"
+      required
+      autocomplete="off"
+    />
+    @if(searchTerm !== '') {
+      <button class="close-btn" (click)="clearSearch()">
+        <app-close></app-close>
+      </button>
+    }
+  </form>
+
+  <div class="show-found" [class.active]="isResultsVisible">
+    <ul>
+      @if(searchTerm !== '') {
+      <li class="looking">
+        <img src="/assets/media/icons/search.svg" alt="Search" />
+        {{ searchTerm }}
+      </li>
+      } @if(searchTerm === '') {
+      <span>Versuche mit &commat; oder #</span>
+      } @for(result of userResults; track $index) {
+
+      <li>
+        <button (click)="openMessage(result)">
+          <app-avatar [user]="result" [userList]="true"></app-avatar>
+          <span>{{ result.displayName }}</span>
+        </button>
+      </li>
+      } @for(result of channelResults; track $index) {
+      <li>
+        <button (click)="openChannel(result.chanId, result.channelName)">
+          #
+          <span>{{ result.channelName }}</span>
+        </button>
+      </li>
+      } 
+      @for(result of allResults; track $index) {   
+      
+        @if(result.displayName !== undefined) {
+      <li>
+        <button (click)="openMessage(result)">
+          <app-avatar [user]="result" [userList]="true"></app-avatar>
+          <span>{{ result.displayName }}</span>
+        </button>
+      </li>
+      } @else if(result.channelName !== undefined) {
+      <li>
+        <button (click)="openChannel(result.chanId, result.channelName)">
+          #
+          <span>{{ result.channelName }}</span>
+        </button>
+      </li>
+      } 
+    }
+    </ul>
+  </div>
+</div>
