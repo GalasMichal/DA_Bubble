@@ -154,5 +154,9 @@ if (collRef) {
     })
     return sortAllUser
   };
+
+  addUserToMessage(displayName: string) {
+    this.textArea += `@${displayName.trim()}`;
+  }
 }
 

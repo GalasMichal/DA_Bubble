@@ -29,14 +29,14 @@
         @for(user of this.sortListOfUser(); track $index) {
           @if(user.uId === this.fb.currentUser()?.uId) {
             <li>
-              <button class="single-user">
+              <button (click)="addUserToMessage(user.displayName)" class="single-user">
                   <app-avatar [user]="user" [userList]="true"></app-avatar>
                 <span>{{user.displayName}} (Du)</span> 
               </button>
             </li>
           } @else () {
             <li>
-              <button>
+              <button (click)="addUserToMessage(user.displayName)">
                   <app-avatar [user]="user" [userList]="true"></app-avatar>
                 <span>{{user.displayName}}</span>
               </button>
