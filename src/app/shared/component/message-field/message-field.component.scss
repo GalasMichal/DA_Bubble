@@ -129,29 +129,44 @@ emoji-mart {
   transform: translateY(100%);
 }
 
-
 .show-emoji {
   visibility: visible;
   transform: translateY(0);
 }
 
-.users-content {
+.added-user {
+  color: #4954c5;
+  background-color: #e4dcdb;
+  padding-inline: 0.125rem;
+  &:hover {
+    color: $white;
+    background-color: #5865f2;
+  }
+}
+
+.users-container {
   display: flex;
-  overflow-y: auto;
+  overflow: hidden;
   position: absolute;
-  visibility: visible;
-  background: $white;
-  bottom: 4.0625rem;
-  left: 120px;
+  visibility: hidden;
   max-height: 26.875rem;
-  border: 1px solid $secondary;
-  outline: $secondary;
-  border-radius: $b-radius-1 $b-radius-1 $b-radius-1 $b-radius-1;
-  border-bottom: 0;
+  max-height: 16.875rem;
+  bottom: 3.0625rem;
+  left: 120px;
+  z-index: 1;
+  overflow: scroll;
   ul {
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
+    background: $white;
     padding-block: 1rem;
+    border: 1px solid $secondary;
+    outline: $secondary;
+    transition-timing-function: ease-in-out;
+    transition-duration: 175ms;
+    transform: translateY(100%);
+
     button {
       display: flex;
       align-items: center;
@@ -167,4 +182,9 @@ emoji-mart {
       }
     }
   }
+}
+
+.show-users {
+  visibility: visible !important;
+  transform: translateY(0) !important;
 }

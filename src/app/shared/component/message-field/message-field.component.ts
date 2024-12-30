@@ -35,6 +35,7 @@ export class MessageFieldComponent {
   msg = inject(MessageService);
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
+  isUsersPickerVisible: boolean = false;
 
   @Input() isThreadAnswerOpen = false;
   @Input() textAreaEdit: string = '';
@@ -144,6 +145,10 @@ if (collRef) {
     this.isEmojiPickerVisible = false;
   }
 
+  showUserWindow() {
+    this.isUsersPickerVisible = !this.isUsersPickerVisible;
+  }
+
   sortListOfUser() {
     const sortAllUser = this.user.userList
     sortAllUser.sort((a, b) => {
@@ -156,7 +161,7 @@ if (collRef) {
   };
 
   addUserToMessage(displayName: string) {
-    this.textArea += `@${displayName.trim()}`;
+    this.textArea += `<span class="added-user">@${displayName.trim()}</span> `;
   }
 }
 
