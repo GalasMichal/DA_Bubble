@@ -88,11 +88,18 @@ mat-dialog-content {
     .mat-mdc-dialog-container
     .mdc-dialog__container
     .mat-mdc-dialog-surface {
-    border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
-    height: 9rem;
-    width: 13rem;
+    border-radius: $b-radius-1 $b-radius-1 0 0;
+    height: 30vh;
+    width: unset;
     position: absolute;
-    top: auto;
-    right: auto;
+    top: unset;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  ::ng-deep
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: 100%;
   }
 }
