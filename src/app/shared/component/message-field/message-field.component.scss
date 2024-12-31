@@ -22,10 +22,15 @@
     align-items: center;
     transform: translateY(-15px);
   }
-  textarea {
+  .textarea {
+    display: flex;
     width: 100%;
     height: 100%;
+    border: none;
     resize: none;
+    font-weight: 400;
+    font-size: 1.125rem;
+    line-height: 1.5344rem;
     &:focus {
       border: solid 1px none;
       outline: none;
@@ -33,17 +38,6 @@
   }
 }
 
-.input-field {
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-
-.txt {
-  font-weight: 400;
-  font-size: 1.125rem;
-  line-height: 1.5344rem;
-}
 
 .icons-container {
   display: flex;

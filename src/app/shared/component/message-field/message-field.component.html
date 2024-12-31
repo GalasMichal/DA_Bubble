@@ -28,23 +28,26 @@
       <app-close></app-close>
     </button>
   </div>
-  
+  <!-- placeholder="Nachricht an # {{chat.currentChannelData.channelName}} schreiben" -->
+  <!-- [(ngModel)]="textArea" -->
   @if (chat.currentChannelData != undefined) {
-    <textarea [ngClass]="{'textarea-edit': stateControl.globalEdit}"
+    
+    <div class="input-field" type="text"  
+    [ngClass]="{'textarea-edit': stateControl.globalEdit}"
+    contenteditable="true"
     (click)="closeEmojiWindow()"
     (click)="closeUserWindow()" 
-    [(ngModel)]="textArea"
     (keyup)="handleKeyUp($event)"
-    class="input-field txt" type="text" placeholder="Nachricht an # {{chat.currentChannelData.channelName}} schreiben"
-    wrap="hard"></textarea>
+    wrap="hard"></div>
   }@else {
-    <textarea [ngClass]="{'textarea-edit': stateControl.globalEdit}"
+    <div class="input-field" type="text"
+    [ngClass]="{'textarea-edit': stateControl.globalEdit}"
+    contenteditable="true"
     (click)="closeEmojiWindow()" 
     (click)="closeUserWindow()" 
-    [(ngModel)]="textArea"
     (keyup)="handleKeyUp($event)"
-    class="input-field txt" type="text" placeholder="Nachricht schreiben"
-    wrap="hard"></textarea>
+    placeholder="Nachricht schreiben" 
+    wrap="hard"></div>
   }
 
   <div class="textarea-btn-container">
