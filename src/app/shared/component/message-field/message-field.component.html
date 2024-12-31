@@ -1,4 +1,27 @@
 <div class="message-field-container" [ngClass]="{'edit-field': stateControl.globalEdit}" tabindex="0">
+  <div class="users-container">
+    <ul [ngClass]="{'show-users': isUsersPickerVisible}">
+      @for(user of this.sortListOfUser(); track $index) {
+        @if(user.uId === this.fb.currentUser()?.uId) {
+          <li>
+            <button (click)="addUserToMessage(user.displayName)" class="single-user">
+                <app-avatar [user]="user" [userList]="true"></app-avatar>
+              <span>{{user.displayName}} (Du)</span> 
+            </button>
+          </li>
+        } @else () {
+          <li>
+            <button (click)="addUserToMessage(user.displayName)">
+                <app-avatar [user]="user" [userList]="true"></app-avatar>
+              <span>{{user.displayName}}</span>
+            </button>
+          </li>
+
+        }
+      }
+      </ul>
+
+  </div>
   <div class="edit-field-info"  [ngClass]="{'show-edit-filed': stateControl.globalEdit}">
     <span>Nachricht bearbeiten</span>
     <button class="close-btn" (click)="closeEdit()">
@@ -8,12 +31,18 @@
   
   @if (chat.currentChannelData != undefined) {
     <textarea [ngClass]="{'textarea-edit': stateControl.globalEdit}"
-    (click)="closeEmojiWindow()" [(ngModel)]="textArea"
+    (click)="closeEmojiWindow()"
+    (click)="closeUserWindow()" 
+    [(ngModel)]="textArea"
+    (keyup)="handleKeyUp($event)"
     class="input-field txt" type="text" placeholder="Nachricht an # {{chat.currentChannelData.channelName}} schreiben"
     wrap="hard"></textarea>
   }@else {
     <textarea [ngClass]="{'textarea-edit': stateControl.globalEdit}"
-    (click)="closeEmojiWindow()" [(ngModel)]="textArea"
+    (click)="closeEmojiWindow()" 
+    (click)="closeUserWindow()" 
+    [(ngModel)]="textArea"
+    (keyup)="handleKeyUp($event)"
     class="input-field txt" type="text" placeholder="Nachricht schreiben"
     wrap="hard"></textarea>
   }
@@ -22,30 +51,6 @@
 
     <div class="emoji">
       <emoji-mart (emojiClick)="addEmoji($event)" [ngClass]="{'show-emoji': isEmojiPickerVisible}"></emoji-mart>
-    </div>
-
-    <div class="users-container">
-      <ul [ngClass]="{'show-users': isUsersPickerVisible}">
-        @for(user of this.sortListOfUser(); track $index) {
-          @if(user.uId === this.fb.currentUser()?.uId) {
-            <li>
-              <button (click)="addUserToMessage(user.displayName)" class="single-user">
-                  <app-avatar [user]="user" [userList]="true"></app-avatar>
-                <span>{{user.displayName}} (Du)</span> 
-              </button>
-            </li>
-          } @else () {
-            <li>
-              <button (click)="addUserToMessage(user.displayName)">
-                  <app-avatar [user]="user" [userList]="true"></app-avatar>
-                <span>{{user.displayName}}</span>
-              </button>
-            </li>
-
-          }
-        }
-        </ul>
-
     </div>
 
     <div class="icons-container">

@@ -151,10 +151,11 @@ emoji-mart {
   visibility: hidden;
   max-height: 26.875rem;
   max-height: 16.875rem;
-  bottom: 3.0625rem;
+  // bottom: 3.0625rem;
   left: 120px;
   z-index: 1;
   overflow: scroll;
+  transform: translateY(-100%);
   ul {
     overflow-y: scroll;
     display: flex;

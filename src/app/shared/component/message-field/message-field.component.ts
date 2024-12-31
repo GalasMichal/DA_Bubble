@@ -36,6 +36,7 @@ export class MessageFieldComponent {
   textArea: string = '';
   isEmojiPickerVisible: boolean = false;
   isUsersPickerVisible: boolean = false;
+  formattedContent: string = ''; // Styled HTML for the background
 
   @Input() isThreadAnswerOpen = false;
   @Input() textAreaEdit: string = '';
@@ -145,7 +146,13 @@ if (collRef) {
     this.isEmojiPickerVisible = false;
   }
 
+  closeUserWindow() {
+    this.isUsersPickerVisible = false;
+  }
+
+
   showUserWindow() {
+    this.textArea += `@`
     this.isUsersPickerVisible = !this.isUsersPickerVisible;
   }
 
@@ -161,7 +168,16 @@ if (collRef) {
   };
 
   addUserToMessage(displayName: string) {
-    this.textArea += `<span class="added-user">@${displayName.trim()}</span> `;
+    this.textArea += `${displayName.trim()} `;
+    this.isUsersPickerVisible = false;
   }
+
+  handleKeyUp(event: KeyboardEvent) {
+    const currentChar = this.textArea.charAt(0);    
+    if (currentChar === '@') {
+      this.isUsersPickerVisible = true;
+    }
+  }
+
 }
 
