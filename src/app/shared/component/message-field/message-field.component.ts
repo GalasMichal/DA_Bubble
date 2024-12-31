@@ -46,7 +46,6 @@ export class MessageFieldComponent {
   @Output() editStatusChange = new EventEmitter<boolean>();
   @Input() directMessage: boolean = false;
 
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['textAreaEdit'] && changes['textAreaEdit'].currentValue !== undefined) {
       this.textArea = changes['textAreaEdit'].currentValue;
