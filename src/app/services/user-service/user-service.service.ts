@@ -9,7 +9,7 @@ import { tick } from '@angular/core/testing';
 import { Message } from '../../models/interfaces/message.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserServiceService {
   firestore = inject(Firestore);
@@ -22,12 +22,9 @@ export class UserServiceService {
   auth = getAuth();
   answerChatMessage: Message | null = null;
   selectedUserMessage = signal<Message | null>(null);
-  profileSingleUser!: User
+  profileSingleUser!: User;
 
-
-  constructor() {
-
-  }
+  constructor() {}
 
   setThreadMessage(message: Message) {
     this.selectedUserMessage.set(message); // Nachricht setzen
@@ -65,7 +62,9 @@ export class UserServiceService {
     const userDocRef = doc(this.getUsers(), userId);
     try {
       await updateDoc(userDocRef, { avatarUrl: selectedAvatar });
-      console.log(`Avatar URL für Benutzer ${userId} erfolgreich aktualisiert.`);
+      console.log(
+        `Avatar URL für Benutzer ${userId} erfolgreich aktualisiert.`
+      );
     } catch (error) {
       console.error('Fehler beim Aktualisieren des Avatars:', error);
     }
@@ -77,28 +76,20 @@ export class UserServiceService {
         // Aktualisiere den displayName und das Avatar-Bild (photoURL)
         await updateProfile(this.auth.currentUser, {
           displayName: userName,
-                });
-        console.log("Profile updated successfully!");
+        });
+        console.log('Profile updated successfully!');
 
         // Aktualisiere die E-Mail separat
         await updateEmail(this.auth.currentUser, userEmail);
-        console.log("Email updated successfully!");
+        console.log('Email updated successfully!');
       } catch (error) {
-        console.error("An error occurred while updating the user information:", error);
+        console.error(
+          'An error occurred while updating the user information:',
+          error
+        );
       }
     } else {
-      console.error("No authenticated user found to update the profile.");
-    }
-  }
-
-
-  // Update the current user muss noch geändert werden auf realtime verbindung !! wichtig
-  async updateCurrentUser(user: AppUser) {
-    const userDocRef = doc(this.getUsers(), user.uId);
-    const docSnap = await getDoc(userDocRef);
-    if (docSnap.exists()) {
-    const userData = docSnap.data();
-    console.log('Document data:', userData);
+      console.error('No authenticated user found to update the profile.');
     }
   }
 
@@ -107,7 +98,7 @@ export class UserServiceService {
     const userDocRef = doc(this.getUsers(), userId);
     const docSnap = await getDoc(userDocRef);
     if (docSnap.exists()) {
-    this.profileSingleUser = docSnap.data() as User;
+      this.profileSingleUser = docSnap.data() as User;
     }
   }
 }

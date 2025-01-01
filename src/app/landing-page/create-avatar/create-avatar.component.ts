@@ -38,7 +38,7 @@ export class CreateAvatarComponent {
   st = inject(StorageService);
   user = inject(UserServiceService);
   router = inject(Router);
-  stateControl = inject(StateControlService)
+  stateControl = inject(StateControlService);
   selectedAvatar: string = 'assets/media/icons/profile-icons/profile-icon.svg';
   file: any;
   isSelected: boolean = false;
@@ -83,22 +83,22 @@ export class CreateAvatarComponent {
       if (downloadUrl) {
         this.selectedAvatar = downloadUrl;
       }
-    }else {
-
+    } else {
     }
     this.user.updateUserAvatar(this.db.currentUser()!.uId, this.selectedAvatar);
-    await this.user.updateCurrentUser(this.db.currentUser()!);
-    this.showToast(text)
-    this.closeEditAvatar()
+    // await this.user.updateCurrentUser(this.db.currentUser()!);
+    await this.db.getUserByUid(this.db.currentUser()!.uId);
+    this.showToast(text);
+    this.closeEditAvatar();
   }
 
   showToast(text: string) {
-    this.stateControl.showToast = true
-    this.stateControl.showToastText = text
-    this.stateControl.removeShowToast()
+    this.stateControl.showToast = true;
+    this.stateControl.showToastText = text;
+    this.stateControl.removeShowToast();
     setTimeout(() => {
       this.router.navigate(['/start/main']);
-      }, 2200);
+    }, 2200);
   }
 
   closeEditAvatar() {
