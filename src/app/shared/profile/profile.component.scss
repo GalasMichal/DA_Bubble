@@ -61,8 +61,12 @@
     font-size: 2rem;
     font-weight: 500;
   }
-  .edit-img,
-  .edit {
+  .edit,
+  .edit-img
+   {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.125rem;
     font-weight: 600;
     line-height: 1.5344rem;
@@ -70,16 +74,20 @@
     background: none;
     padding-inline: 0.625rem;
     font-weight: 500;
+    border-radius: $b-radius-2;
     @include firstTranistion();
     &:hover,
-    &:focus {
-      color: $primary;
+    &:focus-visible {
+      background: $bg-color;
       outline: none;
     }
+    &:hover svg path {
+      fill: $primary-hover;
+    } 
   }
-}
-.edit-img {
-  display: none;
+  .edit-img {
+    display: none;
+  }
 }
 
 .active {
@@ -177,13 +185,13 @@ ul {
 @media (max-width: 500px) {
   .profile-card {
     .name {
-      button {
-        span {
-          display: none;
-        }
-        img {
-          display: flex;
-        }
+      .edit {
+        display: none;
+      }
+      .edit-img {
+        display: flex;
+        width: 40px;
+        height: 40px;
       }
     }
   }
@@ -193,7 +201,7 @@ ul {
     .mat-mdc-dialog-container
     .mdc-dialog__container
     .mat-mdc-dialog-surface {
-    border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
+    border-radius: $b-radius-1;
     position: absolute;
     width: 500px;
     height: 600px;
