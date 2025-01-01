@@ -8,11 +8,12 @@ mat-dialog-content {
   justify-content: center;
   text-align: center;
   border-radius: 2.5rem;
-  img {
+  .rectangle {
+    display: none;
     position: absolute;
     top: 10px;
     left: auto;
-    right: auto
+    right: auto;
   }
   ul {
     font-size: 1.25rem;
@@ -105,6 +106,11 @@ mat-dialog-content {
     left: 0;
     right: 0;
     bottom: 0;
+  }
+  mat-dialog-content {
+    .rectangle {
+      display: flex;
+    }
   }
 
   ::ng-deep .cdk-overlay-pane.mat-mdc-dialog-panel {
