@@ -13,10 +13,10 @@
     display: none;
   }
   .title {
-      color: $primary;
-      font-size: 2.275rem;
-      font-weight: 700;
-      text-align: center;
+    color: $primary;
+    font-size: 2.275rem;
+    font-weight: 700;
+    text-align: center;
   }
   .avatar-container {
     display: flex;
@@ -190,6 +190,28 @@
       display: flex;
       text-decoration: none;
       width: fit-content;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  ::ng-deep
+    .create-profile-container
+    .mat-mdc-dialog-container
+    .mdc-dialog__container
+    .mat-mdc-dialog-surface {
+    border-radius: $b-radius-1;
+    top: 0;
+    right: 0;
+	left: 0;
+    bottom: 0;
+    max-height: 100%;
+    max-width: 100%;
+    .mdc-dialog__content {
+      overflow: auto;
+    }
+    .main-content {
+      max-height: 100%;
     }
   }
 }
