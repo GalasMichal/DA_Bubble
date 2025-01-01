@@ -1,7 +1,7 @@
 @import "../../../colors.scss";
 @import "../../../styles.scss";
 
-.main-content {
+.main-container {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -172,7 +172,7 @@
   top: 6.25rem;
   right: 2.5rem;
 
-  .main-content {
+  .main-container {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -210,8 +210,14 @@
     .mdc-dialog__content {
       overflow: auto;
     }
-    .main-content {
+    .main-container {
       max-height: 100%;
+	  .main-content {
+		overflow-y: auto;
+	  }
+	  .btn-container {
+		padding-right: 1rem;
+	  }
     }
   }
 }
