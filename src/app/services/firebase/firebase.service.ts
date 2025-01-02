@@ -57,6 +57,7 @@ export class FirebaseService {
   provider = new GoogleAuthProvider();
   router = inject(Router);
   chat = inject(ChatRoomService);
+  user = inject(UserServiceService)
   userService = inject(UserServiceService);
   stateControl = inject(StateControlService);
   public currentUser = signal<AppUser | null>(null);
@@ -259,7 +260,10 @@ export class FirebaseService {
     });
   }
 
-  logoutUser() {
+  logoutUser(userId: string) {
+
+    this.user.updateUserStatus(userId)
+
     // Methode zum Ausloggen des Benutzers
     signOut(this.auth)
       .then(() => {
