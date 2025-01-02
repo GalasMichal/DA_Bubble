@@ -32,14 +32,7 @@ import { ShowUsersComponent } from '../../shared/show-users/show-users.component
 })
 export class ChatRoomComponent {
   allUserMessages: Message[] = [];
-
   stateServer = inject(StateControlService);
-
-  usersInChat = [
-    'assets/media/icons/profile-icons/user-1-elise.svg',
-    'assets/media/icons/profile-icons/user-2-elias.svg',
-    'assets/media/icons/profile-icons/user-4-steffen.svg',
-  ];
   dialog = inject(MatDialog);
   dialogConfirm = inject(MatDialog);
   readonly userDialog = inject(MatDialog);
