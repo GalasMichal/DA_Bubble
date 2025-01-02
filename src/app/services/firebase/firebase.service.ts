@@ -144,7 +144,6 @@ export class FirebaseService {
         password
       );
       let user = userCredential.user as FirebaseUser;
-      console.log('user is', user);
       if (user) {
         this.stateControl.showToast = true;
         this.stateControl.showToastText = text;
@@ -165,8 +164,6 @@ export class FirebaseService {
         this.errorMessageLogin.set('E-Mail oder Passwort falsch');
       }
       this.stateControl.removeShowToast();
-      // Falls es einen allgemeinen Fehler gibt (bei der Benutzerabfrage oder Anmeldung)
-      console.error('Fehler beim Login:', error);
     }
   }
 
@@ -180,7 +177,6 @@ export class FirebaseService {
         this.currentUser.set(userData);
         return userData; // Benutzer-Daten zurückgeben
       } else {
-        console.log('Kein Benutzer mit dieser UID gefunden.');
         return null; // Falls kein Benutzer gefunden wird
       }
     } catch (error) {
@@ -197,9 +193,6 @@ export class FirebaseService {
       // Der angemeldete Benutzer
       const googleUser = result.user as FirebaseUser;
       const additionalUserInfo = getAdditionalUserInfo(result);
-      console.log('Google Access Token:', token);
-      console.log('Google-Benutzer:', googleUser);
-      console.log('Zusätzliche Benutzerinformationen:', additionalUserInfo);
       // Fallback für den displayName, falls er nicht verfügbar ist
       const displayName =
         typeof additionalUserInfo?.profile?.['name'] === 'string'
@@ -225,8 +218,6 @@ export class FirebaseService {
         await this.getUserByUid(googleUser.uid);
         this.router.navigate(['/start/main']);
       }
-
-      console.log('User ist eingeloggt', this.currentUser());
     } catch (error) {
       console.error('Fehler bei der Google-Anmeldung:', error);
     }
@@ -238,7 +229,6 @@ export class FirebaseService {
         return methods.length > 0;
       })
       .catch((error) => {
-        console.error('Fehler beim Überprüfen des Benutzers:', error);
         this.errorMessageLogin.set('Fehler beim Überprüfen des Benutzers.');
         return false;
       });
@@ -389,7 +379,6 @@ export class FirebaseService {
         deleteUser(user)
           .then(() => {
             deleteDoc(doc(this.firestore, "users", userId));
-            console.log('User deleted successfully');
             this.stateControl.showConfirmationText = 'Dein Konto wurde erfolgreich gelöscht.';
             this.stateControl.isUserLoggedIn = false;
             this.router.navigate(['start/confirmation']);
