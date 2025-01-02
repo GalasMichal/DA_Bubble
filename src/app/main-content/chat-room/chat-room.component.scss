@@ -160,7 +160,10 @@ header {
   header {
     padding: 1.5625rem 0.8125rem;
   }
-    .show-responsive {
-      display: flex;
+  .user-container {
+    display: none;
+  }
+  .show-responsive {
+    display: flex;
   }
 }

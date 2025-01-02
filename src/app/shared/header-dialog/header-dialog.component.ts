@@ -32,8 +32,8 @@ export class HeaderDialogComponent {
   }
 
   logOut() {
-    this.firebase.logoutUser();
-    this.firebase.currentUser()!.status = false;
+    const userId = this.firebase.currentUser()!.uId
+    this.firebase.logoutUser(userId);
     // noch dazu muss kommen update signal to firebase oder update profile tu firebase
     this.closeDialog.close()
     this.stateControl.isUserLoggedIn = false;
