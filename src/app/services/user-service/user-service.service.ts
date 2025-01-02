@@ -101,4 +101,9 @@ export class UserServiceService {
       this.profileSingleUser = docSnap.data() as User;
     }
   }
+
+  async updateUserStatus(currentUserId: string) {
+    const userDocRef = doc(this.firestore, 'users', currentUserId);
+    await updateDoc(userDocRef, { status: false });
+  }
 }
