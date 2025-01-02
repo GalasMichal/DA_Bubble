@@ -9,40 +9,30 @@ import {
   updateProfile,
   User as FirebaseUser,
   fetchSignInMethodsForEmail,
-  onAuthStateChanged,
   signOut,
-  user,
 } from '@angular/fire/auth';
 import {
   collection,
-  collectionData,
   doc,
   Firestore,
   setDoc,
-  onSnapshot,
   getDoc,
-  Unsubscribe,
   getDocs,
   query,
   where,
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
-import { Channel } from '../../models/interfaces/channel.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
 import {
-  AuthCredential,
   confirmPasswordReset,
   deleteUser,
   EmailAuthProvider,
-  reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInAnonymously,
-  updatePassword,
 } from 'firebase/auth';
 import { StateControlService } from '../state-control/state-control.service';
-import { log } from 'console';
 import { DeleteAccountComponent } from '../../shared/component/delete-account/delete-account.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteAccountComponent } from '../../shared/component/confirm-delete-account/confirm-delete-account.component';
@@ -408,7 +398,7 @@ export class FirebaseService {
       alert('Ein unbekannter Fehler ist aufgetreten.');
       return;
     }
-    if (error.message === 'Passwortabfrage abgebrochen.') {
+    if (error.code === 'Passwortabfrage abgebrochen.') {
       alert('Die Passwortabfrage wurde abgebrochen.');
     } else if (error.code === 'auth/wrong-password') {
       alert('Das eingegebene Passwort ist falsch.');
