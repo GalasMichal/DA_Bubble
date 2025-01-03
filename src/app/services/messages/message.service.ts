@@ -42,7 +42,10 @@ export class MessageService {
     }
 
     // Neuen Chat erstellen, wenn keiner existiert
-    const channelCollectionRef = collection(this.db.firestore, 'privateMessages');
+    const channelCollectionRef = collection(
+      this.db.firestore,
+      'privateMessages'
+    );
     const channelDocRef = doc(channelCollectionRef);
     const privateChat = this.setPrivateObject(channelDocRef, user.uId);
     await setDoc(channelDocRef, privateChat);
@@ -54,11 +57,10 @@ export class MessageService {
     return channelDocRef.id;
   }
 
-
   async addMessageToSubcollection(chatId: string, message: Message) {
     if (!chatId) {
       throw new Error('chatId is required to add a message.');
-    }else {
+    } else {
       const messagesCollectionRef = collection(
         this.db.firestore,
         `privateMessages/${chatId}/messages`
@@ -66,7 +68,6 @@ export class MessageService {
 
       await addDoc(messagesCollectionRef, message);
     }
-
   }
 
   async loadCurrentMessageData() {
@@ -117,7 +118,6 @@ export class MessageService {
     });
   }
 
-
   setPrivateObject(obj: any, uId: string) {
     const privateChat: PrivateChat = {
       privatChatId: obj.id,
@@ -134,22 +134,35 @@ export class MessageService {
       'privateMessages'
     ); // Collection-Name
 
-    // Query erstellen, um Dokumente zu finden, die chatCreator und chatReciver entsprechen
-    const q = query(
+    // Query 1: chatCreator ist der aktuelle Benutzer und chatReciver ist der andere Benutzer
+    const q1 = query(
       privateChatCollection,
       where('chatCreator', '==', chatCreator),
       where('chatReciver', '==', uId)
     );
 
-    const querySnapshot = await getDocs(q);
+    // Query 2: chatCreator ist der andere Benutzer und chatReciver ist der aktuelle Benutzer
+    const q2 = query(
+      privateChatCollection,
+      where('chatCreator', '==', uId),
+      where('chatReciver', '==', chatCreator)
+    );
 
-    // Wenn ein Dokument gefunden wird, gib die ID zurück
-    if (!querySnapshot.empty) {
-      const doc = querySnapshot.docs[0]; // Erstes Dokument
-      return doc.id; // Dokument-ID
+    // Beide Queries ausführen
+    const [querySnapshot1, querySnapshot2] = await Promise.all([
+      getDocs(q1),
+      getDocs(q2),
+    ]);
+
+    // Prüfen, ob ein Dokument in einer der beiden Queries gefunden wurde
+    if (!querySnapshot1.empty) {
+      return querySnapshot1.docs[0].id; // ID des ersten Dokuments aus Query 1
+    }
+    if (!querySnapshot2.empty) {
+      return querySnapshot2.docs[0].id; // ID des ersten Dokuments aus Query 2
     }
 
-    // Wenn kein Dokument gefunden wird, gib `null` zurück
+    // Wenn kein Dokument gefunden wurde, gib `null` zurück
     return null;
   }
 }
