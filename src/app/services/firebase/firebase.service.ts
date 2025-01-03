@@ -240,9 +240,9 @@ export class FirebaseService {
     });
   }
 
-  logoutUser(userId: string) {
+ async logoutUser(userId: string) {
 
-    this.user.updateUserStatus(userId)
+   await this.user.updateUserStatus(userId)
 
     // Methode zum Ausloggen des Benutzers
     signOut(this.auth)

@@ -91,7 +91,9 @@ export class UserServiceService {
   }
 
   async updateUserStatus(currentUserId: string) {
+    console.log('currentUserId ist status geändert', currentUserId);
+
     const userDocRef = doc(this.firestore, 'users', currentUserId);
-    await updateDoc(userDocRef, { statu: false });
+    await updateDoc(userDocRef, { status: false });
   }
 }
