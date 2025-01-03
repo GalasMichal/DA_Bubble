@@ -87,7 +87,11 @@
     align-items: baseline;
     width: 100%;
     height: fit-content;
-    .edit {
+    .edit,
+    .edit-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-size: 1.125rem;
       font-weight: 600;
       line-height: 1.5344rem;
@@ -95,11 +99,15 @@
       background: none;
       padding-inline: 0.625rem;
       font-weight: 500;
+      border-radius: $b-radius-2;
       @include firstTranistion();
       &:hover,
-      &:focus {
-        color: $primary;
+      &:focus-visible {
+        background: $bg-color;
         outline: none;
+      }
+      &:hover svg path {
+        fill: $primary-hover;
       }
       &.disabled {
         color: gray;
@@ -107,6 +115,12 @@
         border: none;
         cursor: auto;
       }
+    }
+    .edit-img {
+      display: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
     }
   }
 
@@ -191,4 +205,20 @@
 
 .d-none {
   display: none !important;
+}
+
+@media (max-width: 500px) {
+  .container {
+    .container-content {
+      .edit-name-container,
+      .edit-info-container {
+        .edit {
+          display: none;
+        }
+        .edit-img {
+          display: flex;
+        }
+      }
+    }
+  }
 }
