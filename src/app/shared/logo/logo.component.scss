@@ -27,7 +27,7 @@ button {
   height: fit-content;
   transition: all 175ms ease-in-out;
   margin-block: auto;
-  margin-right: 20px;
+  margin-inline: 10px;
   &:hover,
   &:focus-visible {
     background: $primary-light;
