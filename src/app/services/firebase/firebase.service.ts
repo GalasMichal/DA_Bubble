@@ -139,6 +139,7 @@ export class FirebaseService {
         this.stateControl.showToastText = text;
         this.stateControl.removeShowToast();
         await this.getUserByUid(user.uid);
+        await this.user.updateUserStatus(user.uid, true);
         setTimeout(() => {
           this.router.navigate(['/start/main']);
         }, 2200);
@@ -206,6 +207,7 @@ export class FirebaseService {
       } else {
         // Benutzer existiert, also zum Main-Content
         await this.getUserByUid(googleUser.uid);
+        await this.user.updateUserStatus(googleUser.uid, true);
         this.router.navigate(['/start/main']);
       }
     } catch (error) {
@@ -242,7 +244,7 @@ export class FirebaseService {
 
  async logoutUser(userId: string) {
 
-   await this.user.updateUserStatus(userId)
+   await this.user.updateUserStatus(userId, false)
 
     // Methode zum Ausloggen des Benutzers
     signOut(this.auth)
