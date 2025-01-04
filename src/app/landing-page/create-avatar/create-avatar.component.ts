@@ -60,7 +60,7 @@ export class CreateAvatarComponent {
   uploadUserAvatar(event: any) {
     const file = event.target.files[0];
     this.readURL(file);
-    this.st.uploadMsg.set(file.name);
+    this.st.uploadMsg.set(file.name); // Set the file name to uploadMsg signal
     this.file = file;
     console.log('file', file);
     this.isSelected = true;
@@ -76,18 +76,25 @@ export class CreateAvatarComponent {
 
   async closeCreateAvatar(text: string) {
     if (this.file) {
-      const downloadUrl = await this.st.uploadAvatarToStorage(
-        this.db.currentUser()!.uId,
-        this.file
+      // Use the universal upload function from the StorageService
+      const downloadUrl = await this.st.uploadFileToStorage(
+        'avatars', // The folder in Firebase Storage
+        this.db.currentUser()!.uId, // The user ID as the file name or path
+        this.file // The file to upload
       );
       if (downloadUrl) {
-        this.selectedAvatar = downloadUrl;
+        this.selectedAvatar = downloadUrl; // Set the selected avatar to the uploaded URL
       }
     } else {
+      // If no file was selected, use the default avatar
+      this.selectedAvatar = 'assets/media/icons/profile-icons/profile-icon.svg';
     }
+
+    // Update the user's avatar in Firestore
     this.user.updateUserAvatar(this.db.currentUser()!.uId, this.selectedAvatar);
-    // await this.user.updateCurrentUser(this.db.currentUser()!);
-    await this.db.getUserByUid(this.db.currentUser()!.uId);
+    await this.db.getUserByUid(this.db.currentUser()!.uId); // Refresh user data
+
+    // Show a toast message and navigate
     this.showToast(text);
     this.closeEditAvatar();
   }

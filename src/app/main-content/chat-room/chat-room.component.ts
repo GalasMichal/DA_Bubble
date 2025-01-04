@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { AvatarComponent } from '../../shared/avatar/avatar.component';
-// import { log } from 'console';
 import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../shared/component/dialog-global/dialog-global.component';
@@ -32,7 +31,7 @@ import { ShowUsersComponent } from '../../shared/show-users/show-users.component
 })
 export class ChatRoomComponent {
   allUserMessages: Message[] = [];
-  stateServer = inject(StateControlService);
+
   dialog = inject(MatDialog);
   dialogConfirm = inject(MatDialog);
   readonly userDialog = inject(MatDialog);
@@ -44,31 +43,31 @@ export class ChatRoomComponent {
   fb = inject(FirebaseService);
   sumrestOfUser: number = 0;
   counter: number = 0;
-  
+
   textArea: string = ""; // Variable, die mit dem textarea verbunden ist
   textAreaId: string = "";
   channelId: string = "";
   textAreaEdited: boolean = false;
   @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
-    
+
 
   ngAfterViewChecked(): void {
     if (this.scrollToBottom?.nativeElement) {
-      this.scrollToBottom.nativeElement.scrollTop = 
+      this.scrollToBottom.nativeElement.scrollTop =
         this.scrollToBottom.nativeElement.scrollHeight;
     }
   }
-    
+
   onTextUpdate(event: { textToEdit: string, channelId:string, messageId: string }) {
     this.textArea = event.textToEdit; // Aktualisiere die Variable, wenn Änderungen eintreffen
     this.channelId = event.channelId;
     this.textAreaId = event.messageId;
     this.textAreaEdited = false;
-    
+
     setTimeout(() => {
     this.textAreaEdited = true;
     },);
-    this.stateServer.globalEdit = true
+    this.stateControl.globalEdit = true
   }
 
 
@@ -86,7 +85,7 @@ export class ChatRoomComponent {
       this.openAddUsers();
     }
   }
-  
+
 
   onCounter() {
     if(this.counter >= 2) {
@@ -108,7 +107,7 @@ export class ChatRoomComponent {
   }
 
   openAddUsers() {
-    this.stateServer.createChannelActiveInput = true
+    this.stateControl.createChannelActiveInput = true
     this.dialog.open(AddUsersComponent, {
       panelClass: 'add-users-container', // Custom class for profile dialog
     });
@@ -151,16 +150,16 @@ export class ChatRoomComponent {
   }
 
   showAllChoosenUsers() {
-    this.stateServer.choosenUser = [];
-    this.stateServer.choosenUserFirbase = []
+    this.stateControl.choosenUser = [];
+    this.stateControl.choosenUserFirbase = []
 
     if (this.chat.currentChannelData !== undefined){
       const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
       for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
         const object = listOfAllChoosenUsers[i];
         if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
-          this.stateServer.choosenUser.push(object)
-          this.stateServer.choosenUserFirbase.push(object.uId);
+          this.stateControl.choosenUser.push(object)
+          this.stateControl.choosenUserFirbase.push(object.uId);
         }
 
       }
