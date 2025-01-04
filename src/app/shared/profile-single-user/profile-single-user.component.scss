@@ -143,6 +143,13 @@
 }
 
 @media (max-width: 500px) {
+  ::ng-deep
+    .profile-single-user-container
+    .mat-mdc-dialog-container
+    .mdc-dialog__container
+    .mat-mdc-dialog-surface {
+    border-radius: 0;
+  }
   .profile-card {
     .name {
       button {
