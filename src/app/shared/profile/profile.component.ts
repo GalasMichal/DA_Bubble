@@ -17,7 +17,6 @@ import { DeleteAccountComponent } from '../component/delete-account/delete-accou
   selector: 'app-profil',
   standalone: true,
   imports: [
-    MatDialogContent,
     AvatarComponent,
     CloseComponent,
   ],
