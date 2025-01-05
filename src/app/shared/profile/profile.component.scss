@@ -32,10 +32,10 @@
         position: absolute;
         bottom: 0;
         right: 0;
-        width: 40px;
-        height: 40px;
+        width: 2.5rem;
+        height: 2.5rem;
         background: none;
-        border: solid 1px transparent;
+        border: solid .0625rem transparent;
         border-radius: $b-radius-2;
         @include firstTranistion();
         &:hover,
@@ -137,7 +137,7 @@
         background: none;
         border: dotted 0.2rem transparent;
         .icon {
-          padding-top: 2px;
+          padding-top: .125rem;
         }
         &:hover {
           color: $primary;
@@ -155,7 +155,7 @@
 
 
 ::ng-deep .cdk-global-overlay-wrapper {
-  max-width: 1920px;
+  max-width: 120rem;
   margin-left: auto;
   margin-right: auto;
   left: 0;
@@ -169,8 +169,8 @@
   .mat-mdc-dialog-surface {
   border-radius: $b-radius-1 0 $b-radius-1 $b-radius-1;
   position: absolute;
-  width: 500px;
-  max-height: 650px;
+  width: 31.25rem;
+  max-height: 40.625rem;
   top: 6.25rem;
   right: 2.5rem;
   .mat-mdc-dialog-content {
@@ -187,8 +187,8 @@
       }
       .edit-img {
         display: flex;
-        width: 40px;
-        height: 40px;
+        width: 2.5rem;
+        height: 2.5rem;
       }
     }
   }
