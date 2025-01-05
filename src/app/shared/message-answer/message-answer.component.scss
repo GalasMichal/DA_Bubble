@@ -18,11 +18,14 @@
     padding: 0.625rem 2.8125rem;
     gap: 1.875rem;
     &:hover {
-      background-color: $bg-color;
+      background: $bg-color;
       width: 100%;
       & .messages-main-chat {
-        background-color: $white;
+        background: $white;
       }
+    }
+    &:hover .message-content .message-container .messages-main-chat {
+      background: $white;
     }
     &:hover app-reaction-bar {
       opacity: 1;
@@ -33,6 +36,9 @@
       height: 4.375rem;
       border-radius: 2.5rem;
       object-fit: cover;
+      &:hover ~ .message-content .message-container .messages-main-chat {
+        background: $white !important;
+      }
     }
     .message-content {
       display: flex;
