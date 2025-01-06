@@ -4,7 +4,7 @@
 
 ::ng-deep .close-btn {
   background: none;
-  border: solid 1px transparent;
+  border: solid .0625rem transparent;
   border-radius: $b-radius-2;
   transition: all 175ms ease-in-out;
   &:hover,

@@ -32,7 +32,7 @@
 
             <div class="messages-main-chat" [ngClass]="{'messages-main-chat-right': meUser}">
               @if(currentMessage.storageData) {
-                <img class="message-image" src={{currentMessage.storageData}} alt="message-image"/>
+                <img class="message-image"(click)="openDialogWithImage(currentMessage.storageData)" src={{currentMessage.storageData}} alt="message-image"/>
               }
               {{currentMessage.text}}
               @if(currentMessage.editCount > 0) {

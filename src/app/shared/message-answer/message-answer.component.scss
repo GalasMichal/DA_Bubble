@@ -75,6 +75,9 @@
           font-size: 1.125rem;
           line-height: 1.5344rem;
           word-break: break-all;
+          .message-image {
+            max-width: 20rem;
+          }
           .message-edited {
             position: absolute;
             bottom: -0.3125rem;
