@@ -30,6 +30,7 @@
     &:hover app-reaction-bar {
       opacity: 1;
       transform: translateX(0);
+      z-index: 1;
     }
     .avatar {
       width: 4.375rem;
