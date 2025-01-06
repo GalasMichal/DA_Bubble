@@ -1,5 +1,13 @@
-import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
-import { HeaderComponent } from '../../header/header.component';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  signal,
+  SimpleChanges,
+} from '@angular/core';
+
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,12 +24,7 @@ import { StorageService } from '../../../services/storage/storage.service';
 @Component({
   selector: 'app-message-field',
   standalone: true,
-  imports: [
-    FormsModule,
-    PickerComponent,
-    CommonModule,
-    CloseComponent
-  ],
+  imports: [FormsModule, PickerComponent, CommonModule, CloseComponent],
   templateUrl: './message-field.component.html',
   styleUrl: './message-field.component.scss',
 })
@@ -32,7 +35,7 @@ export class MessageFieldComponent {
   user = inject(UserServiceService);
   msg = inject(MessageService);
   storageService = inject(StorageService); // StorageService injizieren
-  textArea: string = '';  // Initialisierung als leerer String
+  textArea: string = ''; // Initialisierung als leerer String
   isEmojiPickerVisible: boolean = false;
   selectedFile: File | null = null; // Für den Dateiupload
 
@@ -45,8 +48,11 @@ export class MessageFieldComponent {
   @Input() directMessage: boolean = false;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['textAreaEdit'] && changes['textAreaEdit'].currentValue !== undefined) {
-      this.textArea = changes['textAreaEdit'].currentValue || '';  // Sicherstellen, dass textArea nie null ist
+    if (
+      changes['textAreaEdit'] &&
+      changes['textAreaEdit'].currentValue !== undefined
+    ) {
+      this.textArea = changes['textAreaEdit'].currentValue || ''; // Sicherstellen, dass textArea nie null ist
     }
   }
 
@@ -54,14 +60,18 @@ export class MessageFieldComponent {
     const currentUser = this.fb.currentUser();
 
     if (this.textAreaIsEdited && this.textArea !== '') {
-      this.chat.updateMessageTextInFirestore(this.textArea, this.channelIdEdit, this.textAreaEditId);
+      this.chat.updateMessageTextInFirestore(
+        this.textArea,
+        this.channelIdEdit,
+        this.textAreaEditId
+      );
       this.textArea = '';
       this.textAreaIsEdited = false;
       this.stateControl.globalEdit = false;
       return;
     }
 
-    this.textArea = this.textArea || '';  // Falls textArea null ist, wird sie auf einen leeren String gesetzt
+    this.textArea = this.textArea || ''; // Falls textArea null ist, wird sie auf einen leeren String gesetzt
 
     if (currentUser) {
       const newMessage: Message = {
@@ -81,8 +91,12 @@ export class MessageFieldComponent {
 
       if (this.textArea !== '' || this.selectedFile) {
         if (this.selectedFile) {
-          const imageUrl = await this.uploadChatImage(this.chat.currentChannelData.chanId, this.selectedFile);
+          const imageUrl = await this.uploadChatImage(
+            this.chat.currentChannelData.chanId,
+            this.selectedFile
+          );
           newMessage.storageData = imageUrl; // URL des Bildes speichern
+          this.storageService.uploadMsg.set(''); // Signal zurücksetzen
         }
 
         if (this.isThreadAnswerOpen) {
@@ -101,7 +115,9 @@ export class MessageFieldComponent {
   }
 
   async sendDirectMessage() {
-    let collRef = await this.msg.newPrivateMessageChannel(this.user.messageReceiver!);
+    let collRef = await this.msg.newPrivateMessageChannel(
+      this.user.messageReceiver!
+    );
     if (collRef) {
       const newMessage: Message = {
         text: this.textArea,
@@ -120,8 +136,12 @@ export class MessageFieldComponent {
 
       if (this.textArea.trim() !== '' || this.selectedFile) {
         if (this.selectedFile) {
-          const imageUrl = await this.uploadDirectMessageImage(collRef, this.selectedFile);
+          const imageUrl = await this.uploadDirectMessageImage(
+            collRef,
+            this.selectedFile
+          );
           newMessage.storageData = imageUrl;
+          this.storageService.uploadMsg.set('');
         }
 
         await this.msg.addMessageToSubcollection(collRef, newMessage);
@@ -135,14 +155,22 @@ export class MessageFieldComponent {
     return this.storageService.uploadFileToStorage('chats', chatId, file);
   }
 
-  async uploadDirectMessageImage(directMessageId: string, file: File): Promise<string> {
-    return this.storageService.uploadFileToStorage('directMessages', directMessageId, file);
+  async uploadDirectMessageImage(
+    directMessageId: string,
+    file: File
+  ): Promise<string> {
+    return this.storageService.uploadFileToStorage(
+      'directMessages',
+      directMessageId,
+      file
+    );
   }
 
   handleFileInput(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       this.selectedFile = input.files[0];
+      this.storageService.generatePreview(this.selectedFile); // Vorschau generieren
     }
   }
 
@@ -159,8 +187,8 @@ export class MessageFieldComponent {
     this.isEmojiPickerVisible = false;
   }
   closeEdit() {
-    this.stateControl.globalEdit = false
-    this.textArea = ""
+    this.stateControl.globalEdit = false;
+    this.textArea = '';
     this.textAreaIsEdited = false;
   }
 }
