@@ -11,7 +11,7 @@ mat-dialog-content {
   .rectangle {
     display: none;
     position: absolute;
-    top: 10px;
+    top: .625rem;
     left: auto;
     right: auto;
   }
@@ -72,7 +72,7 @@ mat-dialog-content {
 }
 
 ::ng-deep .cdk-global-overlay-wrapper {
-  max-width: 1920px;
+  max-width: 120rem;
   margin-left: auto;
   margin-right: auto;
   left: 0;
