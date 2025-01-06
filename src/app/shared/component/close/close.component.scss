@@ -12,6 +12,9 @@
     background: $bg-color;
     outline: none;
   }
+  &:focus-visible svg path {
+    fill: $primary-hover;
+  }
   app-close {
     &:hover svg path {
       fill: $primary-hover;
