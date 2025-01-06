@@ -13,6 +13,7 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileSingleUserComponent } from '../profile-single-user/profile-single-user.component';
+import { MessageImageComponent } from './message-image/message-image.component';
 
 @Component({
   selector: 'app-message-answer',
@@ -35,7 +36,7 @@ export class MessageAnswerComponent {
   today: number = Date.now();
   state = inject(StateControlService);
   userService = inject(UserServiceService);
-  readonly userDialog = inject(MatDialog);
+  dialog = inject(MatDialog);
 
   meUser: boolean = false;
 
@@ -112,7 +113,7 @@ export class MessageAnswerComponent {
 
   async openProfileUserSingle(userId: string) {
     await this.userService.showProfileUserSingle(userId);
-    this.userDialog.open(ProfileSingleUserComponent, {
+    this.dialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',
     });
   }
@@ -180,4 +181,10 @@ export class MessageAnswerComponent {
       return `${allUsers[0]} hat reagiert`;
     }
   }
+
+  openDialog(image: string) {
+      this.dialog.open(MessageImageComponent, {
+        panelClass: 'custom-container',
+      });
+    }
 }
