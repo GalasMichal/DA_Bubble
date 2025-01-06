@@ -36,9 +36,6 @@
       height: 4.375rem;
       border-radius: 2.5rem;
       object-fit: cover;
-      &:hover ~ .message-content .message-container .messages-main-chat {
-        background: $white !important;
-      }
     }
     .message-content {
       display: flex;
@@ -156,6 +153,10 @@
 
 .user-message-container-right {
   flex-direction: row-reverse; //HIER
+  &:hover .message-content .message-container .messages-main-chat {
+    background: $primary-hover !important;
+}
+
 }
 
 .user-time-right {
