@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { StateControlService } from '../../../services/state-control/state-control.service';
 
 @Component({
   selector: 'app-message-image',
@@ -8,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './message-image.component.scss'
 })
 export class MessageImageComponent {
-
+ stateControl = inject(StateControlService)
+ 
 }
