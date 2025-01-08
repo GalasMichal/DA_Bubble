@@ -101,7 +101,7 @@ export class CreateAvatarComponent {
 
   showToast(text: string) {
     this.stateControl.showToast = true;
-    this.stateControl.showToastText = text;
+    this.stateControl.showToastText.set(text);
     this.stateControl.removeShowToast();
     setTimeout(() => {
       this.router.navigate(['/start/main']);

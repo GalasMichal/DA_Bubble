@@ -99,6 +99,9 @@ export class MenuSideLeftComponent {
 
 
   writeMessage() {
+    this.state.responsiveChat = true;
+    this.state.responsiveArrow = true;
+    this.state.responsiveMenu = true;
     this.state.isThreadOpen = false;
     this.router.navigate(['/start/main']);
   }

@@ -126,11 +126,11 @@ export class ChannelEditComponent {
     });
 
     this.stateServer.showToast = true;
-    this.stateServer.showToastText = text
+    this.stateServer.showToastText.set(text);
 
     this.stateServer.removeShowToast();
     setTimeout(() => {
-      this.dialog.close()
+      this.dialog.close();
     }, 2200);
   }
 
@@ -138,7 +138,7 @@ export class ChannelEditComponent {
     this.counter++;
 
     if (this.isDisabled) {
-      this.onCounter()
+      this.onCounter();
     } else {
       this.deleteChannel(chanId);
     }
@@ -169,7 +169,7 @@ export class ChannelEditComponent {
       const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
       for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
         const object = listOfAllChoosenUsers[i];
-          this.stateServer.choosenUser.push(object)
+          this.stateServer.choosenUser.push(object);
           this.stateServer.choosenUserFirbase.push(object.uId);
       }
     }
@@ -185,7 +185,7 @@ export class ChannelEditComponent {
       if(result) {
         this.stateServer.choosenUserFirbase = this.stateServer.choosenUserFirbase.filter((user) => user !== currentUser!.uId )
         this.chat.updateSpecificPeopleInChannelFromState();
-        this.dialogConfirm.closeAll()
+        this.dialogConfirm.closeAll();
         this.router.navigate(['/start/main']);
       } else {
         confirmLeaveDialog.close();
