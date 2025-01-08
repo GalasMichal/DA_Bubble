@@ -88,7 +88,7 @@ export class FirebaseService {
       .catch((error) => {
         this.stateControl.showError = true;
         this.stateControl.showToast = true;
-        this.stateControl.showToastText = 'Versuche bitte noch einmal';
+        this.stateControl.showToastText.set('Versuche bitte noch einmal');
         switch (error.code) {
           case 'auth/email-already-in-use':
             this.errorMessageLogin.set(
@@ -136,7 +136,7 @@ export class FirebaseService {
       let user = userCredential.user as FirebaseUser;
       if (user) {
         this.stateControl.showToast = true;
-        this.stateControl.showToastText = text;
+        this.stateControl.showToastText.set(text)
         this.stateControl.removeShowToast();
         await this.getUserByUid(user.uid);
         await this.user.updateUserStatus(user.uid, true);
@@ -151,7 +151,7 @@ export class FirebaseService {
       if (error === 'auth/wrong-password') {
         this.errorMessageLogin.set('Falsches Passwort.');
       } else {
-        this.stateControl.showToastText = 'Versuche bitte noch einmal';
+        this.stateControl.showToastText.set('Versuche bitte noch einmal');
         this.errorMessageLogin.set('E-Mail oder Passwort falsch');
       }
       this.stateControl.removeShowToast();
@@ -261,7 +261,7 @@ export class FirebaseService {
       .then(() => {
         this.stateControl.showArrow = true;
         this.stateControl.showToast = true;
-        this.stateControl.showToastText = text;
+        this.stateControl.showToastText.set(text);
         this.stateControl.showConfirmationText =
           'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
         this.stateControl.removeShowToast();
@@ -271,16 +271,13 @@ export class FirebaseService {
         this.stateControl.showError = true;
         switch (error.code) {
           case 'auth/invalid-email':
-            this.stateControl.showToastText =
-              'Ungültige E-Mail-Adresse. Bitte überprüfen Sie die Eingabe.';
+            this.stateControl.showToastText.set('Ungültige E-Mail-Adresse. Bitte überprüfen Sie die Eingabe.');
             break;
           case 'auth/user-not-found':
-            this.stateControl.showToastText =
-              'Kein Benutzer mit dieser E-Mail-Adresse gefunden.';
+            this.stateControl.showToastText.set('Kein Benutzer mit dieser E-Mail-Adresse gefunden.');
             break;
           default:
-            this.stateControl.showToastText =
-              'Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.';
+            this.stateControl.showToastText.set('Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.');
         }
         this.stateControl.removeShowToast();
       });
@@ -294,15 +291,14 @@ export class FirebaseService {
       console.error('No oobCode provided.');
       this.stateControl.showToast = true;
       this.stateControl.showError = true;
-      this.stateControl.showToastText =
-        'Es gab ein Problem mit dem Link. Bitte versuchen Sie es erneut.';
+      this.stateControl.showToastText.set('Es gab ein Problem mit dem Link. Bitte versuchen Sie es erneut.');
       return;
     }
 
     confirmPasswordReset(this.auth, oobCode, password)
       .then(() => {
         this.stateControl.showToast = true;
-        this.stateControl.showToastText = text;
+        this.stateControl.showToastText.set(text);
         this.stateControl.showConfirmationText =
           'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
         this.stateControl.removeShowToast();
@@ -315,16 +311,13 @@ export class FirebaseService {
         this.stateControl.showError = true;
         switch (error.code) {
           case 'auth/invalid-action-code':
-            this.stateControl.showToastText =
-              'Der Link ist ungültig oder abgelaufen.';
+            this.stateControl.showToastText.set('Der Link ist ungültig oder abgelaufen.') 
             break;
           case 'auth/weak-password':
-            this.stateControl.showToastText =
-              'Das Passwort ist zu schwach. Bitte verwenden Sie ein stärkeres Passwort.';
+            this.stateControl.showToastText.set('Das Passwort ist zu schwach. Bitte verwenden Sie ein stärkeres Passwort.');
             break;
           default:
-            this.stateControl.showToastText =
-              'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
+            this.stateControl.showToastText.set('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
         }
         this.stateControl.removeShowToast();
       });
@@ -332,7 +325,7 @@ export class FirebaseService {
 
   signInAsGuest(text: string): Promise<void> {
     this.stateControl.showToast = true;
-    this.stateControl.showToastText = text;
+    this.stateControl.showToastText.set(text);
 
     return signInAnonymously(this.auth)
       .then((userCredential) => {

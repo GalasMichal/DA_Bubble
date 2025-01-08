@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { User } from '../../models/interfaces/user.model';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class StateControlService {
   isThreadOpen:boolean = false;
   showToast: boolean = false;
   showArrow: boolean = false;
-  showToastText: string = '';
+  showToastText = signal('');
   showConfirmationText: string = '';
   choosenUser: User[] = [];
   choosenUserFirbase: string[] = [];
@@ -27,7 +27,7 @@ export class StateControlService {
     this.showToast = false;
     this.showArrow = false;
     this.showError = false;
-    this.showToastText = "";
+    this.showToastText.set('');
     }, 2000);
   }
 
