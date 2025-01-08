@@ -7,7 +7,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 40px;
+    height: 2.5rem;
     margin-bottom: 1.875rem;
     .form-title-name {
       color: $primary;
@@ -36,9 +36,9 @@
     }
     .input-field {
       border: solid 0.0625rem transparent;
-      padding-left: 85px;
-      padding-top: 18px;
-      padding-bottom: 18px;
+      padding-left: 5.3125rem;
+      padding-top: 1.125rem;
+      padding-bottom: 1.125rem;
       width: 100%;
       height: 3.07rem;
       background-color: $bg-color;
@@ -55,23 +55,23 @@
     }
     .input-icon {
       position: absolute;
-      top: 13px;
+      top: .8125rem;
       left: 0;
-      padding: 0 25px;
+      padding: 0 1.5625rem;
       display: inline-flex;
       justify-content: center;
       align-items: center;
     }
 
     .warn-txt-hight {
-      height: 55px;
+      height: 3.4375rem;
     }
 
     .eye-pos {
       position: absolute;
-      top: 10px;
+      top: .625rem;
       right: 0;
-      padding: 0 25px;
+      padding: 0 1.5625rem;
       display: inline-flex;
       justify-content: center;
       align-items: center;
@@ -86,7 +86,7 @@
       width: fit-content;
       padding: 0.3125rem 0.9375rem;
       border-radius: $b-radius-2;
-      margin-bottom: 30px;
+      margin-bottom: 1.875rem;
       border: solid 0.0625rem transparent;
       transition: all 175ms ease-in-out;
       &:hover {
@@ -106,12 +106,12 @@
       display: flex;
       justify-content: center;
       position: relative;
-      margin-bottom: 30px;
+      margin-bottom: 1.875rem;
       &::before {
         content: "";
         position: absolute;
         background-color: $bg-color;
-        height: 2px;
+        height: .125rem;
         width: 100%;
         top: 50%;
         left: 50%;
@@ -121,7 +121,7 @@
       .sep-line-txt {
         display: flex;
         border-radius: $b-radius-1;
-        padding-inline: 15px;
+        padding-inline: .9375rem;
         background-color: $white;
         z-index: 1;
       }
@@ -148,7 +148,7 @@
       outline: $secondary;
     }
     img {
-      margin-right: 16px;
+      margin-right: 1rem;
     }
   }
 
@@ -174,8 +174,8 @@
       width: 100%;
       font-weight: 700;
       font-size: 1.125rem;
-      gap: 10px;
-      padding: 12px 25px;
+      gap: .625rem;
+      padding: .75rem 1.5625rem;
       border-radius: $b-radius-2;
       color: $white;
     }
@@ -195,19 +195,19 @@
       }
     }
     .guest-btn {
-      border: 1px solid $primary;
+      border: solid .0625rem $primary;
       color: $primary;
       background-color: $white;
       transition: all 175ms ease-in-out;
       &:hover {
         background-color: $primary-hover;
         color: $white;
-        border: solid 1px $primary-hover;
+        border: solid .0625rem $primary-hover;
       }
       &:focus {
         background-color: $primary-hover;
         color: $white;
-        border: solid 1px $primary-hover;
+        border: solid .0625rem $primary-hover;
         outline: $secondary;
       }
     }
@@ -220,7 +220,7 @@
       gap: 0.875rem;
       .login-btn,
       .guest-btn {
-        padding: 10px 5px;
+        padding: .625rem .3125rem;
       }
     }
     .legal-imprint-container {
