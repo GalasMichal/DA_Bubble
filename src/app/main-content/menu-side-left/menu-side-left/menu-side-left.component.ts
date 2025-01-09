@@ -11,6 +11,7 @@ import { MessageService } from '../../../services/messages/message.service';
 import { User } from '../../../models/interfaces/user.model';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { SearchComponent } from '../../../shared/search/search.component';
+import { ProfileSingleUserComponent } from '../../../shared/profile-single-user/profile-single-user.component';
 
 @Component({
   selector: 'app-menu-side-left',
