@@ -13,7 +13,7 @@ import { User } from '../../models/interfaces/user.model';
 @Component({
   selector: 'app-profile-single-user',
   standalone: true,
-  imports: [MatDialogContent],
+  imports: [],
   templateUrl: './profile-single-user.component.html',
   styleUrl: './profile-single-user.component.scss'
 })
