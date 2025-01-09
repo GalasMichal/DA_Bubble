@@ -12,6 +12,8 @@ import { ProfileSingleUserComponent } from '../profile-single-user/profile-singl
 import { Message } from '../../models/interfaces/message.model';
 import { MessageService } from '../../services/messages/message.service';
 import { CommonModule } from '@angular/common';
+import { StateControlService } from '../../services/state-control/state-control.service';
+import { User } from '../../models/interfaces/user.model';
 
 @Component({
   selector: 'app-direct-message',
@@ -41,7 +43,5 @@ export class DirectMessageComponent {
       panelClass: 'profile-single-user-container',
     });
   }
-
-
 
 }
