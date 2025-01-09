@@ -2,7 +2,7 @@
 
   <header>
 
-    <button class="header-left-container">
+    <button class="header-left-container" (click)="openProfileUserSingle(user.messageReceiver!.uId)">
       @if(user.messageReceiver){
       <app-avatar [userMessageReceiver]="user.messageReceiver"></app-avatar>
       }
