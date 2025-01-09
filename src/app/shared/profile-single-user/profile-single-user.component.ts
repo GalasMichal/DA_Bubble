@@ -9,22 +9,20 @@ import { Router } from '@angular/router';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { User } from '../../models/interfaces/user.model';
 
-
 @Component({
   selector: 'app-profile-single-user',
   standalone: true,
   imports: [],
   templateUrl: './profile-single-user.component.html',
-  styleUrl: './profile-single-user.component.scss'
+  styleUrl: './profile-single-user.component.scss',
 })
 export class ProfileSingleUserComponent {
   readonly dialog = inject(MatDialogRef<ProfileSingleUserComponent>);
   chat = inject(ChatRoomService);
-  userService = inject(UserServiceService)
+  userService = inject(UserServiceService);
   ms = inject(MessageService);
-    router = inject(Router);
-    stateControl = inject(StateControlService)
-
+  router = inject(Router);
+  stateControl = inject(StateControlService);
 
   closeUserProfile() {
     this.dialog.close();
@@ -37,18 +35,17 @@ export class ProfileSingleUserComponent {
     this.stateControl.responsiveArrow = true;
     this.stateControl.responsiveMenu = true;
 
-  // Prüfen, ob ein privater Chat bereits existiert
-  const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
-  console.log('chatID', existingChatId);
+    // Prüfen, ob ein privater Chat bereits existiert
+    const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
+    console.log('chatID', existingChatId);
 
-  if (existingChatId) {
-    // Wenn der Chat existiert, zur spezifischen Nachricht navigieren
-    this.router.navigate(['/start/main/messages', existingChatId]);
-    this.ms.loadMessagesFromChat(existingChatId);
-  } else {
-
-    this.router.navigate(['/start/main/messages']);
-  }
-  this.closeUserProfile()
+    if (existingChatId) {
+      // Wenn der Chat existiert, zur spezifischen Nachricht navigieren
+      this.router.navigate(['/start/main/messages', existingChatId]);
+      this.ms.loadMessagesFromChat(existingChatId);
+    } else {
+      this.router.navigate(['/start/main/messages']);
+    }
+    this.closeUserProfile();
   }
 }
