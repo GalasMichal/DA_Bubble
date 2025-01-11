@@ -189,7 +189,7 @@ export class ChatRoomService {
     return collection(this.firestore, 'channels');
   }
 
-  openChatById(currentChannel: string) {
+  async openChatById(currentChannel: string) {
     this.currentChannel = currentChannel;
     const channelRef = doc(this.firestore, 'channels', currentChannel);
     this.unsubscribe(this.channelDataUnsubscribe);
@@ -205,7 +205,7 @@ export class ChatRoomService {
     });
     this.loadCurrentChatData(currentChannel);
     this.router.navigate(['start/main/chat/', currentChannel]);
-    this.loadSpecificPeopleFromChannel();
+    await this.loadSpecificPeopleFromChannel();
   }
 
   loadCurrentChatData(currentChannel: string) {
@@ -258,26 +258,13 @@ export class ChatRoomService {
     }
   }
 
-  // Ta metoda pokazuje wszystkie kanaly gdzie jest dany uzytkownik
-  checkUserInChannels(currentUserId: string | undefined): void {
-    if (!currentUserId) {
-      console.error('currentUserId ist undefined');
-      return;
-    }
-    const channelsRef = collection(this.firestore, 'channels'); // 'channels' ist der Name der Collection
-    const q = query(
-      channelsRef,
-      where('specificPeople', 'array-contains', currentUserId)
-    );
-    // Real-Time Listener
-    onSnapshot(q, (querySnapshot) => {
-      this.currentUserChannels = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data() as Channel;
-        this.currentUserChannels.push(data);
-      });
-    });
-  }
+   
+  async getUserChannels(currentUserId: string): Promise<Channel[]> {
+    const channelsRef = collection(this.firestore, 'channels');
+    const q = query(channelsRef, where('specificPeople', 'array-contains', currentUserId));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => doc.data() as Channel);
+}
 
   async loadSpecificPeopleFromChannel() {
     this.currentUserChannelsSpecificPeopleObject = [];
@@ -294,7 +281,7 @@ export class ChatRoomService {
       );
       const querySnapshot = await getDocs(q);
 
-      querySnapshot.forEach((doc) => {
+      await querySnapshot.forEach((doc) => {
         const userData = doc.data() as AppUser;
         this.currentUserChannelsSpecificPeopleObject.push(userData);
       });

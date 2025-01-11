@@ -119,6 +119,10 @@
         &:hover {
           background: $bg-color;
         }
+        span {
+          word-break: break-word;
+          text-align: start;
+        }
       }
     }
   }

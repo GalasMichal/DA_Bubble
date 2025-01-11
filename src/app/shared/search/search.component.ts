@@ -88,9 +88,13 @@ export class SearchComponent {
         item.displayName.toLowerCase().includes(value.slice(1).toLowerCase())
       );
     } else if (value.startsWith('#')) {
-      this.channelResults = this.chat.currentUserChannels.filter(item =>
-        item.channelName.toLowerCase().includes(value.slice(1).toLowerCase())
-      );
+      const userId = this.fb.currentUser()!.uId;
+      this.chat.getUserChannels(userId).then((userChannels) => {
+        this.channelResults = userChannels.filter(item =>
+          item.channelName.toLowerCase().includes(value.slice(1).toLowerCase())
+        );
+
+      })
     } else if (value === '') {
       this.channelResults = [];
       this.userResults = [];
