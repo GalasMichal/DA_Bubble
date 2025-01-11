@@ -258,26 +258,13 @@ export class ChatRoomService {
     }
   }
 
-  // Ta metoda pokazuje wszystkie kanaly gdzie jest dany uzytkownik
-  checkUserInChannels(currentUserId: string | undefined): void {
-    if (!currentUserId) {
-      console.error('currentUserId ist undefined');
-      return;
-    }
-    const channelsRef = collection(this.firestore, 'channels'); // 'channels' ist der Name der Collection
-    const q = query(
-      channelsRef,
-      where('specificPeople', 'array-contains', currentUserId)
-    );
-    // Real-Time Listener
-    onSnapshot(q, (querySnapshot) => {
-      this.currentUserChannels = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data() as Channel;
-        this.currentUserChannels.push(data);
-      });
-    });
-  }
+   
+  async getUserChannels(currentUserId: string): Promise<Channel[]> {
+    const channelsRef = collection(this.firestore, 'channels');
+    const q = query(channelsRef, where('specificPeople', 'array-contains', currentUserId));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => doc.data() as Channel);
+}
 
   async loadSpecificPeopleFromChannel() {
     this.currentUserChannelsSpecificPeopleObject = [];

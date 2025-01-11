@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +11,9 @@ import { MessageService } from '../../../services/messages/message.service';
 import { User } from '../../../models/interfaces/user.model';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { SearchComponent } from '../../../shared/search/search.component';
-import { ProfileSingleUserComponent } from '../../../shared/profile-single-user/profile-single-user.component';
+import { Channel } from '../../../models/interfaces/channel.model';
+import { channel } from 'diagnostics_channel';
+import { user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-menu-side-left',
@@ -30,11 +32,23 @@ export class MenuSideLeftComponent {
   userService = inject(UserServiceService);
   router = inject(Router);
   state = inject(StateControlService);
+  channelUsers : Channel[] = [];
 
-  ngOnInit() {
+  constructor() {
+      effect(() => {
+        if(this.fb.currentUser() != null) {
+          console.log(this.fb.currentUser())
+          const userId = this.fb.currentUser()!.uId;
+          this.chat.getUserChannels(userId).then((userChannels) => {
+            this.channelUsers = userChannels
+          })
+        }
+  })
     this.chat.subChannelList();
     this.userService.subUserList();
+
   }
+
 
  async openMessage(user: User) {
     this.state.isThreadOpen = false;
@@ -59,9 +73,10 @@ export class MenuSideLeftComponent {
   }
   ngOnDestroy(): void {}
 
+  // Schow all channels
   async toogleDropDown1() {
     const userId = this.fb.currentUser()!.uId;
-    this.chat.checkUserInChannels(userId);
+    this.chat.getUserChannels(userId);
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
   }
 
