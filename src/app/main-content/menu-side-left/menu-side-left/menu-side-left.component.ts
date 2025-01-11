@@ -92,12 +92,12 @@ export class MenuSideLeftComponent {
     });
   }
 
-  openChannel(chanId: string) {
+  async openChannel(chanId: string) {
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
     this.state.isThreadOpen = false
-    this.chat.openChatById(chanId);
+    await this.chat.openChatById(chanId);
   }
 
   sortListOfUser() {

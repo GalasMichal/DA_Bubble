@@ -51,12 +51,12 @@ export class ChatRoomComponent {
   @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
 
 
-  ngAfterViewChecked(): void {
-    if (this.scrollToBottom?.nativeElement) {
-      this.scrollToBottom.nativeElement.scrollTop =
-        this.scrollToBottom.nativeElement.scrollHeight;
-    }
-  }
+  // ngAfterViewChecked(): void {
+  //   if (this.scrollToBottom?.nativeElement) {
+  //     this.scrollToBottom.nativeElement.scrollTop =
+  //       this.scrollToBottom.nativeElement.scrollHeight;
+  //   }
+  // }
 
   onTextUpdate(event: { textToEdit: string, channelId:string, messageId: string }) {
     this.textArea = event.textToEdit; // Aktualisiere die Variable, wenn Änderungen eintreffen

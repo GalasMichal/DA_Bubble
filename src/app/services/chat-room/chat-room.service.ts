@@ -189,7 +189,7 @@ export class ChatRoomService {
     return collection(this.firestore, 'channels');
   }
 
-  openChatById(currentChannel: string) {
+  async openChatById(currentChannel: string) {
     this.currentChannel = currentChannel;
     const channelRef = doc(this.firestore, 'channels', currentChannel);
     this.unsubscribe(this.channelDataUnsubscribe);
@@ -205,7 +205,7 @@ export class ChatRoomService {
     });
     this.loadCurrentChatData(currentChannel);
     this.router.navigate(['start/main/chat/', currentChannel]);
-    this.loadSpecificPeopleFromChannel();
+    await this.loadSpecificPeopleFromChannel();
   }
 
   loadCurrentChatData(currentChannel: string) {
@@ -281,7 +281,7 @@ export class ChatRoomService {
       );
       const querySnapshot = await getDocs(q);
 
-      querySnapshot.forEach((doc) => {
+      await querySnapshot.forEach((doc) => {
         const userData = doc.data() as AppUser;
         this.currentUserChannelsSpecificPeopleObject.push(userData);
       });
