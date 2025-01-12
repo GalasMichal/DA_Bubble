@@ -81,6 +81,7 @@ export class FirebaseService {
             };
             console.log('Registrierter User ist', user);
             this.addUserToFirestore(user);
+            this.chat.addNewUserToChannel('Willkommen', user.uId )
             return user;
           }
         );
@@ -204,6 +205,7 @@ export class FirebaseService {
         await this.addUserToFirestore(user);
         this.currentUser.set(user);
         this.router.navigate(['/start/avatar']);
+        this.chat.addNewUserToChannel('Willkommen', user.uId )
       } else {
         // Benutzer existiert, also zum Main-Content
         await this.getUserByUid(googleUser.uid);
@@ -341,6 +343,8 @@ export class FirebaseService {
         };
         this.stateControl.removeShowToast();
         this.router.navigate(['/start/main']);
+        // Add new User to channel "Willkommen"
+        this.chat.addNewUserToChannel('xLke9Ff8JAT8AoorWXya', user.uId )
         return this.addUserToFirestore(user);
       })
       .catch((error) => {

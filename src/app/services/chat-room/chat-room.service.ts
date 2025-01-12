@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import {
   addDoc,
+  arrayUnion,
   DocumentData,
   QuerySnapshot,
   Timestamp,
@@ -27,6 +28,7 @@ import { StateControlService } from '../state-control/state-control.service';
 @Injectable({
   providedIn: 'root',
 })
+
 export class ChatRoomService {
   private firestore = inject(Firestore);
   state = inject(StateControlService);
@@ -257,6 +259,23 @@ export class ChatRoomService {
       console.error('Fehler beim Überschreiben der specificPeople:', error);
     }
   }
+
+  async addNewUserToChannel(channelName: string, newUserId: string) {
+    try {
+      // Reference the document for the "Willkommen" channel
+      const channelRef = doc(this.firestore, "channels", channelName); // Assuming 'channels' is the collection name and 'channelName' is the document ID
+      
+      // Update the 'allMembers' array
+      await updateDoc(channelRef, {
+        specificPeople: arrayUnion(newUserId),
+      });
+  
+      console.log(`User ${newUserId} added to the channel ${channelName}`);
+    } catch (error) {
+      console.error("Error adding user to the channel:", error);
+    }
+  }
+  
 
    
   async getUserChannels(currentUserId: string): Promise<Channel[]> {
