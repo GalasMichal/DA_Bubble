@@ -343,6 +343,7 @@ export class FirebaseService {
         };
         this.stateControl.removeShowToast();
         this.router.navigate(['/start/main']);
+        // Add new User to channel "Willkommen"
         this.chat.addNewUserToChannel('xLke9Ff8JAT8AoorWXya', user.uId )
         return this.addUserToFirestore(user);
       })
