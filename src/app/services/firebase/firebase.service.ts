@@ -54,6 +54,8 @@ export class FirebaseService {
   public errorMessageLogin = signal('');
   dialog = inject(MatDialog);
 
+  mainChannel: string = 'xLke9Ff8JAT8AoorWXya'
+
   constructor(private route: ActivatedRoute) {}
 
   async loadAllBackendData() {
@@ -81,7 +83,7 @@ export class FirebaseService {
             };
             console.log('Registrierter User ist', user);
             this.addUserToFirestore(user);
-            this.chat.addNewUserToChannel('Willkommen', user.uId )
+            this.chat.addNewUserToChannel(this.mainChannel, user.uId )
             return user;
           }
         );
@@ -205,7 +207,7 @@ export class FirebaseService {
         await this.addUserToFirestore(user);
         this.currentUser.set(user);
         this.router.navigate(['/start/avatar']);
-        this.chat.addNewUserToChannel('Willkommen', user.uId )
+        this.chat.addNewUserToChannel(this.mainChannel, user.uId )
       } else {
         // Benutzer existiert, also zum Main-Content
         await this.getUserByUid(googleUser.uid);
@@ -344,7 +346,7 @@ export class FirebaseService {
         this.stateControl.removeShowToast();
         this.router.navigate(['/start/main']);
         // Add new User to channel "Willkommen"
-        this.chat.addNewUserToChannel('xLke9Ff8JAT8AoorWXya', user.uId )
+        this.chat.addNewUserToChannel(this.mainChannel, user.uId )
         return this.addUserToFirestore(user);
       })
       .catch((error) => {
