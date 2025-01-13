@@ -17,7 +17,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 40px;
+    height: 2.5rem;
     gap: 1rem;
     .title-name {
       color: $primary;
@@ -48,8 +48,8 @@
       width: 100%;
       font-weight: 700;
       font-size: 1.125rem;
-      gap: 10px;
-      padding: 12px 25px;
+      gap: .625rem;
+      padding: .75rem 1.5625rem;
       border-radius: $b-radius-2;
       color: $white;
     }
@@ -69,19 +69,19 @@
       }
     }
     .guest-btn {
-      border: 1px solid $primary;
+      border: solid .0625rem $primary;
       color: $primary;
       background-color: $white;
       transition: all 175ms ease-in-out;
       &:hover {
         background-color: $primary-hover;
         color: $white;
-        border: solid 1px $primary-hover;
+        border: solid .0625rem $primary-hover;
       }
       &:focus {
         background-color: $primary-hover;
         color: $white;
-        border: solid 1px $primary-hover;
+        border: solid .0625rem $primary-hover;
         outline: $secondary;
       }
     }
@@ -109,8 +109,8 @@
     max-height: 46rem;
     background-color: $white;
     border-radius: $b-radius-3;
-    padding: 40px;
-    margin: 10px;
+    padding: 2.5rem;
+    margin: .625rem;
     gap: 1rem;
   }
 }
