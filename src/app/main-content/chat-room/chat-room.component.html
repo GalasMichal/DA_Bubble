@@ -134,7 +134,12 @@
             }
 
         </div>
+        @if(chat.currentChannelData.channelDescription === "") {
+            @if (chat.currentChannelData.createdBy[0].uId === this.fb.currentUser()?.uId) {
+              <button (click)="openTeam(chat)">Beschreibung</button>
+            }
 
+        }
         <p>
           {{ chat.currentChannelData.channelDescription}}
         </p>
