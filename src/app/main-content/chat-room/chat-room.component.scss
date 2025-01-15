@@ -59,6 +59,15 @@ app-message-field {
       }
     }
   }
+  .add-description {
+    color: #4954c5;
+    background: none;
+    padding-inline: 0.125rem;
+    width: fit-content;
+    &:hover {
+      color: $black;
+    }
+  }
 }
 
 header {
@@ -67,7 +76,7 @@ header {
   flex-shrink: 0;
   justify-content: space-between;
   height: 6rem;
-  box-shadow: 0 .6875rem 1.25rem -1.4375rem rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0.6875rem 1.25rem -1.4375rem rgba(0, 0, 0, 0.45);
   .responsive {
     display: none;
   }
@@ -101,8 +110,8 @@ header {
         align-items: center;
         justify-content: center;
         border-radius: $b-radius-2;
-        padding-inline: 1.875rem .625rem;
-        padding-block: .1875rem;
+        padding-inline: 1.875rem 0.625rem;
+        padding-block: 0.1875rem;
         gap: 0.325rem;
         transition: all 175ms ease-in-out;
         &:hover {

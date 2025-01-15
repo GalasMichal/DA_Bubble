@@ -36,6 +36,30 @@
 }
 
 ::ng-deep {
+  .profile-card app-avatar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    .user-avatar {
+      display: flex;
+      justify-content: center;
+      img {
+        width: 12.5rem;
+        height: 12.5rem;
+        object-fit: cover;
+      }
+      .online {
+        display: flex;
+        right: 1.25rem;
+        bottom: 1.25rem;
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+    }
+  }
+}
+
+::ng-deep {
   .single-user {
     display: flex;
     align-items: center;

@@ -120,23 +120,23 @@
   @else {
     <div class="welcome-content">
       
-      <div class="user-time">
-          <h2> {{chat.currentChannelData.createdBy[0].displayName}} </h2>
-        <span>{{ chat.currentChannelData.createdAt | date:'dd.MM.yyyy HH:mm'  }}</span>
-      </div>
+    <div class="user-time">
+        <h2> {{chat.currentChannelData.createdBy[0].displayName}} </h2>
+      <span>{{ chat.currentChannelData.createdAt | date:'dd.MM.yyyy HH:mm'  }}</span>
+    </div>
 
 
-        <h1>Willkommen in eurem privaten Channel!</h1>
+    <h1>Willkommen in eurem privaten Channel!</h1>
         
-        <div class="added-user-container">
-            @for(user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
-              <button (click)="openProfileUserSingle(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
-            }
+    <div class="added-user-container">
+        @for(user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
+          <button (click)="openProfileUserSingle(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
+        }
 
-        </div>
+    </div>
+      <button class="add-description" (click)="openTeam(chat)">Beschreibung hinzufügen...</button>
         @if(chat.currentChannelData.channelDescription === "") {
             @if (chat.currentChannelData.createdBy[0].uId === this.fb.currentUser()?.uId) {
-              <button (click)="openTeam(chat)">Beschreibung</button>
             }
 
         }
