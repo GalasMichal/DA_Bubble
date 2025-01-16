@@ -58,6 +58,7 @@ export class FirebaseService {
   constructor(private route: ActivatedRoute) {}
 
   getMainChannel() {
+    this.chat.channelList.filter((channel) => channel.channelName === 'Willkommen' );
     return 'Willkommen'
   }
 
