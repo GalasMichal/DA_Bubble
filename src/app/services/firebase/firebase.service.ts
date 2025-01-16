@@ -55,8 +55,6 @@ export class FirebaseService {
   public errorMessageLogin = signal('');
   dialog = inject(MatDialog);
 
-  // mainChannel: string = 'xLke9Ff8JAT8AoorWXya'; //Willkommen
-
   constructor(private route: ActivatedRoute) {}
 
   getMainChannel() {
