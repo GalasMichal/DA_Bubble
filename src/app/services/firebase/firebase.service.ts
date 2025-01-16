@@ -57,6 +57,7 @@ export class FirebaseService {
 
   constructor(private route: ActivatedRoute) {}
 
+  // Prepared for later extensions of DaBubble
   getMainChannel() {
     this.chat.channelList.filter((channel) => channel.channelName === 'Willkommen' );
     return 'Willkommen'
