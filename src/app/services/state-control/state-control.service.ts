@@ -21,6 +21,7 @@ export class StateControlService {
   responsiveArrow: boolean = false;
   responsiveMenu: boolean = false;
   messageImage: string = "";
+  scrollToBottomGlobal: boolean = true;
 
   removeShowToast() {
     setTimeout(() => {
