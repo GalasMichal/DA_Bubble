@@ -37,7 +37,6 @@ import { DeleteAccountComponent } from '../../shared/component/delete-account/de
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteAccountComponent } from '../../shared/component/confirm-delete-account/confirm-delete-account.component';
 import { deleteDoc } from 'firebase/firestore';
-import { channel } from 'node:diagnostics_channel';
 
 @Injectable({
   providedIn: 'root',
@@ -55,13 +54,9 @@ export class FirebaseService {
   public errorMessageLogin = signal('');
   dialog = inject(MatDialog);
 
-  constructor(private route: ActivatedRoute) {}
+  mainChannel: string = 'xLke9Ff8JAT8AoorWXya'; //Willkommen
 
-  // Prepared for later extensions of DaBubble
-  getMainChannel() {
-    this.chat.channelList.filter((channel) => channel.channelName === 'Willkommen' );
-    return 'Willkommen'
-  }
+  constructor(private route: ActivatedRoute) {}
 
   async loadAllBackendData() {
     this.chat.subChannelList();
@@ -88,7 +83,7 @@ export class FirebaseService {
             };
             console.log('Registrierter User ist', user);
             this.addUserToFirestore(user);
-            this.chat.addNewUserToChannel(this.getMainChannel(), user.uId )
+            this.chat.addNewUserToChannel(this.mainChannel, user.uId )
             return user;
           }
         );
@@ -212,7 +207,7 @@ export class FirebaseService {
         await this.addUserToFirestore(user);
         this.currentUser.set(user);
         this.router.navigate(['/start/avatar']);
-        this.chat.addNewUserToChannel(this.getMainChannel(), user.uId )
+        this.chat.addNewUserToChannel(this.mainChannel, user.uId )
       } else {
         // Benutzer existiert, also zum Main-Content
         await this.getUserByUid(googleUser.uid);
@@ -351,7 +346,7 @@ export class FirebaseService {
         this.stateControl.removeShowToast();
         this.router.navigate(['/start/main']);
         // Add new User to channel "Willkommen"
-        this.chat.addNewUserToChannel(this.getMainChannel(), user.uId )
+        this.chat.addNewUserToChannel(this.mainChannel, user.uId )
         return this.addUserToFirestore(user);
       })
       .catch((error) => {
