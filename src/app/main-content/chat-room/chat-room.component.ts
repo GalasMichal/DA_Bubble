@@ -16,6 +16,7 @@ import { ProfileSingleUserComponent } from '../../shared/profile-single-user/pro
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../shared/component/dialog-global/dialog-global.component';
 import { ShowUsersComponent } from '../../shared/show-users/show-users.component';
+import { LoaderComponent } from '../../shared/component/loader/loader.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -24,7 +25,8 @@ import { ShowUsersComponent } from '../../shared/show-users/show-users.component
     MessageFieldComponent,
     MessageAnswerComponent,
     CommonModule,
-    AvatarComponent
+    AvatarComponent,
+    LoaderComponent
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss',
@@ -38,57 +40,62 @@ export class ChatRoomComponent {
   channelData: Channel | null = null;
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
-  stateControl = inject(StateControlService)
+  stateControl = inject(StateControlService);
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   sumrestOfUser: number = 0;
   counter: number = 0;
 
-  textArea: string = ""; // Variable, die mit dem textarea verbunden ist
-  textAreaId: string = "";
-  channelId: string = "";
+  textArea: string = ''; // Variable, die mit dem textarea verbunden ist
+  textAreaId: string = '';
+  channelId: string = '';
   textAreaEdited: boolean = false;
   @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
 
+  ngAfterViewChecked(): void {
+    if (this.stateControl.scrollToBottomGlobal) {
+      if (this.scrollToBottom?.nativeElement) {
+        this.scrollToBottom.nativeElement.scrollTop =
+          this.scrollToBottom.nativeElement.scrollHeight;
+      }
+    }
+  }
 
-  // ngAfterViewChecked(): void {
-  //   if (this.scrollToBottom?.nativeElement) {
-  //     this.scrollToBottom.nativeElement.scrollTop =
-  //       this.scrollToBottom.nativeElement.scrollHeight;
-  //   }
-  // }
-
-  onTextUpdate(event: { textToEdit: string, channelId:string, messageId: string }) {
+  onTextUpdate(event: {
+    textToEdit: string;
+    channelId: string;
+    messageId: string;
+  }) {
     this.textArea = event.textToEdit; // Aktualisiere die Variable, wenn Änderungen eintreffen
     this.channelId = event.channelId;
     this.textAreaId = event.messageId;
     this.textAreaEdited = false;
 
     setTimeout(() => {
-    this.textAreaEdited = true;
-    },);
-    this.stateControl.globalEdit = true
+      this.textAreaEdited = true;
+    });
+    this.stateControl.globalEdit = true;
   }
 
-
   closeChannelEdit() {
-    this.dialogConfirm.closeAll()
+    this.dialogConfirm.closeAll();
   }
 
   onOpenAddUsers() {
-    const isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId
+    const isDisabled =
+      this.chat.currentChannelData.createdBy[0].uId !==
+      this.fb.currentUser()?.uId;
     this.counter++;
 
     if (isDisabled) {
-      this.onCounter()
+      this.onCounter();
     } else {
       this.openAddUsers();
     }
   }
 
-
   onCounter() {
-    if(this.counter >= 2) {
+    if (this.counter >= 2) {
       this.showDialog();
       this.counter = 0;
     }
@@ -101,13 +108,11 @@ export class ChatRoomComponent {
   }
 
   ngOnDestroy(): void {
-
-  this.chat.unsubscribeAll?.();
-
+    this.chat.unsubscribeAll?.();
   }
 
   openAddUsers() {
-    this.stateControl.createChannelActiveInput = true
+    this.stateControl.createChannelActiveInput = true;
     this.dialog.open(AddUsersComponent, {
       panelClass: 'add-users-container', // Custom class for profile dialog
     });
@@ -119,7 +124,7 @@ export class ChatRoomComponent {
       panelClass: 'show-users-container', // Custom class for profile dialog
     });
 
-    this.showAllChoosenUsers()
+    this.showAllChoosenUsers();
   }
 
   restOfUser() {
@@ -127,10 +132,10 @@ export class ChatRoomComponent {
   }
 
   openTeam(chat: Object) {
-    const currentChannelID = this.chat.currentChannel
+    const currentChannelID = this.chat.currentChannel;
     // console.log('ID', currentChannelID);
 
-    const currentChannelName = this.chat.currentChannelData
+    const currentChannelName = this.chat.currentChannelData;
     // console.log('Name', currentChannelName);
 
     this.dialog.open(ChannelEditComponent, {
@@ -143,7 +148,8 @@ export class ChatRoomComponent {
   }
 
   async openProfileUserSingle(userId: string) {
-    await this.userService.showProfileUserSingle(userId)
+    this.stateControl.scrollToBottomGlobal = false
+    await this.userService.showProfileUserSingle(userId);
     this.userDialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',
     });
@@ -151,17 +157,17 @@ export class ChatRoomComponent {
 
   showAllChoosenUsers() {
     this.stateControl.choosenUser = [];
-    this.stateControl.choosenUserFirbase = []
+    this.stateControl.choosenUserFirbase = [];
 
-    if (this.chat.currentChannelData !== undefined){
-      const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
+    if (this.chat.currentChannelData !== undefined) {
+      const listOfAllChoosenUsers =
+        this.chat.currentUserChannelsSpecificPeopleObject;
       for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
         const object = listOfAllChoosenUsers[i];
         if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
-          this.stateControl.choosenUser.push(object)
+          this.stateControl.choosenUser.push(object);
           this.stateControl.choosenUserFirbase.push(object.uId);
         }
-
       }
     }
   }
