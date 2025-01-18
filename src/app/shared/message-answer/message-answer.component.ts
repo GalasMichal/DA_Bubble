@@ -182,7 +182,10 @@ export class MessageAnswerComponent {
     }
   }
 
-  openDialogWithImage(image: string) {
+  openDialogWithImage(image: string | undefined) {
+    if(!image) {
+      return
+    }
     this.state.messageImage = image;
       this.dialog.open(MessageImageComponent, {
         panelClass: 'image-container',
