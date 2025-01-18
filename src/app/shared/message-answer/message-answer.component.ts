@@ -13,7 +13,7 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileSingleUserComponent } from '../profile-single-user/profile-single-user.component';
-import { MessageImageComponent } from '../component/show-image/show-image.component';
+import { ShowImageComponent } from '../component/show-image/show-image.component';
 
 @Component({
   selector: 'app-message-answer',
@@ -187,7 +187,7 @@ export class MessageAnswerComponent {
       return
     }
     this.state.messageImage = image;
-      this.dialog.open(MessageImageComponent, {
+      this.dialog.open(ShowImageComponent, {
         panelClass: 'image-container',
       });
     }

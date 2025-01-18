@@ -5,14 +5,13 @@ import {
   MatDialogContent,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { AvatarComponent } from '../avatar/avatar.component';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { MessageService } from '../../services/messages/message.service';
 import { Router } from '@angular/router';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { User } from '../../models/interfaces/user.model';
-import { MessageImageComponent } from '../component/show-image/show-image.component';
+import { ShowImageComponent } from '../component/show-image/show-image.component';
 
 @Component({
   selector: 'app-profile-single-user',
@@ -57,7 +56,7 @@ export class ProfileSingleUserComponent {
 
   openDialogWithImage(image: string | undefined) {
     this.stateControl.messageImage = image;
-    this.dialogImage.open(MessageImageComponent, {
+    this.dialogImage.open(ShowImageComponent, {
       panelClass: 'image-container',
     });
   }
