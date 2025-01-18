@@ -12,7 +12,7 @@ import { MessageService } from '../../services/messages/message.service';
 import { Router } from '@angular/router';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { User } from '../../models/interfaces/user.model';
-import { MessageImageComponent } from '../message-answer/message-image/message-image.component';
+import { MessageImageComponent } from '../component/show-image/show-image.component';
 
 @Component({
   selector: 'app-profile-single-user',

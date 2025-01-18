@@ -2,7 +2,6 @@
 @import "./../../../../styles.scss";
 @import "./../../../../animations.scss";
 
-
 .main-container {
   display: flex;
   justify-content: center;
@@ -20,8 +19,28 @@
   .image {
     object-fit: cover;
     height: 40vw;
-    width: 40vw;
+    width: 40vh;
     z-index: 2;
   }
 }
 
+@media (max-width: 500px) {
+  .main-container {
+    .image {
+      object-fit: contain;
+      width: 100%;
+      height: 100%; 
+      z-index: 2;
+    }
+  }
+  ::ng-deep
+    .image-container
+    .mat-mdc-dialog-container
+    .mdc-dialog__container
+    .mat-mdc-dialog-surface {
+    overflow: hidden;
+    border-radius: 0;
+    position: absolute;
+    max-width: 100%;
+  }
+}
