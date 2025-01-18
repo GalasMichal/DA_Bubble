@@ -1,6 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogContent,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
@@ -52,9 +56,9 @@ export class ProfileSingleUserComponent {
   }
 
   openDialogWithImage(image: string | undefined) {
-      this.stateControl.messageImage = image;
-        this.dialogImage.open(MessageImageComponent, {
-          panelClass: 'image-container',
-        });
-      }
+    this.stateControl.messageImage = image;
+    this.dialogImage.open(MessageImageComponent, {
+      panelClass: 'image-container',
+    });
+  }
 }

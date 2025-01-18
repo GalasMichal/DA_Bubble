@@ -20,7 +20,9 @@
         (textChange)="onReactionBarChange($event)"
         >
       </app-reaction-bar>
-        <img class="avatar" (click)="openDialogWithImage(userService.profileSingleUser.avatarUrl)" src={{currentMessage.messageSendBy.avatarUrl}} alt="profil-image"/>
+        <img class="avatar" 
+        (click)="openDialogWithImage(currentMessage.messageSendBy.avatarUrl || './assets/media/icons/profile-icons/profile-icon.svg')" 
+        src={{currentMessage.messageSendBy.avatarUrl}} alt="profil-image"/>
 
         <div class="message-content" [ngClass]="{'message-content-right': meUser}">
           <div class="message-container">
