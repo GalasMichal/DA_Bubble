@@ -183,3 +183,10 @@
     background: $primary-hover !important;
   }
 }
+
+
+@media (max-width: 500px) {
+  .message-image {
+    max-width: 10rem;
+  }
+}
