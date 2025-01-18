@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
@@ -24,145 +24,125 @@ import { ShowUsersComponent } from '../../shared/show-users/show-users.component
     MessageFieldComponent,
     MessageAnswerComponent,
     CommonModule,
-    AvatarComponent
+    AvatarComponent,
   ],
   templateUrl: './chat-room.component.html',
-  styleUrl: './chat-room.component.scss',
+  styleUrls: ['./chat-room.component.scss'],
 })
-export class ChatRoomComponent {
+export class ChatRoomComponent implements OnInit, OnDestroy {
   allUserMessages: Message[] = [];
-
-  dialog = inject(MatDialog);
-  dialogConfirm = inject(MatDialog);
-  readonly userDialog = inject(MatDialog);
   channelData: Channel | null = null;
-  chat = inject(ChatRoomService);
-  route = inject(ActivatedRoute);
-  stateControl = inject(StateControlService)
-  userService = inject(UserServiceService);
-  fb = inject(FirebaseService);
-  sumrestOfUser: number = 0;
+  sumRestOfUser: number = 0;
   counter: number = 0;
-
-  textArea: string = ""; // Variable, die mit dem textarea verbunden ist
-  textAreaId: string = "";
-  channelId: string = "";
+  textArea: string = ''; // Verbunden mit dem textarea
+  textAreaId: string = '';
+  channelId: string = '';
   textAreaEdited: boolean = false;
+
   @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
 
+  dialog = inject(MatDialog);
+  chat = inject(ChatRoomService);
+  route = inject(ActivatedRoute);
+  stateControl = inject(StateControlService);
+  userService = inject(UserServiceService);
+  fb = inject(FirebaseService);
 
-  // ngAfterViewChecked(): void {
-  //   if (this.scrollToBottom?.nativeElement) {
-  //     this.scrollToBottom.nativeElement.scrollTop =
-  //       this.scrollToBottom.nativeElement.scrollHeight;
-  //   }
-  // }
+  ngOnInit(): void {
+    this.loadSpecificPeopleFromChannel();
+  }
 
-  onTextUpdate(event: { textToEdit: string, channelId:string, messageId: string }) {
-    this.textArea = event.textToEdit; // Aktualisiere die Variable, wenn Änderungen eintreffen
+  ngOnDestroy(): void {
+    this.chat.unsubscribeAll?.();
+  }
+
+  async loadSpecificPeopleFromChannel(): Promise<void> {
+    await this.chat.loadSpecificPeopleFromChannel();
+  }
+
+  onTextUpdate(event: { textToEdit: string; channelId: string; messageId: string }): void {
+    this.textArea = event.textToEdit;
     this.channelId = event.channelId;
     this.textAreaId = event.messageId;
     this.textAreaEdited = false;
 
     setTimeout(() => {
-    this.textAreaEdited = true;
-    },);
-    this.stateControl.globalEdit = true
+      this.textAreaEdited = true;
+    });
+    this.stateControl.globalEdit = true;
   }
 
-
-  closeChannelEdit() {
-    this.dialogConfirm.closeAll()
+  closeChannelEdit(): void {
+    this.dialog.closeAll();
   }
 
-  onOpenAddUsers() {
-    const isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId
+  onOpenAddUsers(): void {
+    const isDisabled = this.chat.currentChannelData?.createdBy[0]?.uId !== this.fb.currentUser()?.uId;
     this.counter++;
 
     if (isDisabled) {
-      this.onCounter()
+      this.handleCounter();
     } else {
       this.openAddUsers();
     }
   }
 
-
-  onCounter() {
-    if(this.counter >= 2) {
+  handleCounter(): void {
+    if (this.counter >= 2) {
       this.showDialog();
       this.counter = 0;
     }
   }
 
-  showDialog() {
-    this.dialogConfirm.open(DialogGlobalComponent, {
+  showDialog(): void {
+    this.dialog.open(DialogGlobalComponent, {
       panelClass: 'dialog-global-container',
     });
   }
 
-  ngOnDestroy(): void {
-
-  this.chat.unsubscribeAll?.();
-
-  }
-
-  openAddUsers() {
-    this.stateControl.createChannelActiveInput = true
+  openAddUsers(): void {
+    this.stateControl.createChannelActiveInput = true;
     this.dialog.open(AddUsersComponent, {
-      panelClass: 'add-users-container', // Custom class for profile dialog
+      panelClass: 'add-users-container',
     });
   }
 
-  openShowUsres() {
-    // this.stateServer.createChannelActiveInput = true
+  openShowUsers(): void {
     this.dialog.open(ShowUsersComponent, {
-      panelClass: 'show-users-container', // Custom class for profile dialog
+      panelClass: 'show-users-container',
     });
-
-    this.showAllChoosenUsers()
+    this.showAllChosenUsers();
   }
 
-  restOfUser() {
+  restOfUser(): number {
     return this.chat.currentUserChannelsSpecificPeopleObject.length - 3;
   }
 
-  openTeam(chat: Object) {
-    const currentChannelID = this.chat.currentChannel
-    // console.log('ID', currentChannelID);
-
-    const currentChannelName = this.chat.currentChannelData
-    // console.log('Name', currentChannelName);
-
+  openTeam(): void {
     this.dialog.open(ChannelEditComponent, {
       panelClass: 'team-container',
     });
   }
 
-  showId(id: object) {
-    // console.log('ThreatID:', id);
-  }
-
-  async openProfileUserSingle(userId: string) {
-    await this.userService.showProfileUserSingle(userId)
-    this.userDialog.open(ProfileSingleUserComponent, {
+  async openProfileUserSingle(userId: string): Promise<void> {
+    await this.userService.showProfileUserSingle(userId);
+    this.dialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',
     });
   }
 
-  showAllChoosenUsers() {
+  showAllChosenUsers(): void {
     this.stateControl.choosenUser = [];
-    this.stateControl.choosenUserFirbase = []
+    this.stateControl.choosenUserFirebase = [];
 
-    if (this.chat.currentChannelData !== undefined){
-      const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
-      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-        const object = listOfAllChoosenUsers[i];
-        if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
-          this.stateControl.choosenUser.push(object)
-          this.stateControl.choosenUserFirbase.push(object.uId);
+    if (this.chat.currentChannelData) {
+      const listOfAllChosenUsers = this.chat.currentUserChannelsSpecificPeopleObject;
+      listOfAllChosenUsers.forEach((user) => {
+        if (user.uId !== this.chat.currentChannelData?.createdBy[0]?.uId) {
+          this.stateControl.choosenUser.push(user);
+          this.stateControl.choosenUserFirebase.push(user.uId);
         }
-
-      }
+      });
     }
   }
 }

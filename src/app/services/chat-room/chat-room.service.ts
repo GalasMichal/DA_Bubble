@@ -11,7 +11,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { Channel } from '../../models/interfaces/channel.model';
-import { User as AppUser } from '../../models/interfaces/user.model';
+import { User } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import {
@@ -35,14 +35,14 @@ export class ChatRoomService {
   channelUnsubscribe: Unsubscribe | null = null;
   messageUnsubscribe: Unsubscribe | null = null;
   channelDataUnsubscribe: Unsubscribe | null = null;
-  public userList: AppUser[] = [];
+  public userList = [];
   // Wszystkie kanaly
   public channelList: Channel[] = [];
 
   // Kanaly tylko zalogowangeo uzytkownika
   public currentUserChannels: Channel[] = [];
   public currentUserChannelsSpecificPeopleUid: string[] = [];
-  public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
+  public currentUserChannelsSpecificPeopleObject: User[] = [];
 
   public currentChannelData!: Channel;
   public answers: Message[] = [];
@@ -51,8 +51,7 @@ export class ChatRoomService {
   unsub: any;
   public currentMessageId: string | null = null;
 
-  constructor() {
-  }
+  constructor() {}
 
   unsubscribe(subscription: Unsubscribe | null) {
     if (subscription) {
@@ -131,7 +130,7 @@ export class ChatRoomService {
     await updateDoc(messageDocRef, {
       text: textAreaEdited,
       lastEdit: Timestamp.now(),
-      editCount: 1
+      editCount: 1,
     });
   }
 
@@ -167,7 +166,6 @@ export class ChatRoomService {
   }
 
   subChannelList() {
-    this.unsubscribe(this.channelUnsubscribe);
     this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
       this.channelList = [];
       list.forEach((element) => {
@@ -176,7 +174,6 @@ export class ChatRoomService {
       });
     });
   }
-
 
   addChannelToFirestore(channel: Channel) {
     const channelCollectionRef = collection(this.firestore, 'channels');
@@ -246,7 +243,7 @@ export class ChatRoomService {
       const docSnap = await getDoc(channelRef);
       if (docSnap.exists()) {
         // Setze den specificPeople-Array mit dem aktuellen User-Array aus dem StateControlService
-        const updatedSpecificPeople = this.state.choosenUserFirbase; // Array aus dem Service
+        const updatedSpecificPeople = this.state.choosenUserFirebase; // Array aus dem Service
         // Aktualisiere den Channel mit dem neuen specificPeople-Array
         await updateDoc(channelRef, { specificPeople: updatedSpecificPeople });
         console.log('specificPeople erfolgreich überschrieben');
@@ -258,18 +255,21 @@ export class ChatRoomService {
     }
   }
 
-   
   async getUserChannels(currentUserId: string): Promise<Channel[]> {
     const channelsRef = collection(this.firestore, 'channels');
-    const q = query(channelsRef, where('specificPeople', 'array-contains', currentUserId));
+    const q = query(
+      channelsRef,
+      where('specificPeople', 'array-contains', currentUserId)
+    );
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => doc.data() as Channel);
-}
+  }
 
   async loadSpecificPeopleFromChannel() {
     this.currentUserChannelsSpecificPeopleObject = [];
 
     if (this.currentUserChannelsSpecificPeopleUid.length === 0) {
+      console.log('Keine spezifischen Personen im Channel');
       return;
     }
 
@@ -280,9 +280,8 @@ export class ChatRoomService {
         where('uId', 'in', this.currentUserChannelsSpecificPeopleUid)
       );
       const querySnapshot = await getDocs(q);
-
-      await querySnapshot.forEach((doc) => {
-        const userData = doc.data() as AppUser;
+      querySnapshot.forEach((doc) => {
+        const userData = doc.data() as User;
         this.currentUserChannelsSpecificPeopleObject.push(userData);
       });
     } catch (error) {

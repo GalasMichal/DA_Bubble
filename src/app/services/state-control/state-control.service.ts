@@ -13,7 +13,7 @@ export class StateControlService {
   showToastText = signal('');
   showConfirmationText: string = '';
   choosenUser: User[] = [];
-  choosenUserFirbase: string[] = [];
+  choosenUserFirebase: string[] = [];
   isUserLoggedIn: boolean = false;
   showError: boolean = false;
   globalEdit: boolean = false;

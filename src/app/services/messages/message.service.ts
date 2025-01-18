@@ -17,7 +17,7 @@ import { UserServiceService } from '../user-service/user-service.service';
 import { User } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
-import { log } from 'console';
+
 
 @Injectable({
   providedIn: 'root',
@@ -91,7 +91,7 @@ export class MessageService {
    * @param chatId Die ID des privaten Chats.
    * @returns Ein Promise mit einer Liste von Nachrichten.
    */
-  private unsubscribeMessages: (() => void) | null = null;
+   unsubscribeMessages: (() => void) | null = null;
 
   async loadMessagesFromChat(chatId: string) {
     if (this.unsubscribeMessages) {

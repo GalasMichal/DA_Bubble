@@ -12,18 +12,16 @@ import { User } from '../../../models/interfaces/user.model';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { SearchComponent } from '../../../shared/search/search.component';
 import { Channel } from '../../../models/interfaces/channel.model';
-import { channel } from 'diagnostics_channel';
-import { user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-menu-side-left',
   standalone: true,
   imports: [CommonModule, AvatarComponent, SearchComponent],
   templateUrl: './menu-side-left.component.html',
-  styleUrl: './menu-side-left.component.scss',
+  styleUrls: ['./menu-side-left.component.scss'],
 })
 export class MenuSideLeftComponent {
-  isFirstDropdownMenuOpen = false;
+  isFirstDropdownMenuOpen = true;
   isSecondDropdownMenuOpen = true;
   dialog = inject(MatDialog);
   fb = inject(FirebaseService);
@@ -32,59 +30,76 @@ export class MenuSideLeftComponent {
   userService = inject(UserServiceService);
   router = inject(Router);
   state = inject(StateControlService);
-  channelUsers : Channel[] = [];
+  channelUsers: Channel[] = [];
 
   constructor() {
-      effect(() => {
-        if(this.fb.currentUser() != null) {
-          console.log(this.fb.currentUser())
-          const userId = this.fb.currentUser()!.uId;
-          this.chat.getUserChannels(userId).then((userChannels) => {
-            this.channelUsers = userChannels
-          })
-        }
-  })
-    this.chat.subChannelList();
-    this.userService.subUserList();
-
+    // Reaktive Überwachung des Benutzerstatus
+    effect(() => {
+      const currentUser = this.fb.currentUser();
+      if (currentUser) {
+        const userId = currentUser.uId;
+        this.chat.getUserChannels(userId).then((userChannels) => {
+          this.channelUsers = userChannels;
+        });
+      }
+    });
   }
 
+  ngOnInit(): void {
+    // Wiederherstellung des aktuellen Channels bei Seiten-Neuladen
+    const savedChannelId = localStorage.getItem('currentChannel');
+    if (savedChannelId) {
+      this.openChannel(savedChannelId);
+    }
+    this.ms.loadCurrentMessageData();
+    this.sortListOfUser();
+  }
 
- async openMessage(user: User) {
+  ngOnDestroy(): void {
+    // Ressourcen bereinigen
+    this.chat.unsubscribe(this.chat.channelUnsubscribe);
+    if (this.ms.unsubscribeMessages) {
+      this.ms.unsubscribe(this.ms.unsubscribeMessages);
+    }
+  }
+
+  async openChannel(chanId: string): Promise<void> {
+    this.state.responsiveChat = true;
+    this.state.responsiveArrow = true;
+    this.state.responsiveMenu = true;
+    this.state.isThreadOpen = false;
+
+    // Speichern des aktuellen Channels im localStorage
+    localStorage.setItem('currentChannel', chanId);
+
+    await this.chat.openChatById(chanId);
+  }
+
+  async openMessage(user: User): Promise<void> {
     this.state.isThreadOpen = false;
     this.userService.messageReceiver = user;
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
 
-  // Prüfen, ob ein privater Chat bereits existiert
-  const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
-  console.log('chatID', existingChatId);
-
-  if (existingChatId) {
-    // Wenn der Chat existiert, zur spezifischen Nachricht navigieren
-    this.router.navigate(['/start/main/messages', existingChatId]);
-    this.ms.loadMessagesFromChat(existingChatId);
-  } else {
-
-    this.router.navigate(['/start/main/messages']);
-    // this.ms.newPrivateMessageChannel(user);
+    const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
+    if (existingChatId) {
+      this.router.navigate(['/start/main/messages', existingChatId]);
+      this.ms.loadMessagesFromChat(existingChatId);
+    } else {
+      this.router.navigate(['/start/main/messages']);
+    }
   }
-  }
-  ngOnDestroy(): void {}
 
-  // Schow all channels
-  async toogleDropDown1() {
-    const userId = this.fb.currentUser()!.uId;
-    this.chat.getUserChannels(userId);
+  toogleDropDown1(): void {
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
   }
 
-  toogleDropDown2() {
+  toogleDropDown2(): void {
     this.isSecondDropdownMenuOpen = !this.isSecondDropdownMenuOpen;
   }
 
-  addChannel() {
+  addChannel(): void {
     this.state.isThreadOpen = false;
     this.state.createChannelActiveInput = false;
     this.dialog.open(ChannelCreateComponent, {
@@ -92,27 +107,18 @@ export class MenuSideLeftComponent {
     });
   }
 
-  async openChannel(chanId: string) {
-    this.state.responsiveChat = true;
-    this.state.responsiveArrow = true;
-    this.state.responsiveMenu = true;
-    this.state.isThreadOpen = false
-    await this.chat.openChatById(chanId);
+  sortListOfUser(): User[] {
+    const sortAllUser = [...this.userService.userList];
+    sortAllUser.sort((a, b) => {
+      if (a.uId === this.fb.currentUser()?.uId) return -1;
+      if (b.uId === this.fb.currentUser()?.uId) return 1;
+
+      return a.displayName.localeCompare(b.displayName);
+    });
+    return sortAllUser;
   }
 
-  sortListOfUser() {
-    const sortAllUser = this.userService.userList
-    sortAllUser.sort((a, b) => {
-      if(a.uId === this.fb.currentUser()?.uId) return -1
-      if(b.uId === this.fb.currentUser()?.uId) return 1
-
-      return a.displayName.localeCompare(b.displayName)
-    })
-    return sortAllUser
-  };
-
-
-  writeMessage() {
+  writeMessage(): void {
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
