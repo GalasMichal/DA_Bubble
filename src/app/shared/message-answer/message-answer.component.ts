@@ -13,7 +13,7 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileSingleUserComponent } from '../profile-single-user/profile-single-user.component';
-import { MessageImageComponent } from './message-image/message-image.component';
+import { MessageImageComponent } from '../component/show-image/show-image.component';
 
 @Component({
   selector: 'app-message-answer',
