@@ -26,7 +26,6 @@ import { LoaderComponent } from '../../shared/component/loader/loader.component'
     MessageAnswerComponent,
     CommonModule,
     AvatarComponent,
-    LoaderComponent
   ],
   templateUrl: './chat-room.component.html',
   styleUrl: './chat-room.component.scss',
