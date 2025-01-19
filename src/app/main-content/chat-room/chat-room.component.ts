@@ -98,7 +98,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   // Other possibilty to scroll to bottom
   scrollToBottomButton() {
     if (this.scrollToBottom?.nativeElement) {
-      this.scrollToBottom.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this.scrollToBottom.nativeElement.scrollTop =
+      this.scrollToBottom.nativeElement.scrollHeight;
     }
   }
 

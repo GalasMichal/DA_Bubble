@@ -20,6 +20,10 @@ app-message-field {
   background: rgba(0, 0, 0, 0);
 }
 
+.chat-main-container {
+  scroll-behavior: smooth;
+}
+
 .welcome-container {
   display: flex;
   min-height: 8.8125rem;
