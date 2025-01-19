@@ -1,4 +1,11 @@
-import { Component, ElementRef, inject, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
@@ -12,11 +19,11 @@ import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { AvatarComponent } from '../../shared/avatar/avatar.component';
-import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../shared/component/dialog-global/dialog-global.component';
 import { ShowUsersComponent } from '../../shared/show-users/show-users.component';
 import { LoaderComponent } from '../../shared/component/loader/loader.component';
+import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -27,8 +34,6 @@ import { LoaderComponent } from '../../shared/component/loader/loader.component'
     CommonModule,
     AvatarComponent,
     LoaderComponent,
-    ProfileSingleUserComponent,
-    
   ],
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
@@ -45,12 +50,14 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
 
+  userDialog = inject(MatDialog);
   dialog = inject(MatDialog);
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
   stateControl = inject(StateControlService);
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
+  dialogConfirm = inject(MatDialog);
 
   ngOnInit(): void {
     this.loadSpecificPeopleFromChannel();
@@ -64,7 +71,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     await this.chat.loadSpecificPeopleFromChannel();
   }
   sumrestOfUser: number = 0;
-
 
   ngAfterViewChecked(): void {
     if (this.stateControl.scrollToBottomGlobal) {
@@ -121,8 +127,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
   openAddUsers() {
     this.stateControl.createChannelActiveInput = true;
     this.dialog.open(AddUsersComponent, {
@@ -159,7 +163,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   async openProfileUserSingle(userId: string) {
-    this.stateControl.scrollToBottomGlobal = false
+    this.stateControl.scrollToBottomGlobal = false;
     await this.userService.showProfileUserSingle(userId);
     this.userDialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',
@@ -168,7 +172,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   showAllChoosenUsers(): void {
     this.stateControl.choosenUser = [];
-    this.stateControl.choosenUserFirbase = [];
+    this.stateControl.choosenUserFirebase = [];
 
     if (this.chat.currentChannelData !== undefined) {
       const listOfAllChoosenUsers =
@@ -177,7 +181,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
         const object = listOfAllChoosenUsers[i];
         if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
           this.stateControl.choosenUser.push(object);
-          this.stateControl.choosenUserFirbase.push(object.uId);
+          this.stateControl.choosenUserFirebase.push(object.uId);
         }
       }
     }
