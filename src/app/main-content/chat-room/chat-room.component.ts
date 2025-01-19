@@ -26,7 +26,9 @@ import { LoaderComponent } from '../../shared/component/loader/loader.component'
     MessageAnswerComponent,
     CommonModule,
     AvatarComponent,
-    LoaderComponent
+    LoaderComponent,
+    ProfileSingleUserComponent,
+    
   ],
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
@@ -62,13 +64,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     await this.chat.loadSpecificPeopleFromChannel();
   }
   sumrestOfUser: number = 0;
-  counter: number = 0;
 
-  textArea: string = ''; // Variable, die mit dem textarea verbunden ist
-  textAreaId: string = '';
-  channelId: string = '';
-  textAreaEdited: boolean = false;
-  @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
 
   ngAfterViewChecked(): void {
     if (this.stateControl.scrollToBottomGlobal) {
@@ -125,9 +121,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.chat.unsubscribeAll?.();
-  }
+
 
   openAddUsers() {
     this.stateControl.createChannelActiveInput = true;
@@ -172,7 +166,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  showAllChosenUsers(): void {
+  showAllChoosenUsers(): void {
     this.stateControl.choosenUser = [];
     this.stateControl.choosenUserFirbase = [];
 
