@@ -3,6 +3,8 @@ import {
   ElementRef,
   HostListener,
   inject,
+  OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
@@ -69,15 +71,10 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   async loadSpecificPeopleFromChannel(): Promise<void> {
     await this.chat.loadSpecificPeopleFromChannel();
   }
-  sumrestOfUser: number = 0;
-  counter: number = 0;
 
-  textArea: string = ''; // Variable, die mit dem textarea verbunden ist
-  textAreaId: string = '';
-  channelId: string = '';
-  textAreaEdited: boolean = false;
+
   isVisible: boolean = false;
-  @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
+
 
   ngAfterViewChecked(): void {
     if (this.stateControl.scrollToBottomGlobal) {
