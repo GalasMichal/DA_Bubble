@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
@@ -50,6 +50,7 @@ export class ChatRoomComponent {
   textAreaId: string = '';
   channelId: string = '';
   textAreaEdited: boolean = false;
+  isVisible: boolean = false;
   @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
 
   ngAfterViewChecked(): void {
@@ -60,6 +61,24 @@ export class ChatRoomComponent {
       }
     }
   }
+
+ onScroll() {
+  this.stateControl.scrollToBottomGlobal = false
+  if (this.scrollToBottom?.nativeElement) {
+    const container = this.scrollToBottom.nativeElement;
+    const scrollPosition = container.scrollTop;
+    const containerHeight = container.scrollHeight - container.clientHeight;
+    this.isVisible = (containerHeight - scrollPosition) > 300;
+  }
+ }
+
+  // Other possibilty to scroll to bottom
+  scrollToBottomButton() {
+    if (this.scrollToBottom?.nativeElement) {
+    this.scrollToBottom.nativeElement.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
 
   onTextUpdate(event: {
     textToEdit: string;

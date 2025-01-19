@@ -54,7 +54,7 @@
       </button>
     </div>
   </header>
-  <div class="chat-main-container" #scrollToBottom>
+  <div class="chat-main-container" #scrollToBottom (scroll)="onScroll()">
     
     <div class="welcome-container">
 
@@ -146,7 +146,12 @@
         <br>
     </div>
   }
-
+  <button (click)="scrollToBottomButton()" 
+  class="c-scroll-bottom js-scroll-bottom"
+  [ngClass]="{'c-scroll-bottom--visible': isVisible}"
+  >
+    <img class="c-icon c-scroll-bottom__icon" src="assets/media/icons/arrow-bottom.svg" alt="arrow">
+  </button>
 
   </div>
   

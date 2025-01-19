@@ -176,3 +176,67 @@ header {
     display: flex;
   }
 }
+
+
+.c-scroll-bottom--visible {
+  visibility: visible !important;
+  transform: scale(1) !important;
+  transition: transform .3s cubic-bezier(.25,.46,.45,.94);
+}
+
+.c-scroll-bottom {
+  position: fixed;
+  z-index: 10;
+  bottom: 15rem;
+  right: 4rem;
+  transform: scale(0);
+  visibility: hidden;
+  color: #4a4a4a;
+  background: rgba(220,225,229,.9);
+  padding: 0.8rem;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(220,225,229,.6);
+  -webkit-animation: pulse 6s infinite;
+  animation: pulse 6s infinite;
+  transition: transform .3s cubic-bezier(.25,.46,.45,.94);
+}
+
+.c-icon {
+  width: 35px;
+  height: 35px;
+  margin: 5px;
+  fill: currentColor;
+  transform: rotate(180deg);
+  transition: all .5s;
+}
+
+.c-scroll-bottom:hover .c-scroll-bottom__icon {
+  transform: rotate(540deg);
+  transition: transform .4s;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220,225,229,.6);
+  }
+  10% {
+    box-shadow: 0 0 0 10px rgba(220,225,229,.2);
+}
+  20% {
+    box-shadow: 0 0 0 10px rgba(220,225,229,0);
+}
+ 100% {
+  box-shadow: 0 0 0 0 rgba(220,225,229,0);
+ }
+}
+
+@media (max-width: 1100px) {
+  .c-scroll-bottom {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  .c-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
