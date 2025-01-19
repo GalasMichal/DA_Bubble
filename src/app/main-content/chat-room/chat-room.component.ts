@@ -16,7 +16,6 @@ import { ProfileSingleUserComponent } from '../../shared/profile-single-user/pro
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../shared/component/dialog-global/dialog-global.component';
 import { ShowUsersComponent } from '../../shared/show-users/show-users.component';
-import { LoaderComponent } from '../../shared/component/loader/loader.component';
 
 @Component({
   selector: 'app-chat-room',
