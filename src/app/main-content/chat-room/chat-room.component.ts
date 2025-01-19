@@ -1,4 +1,10 @@
-import { Component, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  ViewChild,
+} from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
@@ -82,23 +88,22 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     }
   }
 
- onScroll() {
-  this.stateControl.scrollToBottomGlobal = false
-  if (this.scrollToBottom?.nativeElement) {
-    const container = this.scrollToBottom.nativeElement;
-    const scrollPosition = container.scrollTop;
-    const containerHeight = container.scrollHeight - container.clientHeight;
-    this.isVisible = (containerHeight - scrollPosition) > 300;
+  onScroll() {
+    this.stateControl.scrollToBottomGlobal = false;
+    if (this.scrollToBottom?.nativeElement) {
+      const container = this.scrollToBottom.nativeElement;
+      const scrollPosition = container.scrollTop;
+      const containerHeight = container.scrollHeight - container.clientHeight;
+      this.isVisible = containerHeight - scrollPosition > 300;
+    }
   }
- }
 
   // Other possibilty to scroll to bottom
   scrollToBottomButton() {
     if (this.scrollToBottom?.nativeElement) {
-    this.scrollToBottom.nativeElement.scrollIntoView({ behavior: 'smooth' })
+      this.scrollToBottom.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
-
 
   onTextUpdate(event: {
     textToEdit: string;
@@ -177,9 +182,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  showId(id: object) {
-    // console.log('ThreatID:', id);
-  }
+  showId(id: object) {}
 
   async openProfileUserSingle(userId: string) {
     this.stateControl.scrollToBottomGlobal = false;
