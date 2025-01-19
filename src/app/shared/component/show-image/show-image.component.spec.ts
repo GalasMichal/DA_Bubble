@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MessageImageComponent } from './message-image.component';
+import { MessageImageComponent } from './show-image.component';
 
 describe('MessageImageComponent', () => {
   let component: MessageImageComponent;
