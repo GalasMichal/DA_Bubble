@@ -16,7 +16,7 @@ import { Firestore } from '@angular/fire/firestore';
   styleUrl: './reaction-bar.component.scss'
 })
 export class ReactionBarComponent {
-  state = inject(StateControlService)
+  stateControl = inject(StateControlService)
   firestore = inject(Firestore);
   fb = inject(FirebaseService);
   showCloud:boolean = false 
@@ -48,6 +48,7 @@ export class ReactionBarComponent {
   }
 
   addEmoji(event: any) {
+    this.stateControl.scrollToBottomGlobal = false;
     // Das ausgewählte Emoji wird in der aktuellen Komponente in newEmoji gespeichert
     this.newEmoji = `${this.newEmoji}${event.emoji.native}`; 
 
@@ -58,7 +59,8 @@ export class ReactionBarComponent {
   }
  
  
-  showEmojiWindow(index: number) {    
+  showEmojiWindow(index: number) { 
+    this.stateControl.scrollToBottomGlobal = false;
     this.isEmojiPickerVisibleMessage[index] = !this.isEmojiPickerVisibleMessage[index]
   }
 

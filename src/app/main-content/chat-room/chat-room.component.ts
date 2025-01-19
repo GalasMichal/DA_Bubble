@@ -16,6 +16,7 @@ import { ProfileSingleUserComponent } from '../../shared/profile-single-user/pro
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../shared/component/dialog-global/dialog-global.component';
 import { ShowUsersComponent } from '../../shared/show-users/show-users.component';
+import { LoaderComponent } from '../../shared/component/loader/loader.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -25,6 +26,7 @@ import { ShowUsersComponent } from '../../shared/show-users/show-users.component
     MessageAnswerComponent,
     CommonModule,
     AvatarComponent,
+    LoaderComponent
   ],
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
@@ -59,9 +61,30 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   async loadSpecificPeopleFromChannel(): Promise<void> {
     await this.chat.loadSpecificPeopleFromChannel();
   }
+  sumrestOfUser: number = 0;
+  counter: number = 0;
 
-  onTextUpdate(event: { textToEdit: string; channelId: string; messageId: string }): void {
-    this.textArea = event.textToEdit;
+  textArea: string = ''; // Variable, die mit dem textarea verbunden ist
+  textAreaId: string = '';
+  channelId: string = '';
+  textAreaEdited: boolean = false;
+  @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
+
+  ngAfterViewChecked(): void {
+    if (this.stateControl.scrollToBottomGlobal) {
+      if (this.scrollToBottom?.nativeElement) {
+        this.scrollToBottom.nativeElement.scrollTop =
+          this.scrollToBottom.nativeElement.scrollHeight;
+      }
+    }
+  }
+
+  onTextUpdate(event: {
+    textToEdit: string;
+    channelId: string;
+    messageId: string;
+  }) {
+    this.textArea = event.textToEdit; // Aktualisiere die Variable, wenn Änderungen eintreffen
     this.channelId = event.channelId;
     this.textAreaId = event.messageId;
     this.textAreaEdited = false;
@@ -72,22 +95,24 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.stateControl.globalEdit = true;
   }
 
-  closeChannelEdit(): void {
-    this.dialog.closeAll();
+  closeChannelEdit() {
+    this.dialogConfirm.closeAll();
   }
 
-  onOpenAddUsers(): void {
-    const isDisabled = this.chat.currentChannelData?.createdBy[0]?.uId !== this.fb.currentUser()?.uId;
+  onOpenAddUsers() {
+    const isDisabled =
+      this.chat.currentChannelData.createdBy[0].uId !==
+      this.fb.currentUser()?.uId;
     this.counter++;
 
     if (isDisabled) {
-      this.handleCounter();
+      this.onCounter();
     } else {
       this.openAddUsers();
     }
   }
 
-  handleCounter(): void {
+  onCounter() {
     if (this.counter >= 2) {
       this.showDialog();
       this.counter = 0;
@@ -100,7 +125,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  openAddUsers(): void {
+  ngOnDestroy(): void {
+    this.chat.unsubscribeAll?.();
+  }
+
+  openAddUsers() {
     this.stateControl.createChannelActiveInput = true;
     this.dialog.open(AddUsersComponent, {
       panelClass: 'add-users-container',
@@ -111,38 +140,52 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.dialog.open(ShowUsersComponent, {
       panelClass: 'show-users-container',
     });
-    this.showAllChosenUsers();
+
+    this.showAllChoosenUsers();
   }
 
   restOfUser(): number {
     return this.chat.currentUserChannelsSpecificPeopleObject.length - 3;
   }
 
-  openTeam(): void {
+  openTeam(chat: Object) {
+    const currentChannelID = this.chat.currentChannel;
+    // console.log('ID', currentChannelID);
+
+    const currentChannelName = this.chat.currentChannelData;
+    // console.log('Name', currentChannelName);
+
     this.dialog.open(ChannelEditComponent, {
       panelClass: 'team-container',
     });
   }
 
-  async openProfileUserSingle(userId: string): Promise<void> {
+  showId(id: object) {
+    // console.log('ThreatID:', id);
+  }
+
+  async openProfileUserSingle(userId: string) {
+    this.stateControl.scrollToBottomGlobal = false
     await this.userService.showProfileUserSingle(userId);
-    this.dialog.open(ProfileSingleUserComponent, {
+    this.userDialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',
     });
   }
 
   showAllChosenUsers(): void {
     this.stateControl.choosenUser = [];
-    this.stateControl.choosenUserFirebase = [];
+    this.stateControl.choosenUserFirbase = [];
 
-    if (this.chat.currentChannelData) {
-      const listOfAllChosenUsers = this.chat.currentUserChannelsSpecificPeopleObject;
-      listOfAllChosenUsers.forEach((user) => {
-        if (user.uId !== this.chat.currentChannelData?.createdBy[0]?.uId) {
-          this.stateControl.choosenUser.push(user);
-          this.stateControl.choosenUserFirebase.push(user.uId);
+    if (this.chat.currentChannelData !== undefined) {
+      const listOfAllChoosenUsers =
+        this.chat.currentUserChannelsSpecificPeopleObject;
+      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+        const object = listOfAllChoosenUsers[i];
+        if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
+          this.stateControl.choosenUser.push(object);
+          this.stateControl.choosenUserFirbase.push(object.uId);
         }
-      });
+      }
     }
   }
 }

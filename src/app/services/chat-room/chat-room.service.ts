@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import {
   addDoc,
+  arrayUnion,
   DocumentData,
   QuerySnapshot,
   Timestamp,
@@ -27,6 +28,7 @@ import { StateControlService } from '../state-control/state-control.service';
 @Injectable({
   providedIn: 'root',
 })
+
 export class ChatRoomService {
   private firestore = inject(Firestore);
   state = inject(StateControlService);
@@ -254,6 +256,7 @@ export class ChatRoomService {
       console.error('Fehler beim Überschreiben der specificPeople:', error);
     }
   }
+
 
   async getUserChannels(currentUserId: string): Promise<Channel[]> {
     const channelsRef = collection(this.firestore, 'channels');

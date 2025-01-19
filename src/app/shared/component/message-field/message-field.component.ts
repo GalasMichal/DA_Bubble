@@ -57,6 +57,7 @@ export class MessageFieldComponent {
   }
 
   async sendMessage() {
+    this.stateControl.scrollToBottomGlobal = true;
     const currentUser = this.fb.currentUser();
 
     if (this.textAreaIsEdited && this.textArea !== '') {
@@ -115,6 +116,7 @@ export class MessageFieldComponent {
   }
 
   async sendDirectMessage() {
+    this.stateControl.scrollToBottomGlobal = false;
     let collRef = await this.msg.newPrivateMessageChannel(
       this.user.messageReceiver!
     );
@@ -175,11 +177,13 @@ export class MessageFieldComponent {
   }
 
   addEmoji(event: any) {
+    this.stateControl.scrollToBottomGlobal = false;
     this.textArea = `${this.textArea}${event.emoji.native}`;
     this.isEmojiPickerVisible = false;
   }
 
   showEmojiWindow() {
+    this.stateControl.scrollToBottomGlobal = false;
     this.isEmojiPickerVisible = !this.isEmojiPickerVisible;
   }
 

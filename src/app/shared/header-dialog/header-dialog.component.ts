@@ -26,9 +26,11 @@ export class HeaderDialogComponent {
   user = inject(UserServiceService)
 
   openDialogProfile() {
-    this.dialog.open(ProfileComponent, {
-      panelClass: 'profile-container', // Custom class for profile dialog
-    });
+    if(this.firebase.currentUser()!.displayName != 'Gast') {
+      this.dialog.open(ProfileComponent, {
+        panelClass: 'profile-container', // Custom class for profile dialog
+      });
+    }
   }
 
  async logOut() {

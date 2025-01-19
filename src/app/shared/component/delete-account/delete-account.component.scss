@@ -45,9 +45,9 @@
         background-repeat: no-repeat;
         background-position: left 30px top 50%;
         border: solid 0.0625rem transparent;
-        padding-left: 85px;
-        padding-top: 18px;
-        padding-bottom: 18px;
+        padding-left: 5.3125rem;
+        padding-top: 1.125rem;
+        padding-bottom: 1.125rem;
         width: 100%;
         height: 3.07rem;
         background-color: $bg-color;
@@ -63,24 +63,24 @@
       }
       .input-icon {
         position: absolute;
-        top: 13px;
+        top: .8125rem;
         left: 0;
-        padding: 0 25px;
+        padding: 0 1.5625rem;
         display: inline-flex;
         justify-content: center;
         align-items: center;
       }
       .eye-pos {
         position: absolute;
-        top: 10px;
+        top: .625rem;
         right: 0;
-        padding: 0 25px;
+        padding: 0 1.5625rem;
         display: inline-flex;
         justify-content: center;
         align-items: center;
       }
       .match {
-        height: 18px;
+        height: 1.125rem;
       }
       .btn-password {
         display: flex;
@@ -91,7 +91,7 @@
         width: fit-content;
         padding: 0.3125rem 0.9375rem;
         border-radius: $b-radius-2;
-        margin-bottom: 30px;
+        margin-bottom: 1.875rem;
         border: solid 0.0625rem transparent;
         @include firstTranistion();
         &:hover {
@@ -126,8 +126,8 @@
         width: fit-content;
         font-weight: 700;
         font-size: 1.125rem;
-        gap: 10px;
-        padding: 12px 25px;
+        gap: .625rem;
+        padding: .75rem 1.5625rem;
         border: solid 0.0625rem transparent;
         border-radius: $b-radius-2;
         color: $white;
@@ -166,8 +166,8 @@
     max-height: 46rem;
     background-color: $white;
     border-radius: $b-radius-3;
-    padding: 40px;
-    margin: 10px;
+    padding: 2.5rem;
+    margin: .625rem;
     gap: 1rem;
   }
 }

@@ -20,7 +20,8 @@ export class StateControlService {
   responsiveChat: boolean = false;
   responsiveArrow: boolean = false;
   responsiveMenu: boolean = false;
-  messageImage: string = "";
+  messageImage: string | undefined = "";
+  scrollToBottomGlobal: boolean = true;
 
   removeShowToast() {
     setTimeout(() => {

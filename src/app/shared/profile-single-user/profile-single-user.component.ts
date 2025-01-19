@@ -1,6 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogContent, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogContent,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
@@ -8,6 +12,7 @@ import { MessageService } from '../../services/messages/message.service';
 import { Router } from '@angular/router';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { User } from '../../models/interfaces/user.model';
+import { MessageImageComponent } from '../message-answer/message-image/message-image.component';
 
 @Component({
   selector: 'app-profile-single-user',
@@ -23,6 +28,7 @@ export class ProfileSingleUserComponent {
   ms = inject(MessageService);
   router = inject(Router);
   stateControl = inject(StateControlService);
+  dialogImage = inject(MatDialog);
 
   closeUserProfile() {
     this.dialog.close();
@@ -47,5 +53,12 @@ export class ProfileSingleUserComponent {
       this.router.navigate(['/start/main/messages']);
     }
     this.closeUserProfile();
+  }
+
+  openDialogWithImage(image: string | undefined) {
+    this.stateControl.messageImage = image;
+    this.dialogImage.open(MessageImageComponent, {
+      panelClass: 'image-container',
+    });
   }
 }

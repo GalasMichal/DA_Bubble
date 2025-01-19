@@ -113,10 +113,21 @@ export class MenuSideLeftComponent {
       if (a.uId === this.fb.currentUser()?.uId) return -1;
       if (b.uId === this.fb.currentUser()?.uId) return 1;
 
-      return a.displayName.localeCompare(b.displayName);
-    });
-    return sortAllUser;
-  }
+      return a.displayName.localeCompare(b.displayName)
+    })
+    return sortAllUser
+  };
+
+  sortOfAllChannels() {
+    const sortAllChannels = this.channelUsers
+    sortAllChannels.sort((a, b) => {
+      if(a.chanId === this.fb.mainChannel) return -1
+      if(b.chanId === this.fb.mainChannel) return 1
+
+      return a.channelName.localeCompare(b.channelName)
+    })
+    return sortAllChannels
+  };
 
   writeMessage(): void {
     this.state.responsiveChat = true;
