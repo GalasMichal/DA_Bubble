@@ -57,7 +57,7 @@ export class ChannelCreateComponent {
 
   onRadioChange(event: any) {
     this.stateServer.choosenUser = [];
-    this.stateServer.choosenUserFirbase = [];
+    this.stateServer.choosenUserFirebase = [];
     if (event.target.value === 'specificPeople') {
       this.isSpecificPeople = true;
       this.allMembers = true;
@@ -65,7 +65,7 @@ export class ChannelCreateComponent {
       this.isSpecificPeople = false;
       this.allMembers = true;
       this.allMembersInChannel = this.userService.userListUid;
-      this.stateServer.choosenUserFirbase = this.userService.userListUid;
+      this.stateServer.choosenUserFirebase = this.userService.userListUid;
     }
   }
 
@@ -105,13 +105,13 @@ export class ChannelCreateComponent {
       channelName: formValues.channelName,
       channelDescription: formValues.channelDescription || '',
       allMembers: this.allMembersInChannel,
-      specificPeople: this.stateServer.choosenUserFirbase,
+      specificPeople: this.stateServer.choosenUserFirebase,
       createdAt: new Date().toISOString(),
       createdBy: [this.fb.currentUser()!],
     };
-    this.stateServer.choosenUserFirbase.push(this.fb.currentUser()!.uId);
+    this.stateServer.choosenUserFirebase.push(this.fb.currentUser()!.uId);
     this.stateServer.choosenUser = [];
-    this.stateServer.createChannelActiveInput = true
+    this.stateServer.createChannelActiveInput = true;
     this.createChannel(event, newChannel);
   }
 

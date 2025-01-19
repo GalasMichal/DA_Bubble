@@ -12,11 +12,11 @@ import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { AvatarComponent } from '../../shared/avatar/avatar.component';
-import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../shared/component/dialog-global/dialog-global.component';
 import { ShowUsersComponent } from '../../shared/show-users/show-users.component';
 import { LoaderComponent } from '../../shared/component/loader/loader.component';
+import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 
 @Component({
   selector: 'app-chat-room',
@@ -26,23 +26,43 @@ import { LoaderComponent } from '../../shared/component/loader/loader.component'
     MessageAnswerComponent,
     CommonModule,
     AvatarComponent,
-    LoaderComponent
+    LoaderComponent,
   ],
   templateUrl: './chat-room.component.html',
-  styleUrl: './chat-room.component.scss',
+  styleUrls: ['./chat-room.component.scss'],
 })
-export class ChatRoomComponent {
+export class ChatRoomComponent implements OnInit, OnDestroy {
   allUserMessages: Message[] = [];
-
-  dialog = inject(MatDialog);
-  dialogConfirm = inject(MatDialog);
-  readonly userDialog = inject(MatDialog);
   channelData: Channel | null = null;
+  sumRestOfUser: number = 0;
+  counter: number = 0;
+  textArea: string = ''; // Verbunden mit dem textarea
+  textAreaId: string = '';
+  channelId: string = '';
+  textAreaEdited: boolean = false;
+
+  @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
+
+  userDialog = inject(MatDialog);
+  dialog = inject(MatDialog);
   chat = inject(ChatRoomService);
   route = inject(ActivatedRoute);
   stateControl = inject(StateControlService);
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
+  dialogConfirm = inject(MatDialog);
+
+  ngOnInit(): void {
+    this.loadSpecificPeopleFromChannel();
+  }
+
+  ngOnDestroy(): void {
+    this.chat.unsubscribeAll?.();
+  }
+
+  async loadSpecificPeopleFromChannel(): Promise<void> {
+    await this.chat.loadSpecificPeopleFromChannel();
+  }
   sumrestOfUser: number = 0;
   counter: number = 0;
 
@@ -120,33 +140,28 @@ export class ChatRoomComponent {
     }
   }
 
-  showDialog() {
-    this.dialogConfirm.open(DialogGlobalComponent, {
+  showDialog(): void {
+    this.dialog.open(DialogGlobalComponent, {
       panelClass: 'dialog-global-container',
     });
-  }
-
-  ngOnDestroy(): void {
-    this.chat.unsubscribeAll?.();
   }
 
   openAddUsers() {
     this.stateControl.createChannelActiveInput = true;
     this.dialog.open(AddUsersComponent, {
-      panelClass: 'add-users-container', // Custom class for profile dialog
+      panelClass: 'add-users-container',
     });
   }
 
-  openShowUsres() {
-    // this.stateServer.createChannelActiveInput = true
+  openShowUsers(): void {
     this.dialog.open(ShowUsersComponent, {
-      panelClass: 'show-users-container', // Custom class for profile dialog
+      panelClass: 'show-users-container',
     });
 
     this.showAllChoosenUsers();
   }
 
-  restOfUser() {
+  restOfUser(): number {
     return this.chat.currentUserChannelsSpecificPeopleObject.length - 3;
   }
 
@@ -167,16 +182,16 @@ export class ChatRoomComponent {
   }
 
   async openProfileUserSingle(userId: string) {
-    this.stateControl.scrollToBottomGlobal = false
+    this.stateControl.scrollToBottomGlobal = false;
     await this.userService.showProfileUserSingle(userId);
     this.userDialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',
     });
   }
 
-  showAllChoosenUsers() {
+  showAllChoosenUsers(): void {
     this.stateControl.choosenUser = [];
-    this.stateControl.choosenUserFirbase = [];
+    this.stateControl.choosenUserFirebase = [];
 
     if (this.chat.currentChannelData !== undefined) {
       const listOfAllChoosenUsers =
@@ -185,7 +200,7 @@ export class ChatRoomComponent {
         const object = listOfAllChoosenUsers[i];
         if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
           this.stateControl.choosenUser.push(object);
-          this.stateControl.choosenUserFirbase.push(object.uId);
+          this.stateControl.choosenUserFirebase.push(object.uId);
         }
       }
     }
