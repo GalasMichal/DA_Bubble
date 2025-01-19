@@ -20,11 +20,10 @@ export class InputAddUsersComponent {
   userService = inject(UserServiceService);
   stateServer = inject(StateControlService);
   chat = inject(ChatRoomService);
-  fireService = inject(FirebaseService)
+  fireService = inject(FirebaseService);
 
   // Nicht fertig
   listOfAllUsers: User[] = [...this.userService.userList];
-
 
   @Output() activeButton: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -33,52 +32,55 @@ export class InputAddUsersComponent {
   }
 
   constructor() {
-    if(this.stateServer.createChannelActiveInput) {
-      this.showAllChoosenUsers()
+    if (this.stateServer.createChannelActiveInput) {
+      this.showAllChoosenUsers();
     }
-
   }
 
   showAllChoosenUsers() {
     this.stateServer.choosenUser = [];
-    this.stateServer.choosenUserFirbase = []
+    this.stateServer.choosenUserFirebase = [];
 
-    if (this.chat.currentChannelData !== undefined){
-      const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
+    if (this.chat.currentChannelData !== undefined) {
+      const listOfAllChoosenUsers =
+        this.chat.currentUserChannelsSpecificPeopleObject;
       for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
         const object = listOfAllChoosenUsers[i];
         if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
-          this.stateServer.choosenUser.push(object)
-          this.stateServer.choosenUserFirbase.push(object.uId);
+          this.stateServer.choosenUser.push(object);
+          this.stateServer.choosenUserFirebase.push(object.uId);
         }
-
       }
     }
   }
 
-
   filterOnlyAvaliableUser() {
-    const choosenUsers = new Set(this.stateServer.choosenUser.map(user => user.uId));
-    return this.listOfAllUsers.filter(user => !choosenUsers.has(user.uId) && user.uId !== this.fireService.currentUser()?.uId);    
-
+    const choosenUsers = new Set(
+      this.stateServer.choosenUser.map((user) => user.uId)
+    );
+    return this.listOfAllUsers.filter(
+      (user) =>
+        !choosenUsers.has(user.uId) &&
+        user.uId !== this.fireService.currentUser()?.uId
+    );
   }
 
   addUser(index: number, event: Event, uId: string) {
     event.preventDefault();
     const indexListOfAllUsers = this.filterOnlyAvaliableUser()[index];
     this.stateServer.choosenUser.push(indexListOfAllUsers);
-    this.stateServer.choosenUserFirbase.push(uId);
-    
+    this.stateServer.choosenUserFirebase.push(uId);
+
     this.makeButtonActiveReactive();
-    this.filterOnlyAvaliableUser()
+    this.filterOnlyAvaliableUser();
   }
 
   removeUser(index: number, event: Event) {
     event.preventDefault();
     this.stateServer.choosenUser.splice(index, 1);
-    this.stateServer.choosenUserFirbase.splice(index, 1);
+    this.stateServer.choosenUserFirebase.splice(index, 1);
     this.makeButtonActiveReactive();
-    this.filterOnlyAvaliableUser()
+    this.filterOnlyAvaliableUser();
   }
 
   makeButtonActiveReactive() {

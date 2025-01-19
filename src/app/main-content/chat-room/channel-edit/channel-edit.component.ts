@@ -26,28 +26,29 @@ export class ChannelEditComponent {
   readonly dialog = inject(MatDialogRef<ChannelEditComponent>);
   dialogConfirm = inject(MatDialog);
 
-
   channelEditTitel: boolean = false;
   channelEditDescription: boolean = false;
   chat = inject(ChatRoomService);
-  firestore = inject(Firestore)
-  stateServer = inject(StateControlService)
+  firestore = inject(Firestore);
+  stateServer = inject(StateControlService);
   fb = inject(FirebaseService);
   router = inject(Router);
 
-  currentTitle = this.chat.currentChannelData.channelName
-  currentDescription = this.chat.currentChannelData.channelDescription
-  newTitle: string = ""
-  newDescription: string = ""
+  currentTitle = this.chat.currentChannelData.channelName;
+  currentDescription = this.chat.currentChannelData.channelDescription;
+  newTitle: string = '';
+  newDescription: string = '';
   counter: number = 0;
-  isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId
-  isDisabledCreatedBy = this.chat.currentChannelData.createdBy[0].uId === this.fb.currentUser()?.uId
-
-
+  isDisabled =
+    this.chat.currentChannelData.createdBy[0].uId !==
+    this.fb.currentUser()?.uId;
+  isDisabledCreatedBy =
+    this.chat.currentChannelData.createdBy[0].uId ===
+    this.fb.currentUser()?.uId;
 
   constructor() {
-    if(this.stateServer.createChannelActiveInput) {
-      this.showAllChoosenUsers()
+    if (this.stateServer.createChannelActiveInput) {
+      this.showAllChoosenUsers();
     }
   }
 
@@ -55,7 +56,7 @@ export class ChannelEditComponent {
     this.dialog.close();
   }
   onCounter() {
-    if(this.counter >= 2) {
+    if (this.counter >= 2) {
       this.showDialog();
       this.counter = 0;
     }
@@ -65,7 +66,7 @@ export class ChannelEditComponent {
     this.counter++;
 
     if (this.isDisabled) {
-      this.onCounter()
+      this.onCounter();
     } else {
       this.editChannelTittle();
     }
@@ -75,13 +76,12 @@ export class ChannelEditComponent {
     this.counter++;
 
     if (this.isDisabled) {
-      this.onCounter()
+      this.onCounter();
     } else {
       this.editChannelDescription();
     }
   }
-  
-  
+
   showDialog() {
     this.dialogConfirm.open(DialogGlobalComponent, {
       panelClass: 'dialog-global-container',
@@ -100,29 +100,31 @@ export class ChannelEditComponent {
   editChannelDescription() {
     this.channelEditDescription = !this.channelEditDescription;
   }
-  
+
   saveChannelDescription() {
     this.channelEditDescription = !this.channelEditDescription;
-    this.newDescription = this.chat.currentChannelData.channelDescription
+    this.newDescription = this.chat.currentChannelData.channelDescription;
   }
 
-  onUpdateChannel(chanId: string, text:string) {
+  onUpdateChannel(chanId: string, text: string) {
     this.counter++;
 
     if (this.isDisabled) {
-      this.onCounter()
+      this.onCounter();
     } else {
       this.updateChannel(chanId, text);
     }
   }
-  
-  updateChannel(chanId: string, text:string) {
 
-    const newTitleNewDescription = doc(this.firestore, "channels", chanId);
+  updateChannel(chanId: string, text: string) {
+    const newTitleNewDescription = doc(this.firestore, 'channels', chanId);
 
     updateDoc(newTitleNewDescription, {
-      channelName: this.newTitle === "" ? this.currentTitle : this.newTitle,
-      channelDescription: this.newDescription === "" ? this.currentDescription : this.newDescription,
+      channelName: this.newTitle === '' ? this.currentTitle : this.newTitle,
+      channelDescription:
+        this.newDescription === ''
+          ? this.currentDescription
+          : this.newDescription,
     });
 
     this.stateServer.showToast = true;
@@ -145,32 +147,35 @@ export class ChannelEditComponent {
   }
 
   deleteChannel(chanId: string) {
-    const confirmDialogRef = this.dialogConfirm.open(ConfirmDeleteChannelComponent, {
-      panelClass: 'confirm-delete-channel',
-    });
+    const confirmDialogRef = this.dialogConfirm.open(
+      ConfirmDeleteChannelComponent,
+      {
+        panelClass: 'confirm-delete-channel',
+      }
+    );
 
     confirmDialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        deleteDoc(doc(this.firestore, "channels", chanId));
-        this.dialogConfirm.closeAll()
+        deleteDoc(doc(this.firestore, 'channels', chanId));
+        this.dialogConfirm.closeAll();
         this.router.navigate(['/start/main']);
       } else {
-        confirmDialogRef.close()
+        confirmDialogRef.close();
       }
-    })
+    });
   }
-
 
   showAllChoosenUsers() {
     this.stateServer.choosenUser = [];
-    this.stateServer.choosenUserFirbase = []
+    this.stateServer.choosenUserFirebase = [];
 
-    if (this.chat.currentChannelData !== undefined){
-      const listOfAllChoosenUsers= this.chat.currentUserChannelsSpecificPeopleObject;
+    if (this.chat.currentChannelData !== undefined) {
+      const listOfAllChoosenUsers =
+        this.chat.currentUserChannelsSpecificPeopleObject;
       for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
         const object = listOfAllChoosenUsers[i];
-          this.stateServer.choosenUser.push(object);
-          this.stateServer.choosenUserFirbase.push(object.uId);
+        this.stateServer.choosenUser.push(object);
+        this.stateServer.choosenUserFirebase.push(object.uId);
       }
     }
   }
@@ -178,19 +183,24 @@ export class ChannelEditComponent {
   leaveChannel() {
     const currentUser = this.fb.currentUser();
 
-    const confirmLeaveDialog = this.dialogConfirm.open(ConfirmLeaveChannelComponent, {
-      panelClass: 'confirm-leave-channel',
-    });
+    const confirmLeaveDialog = this.dialogConfirm.open(
+      ConfirmLeaveChannelComponent,
+      {
+        panelClass: 'confirm-leave-channel',
+      }
+    );
     confirmLeaveDialog.afterClosed().subscribe((result: boolean) => {
-      if(result) {
-        this.stateServer.choosenUserFirbase = this.stateServer.choosenUserFirbase.filter((user) => user !== currentUser!.uId )
+      if (result) {
+        this.stateServer.choosenUserFirebase =
+          this.stateServer.choosenUserFirebase.filter(
+            (user) => user !== currentUser!.uId
+          );
         this.chat.updateSpecificPeopleInChannelFromState();
         this.dialogConfirm.closeAll();
         this.router.navigate(['/start/main']);
       } else {
         confirmLeaveDialog.close();
       }
-    })
-      }
-  
+    });
+  }
 }
