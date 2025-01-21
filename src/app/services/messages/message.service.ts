@@ -69,13 +69,9 @@ export class MessageService {
       await addDoc(messagesCollectionRef, message);
     }
   }
-
   async loadCurrentMessageData() {
-    const docRef = doc(
-      this.db.firestore,
-      'privateMessages',
-      this.currentMessageId
-    );
+
+    const docRef = doc(this.db.firestore, 'privateMessages', this.currentMessageId);
     this.unsubscribe = onSnapshot(docRef, (doc) => {
       if (doc.exists()) {
         const messageData = doc.data() as PrivateChat;
@@ -85,6 +81,7 @@ export class MessageService {
       }
     });
   }
+
 
   /**
    * Lädt alle Nachrichten einer bestimmten Chat-Subcollection.

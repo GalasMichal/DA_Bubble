@@ -46,14 +46,18 @@ export class MenuSideLeftComponent {
   }
 
   ngOnInit(): void {
-    // Wiederherstellung des aktuellen Channels bei Seiten-Neuladen
-    const savedChannelId = localStorage.getItem('currentChannel');
-    if (savedChannelId) {
-      this.openChannel(savedChannelId);
-    }
-    this.ms.loadCurrentMessageData();
+    // // Wiederherstellung des aktuellen Channels bei Seiten-Neuladen
+    // if (typeof window !== 'undefined' && window.localStorage) {
+    //   const savedChannelId = localStorage.getItem('currentChannel');
+    //   if (savedChannelId) {
+    //     this.openChannel(savedChannelId);
+    //   }
+    // }
+    // this.ms.loadCurrentMessageData();
+    this.userService.subUserList();
     this.sortListOfUser();
   }
+
 
   ngOnDestroy(): void {
     // Ressourcen bereinigen
@@ -113,21 +117,21 @@ export class MenuSideLeftComponent {
       if (a.uId === this.fb.currentUser()?.uId) return -1;
       if (b.uId === this.fb.currentUser()?.uId) return 1;
 
-      return a.displayName.localeCompare(b.displayName)
-    })
-    return sortAllUser
-  };
+      return a.displayName.localeCompare(b.displayName);
+    });
+    return sortAllUser;
+  }
 
   sortOfAllChannels() {
-    const sortAllChannels = this.channelUsers
+    const sortAllChannels = this.channelUsers;
     sortAllChannels.sort((a, b) => {
-      if(a.chanId === this.fb.mainChannel) return -1
-      if(b.chanId === this.fb.mainChannel) return 1
+      if (a.chanId === this.fb.mainChannel) return -1;
+      if (b.chanId === this.fb.mainChannel) return 1;
 
-      return a.channelName.localeCompare(b.channelName)
-    })
-    return sortAllChannels
-  };
+      return a.channelName.localeCompare(b.channelName);
+    });
+    return sortAllChannels;
+  }
 
   writeMessage(): void {
     this.state.responsiveChat = true;
