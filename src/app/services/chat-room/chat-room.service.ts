@@ -9,12 +9,6 @@ import {
   query,
   setDoc,
   updateDoc,
-} from '@angular/fire/firestore';
-import { Channel } from '../../models/interfaces/channel.model';
-import { User as AppUser } from '../../models/interfaces/user.model';
-import { Router } from '@angular/router';
-import { Message } from '../../models/interfaces/message.model';
-import {
   addDoc,
   arrayUnion,
   DocumentData,
@@ -22,13 +16,16 @@ import {
   Timestamp,
   Unsubscribe,
   where,
-} from 'firebase/firestore';
+} from '@angular/fire/firestore';
+import { Channel } from '../../models/interfaces/channel.model';
+import { User as AppUser } from '../../models/interfaces/user.model';
+import { Router } from '@angular/router';
+import { Message } from '../../models/interfaces/message.model';
 import { StateControlService } from '../state-control/state-control.service';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class ChatRoomService {
   private firestore = inject(Firestore);
   state = inject(StateControlService);
@@ -38,23 +35,17 @@ export class ChatRoomService {
   messageUnsubscribe: Unsubscribe | null = null;
   channelDataUnsubscribe: Unsubscribe | null = null;
   public userList: AppUser[] = [];
-  // Wszystkie kanaly
   public channelList: Channel[] = [];
-
-  // Kanaly tylko zalogowangeo uzytkownika
   public currentUserChannels: Channel[] = [];
   public currentUserChannelsSpecificPeopleUid: string[] = [];
   public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
-
   public currentChannelData!: Channel;
   public answers: Message[] = [];
-
   public messageAnswerList = signal<Message[]>([]);
   unsub: any;
   public currentMessageId: string | null = null;
 
-  constructor() {
-  }
+  constructor() {}
 
   unsubscribe(subscription: Unsubscribe | null) {
     if (subscription) {
@@ -63,57 +54,34 @@ export class ChatRoomService {
     }
   }
 
-  // Eine Methode zum Beenden aller Subscriptions
   unsubscribeAll() {
     this.unsubscribe(this.channelUnsubscribe);
     this.unsubscribe(this.messageUnsubscribe);
-    // Weitere Subscriptions hier bei Bedarf hinzufügen
   }
 
   async addMessageToChannel(message: Message) {
-    const channelId = this.currentChannelData.chanId;
-    const channelCollectionRef = collection(
-      this.firestore,
-      'channels',
-      channelId,
-      'messages'
+    const messageId = await this.addDocumentToCollection(
+      `channels/${this.currentChannelData.chanId}/messages`,
+      message
     );
-    const messageDocRef = await addDoc(channelCollectionRef, message);
-    console.log('Message verschickt', message);
-    this.currentMessageId = messageDocRef.id;
-    return messageDocRef.id; // Rückgabe der generierten Message-ID
+    this.currentMessageId = messageId;
+    return messageId;
   }
 
   async updateMessageThreadId(messageId: string) {
-    console.log('updateMessageThreadId:', messageId);
-
-    const channelId = this.currentChannelData.chanId;
-    const messageDocRef = doc(
-      this.firestore,
-      'channels',
-      channelId,
-      'messages',
-      messageId
+    await this.updateDocument(
+      `channels/${this.currentChannelData.chanId}/messages/${messageId}`,
+      { threadId: messageId }
     );
-
-    // Aktualisiere das Dokument mit der Firestore-generierten ID als threadId
-    await updateDoc(messageDocRef, { threadId: messageId });
   }
 
   addAnswerToMessage(messageId: string, answer: Message) {
-    const channelId = this.currentChannelData.chanId;
-    const messageCollectionRef = collection(
-      this.firestore,
-      'channels',
-      channelId,
-      'messages',
-      messageId,
-      'answers'
+    this.addDocumentToCollection(
+      `channels/${this.currentChannelData.chanId}/messages/${messageId}/answers`,
+      answer
     );
-    addDoc(messageCollectionRef, answer);
     this.currentMessageId = messageId;
     this.getAnswersFromMessage();
-    console.log('Answer verschickt', answer);
   }
 
   async updateMessageTextInFirestore(
@@ -121,68 +89,34 @@ export class ChatRoomService {
     chanId: string,
     textAreaEditId: string
   ) {
-    const messageDocRef = doc(
-      this.firestore,
-      'channels',
-      chanId,
-      'messages',
-      textAreaEditId
+    await this.updateDocument(
+      `channels/${chanId}/messages/${textAreaEditId}`,
+      {
+        text: textAreaEdited,
+        lastEdit: Timestamp.now(),
+        editCount: 1,
+      }
     );
-
-    // Aktualisiere die Reaktionen im Firestore-Dokument
-    await updateDoc(messageDocRef, {
-      text: textAreaEdited,
-      lastEdit: Timestamp.now(),
-      editCount: 1
-    });
   }
 
   async getAnswersFromMessage() {
     if (this.currentMessageId) {
-      const messageId = this.currentMessageId;
-      const channelId = this.currentChannelData.chanId;
-      const messageCollectionRef = collection(
-        this.firestore,
-        'channels',
-        channelId,
-        'messages',
-        messageId,
-        'answers'
+      const newAnswers = await this.getDocumentsFromCollection(
+        `channels/${this.currentChannelData.chanId}/messages/${this.currentMessageId}/answers`
       );
-
-      try {
-        const querySnapshot = await getDocs(messageCollectionRef);
-        const newAnswers: Message[] = [];
-
-        querySnapshot.forEach((doc) => {
-          newAnswers.push(doc.data() as Message);
-        });
-
-        // Signal mit neuen Daten aktualisieren
-        this.messageAnswerList.set(newAnswers);
-
-        console.log('Antworten aktualisiert:', this.messageAnswerList());
-      } catch (error) {
-        console.error('Fehler beim Abrufen der Antworten:', error);
-      }
+      this.messageAnswerList.set(newAnswers);
     }
   }
 
   subChannelList() {
     this.unsubscribe(this.channelUnsubscribe);
-    this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
-      this.channelList = [];
-      list.forEach((element) => {
-        const channelData = element.data() as Channel;
-        this.channelList.push(channelData);
-      });
+    this.channelUnsubscribe = onSnapshot(this.getChannels(), (list) => {
+      this.channelList = list.docs.map((doc) => doc.data() as Channel);
     });
   }
 
-
   addChannelToFirestore(channel: Channel) {
-    const channelCollectionRef = collection(this.firestore, 'channels');
-    const channelDocRef = doc(channelCollectionRef);
+    const channelDocRef = doc(collection(this.firestore, 'channels'));
     channel.chanId = channelDocRef.id;
     setDoc(channelDocRef, channel);
   }
@@ -197,12 +131,9 @@ export class ChatRoomService {
     this.unsubscribe(this.channelDataUnsubscribe);
     this.channelDataUnsubscribe = onSnapshot(channelRef, (doc) => {
       if (doc.exists()) {
-        const channelData = doc.data() as Channel;
-        this.currentChannelData = channelData;
+        this.currentChannelData = doc.data() as Channel;
         this.currentUserChannelsSpecificPeopleUid =
           this.currentChannelData.specificPeople || [];
-      } else {
-        console.log('No such document!');
       }
     });
     this.loadCurrentChatData(currentChannel);
@@ -211,24 +142,15 @@ export class ChatRoomService {
   }
 
   loadCurrentChatData(currentChannel: string) {
-    const channelDocRef = doc(this.firestore, 'channels', currentChannel);
-    const messageRef = collection(channelDocRef, 'messages');
+    const messageRef = collection(
+      doc(this.firestore, 'channels', currentChannel),
+      'messages'
+    );
     this.unsubscribe(this.messageUnsubscribe);
     this.messageUnsubscribe = onSnapshot(
       messageRef,
       (snapshot: QuerySnapshot<DocumentData>) => {
-        this.answers = [];
-
-        snapshot.forEach((doc) => {
-          const messageData = doc.data() as Message;
-
-          // Füge den timestamp von Firebase hinzu
-          this.answers.push(messageData); // messageData enthält bereits den Timestamp
-
-          // console.log('Received changes from DB', this.answers);
-        });
-
-        // Sortiere die Nachrichten nach dem Timestamp von Firebase
+        this.answers = snapshot.docs.map((doc) => doc.data() as Message);
         this.answers.sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
       }
     );
@@ -239,73 +161,60 @@ export class ChatRoomService {
       console.error('Kein Channel-Daten verfügbar!');
       return;
     }
-
-    const channelId = this.currentChannelData.chanId;
-    const channelRef = doc(this.firestore, 'channels', channelId); // Referenz zum Channel
-
-    try {
-      // Hole die aktuellen Daten des Channels mit getDoc()
-      const docSnap = await getDoc(channelRef);
-      if (docSnap.exists()) {
-        // Setze den specificPeople-Array mit dem aktuellen User-Array aus dem StateControlService
-        const updatedSpecificPeople = this.state.choosenUserFirebase; // Array aus dem Service
-        // Aktualisiere den Channel mit dem neuen specificPeople-Array
-        await updateDoc(channelRef, { specificPeople: updatedSpecificPeople });
-        console.log('specificPeople erfolgreich überschrieben');
-      } else {
-        console.error('Channel nicht gefunden');
-      }
-    } catch (error) {
-      console.error('Fehler beim Überschreiben der specificPeople:', error);
-    }
+    await this.updateDocument(
+      `channels/${this.currentChannelData.chanId}`,
+      { specificPeople: this.state.choosenUserFirebase }
+    );
   }
 
   async addNewUserToChannel(channelName: string, newUserId: string) {
-    try {
-      // Reference the document for the "Willkommen" channel
-      const channelRef = doc(this.firestore, "channels", channelName); // Assuming 'channels' is the collection name and 'channelName' is the document ID
-
-      // Update the 'allMembers' array
-      await updateDoc(channelRef, {
-        specificPeople: arrayUnion(newUserId),
-      });
-
-      console.log(`User ${newUserId} added to the channel ${channelName}`);
-    } catch (error) {
-      console.error("Error adding user to the channel:", error);
-    }
+    await this.updateDocument(
+      `channels/${channelName}`,
+      { specificPeople: arrayUnion(newUserId) }
+    );
   }
 
-
-
   async getUserChannels(currentUserId: string): Promise<Channel[]> {
-    const channelsRef = collection(this.firestore, 'channels');
-    const q = query(channelsRef, where('specificPeople', 'array-contains', currentUserId));
+    const q = query(
+      collection(this.firestore, 'channels'),
+      where('specificPeople', 'array-contains', currentUserId)
+    );
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => doc.data() as Channel);
-}
+  }
 
   async loadSpecificPeopleFromChannel() {
-    this.currentUserChannelsSpecificPeopleObject = [];
+    if (this.currentUserChannelsSpecificPeopleUid.length === 0) return;
+    const q = query(
+      collection(this.firestore, 'users'),
+      where('uId', 'in', this.currentUserChannelsSpecificPeopleUid)
+    );
+    const querySnapshot = await getDocs(q);
+    this.currentUserChannelsSpecificPeopleObject = querySnapshot.docs.map(
+      (doc) => doc.data() as AppUser
+    );
+  }
 
-    if (this.currentUserChannelsSpecificPeopleUid.length === 0) {
-      return;
-    }
+  private async addDocumentToCollection(
+    collectionPath: string,
+    data: any
+  ): Promise<string> {
+    const docRef = await addDoc(collection(this.firestore, collectionPath), data);
+    return docRef.id;
+  }
 
-    try {
-      const usersRef = collection(this.firestore, 'users');
-      const q = query(
-        usersRef,
-        where('uId', 'in', this.currentUserChannelsSpecificPeopleUid)
-      );
-      const querySnapshot = await getDocs(q);
+  private async updateDocument(
+    docPath: string,
+    data: any
+  ): Promise<void> {
+    const docRef = doc(this.firestore, docPath);
+    await updateDoc(docRef, data);
+  }
 
-      await querySnapshot.forEach((doc) => {
-        const userData = doc.data() as AppUser;
-        this.currentUserChannelsSpecificPeopleObject.push(userData);
-      });
-    } catch (error) {
-      console.error('Fehler beim Laden der Benutzer:', error);
-    }
+  private async getDocumentsFromCollection(
+    collectionPath: string
+  ): Promise<any[]> {
+    const querySnapshot = await getDocs(collection(this.firestore, collectionPath));
+    return querySnapshot.docs.map((doc) => doc.data());
   }
 }
