@@ -140,11 +140,6 @@ export class FirebaseService {
     text: string
   ): Promise<any> {
     try {
-      // const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
-      // if (!exists) {
-      //   this.errorMessageLogin.set('Kein Benutzer mit dieser E-Mail-Adresse gefunden.');
-      //   return;
-      // }
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
         email,
@@ -227,15 +222,6 @@ export class FirebaseService {
     }
   }
 
-  // // Methode zum Überprüfen, ob ein Benutzer existiert
-  // userExists(email: string): Promise<boolean> {
-  //   return fetchSignInMethodsForEmail(this.auth, email)
-  //     .then((methods) => methods.length > 0)
-  //     .catch((error) => {
-  //       this.handleUserExistError(error);
-  //       return false;
-  //     });
-  // }
 
   // Methode zum Überprüfen, ob ein Benutzer in Firestore existiert
   async userExistFirestore(uId: string): Promise<boolean> {
