@@ -76,7 +76,7 @@ export class RegisterUserComponent {
 
     },
     { validators: this.passwordMatchValidator } // Validator als Referenz übergeben, ohne Klammern
-    
+
   );
   }
 
@@ -98,7 +98,7 @@ export class RegisterUserComponent {
         if (user) {
           console.log('User successfully registered:', user);
           this.fb.currentUser.update(() => user);
-          this.router.navigate(['/start/avatar']); // Navigation nach der Registrierung
+          this.router.navigate(['avatar']); // Navigation nach der Registrierung
         }
       } catch (error) {
         // Hier kannst du eine spezifische Fehlerbehandlung vornehmen
@@ -120,7 +120,7 @@ export class RegisterUserComponent {
     const formGroup = control as FormGroup;
     const password1 = formGroup.get('password1')?.value;
     const password2 = formGroup.get('password2')?.value;
-  
+
     // Return null if passwords match, otherwise return error object
     return password1 === password2 ? null : { passwordMismatch: true };
   }

@@ -165,7 +165,7 @@ export class FirebaseService {
     await this.getUserByUid(user.uid);
     await this.user.updateUserStatus(user.uid, true);
     setTimeout(() => {
-      this.router.navigate(['/start/main']);
+      this.router.navigate(['main']);
     }, 2200);
   }
 
@@ -212,7 +212,7 @@ export class FirebaseService {
       if (!(await this.userExistFirestore(user.uId))) {
         await this.addUserToFirestore(user);
         this.currentUser.set(user);
-        this.router.navigate(['/start/avatar']);
+        this.router.navigate(['avatar']);
         this.chat.addNewUserToChannel(this.mainChannel, user.uId);
       } else {
         await this.handleExistingGoogleUser(googleUser);
@@ -264,7 +264,7 @@ export class FirebaseService {
   ): Promise<void> {
     await this.getUserByUid(googleUser.uid);
     await this.user.updateUserStatus(googleUser.uid, true);
-    this.router.navigate(['/start/main']);
+    this.router.navigate(['main']);
   }
 
   private handleGoogleSignInError(error: any): void {
@@ -368,7 +368,7 @@ export class FirebaseService {
       const firebaseUser = userCredential.user;
       const user = this.createGuestUser(firebaseUser);
       this.stateControl.removeShowToast();
-      this.router.navigate(['/start/main']);
+      this.router.navigate(['main']);
       await this.chat.addNewUserToChannel(this.mainChannel, user.uId);
       await this.addUserToFirestore(user);
     } catch (error) {
@@ -502,12 +502,10 @@ export class FirebaseService {
     const dialogRef = this.dialog.open(DeleteAccountComponent, {
       panelClass: 'delete-container',
     });
-
     const password = await dialogRef.afterClosed().toPromise();
     if (!password) {
       throw new Error('Passwortabfrage abgebrochen.');
     }
-
     const user = this.auth.currentUser!;
     return EmailAuthProvider.credential(user.email!, password);
   }

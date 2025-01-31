@@ -37,7 +37,7 @@ export class MessageService {
     if (existingChatId) {
       this.currentMessageId = existingChatId;
       await this.loadCurrentMessageData();
-      this.router.navigate(['start/main/messages/', existingChatId]);
+      this.router.navigate(['main/messages/', existingChatId]);
       return existingChatId;
     }
 
@@ -52,7 +52,7 @@ export class MessageService {
 
     this.currentMessageId = channelDocRef.id;
     await this.loadCurrentMessageData();
-    this.router.navigate(['start/main/messages/', channelDocRef.id]);
+    this.router.navigate(['main/messages/', channelDocRef.id]);
     this.currentMessageChannelId = channelDocRef.id;
     return channelDocRef.id;
   }

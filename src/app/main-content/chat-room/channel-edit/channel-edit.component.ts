@@ -158,7 +158,7 @@ export class ChannelEditComponent {
       if (result) {
         deleteDoc(doc(this.firestore, 'channels', chanId));
         this.dialogConfirm.closeAll();
-        this.router.navigate(['/start/main']);
+        this.router.navigate(['main']);
       } else {
         confirmDialogRef.close();
       }
@@ -197,7 +197,7 @@ export class ChannelEditComponent {
           );
         this.chat.updateSpecificPeopleInChannelFromState();
         this.dialogConfirm.closeAll();
-        this.router.navigate(['/start/main']);
+        this.router.navigate(['main']);
       } else {
         confirmLeaveDialog.close();
       }

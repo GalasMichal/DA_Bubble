@@ -46,10 +46,10 @@ export class ProfileSingleUserComponent {
 
     if (existingChatId) {
       // Wenn der Chat existiert, zur spezifischen Nachricht navigieren
-      this.router.navigate(['/start/main/messages', existingChatId]);
+      this.router.navigate(['main/messages', existingChatId]);
       this.ms.loadMessagesFromChat(existingChatId);
     } else {
-      this.router.navigate(['/start/main/messages']);
+      this.router.navigate(['main/messages']);
     }
     this.closeUserProfile();
   }

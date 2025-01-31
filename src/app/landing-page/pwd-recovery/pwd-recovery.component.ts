@@ -63,7 +63,7 @@ export class PwdRecoveryComponent {
     this.isFormValid = true;
     this.stateControl.isUserLoggedIn = false;
     this.dialogRef.closeAll();
-    this.router.navigate(['/start/confirmation']);
+    this.router.navigate(['confirmation']);
   }
 
   closePwdRecovery(event: Event) {

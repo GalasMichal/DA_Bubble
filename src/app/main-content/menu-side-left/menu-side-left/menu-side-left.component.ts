@@ -88,10 +88,10 @@ export class MenuSideLeftComponent {
 
     const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
     if (existingChatId) {
-      this.router.navigate(['/start/main/messages', existingChatId]);
+      this.router.navigate(['main/messages', existingChatId]);
       this.ms.loadMessagesFromChat(existingChatId);
     } else {
-      this.router.navigate(['/start/main/messages']);
+      this.router.navigate(['main/messages']);
     }
   }
 
@@ -138,6 +138,6 @@ export class MenuSideLeftComponent {
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
     this.state.isThreadOpen = false;
-    this.router.navigate(['/start/main']);
+    this.router.navigate(['main']);
   }
 }

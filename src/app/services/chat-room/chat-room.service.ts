@@ -134,7 +134,7 @@ export class ChatRoomService {
       }
     });
     this.loadCurrentChatData(currentChannel);
-    this.router.navigate(['start/main/chat/', currentChannel]);
+    this.router.navigate(['main/chat/', currentChannel]);
     await this.loadSpecificPeopleFromChannel();
   }
 

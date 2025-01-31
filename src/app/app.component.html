@@ -7,7 +7,7 @@
         <router-outlet> </router-outlet>
       </div>
       <app-toast [ngClass]="{ 'show-success': stateControl.showToast, 'show-error': stateControl.showError}"></app-toast>
-    
+
       <div class="new-user-link-responsive">
         <p>Neu bei DABubble?</p>
         <button routerLink='/start/register'>Konto erstellen</button>
@@ -15,12 +15,12 @@
     </div>
     <app-footer></app-footer>
   </div>
-  
+
 </div>
 
 }
 
-@if (stateControl.isUserLoggedIn) { 
+@if (stateControl.isUserLoggedIn) {
   <div [ngClass]="{'edit-container': stateControl.globalEdit}"></div>
   <div class="wrapper">
     <div class="router-outlet" [ngClass]="{'overflow-y': stateControl.isUserLoggedIn}">

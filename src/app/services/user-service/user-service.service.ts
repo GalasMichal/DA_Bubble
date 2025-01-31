@@ -1,11 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Firestore, getDoc, updateDoc } from '@angular/fire/firestore';
 import { User as AppUser, User } from '../../models/interfaces/user.model';
-import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
-import { StorageService } from '../storage/storage.service';
-import { getDownloadURL, getStorage, ref } from '@angular/fire/storage';
+import { collection, doc, onSnapshot } from 'firebase/firestore';
 import { getAuth, updateEmail, updateProfile } from '@angular/fire/auth';
-import { tick } from '@angular/core/testing';
 import { Message } from '../../models/interfaces/message.model';
 
 @Injectable({
@@ -17,7 +14,7 @@ export class UserServiceService {
   public userList: AppUser[] = [];
   public userListUid: string[] = [];
 
-  private readonly storageService = inject(StorageService);
+
   messageReceiver: User | null = null;
   auth = getAuth();
   answerChatMessage: Message | null = null;
@@ -35,7 +32,6 @@ export class UserServiceService {
       this.userList = [];
       list.forEach((element) => {
         const userData = element.data() as User;
-        // console.log('userData List', userData);
         this.userList.push(userData);
         this.userListUid.push(userData.uId);
       });

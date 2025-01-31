@@ -7,17 +7,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { FirebaseService } from '../../services/firebase/firebase.service';
-import { LogoComponent } from '../../shared/logo/logo.component';
 import {
   Router,
   RouterLink,
   RouterModule,
-  RouterOutlet,
 } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FooterComponent } from '../footer/footer.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
-import { User } from '../../models/interfaces/user.model';
+
 
 @Component({
   selector: 'app-login',
@@ -26,17 +23,14 @@ import { User } from '../../models/interfaces/user.model';
   styleUrls: ['./login.component.scss', './login.component.media.scss'],
   imports: [
      CommonModule,
-    //  LogoComponent,
      ReactiveFormsModule,
      FormsModule,
      RouterModule,
      RouterLink,
-    // FooterComponent,
   ],
 })
 export class LoginComponent {
   fb = inject(FirebaseService);
-  private router = inject(Router);
   stateControl = inject(StateControlService);
 
   // FormGroup für die Anmeldeform
