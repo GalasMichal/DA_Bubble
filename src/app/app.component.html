@@ -1,6 +1,8 @@
 <div class="wrapper">
   <div class="router-outlet">
-    <app-header-landing></app-header-landing>
+    @if(!stateControl.isUserLoggedIn) {
+      <app-header-landing></app-header-landing>
+    }
     <div class="landing-page">
       <div class="main-container">
         <router-outlet> </router-outlet>
@@ -13,7 +15,9 @@
         <button routerLink='/start/register'>Konto erstellen</button>
       </div>
     </div>
-    <app-footer></app-footer>
+    @if(!stateControl.isUserLoggedIn) {
+      <app-footer></app-footer>
+    }
   </div>
 
 </div>
