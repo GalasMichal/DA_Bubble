@@ -89,14 +89,11 @@ export class ChatRoomService {
     chanId: string,
     textAreaEditId: string
   ) {
-    await this.updateDocument(
-      `channels/${chanId}/messages/${textAreaEditId}`,
-      {
-        text: textAreaEdited,
-        lastEdit: Timestamp.now(),
-        editCount: 1,
-      }
-    );
+    await this.updateDocument(`channels/${chanId}/messages/${textAreaEditId}`, {
+      text: textAreaEdited,
+      lastEdit: Timestamp.now(),
+      editCount: 1,
+    });
   }
 
   async getAnswersFromMessage() {
@@ -161,17 +158,15 @@ export class ChatRoomService {
       console.error('Kein Channel-Daten verfügbar!');
       return;
     }
-    await this.updateDocument(
-      `channels/${this.currentChannelData.chanId}`,
-      { specificPeople: this.state.choosenUserFirebase }
-    );
+    await this.updateDocument(`channels/${this.currentChannelData.chanId}`, {
+      specificPeople: this.state.choosenUserFirebase,
+    });
   }
 
   async addNewUserToChannel(channelName: string, newUserId: string) {
-    await this.updateDocument(
-      `channels/${channelName}`,
-      { specificPeople: arrayUnion(newUserId) }
-    );
+    await this.updateDocument(`channels/${channelName}`, {
+      specificPeople: arrayUnion(newUserId),
+    });
   }
 
   async getUserChannels(currentUserId: string): Promise<Channel[]> {
@@ -199,14 +194,14 @@ export class ChatRoomService {
     collectionPath: string,
     data: any
   ): Promise<string> {
-    const docRef = await addDoc(collection(this.firestore, collectionPath), data);
+    const docRef = await addDoc(
+      collection(this.firestore, collectionPath),
+      data
+    );
     return docRef.id;
   }
 
-  private async updateDocument(
-    docPath: string,
-    data: any
-  ): Promise<void> {
+  private async updateDocument(docPath: string, data: any): Promise<void> {
     const docRef = doc(this.firestore, docPath);
     await updateDoc(docRef, data);
   }
@@ -214,7 +209,9 @@ export class ChatRoomService {
   private async getDocumentsFromCollection(
     collectionPath: string
   ): Promise<any[]> {
-    const querySnapshot = await getDocs(collection(this.firestore, collectionPath));
+    const querySnapshot = await getDocs(
+      collection(this.firestore, collectionPath)
+    );
     return querySnapshot.docs.map((doc) => doc.data());
   }
 }
