@@ -1,12 +1,12 @@
-@if (!stateControl.isUserLoggedIn) {
-  <div class="wrapper">
-    <div class="router-outlet">
-      <app-header-landing></app-header-landing>
-     <div class="landing-page">
+<div class="wrapper">
+  <div class="router-outlet">
+    <app-header-landing></app-header-landing>
+    <div class="landing-page">
       <div class="main-container">
         <router-outlet> </router-outlet>
       </div>
-      <app-toast [ngClass]="{ 'show-success': stateControl.showToast, 'show-error': stateControl.showError}"></app-toast>
+      <app-toast
+        [ngClass]="{ 'show-success': stateControl.showToast, 'show-error': stateControl.showError}"></app-toast>
 
       <div class="new-user-link-responsive">
         <p>Neu bei DABubble?</p>
@@ -18,13 +18,12 @@
 
 </div>
 
-}
 
-@if (stateControl.isUserLoggedIn) {
+
+<!--
   <div [ngClass]="{'edit-container': stateControl.globalEdit}"></div>
   <div class="wrapper">
     <div class="router-outlet" [ngClass]="{'overflow-y': stateControl.isUserLoggedIn}">
           <router-outlet> </router-outlet>
     </div>
-  </div>
-}
+  </div> -->

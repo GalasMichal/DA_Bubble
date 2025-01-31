@@ -13,20 +13,22 @@ import { DirectMessageComponent } from './shared/direct-message/direct-message.c
 import { LoaderComponent } from './shared/component/loader/loader.component';
 import { ConfirmationComponent } from './landing-page/confirmation/confirmation.component';
 
-/*
-IMPORTANTE
-wenn ihr die route zum arbeiten ändert -> auch bitte wieder zurück setzen
-Merci :)
-*/
-
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterUserComponent },
-  { path: 'avatar', component: CreateAvatarComponent },
-  { path: 'imprint', component: ImprintComponent },
-  { path: 'confirmation', component: ConfirmationComponent },
-  { path: 'legal', component: LegalComponent },
+  {
+    path: '',
+    component: LoginComponent,
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterUserComponent },
+      { path: 'avatar', component: CreateAvatarComponent },
+      { path: 'imprint', component: ImprintComponent },
+      { path: 'confirmation', component: ConfirmationComponent },
+      { path: 'legal', component: LegalComponent },
+      { path: 'reset', component: PwdResetComponent },
+      { path: 'recovery', component: PwdRecoveryComponent },
+    ],
+  },
   {
     path: 'main',
     component: MainContentComponent,
@@ -34,28 +36,9 @@ export const routes: Routes = [
       { path: '', component: MessageNewComponent },
       { path: 'chat/:id', component: ChatRoomComponent },
       { path: 'messages', component: DirectMessageComponent },
-      // { path: 'messages', component: LoaderComponent },
       { path: 'messages/:id', component: DirectMessageComponent },
     ],
   },
-  { path: 'reset', component: PwdResetComponent },
-  { path: 'recovery', component: PwdRecoveryComponent },
-  // { path: '**', component: PageNotFoundComponent },
+  { path: '**', redirectTo: 'login' },
 ];
 
-// from before :
-// export const routes: Routes = [
-//   { path: '', redirectTo: 'start', pathMatch: 'full' },
-//   { path: 'start', component: LoginComponent },
-//   { path: 'start/register', component: RegisterUserComponent },
-//   // { path: 'start/main', component: MainContentComponent },
-//   { path: 'start/avatar', component: CreateAvatarComponent },
-//   { path: 'start/imprint', component: ImprintComponent },
-//   { path: 'start/legal', component: LegalComponent },
-//   // { path: '**', component: PageNotFoundComponent },
-//   { path: 'start/main', component: MainContentComponent, children:[
-//     { path: '', component: MessageNewComponent},
-//     { path: 'chat/:id', component: ChatRoomComponent}
-//   ] },
-
-// ];
