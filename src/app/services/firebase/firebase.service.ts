@@ -148,6 +148,10 @@ export class FirebaseService {
       const user = userCredential.user as FirebaseUser;
       if (user) {
         await this.handleSuccessfulLogin(user, text);
+        const idToken = await user.getIdToken();
+      
+      // Store the token in localStorage
+      localStorage.setItem('authToken', idToken);
       }
       this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
     } catch (error) {
@@ -159,7 +163,6 @@ export class FirebaseService {
     user: FirebaseUser,
     text: string
   ): Promise<void> {
-    debugger
     this.stateControl.showToast = true;
     this.stateControl.showToastText.set(text);
     this.stateControl.removeShowToast();
