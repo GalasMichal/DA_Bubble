@@ -16,9 +16,6 @@ import { ToastComponent } from './shared/component/toast/toast.component';
     RouterModule,
     RouterOutlet,
     ReactiveFormsModule,
-    FooterComponent,
-    HeaderLandingComponent,
-    ToastComponent
   ],
 
   templateUrl: './app.component.html',
