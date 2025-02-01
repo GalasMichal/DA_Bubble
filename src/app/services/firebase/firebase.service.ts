@@ -154,11 +154,12 @@ export class FirebaseService {
       this.handleLoginError(error);
     }
   }
-
+  
   private async handleSuccessfulLogin(
     user: FirebaseUser,
     text: string
   ): Promise<void> {
+    debugger
     this.stateControl.showToast = true;
     this.stateControl.showToastText.set(text);
     this.stateControl.removeShowToast();
