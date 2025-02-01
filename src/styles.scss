@@ -51,6 +51,17 @@ app-message-field {
   width: 100%;
 }
 
+app-main-layout,
+app-landing-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  max-width: 1920px;
+}
+
 app-message-new,
 app-pwd-reset,
 app-pwd-recovery,

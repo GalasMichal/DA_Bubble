@@ -20,7 +20,7 @@ import { StateControlService } from '../../services/state-control/state-control.
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss', './login.component.media.scss'],
+  styleUrls: ['./login.component.scss'],
   imports: [
      CommonModule,
      ReactiveFormsModule,

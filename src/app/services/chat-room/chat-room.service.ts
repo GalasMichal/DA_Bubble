@@ -123,6 +123,7 @@ export class ChatRoomService {
   }
 
   async openChatById(currentChannel: string) {
+    await this.loadSpecificPeopleFromChannel();
     this.currentChannel = currentChannel;
     const channelRef = doc(this.firestore, 'channels', currentChannel);
     this.unsubscribe(this.channelDataUnsubscribe);
@@ -135,7 +136,6 @@ export class ChatRoomService {
     });
     this.loadCurrentChatData(currentChannel);
     this.router.navigate(['main/chat/', currentChannel]);
-    await this.loadSpecificPeopleFromChannel();
   }
 
   loadCurrentChatData(currentChannel: string) {
