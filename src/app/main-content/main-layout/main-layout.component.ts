@@ -12,5 +12,11 @@ import { RouterOutlet } from '@angular/router';
 })
 export class MainLayoutComponent {
     stateControl = inject(StateControlService)
+    isUserLoggedIn = false;
   
+    ngOnInit() {
+      setTimeout(() => {
+        this.isUserLoggedIn = this.stateControl.isUserLoggedIn;
+      }, 0);
+    }
 }
