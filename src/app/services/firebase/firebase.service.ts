@@ -172,7 +172,7 @@ export class FirebaseService {
     await this.user.updateUserStatus(user.uid, true);
     setTimeout(() => {
       this.router.navigate(['main']);
-    }, 3200);
+    }, 2200);
   }
 
   private handleLoginError(error: any): void {
