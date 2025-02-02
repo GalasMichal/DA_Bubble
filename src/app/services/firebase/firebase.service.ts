@@ -10,6 +10,7 @@ import {
   User as FirebaseUser,
   fetchSignInMethodsForEmail,
   signOut,
+  authState,
 } from '@angular/fire/auth';
 import {
   collection,
@@ -31,12 +32,14 @@ import {
   EmailAuthProvider,
   sendPasswordResetEmail,
   signInAnonymously,
+  User,
 } from 'firebase/auth';
 import { StateControlService } from '../state-control/state-control.service';
 import { DeleteAccountComponent } from '../../shared/component/delete-account/delete-account.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteAccountComponent } from '../../shared/component/confirm-delete-account/confirm-delete-account.component';
 import { deleteDoc } from 'firebase/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +65,7 @@ export class FirebaseService {
     this.chat.subChannelList();
     this.userService.subUserList();
   }
+
 
   // Methode zum Erstellen eines neuen Benutzers
   async createUser(
@@ -509,4 +513,6 @@ export class FirebaseService {
     const user = this.auth.currentUser!;
     return EmailAuthProvider.credential(user.email!, password);
   }
+
 }
+

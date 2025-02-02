@@ -2,8 +2,9 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Firestore, getDoc, updateDoc } from '@angular/fire/firestore';
 import { User as AppUser, User } from '../../models/interfaces/user.model';
 import { collection, doc, onSnapshot } from 'firebase/firestore';
-import { getAuth, updateEmail, updateProfile } from '@angular/fire/auth';
+import { authState, getAuth, updateEmail, updateProfile, User as FirebaseUser } from '@angular/fire/auth';
 import { Message } from '../../models/interfaces/message.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -92,4 +93,16 @@ export class UserServiceService {
     const userDocRef = doc(this.firestore, 'users', currentUserId);
     await updateDoc(userDocRef, { status: statusType });
   }
+
+    /**
+ * Returns an observable of the currently authenticated user.
+ * The observable emits:
+ * - A `FirebaseUser` object when a user is logged in.
+ * - `null` when the user is logged out.
+ *
+ * @returns {Observable<FirebaseUser | null>} An observable that tracks the authentication state.
+ */
+    getCurrentUser(): Observable<FirebaseUser | null> {
+      return authState(this.auth); // Returns an observable of the current user
+    }
 }

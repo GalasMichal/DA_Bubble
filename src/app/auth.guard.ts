@@ -1,22 +1,22 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { authState } from 'rxfire/auth';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  const auth = inject(Auth); // Inject Firebase Auth
+  const auth = inject(Auth);
 
-  return new Observable<boolean>((observer) => {
-    auth.onAuthStateChanged((user) => {
+  return authState(auth).pipe(
+    take(1), // Take only the first emitted value (prevents infinite subscription)
+    map(user => {
       if (user) {
-        observer.next(true); // User is logged in
-        observer.complete();
-      } else {        
-        router.navigate(['/login']);
-        observer.next(false); // User is not logged in
-        observer.complete();
+        return true; // Allow access if user is authenticated
+      } else {
+        router.navigate(['/login']); // Redirect to login
+        return false;
       }
-    });
-  });
+    })
+  );
 };
