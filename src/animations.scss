@@ -24,6 +24,17 @@
   animation: spin360 1.5s linear infinite;
 }
 
+.pre-loader-small {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: solid 0.2rem #dce1e5;
+  border-top-color: #6669a1;;
+  border-radius: 50%;
+  z-index: -1;
+  animation: spin360 1.5s linear infinite;
+}
+
 .pre-loader-container {
   position: fixed;
   display: flex;
