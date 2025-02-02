@@ -164,13 +164,15 @@ export class FirebaseService {
     text: string
   ): Promise<void> {
     this.stateControl.showToast = true;
+    console.log(text);
+    
     this.stateControl.showToastText.set(text);
     this.stateControl.removeShowToast();
     await this.getUserByUid(user.uid);
     await this.user.updateUserStatus(user.uid, true);
     setTimeout(() => {
       this.router.navigate(['main']);
-    }, 2200);
+    }, 3200);
   }
 
   private handleLoginError(error: any): void {

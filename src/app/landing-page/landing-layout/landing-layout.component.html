@@ -7,11 +7,7 @@
         <!-- Public routes go here -->
       </div>
       <app-toast
-        [ngClass]="{
-          'show-success': stateControl.showToast,
-          'show-error': stateControl.showError
-        }"
-      >
+        [ngClass]="{'show-success': stateControl.showToast,'show-error': stateControl.showError}">
       </app-toast>
       <div class="new-user-link-responsive">
         <p>Neu bei DABubble?</p>

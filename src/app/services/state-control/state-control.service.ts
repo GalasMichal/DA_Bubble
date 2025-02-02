@@ -29,7 +29,7 @@ export class StateControlService {
     this.showArrow = false;
     this.showError = false;
     this.showToastText.set('');
-    }, 2000);
+    }, 3000);
   }
 
   constructor() {
