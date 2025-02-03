@@ -31,7 +31,7 @@ export class MenuSideLeftComponent {
   router = inject(Router);
   state = inject(StateControlService);
   channelUsers: Channel[] = [];
-
+  channelList: Channel[] = [];
   constructor() {
     // Reaktive Überwachung des Benutzerstatus
     effect(() => {
@@ -58,21 +58,34 @@ export class MenuSideLeftComponent {
     this.sortListOfUser();
   }
 
-
-  ngOnDestroy(): void {
-    // Ressourcen bereinigen
-    this.chat.unsubscribe(this.chat.channelUnsubscribe);
-    if (this.ms.unsubscribeMessages) {
-      this.ms.unsubscribe(this.ms.unsubscribeMessages);
+  toggleMenuSubscription() {
+    if (this.isFirstDropdownMenuOpen) {
+      // Starte das Abonnement, wenn das Menü sichtbar ist
+      this.chat.subChannelList();
+      this.channelList = this.chat.channelList;
+    } else {
+      // Beende das Abonnement, wenn das Menü nicht sichtbar ist
+      this.chat.unsubscribe('channel');
     }
   }
 
+  ngOnDestroy(): void {
+    // // Ressourcen bereinigen
+    // this.chat.unsubscribe(this.chat.channelUnsubscribe);
+    // if (this.ms.unsubscribeMessages) {
+    //   this.ms.unsubscribe(this.ms.unsubscribeMessages);
+    // }
+  }
+
   async openChannel(chanId: string): Promise<void> {
+    this.chat.unsubscribe('channel');
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
     this.state.isThreadOpen = false;
 
+    // // Speichern des aktuellen Channels im localStorage
+    // localStorage.setItem('currentChannel', chanId);
     // Speichern des aktuellen Channels im localStorage
     // localStorage.setItem('currentChannel', chanId);
 

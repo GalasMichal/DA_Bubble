@@ -33,9 +33,8 @@ export class MainContentComponent implements OnInit{
   router = inject(Router);
   private auth = inject(Auth);
   userService = inject(UserServiceService);
-  currentChannel: string = '';
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.stateServer.isUserLoggedIn = true;
   }
   
@@ -53,6 +52,5 @@ export class MainContentComponent implements OnInit{
 
   ngOnDestroy(): void {
     this.chat.unsubscribeAll();
-    // this.userService.unsubscribe();
   }
 }
