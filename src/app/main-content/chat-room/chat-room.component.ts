@@ -25,6 +25,7 @@ import { DialogGlobalComponent } from '../../shared/component/dialog-global/dial
 import { ShowUsersComponent } from '../../shared/show-users/show-users.component';
 import { LoaderComponent } from '../../shared/component/loader/loader.component';
 import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
+import { MessageService } from '../../services/messages/message.service';
 
 @Component({
   selector: 'app-chat-room',
@@ -54,6 +55,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   userDialog = inject(MatDialog);
   dialog = inject(MatDialog);
   chat = inject(ChatRoomService);
+  ms = inject(MessageService);
   route = inject(ActivatedRoute);
   stateControl = inject(StateControlService);
   userService = inject(UserServiceService);
@@ -62,6 +64,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadSpecificPeopleFromChannel();
+    this.loadCurrentChannel();
+    this.loadCurrentMessage();
   }
 
   ngOnDestroy(): void {
@@ -72,9 +76,25 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     await this.chat.loadSpecificPeopleFromChannel();
   }
 
+  loadCurrentChannel(): void {
+    const currentChannel = this.route.snapshot.paramMap.get('id');
+    console.log("currentChannel: ", currentChannel);
+    
+    if (currentChannel) {
+      this.chat.openChatById(currentChannel);
+    }
+  }
+
+  loadCurrentMessage(): void {
+    const messageId = this.route.snapshot.paramMap.get('id'); // Get message ID from URL
+    console.log('messageId: ', messageId);
+
+    if (messageId) {
+      this.ms.loadMessagesFromChat(messageId);
+    }
+  }
 
   isVisible: boolean = false;
-
 
   ngAfterViewChecked(): void {
     if (this.stateControl.scrollToBottomGlobal) {

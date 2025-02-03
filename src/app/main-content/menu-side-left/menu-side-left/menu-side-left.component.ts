@@ -87,6 +87,8 @@ export class MenuSideLeftComponent {
 
     // // Speichern des aktuellen Channels im localStorage
     // localStorage.setItem('currentChannel', chanId);
+    // Speichern des aktuellen Channels im localStorage
+    // localStorage.setItem('currentChannel', chanId);
 
     await this.chat.openChatById(chanId);
   }
