@@ -116,10 +116,8 @@ export class ChatRoomService {
   }
 
   subChannelList() {
-    this.unsubscribe('channel'); // Beende das alte Abonnement
     this.subscriptions['channel'] = onSnapshot(this.getChannels(), (list) => {
       this.channelList = list.docs.map((doc) => doc.data() as Channel);
-
     });
   }
 
