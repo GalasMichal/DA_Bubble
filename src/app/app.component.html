@@ -1,1 +1,10 @@
+@if(loading()) {
+    <div class="pre-loader-container">
+        <div class="pre-loader-big"></div>
+    </div>
+
+}
+
+@if(!loading()) {
 <router-outlet></router-outlet>
+}

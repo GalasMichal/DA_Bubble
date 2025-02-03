@@ -27,14 +27,12 @@ import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 export class MainContentComponent {
   stateServer: StateControlService = inject(StateControlService);
   user = inject(UserServiceService);
-  chat = inject(ChatRoomService)
+  chat = inject(ChatRoomService);
   isMenuOpen = true;
   public db = inject(FirebaseService);
   router = inject(Router);
   private auth = inject(Auth);
   userService = inject(UserServiceService);
-
-
 
   constructor() {
     this.stateServer.isUserLoggedIn = true;
@@ -45,17 +43,14 @@ export class MainContentComponent {
       if (user) {
         this.db.getUserByUid(user.uid);
 
-         // Laden des Benutzers
+        // Laden des Benutzers
       } else {
         this.router.navigate(['']);
       }
-
     });
   }
 
   ngOnDestroy(): void {
     this.chat.unsubscribeAll();
-    // this.userService.unsubscribe();
   }
-
 }

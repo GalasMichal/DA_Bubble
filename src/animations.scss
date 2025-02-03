@@ -24,6 +24,41 @@
   animation: spin360 1.5s linear infinite;
 }
 
+.pre-loader-small {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: solid 0.2rem #dce1e5;
+  border-top-color: #6669a1;;
+  border-radius: 50%;
+  z-index: -1;
+  animation: spin360 1.5s linear infinite;
+}
+
+.pre-loader-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $bg-color;
+}
+
+.pre-loader-big {
+  position: absolute;
+  width: 10rem;
+  height: 10rem;
+  border: solid 1rem #dce1e5;
+  border-top-color: #6669a1;;
+  border-radius: 50%;
+  z-index: 1;
+  animation: spin360 1.5s linear infinite;
+}
+
 @keyframes spin360 {
   0% {
       transform: rotate(0deg)
