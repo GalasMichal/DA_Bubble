@@ -31,9 +31,9 @@ export class ChatRoomService {
   state = inject(StateControlService);
   private router = inject(Router);
   public currentChannel: string = '';
-  channelUnsubscribe: Unsubscribe | null = null;
-  messageUnsubscribe: Unsubscribe | null = null;
-  channelDataUnsubscribe: Unsubscribe | null = null;
+  // channelUnsubscribe: Unsubscribe | null = null;
+  // messageUnsubscribe: Unsubscribe | null = null;
+  // channelDataUnsubscribe: Unsubscribe | null = null;
   public userList: AppUser[] = [];
   public channelList: Channel[] = [];
   public currentUserChannels: Channel[] = [];
@@ -42,21 +42,31 @@ export class ChatRoomService {
   public currentChannelData!: Channel;
   public answers: Message[] = [];
   public messageAnswerList = signal<Message[]>([]);
-  unsub: any;
+
   public currentMessageId: string | null = null;
+
+  private subscriptions: { [key: string]: Unsubscribe } = {};
 
   constructor() {}
 
-  unsubscribe(subscription: Unsubscribe | null) {
-    if (subscription) {
-      subscription();
-      subscription = null;
+  unsubscribe(key: string) {
+    if (this.subscriptions[key]) {
+      this.subscriptions[key](); // Beende das Abonnement
+      delete this.subscriptions[key];
     }
   }
 
+  // unsubscribe(subscription: Unsubscribe | null) {
+  //   if (subscription) {
+  //     subscription();
+  //     subscription = null;
+  //   }
+  // }
+
   unsubscribeAll() {
-    this.unsubscribe(this.channelUnsubscribe);
-    this.unsubscribe(this.messageUnsubscribe);
+    Object.keys(this.subscriptions).forEach((key) => {
+      this.unsubscribe(key); // Beende jedes Abonnement
+    });
   }
 
   async addMessageToChannel(message: Message) {
@@ -106,9 +116,10 @@ export class ChatRoomService {
   }
 
   subChannelList() {
-    this.unsubscribe(this.channelUnsubscribe);
-    this.channelUnsubscribe = onSnapshot(this.getChannels(), (list) => {
+    this.unsubscribe('channel'); // Beende das alte Abonnement
+    this.subscriptions['channel'] = onSnapshot(this.getChannels(), (list) => {
       this.channelList = list.docs.map((doc) => doc.data() as Channel);
+
     });
   }
 
@@ -126,8 +137,8 @@ export class ChatRoomService {
     await this.loadSpecificPeopleFromChannel();
     this.currentChannel = currentChannel;
     const channelRef = doc(this.firestore, 'channels', currentChannel);
-    this.unsubscribe(this.channelDataUnsubscribe);
-    this.channelDataUnsubscribe = onSnapshot(channelRef, (doc) => {
+    this.unsubscribe('channel');
+    this.subscriptions['channel'] = onSnapshot(channelRef, (doc) => {
       if (doc.exists()) {
         this.currentChannelData = doc.data() as Channel;
         this.currentUserChannelsSpecificPeopleUid =
@@ -143,8 +154,8 @@ export class ChatRoomService {
       doc(this.firestore, 'channels', currentChannel),
       'messages'
     );
-    this.unsubscribe(this.messageUnsubscribe);
-    this.messageUnsubscribe = onSnapshot(
+    this.unsubscribe('messages');
+    this.subscriptions['messages'] = onSnapshot(
       messageRef,
       (snapshot: QuerySnapshot<DocumentData>) => {
         this.answers = snapshot.docs.map((doc) => doc.data() as Message);
