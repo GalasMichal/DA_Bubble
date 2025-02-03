@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-side-left.component';
 import { ThreadAnswerComponent } from '../../shared/component/thread-answer/thread-answer.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { FirebaseService } from '../../services/firebase/firebase.service';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
 import { UserServiceService } from '../../services/user-service/user-service.service';
@@ -24,32 +24,30 @@ import { ChatRoomService } from '../../services/chat-room/chat-room.service';
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
-export class MainContentComponent {
+export class MainContentComponent implements OnInit{
   stateServer: StateControlService = inject(StateControlService);
   user = inject(UserServiceService);
-  chat = inject(ChatRoomService)
+  chat = inject(ChatRoomService);
   isMenuOpen = true;
   public db = inject(FirebaseService);
   router = inject(Router);
   private auth = inject(Auth);
   userService = inject(UserServiceService);
+  currentChannel: string = '';
 
-
-
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.stateServer.isUserLoggedIn = true;
   }
-
+  
   ngOnInit(): void {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.db.getUserByUid(user.uid);
 
-         // Laden des Benutzers
+        // Laden des Benutzers
       } else {
         this.router.navigate(['']);
       }
-
     });
   }
 
@@ -57,5 +55,4 @@ export class MainContentComponent {
     this.chat.unsubscribeAll();
     // this.userService.unsubscribe();
   }
-
 }

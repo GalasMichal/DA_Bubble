@@ -74,7 +74,7 @@ export class MenuSideLeftComponent {
     this.state.isThreadOpen = false;
 
     // Speichern des aktuellen Channels im localStorage
-    localStorage.setItem('currentChannel', chanId);
+    // localStorage.setItem('currentChannel', chanId);
 
     await this.chat.openChatById(chanId);
   }

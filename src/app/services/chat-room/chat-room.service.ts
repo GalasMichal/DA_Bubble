@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, DoCheck, inject, Injectable, OnInit, signal } from '@angular/core';
 import {
   collection,
   doc,
@@ -19,7 +19,7 @@ import {
 } from '@angular/fire/firestore';
 import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import { StateControlService } from '../state-control/state-control.service';
 
@@ -45,7 +45,8 @@ export class ChatRoomService {
   unsub: any;
   public currentMessageId: string | null = null;
 
-  constructor() {}
+
+
 
   unsubscribe(subscription: Unsubscribe | null) {
     if (subscription) {
