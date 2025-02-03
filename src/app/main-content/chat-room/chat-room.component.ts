@@ -56,15 +56,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   dialog = inject(MatDialog);
   chat = inject(ChatRoomService);
   ms = inject(MessageService);
-  // route = inject(ActivatedRoute);
+  route = inject(ActivatedRoute);
   stateControl = inject(StateControlService);
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   dialogConfirm = inject(MatDialog);
-
-  constructor(private route: ActivatedRoute) {
-
-  }
 
   ngOnInit(): void {
     this.loadSpecificPeopleFromChannel();
