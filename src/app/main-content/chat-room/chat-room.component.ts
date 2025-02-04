@@ -76,13 +76,12 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   loadCurrentChannelAfterRefresh(): void {
-    this.route.paramMap.subscribe((params) => {
-      const currentChannel = params.get('id');
-      
-      if (currentChannel) {
-        this.chat.openChatById(currentChannel);
-      }
-    });
+    const currentChannel = this.route.snapshot.paramMap.get('id');
+    console.log("currentChannel: ", currentChannel);
+    
+    if (currentChannel) {
+      this.chat.openChatById(currentChannel);
+    }
   }
 
   isVisible: boolean = false;
