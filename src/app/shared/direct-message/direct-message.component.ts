@@ -22,7 +22,7 @@ import { User } from '../../models/interfaces/user.model';
     MessageFieldComponent,
     MessageAnswerComponent,
     AvatarComponent,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './direct-message.component.html',
   styleUrl: './direct-message.component.scss',
@@ -39,7 +39,7 @@ export class DirectMessageComponent implements OnInit {
   currentChatId: string = ''; // ID des aktuellen Chats
 
   ngOnInit(): void {
-      this.loadCurrentMessageAfterRefresh();
+    this.loadCurrentMessageAfterRefresh();
   }
 
   async openProfileUserSingle(userId: string) {
@@ -51,11 +51,9 @@ export class DirectMessageComponent implements OnInit {
 
   loadCurrentMessageAfterRefresh(): void {
     const messageId = this.route.snapshot.paramMap.get('id');
-    console.log('messageId: ', messageId);
 
     if (messageId) {
       this.ms.loadMessagesFromChat(messageId);
     }
   }
-
 }

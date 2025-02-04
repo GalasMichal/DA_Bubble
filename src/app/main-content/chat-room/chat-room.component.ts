@@ -77,8 +77,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   loadCurrentChannelAfterRefresh(): void {
     const currentChannel = this.route.snapshot.paramMap.get('id');
-    console.log("currentChannel: ", currentChannel);
-    
+
     if (currentChannel) {
       this.chat.openChatById(currentChannel);
     }
@@ -109,7 +108,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   scrollToBottomButton() {
     if (this.scrollToBottom?.nativeElement) {
       this.scrollToBottom.nativeElement.scrollTop =
-      this.scrollToBottom.nativeElement.scrollHeight;
+        this.scrollToBottom.nativeElement.scrollHeight;
     }
   }
 
