@@ -1,9 +1,9 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { MessageFieldComponent } from '../component/message-field/message-field.component';
 import { MessageAnswerComponent } from '../message-answer/message-answer.component';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { FirebaseService } from '../../services/firebase/firebase.service';
@@ -22,20 +22,25 @@ import { User } from '../../models/interfaces/user.model';
     MessageFieldComponent,
     MessageAnswerComponent,
     AvatarComponent,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './direct-message.component.html',
   styleUrl: './direct-message.component.scss',
 })
-export class DirectMessageComponent {
+export class DirectMessageComponent implements OnInit {
   ms = inject(MessageService);
   router = inject(Router);
+  route = inject(ActivatedRoute);
   user = inject(UserServiceService);
   fb = inject(FirebaseService);
   userService = inject(UserServiceService);
   readonly userDialog = inject(MatDialog);
   messages: Message[] = [];
   currentChatId: string = ''; // ID des aktuellen Chats
+
+  ngOnInit(): void {
+    this.loadCurrentMessageAfterRefresh();
+  }
 
   async openProfileUserSingle(userId: string) {
     await this.userService.showProfileUserSingle(userId);
@@ -44,4 +49,11 @@ export class DirectMessageComponent {
     });
   }
 
+  loadCurrentMessageAfterRefresh(): void {
+    const messageId = this.route.snapshot.paramMap.get('id');
+
+    if (messageId) {
+      this.ms.loadMessagesFromChat(messageId);
+    }
+  }
 }
