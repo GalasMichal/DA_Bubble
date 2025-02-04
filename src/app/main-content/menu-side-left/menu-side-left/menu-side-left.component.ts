@@ -60,7 +60,7 @@ export class MenuSideLeftComponent {
   }
 
   toggleMenuSubscription() {
-    if (this.isFirstDropdownMenuOpen) {
+    if (this.isFirstDropdownMenuOpen || this.state.isMenuOpen) {
       // Starte das Abonnement, wenn das Menü sichtbar ist
       this.chat.subChannelList();
       this.chat.channelList;
@@ -84,12 +84,6 @@ export class MenuSideLeftComponent {
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
     this.state.isThreadOpen = false;
-
-    // // Speichern des aktuellen Channels im localStorage
-    // localStorage.setItem('currentChannel', chanId);
-    // Speichern des aktuellen Channels im localStorage
-    // localStorage.setItem('currentChannel', chanId);
-
     await this.chat.openChatById(chanId);
   }
 

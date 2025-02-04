@@ -28,7 +28,6 @@ export class MainContentComponent implements OnInit{
   stateServer: StateControlService = inject(StateControlService);
   user = inject(UserServiceService);
   chat = inject(ChatRoomService);
-  isMenuOpen = true;
   public db = inject(FirebaseService);
   router = inject(Router);
   private auth = inject(Auth);
@@ -37,7 +36,7 @@ export class MainContentComponent implements OnInit{
   constructor() {
     this.stateServer.isUserLoggedIn = true;
   }
-  
+
   ngOnInit(): void {
     this.chat.subChannelList();
     onAuthStateChanged(this.auth, (user) => {
