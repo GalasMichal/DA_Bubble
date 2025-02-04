@@ -64,8 +64,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadSpecificPeopleFromChannel();
-    this.loadCurrentChannel();
-    this.loadCurrentMessage();
+    this.loadCurrentChannelAfterRefresh();
   }
 
   ngOnDestroy(): void {
@@ -76,22 +75,14 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     await this.chat.loadSpecificPeopleFromChannel();
   }
 
-  loadCurrentChannel(): void {
-    const currentChannel = this.route.snapshot.paramMap.get('id');
-    console.log("currentChannel: ", currentChannel);
-    
-    if (currentChannel) {
-      this.chat.openChatById(currentChannel);
-    }
-  }
-
-  loadCurrentMessage(): void {
-    const messageId = this.route.snapshot.paramMap.get('id'); // Get message ID from URL
-    console.log('messageId: ', messageId);
-
-    if (messageId) {
-      this.ms.loadMessagesFromChat(messageId);
-    }
+  loadCurrentChannelAfterRefresh(): void {
+    this.route.paramMap.subscribe((params) => {
+      const currentChannel = params.get('id');
+      
+      if (currentChannel) {
+        this.chat.openChatById(currentChannel);
+      }
+    });
   }
 
   isVisible: boolean = false;
