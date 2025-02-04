@@ -31,7 +31,7 @@ export class MenuSideLeftComponent {
   router = inject(Router);
   state = inject(StateControlService);
   channelUsers: Channel[] = [];
-  channelList: Channel[] = [];
+
   constructor() {
     // Reaktive Überwachung des Benutzerstatus
     effect(() => {
@@ -54,6 +54,7 @@ export class MenuSideLeftComponent {
     //   }
     // }
     // this.ms.loadCurrentMessageData();
+    this.chat.subChannelList();
     this.userService.subUserList();
     this.sortListOfUser();
   }
@@ -62,7 +63,7 @@ export class MenuSideLeftComponent {
     if (this.isFirstDropdownMenuOpen) {
       // Starte das Abonnement, wenn das Menü sichtbar ist
       this.chat.subChannelList();
-      this.channelList = this.chat.channelList;
+      this.chat.channelList;
     } else {
       // Beende das Abonnement, wenn das Menü nicht sichtbar ist
       this.chat.unsubscribe('channel');
@@ -136,7 +137,7 @@ export class MenuSideLeftComponent {
   }
 
   sortOfAllChannels() {
-    const sortAllChannels = this.channelUsers;
+    const sortAllChannels = this.chat.channelList;
     sortAllChannels.sort((a, b) => {
       if (a.chanId === this.fb.mainChannel) return -1;
       if (b.chanId === this.fb.mainChannel) return 1;
