@@ -25,9 +25,9 @@ export class ShowUsersComponent {
     counter: number = 0;
     dialogConfirm = inject(MatDialog);
       fb = inject(FirebaseService);
-    
+
     activeButton: boolean = false
-  
+
     closeAddUsers() {
       this.dialog.close()
     }
@@ -46,9 +46,9 @@ export class ShowUsersComponent {
     }
 
     onOpenAddUsers() {
-      const isDisabled = this.chat.currentChannelData.createdBy[0].uId !== this.fb.currentUser()?.uId
+      const isDisabled = this.chat.currentChannelData?.createdBy[0].uId !== this.fb.currentUser()?.uId
       this.counter++;
-  
+
       if (isDisabled) {
         this.onCounter()
       } else {

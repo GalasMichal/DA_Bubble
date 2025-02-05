@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  HostListener,
   inject,
   OnDestroy,
   OnInit,
@@ -23,7 +22,6 @@ import { AvatarComponent } from '../../shared/avatar/avatar.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../shared/component/dialog-global/dialog-global.component';
 import { ShowUsersComponent } from '../../shared/show-users/show-users.component';
-import { LoaderComponent } from '../../shared/component/loader/loader.component';
 import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 import { MessageService } from '../../services/messages/message.service';
 
@@ -35,7 +33,7 @@ import { MessageService } from '../../services/messages/message.service';
     MessageAnswerComponent,
     CommonModule,
     AvatarComponent,
-    LoaderComponent,
+
   ],
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
@@ -63,17 +61,18 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   dialogConfirm = inject(MatDialog);
 
   ngOnInit(): void {
-    this.loadSpecificPeopleFromChannel();
+    // this.loadSpecificPeopleFromChannel();
     this.loadCurrentChannelAfterRefresh();
   }
 
   ngOnDestroy(): void {
     this.chat.unsubscribeAll?.();
+    this.chat.currentChannelData = null;
   }
 
-  async loadSpecificPeopleFromChannel(): Promise<void> {
-    await this.chat.loadSpecificPeopleFromChannel();
-  }
+  // async loadSpecificPeopleFromChannel(): Promise<void> {
+  //   await this.chat.loadSpecificPeopleFromChannel();
+  // }
 
   loadCurrentChannelAfterRefresh(): void {
     const currentChannel = this.route.snapshot.paramMap.get('id');
@@ -134,7 +133,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   onOpenAddUsers() {
     const isDisabled =
-      this.chat.currentChannelData.createdBy[0].uId !==
+      this.chat.currentChannelData!.createdBy[0].uId !==
       this.fb.currentUser()?.uId;
     this.counter++;
 
@@ -208,7 +207,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
         this.chat.currentUserChannelsSpecificPeopleObject;
       for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
         const object = listOfAllChoosenUsers[i];
-        if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
+        if (object.uId !== this.chat.currentChannelData!.createdBy[0].uId) {
           this.stateControl.choosenUser.push(object);
           this.stateControl.choosenUserFirebase.push(object.uId);
         }

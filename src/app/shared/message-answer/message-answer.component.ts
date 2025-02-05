@@ -96,7 +96,7 @@ export class MessageAnswerComponent {
 
   // Methode zum Aktualisieren der Reaktionen in Firestore
   async updateReactionsInFirestore() {
-    const channelId = this.chat.currentChannelData.chanId;
+    const channelId = this.chat.currentChannelData!.chanId;
     const messageId = this.userMessage!.threadId;
 
     const messageDocRef = doc(

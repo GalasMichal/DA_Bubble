@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Message } from '../../../models/interfaces/message.model';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
-import { Timestamp } from '@angular/fire/firestore';
+import { DocumentReference, Timestamp } from '@angular/fire/firestore';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { CloseComponent } from '../close/close.component';
@@ -77,7 +77,7 @@ export class MessageFieldComponent {
     if (currentUser) {
       const newMessage: Message = {
         text: this.textArea,
-        chatId: this.chat.currentChannelData.chanId,
+        chatId: this.chat.currentChannelData!.chanId,
         timestamp: Timestamp.now(),
         messageSendBy: currentUser,
         reactions: [],
@@ -93,7 +93,7 @@ export class MessageFieldComponent {
       if (this.textArea !== '' || this.selectedFile) {
         if (this.selectedFile) {
           const imageUrl = await this.uploadChatImage(
-            this.chat.currentChannelData.chanId,
+            this.chat.currentChannelData!.chanId,
             this.selectedFile
           );
           newMessage.storageData = imageUrl; // URL des Bildes speichern
@@ -108,7 +108,8 @@ export class MessageFieldComponent {
           }
         } else {
           this.textArea = '';
-          const messageDocRef = await this.chat.addMessageToChannel(newMessage);
+          const messageDocRef = await this.chat.addMessageToChannel(newMessage) as unknown as DocumentReference;
+          // Die Methode updateMessageThreadId wird jetzt aufgerufen
           await this.chat.updateMessageThreadId(messageDocRef);
         }
       }

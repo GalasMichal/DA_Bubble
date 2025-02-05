@@ -34,16 +34,16 @@ export class ChannelEditComponent {
   fb = inject(FirebaseService);
   router = inject(Router);
 
-  currentTitle = this.chat.currentChannelData.channelName;
-  currentDescription = this.chat.currentChannelData.channelDescription;
+  currentTitle = this.chat.currentChannelData?.channelName;
+  currentDescription = this.chat.currentChannelData?.channelDescription;
   newTitle: string = '';
   newDescription: string = '';
   counter: number = 0;
   isDisabled =
-    this.chat.currentChannelData.createdBy[0].uId !==
+    this.chat.currentChannelData?.createdBy[0].uId !==
     this.fb.currentUser()?.uId;
   isDisabledCreatedBy =
-    this.chat.currentChannelData.createdBy[0].uId ===
+    this.chat.currentChannelData?.createdBy[0].uId ===
     this.fb.currentUser()?.uId;
 
   constructor() {
@@ -94,7 +94,7 @@ export class ChannelEditComponent {
 
   saveChannelTittle() {
     this.channelEditTitel = !this.channelEditTitel;
-    this.newTitle = this.chat.currentChannelData.channelName;
+    this.newTitle = this.chat.currentChannelData!.channelName;
   }
 
   editChannelDescription() {
@@ -103,7 +103,7 @@ export class ChannelEditComponent {
 
   saveChannelDescription() {
     this.channelEditDescription = !this.channelEditDescription;
-    this.newDescription = this.chat.currentChannelData.channelDescription;
+    this.newDescription = this.chat.currentChannelData!.channelDescription;
   }
 
   onUpdateChannel(chanId: string, text: string) {
@@ -195,7 +195,7 @@ export class ChannelEditComponent {
           this.stateServer.choosenUserFirebase.filter(
             (user) => user !== currentUser!.uId
           );
-        this.chat.updateSpecificPeopleInChannelFromState();
+        // this.chat.updateSpecificPeopleInChannelFromState();
         this.dialogConfirm.closeAll();
         this.router.navigate(['main']);
       } else {

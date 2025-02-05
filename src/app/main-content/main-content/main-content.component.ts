@@ -38,7 +38,7 @@ export class MainContentComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.chat.subChannelList();
+    this.chat.channelList;
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.db.getUserByUid(user.uid);

@@ -62,7 +62,7 @@ export class FirebaseService {
   constructor(private route: ActivatedRoute) {}
 
   async loadAllBackendData() {
-    this.chat.subChannelList();
+    // this.chat.channelList;
     this.userService.subUserList();
   }
 
@@ -84,7 +84,7 @@ export class FirebaseService {
       const user = this.createAppUser(firebaseUser);
       console.log('Registrierter User ist', user);
       await this.addUserToFirestore(user);
-      await this.chat.addNewUserToChannel(this.mainChannel, user.uId);
+      // await this.chat.addNewUserToChannel(this.mainChannel, user.uId);
       return user;
     } catch (error) {
       this.handleCreateUserError(error);
@@ -158,14 +158,14 @@ export class FirebaseService {
       this.handleLoginError(error);
     }
   }
-  
+
   private async handleSuccessfulLogin(
     user: FirebaseUser,
     text: string
   ): Promise<void> {
     this.stateControl.showToast = true;
     console.log(text);
-    
+
     this.stateControl.showToastText.set(text);
     this.stateControl.removeShowToast();
     await this.getUserByUid(user.uid);
@@ -219,7 +219,7 @@ export class FirebaseService {
         await this.addUserToFirestore(user);
         this.currentUser.set(user);
         this.router.navigate(['avatar']);
-        this.chat.addNewUserToChannel(this.mainChannel, user.uId);
+        // this.chat.addNewUserToChannel(this.mainChannel, user.uId);
       } else {
         await this.handleExistingGoogleUser(googleUser);
       }
@@ -375,7 +375,7 @@ export class FirebaseService {
       const user = this.createGuestUser(firebaseUser);
       this.stateControl.removeShowToast();
       this.router.navigate(['main']);
-      await this.chat.addNewUserToChannel(this.mainChannel, user.uId);
+      // await this.chat.addNewUserToChannel(this.mainChannel, user.uId);
       await this.addUserToFirestore(user);
     } catch (error) {
       this.handleAnonymousSignInError(error);

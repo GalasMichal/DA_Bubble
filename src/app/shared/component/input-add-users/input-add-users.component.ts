@@ -46,7 +46,7 @@ export class InputAddUsersComponent {
         this.chat.currentUserChannelsSpecificPeopleObject;
       for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
         const object = listOfAllChoosenUsers[i];
-        if (object.uId !== this.chat.currentChannelData.createdBy[0].uId) {
+        if (object.uId !== this.chat.currentChannelData!.createdBy[0].uId) {
           this.stateServer.choosenUser.push(object);
           this.stateServer.choosenUserFirebase.push(object.uId);
         }
