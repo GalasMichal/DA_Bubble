@@ -35,9 +35,17 @@ export class ChatRoomService {
       db.createObjectStore('channels', { keyPath: 'chanId' });
     },
   });
+  private currentChannelSignal = signal<Channel | null>(null);
 
   channels = signal<Channel[]>([]);
+  
+  setCurrentChannel(channel: Channel) {
+    this.currentChannelSignal.set(channel);
+  }
 
+  getCurrentChannel(): Signal<Channel | null> {
+    return this.currentChannelSignal;
+  }
   constructor() {
 
 
@@ -68,9 +76,6 @@ export class ChatRoomService {
     });
   }
 
-  getChannelById(channelId: string): Signal<Channel | undefined> {
-    return computed(() => this.channels().find(channel => channel.chanId === channelId));
-  }
 
   async addChannel(channel: Channel) {
     const channelRef = doc(

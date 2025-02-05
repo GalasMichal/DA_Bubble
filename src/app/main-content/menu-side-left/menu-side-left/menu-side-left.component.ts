@@ -61,13 +61,14 @@ export class MenuSideLeftComponent {
     // }
   }
 
-   openChannel(chanId: string){
+   openChannel(channel: Channel): void {
     // this.chat.unsubscribe('channel');
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
     this.state.isThreadOpen = false;
-    this.router.navigate(['main/chat/', chanId]);
+    this.chat.setCurrentChannel(channel);
+    this.router.navigate(['main/chat', channel.chanId]);
   }
 
   async openMessage(user: User): Promise<void> {
