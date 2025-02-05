@@ -4,6 +4,8 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  Signal,
+  signal,
   ViewChild,
 } from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
@@ -13,7 +15,6 @@ import { MessageAnswerComponent } from '../../shared/message-answer/message-answ
 import { ChannelEditComponent } from './channel-edit/channel-edit.component';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { ActivatedRoute } from '@angular/router';
-import { Channel } from '../../models/interfaces/channel.model';
 import { Message } from '../../models/interfaces/message.model';
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -24,6 +25,8 @@ import { DialogGlobalComponent } from '../../shared/component/dialog-global/dial
 import { ShowUsersComponent } from '../../shared/show-users/show-users.component';
 import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 import { MessageService } from '../../services/messages/message.service';
+import { sign } from 'node:crypto';
+import { Channel } from '../../models/interfaces/channel.model';
 
 @Component({
   selector: 'app-chat-room',
@@ -33,7 +36,6 @@ import { MessageService } from '../../services/messages/message.service';
     MessageAnswerComponent,
     CommonModule,
     AvatarComponent,
-
   ],
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
@@ -45,7 +47,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   counter: number = 0;
   textArea: string = ''; // Verbunden mit dem textarea
   textAreaId: string = '';
-  channelId: string = '';
   textAreaEdited: boolean = false;
 
   @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
@@ -59,15 +60,17 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   dialogConfirm = inject(MatDialog);
-
+  currentChannel: Signal<Channel | undefined> = signal(undefined);
+  channelId: string = '';
   ngOnInit(): void {
-    // this.loadSpecificPeopleFromChannel();
+    this.channelId = this.route.snapshot.paramMap.get('id') || '';
+    this.currentChannel = this.chat.getChannelById(this.channelId);
     this.loadCurrentChannelAfterRefresh();
+    this.chat.loadChannels();
   }
 
   ngOnDestroy(): void {
     this.chat.unsubscribeAll?.();
-    // this.chat.currentChannelData = null;
   }
 
   // async loadSpecificPeopleFromChannel(): Promise<void> {
@@ -199,19 +202,19 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   showAllChoosenUsers(): void {
-  //   this.stateControl.choosenUser = [];
-  //   this.stateControl.choosenUserFirebase = [];
-
-  //   if (this.chat.currentChannelData !== undefined) {
-  //     const listOfAllChoosenUsers =
-  //       this.chat.currentUserChannelsSpecificPeopleObject;
-  //     for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-  //       const object = listOfAllChoosenUsers[i];
-  //       if (object.uId !== this.chat.currentChannelData!.createdBy[0].uId) {
-  //         this.stateControl.choosenUser.push(object);
-  //         this.stateControl.choosenUserFirebase.push(object.uId);
-  //       }
-  //     }
-  //   }
-  // }
-}}
+    //   this.stateControl.choosenUser = [];
+    //   this.stateControl.choosenUserFirebase = [];
+    //   if (this.chat.currentChannelData !== undefined) {
+    //     const listOfAllChoosenUsers =
+    //       this.chat.currentUserChannelsSpecificPeopleObject;
+    //     for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+    //       const object = listOfAllChoosenUsers[i];
+    //       if (object.uId !== this.chat.currentChannelData!.createdBy[0].uId) {
+    //         this.stateControl.choosenUser.push(object);
+    //         this.stateControl.choosenUserFirebase.push(object.uId);
+    //       }
+    //     }
+    //   }
+    // }
+  }
+}

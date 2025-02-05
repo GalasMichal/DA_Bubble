@@ -13,7 +13,9 @@
         </svg>
 
           <!-- Name of the channel -->
-          <h1>channel name</h1>
+           <ng-container *ngIf="currentChannel() as channel">
+            <h1> {{channel?.channelName}} </h1>
+           </ng-container>
         <!-- Name of the channel end-->
 
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -176,5 +178,5 @@
   [textAreaEditId]="textAreaId"
   [textAreaIsEdited]="textAreaEdited"
   ></app-message-field>
- 
+
 </section>

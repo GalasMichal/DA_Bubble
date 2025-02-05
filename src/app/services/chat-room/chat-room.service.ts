@@ -1,4 +1,4 @@
-import { Injectable, Signal, inject, signal } from '@angular/core';
+import { Injectable, Signal, computed, inject, signal } from '@angular/core';
 import {
   collection,
   deleteDoc,
@@ -47,12 +47,10 @@ export class ChatRoomService {
     const userId = this.fireService.currentUser()?.uId;
     if (!userId) return;
 
-    // 1️⃣ Erst aus IndexedDB laden (Offline-Support)
     const db = await this.dbPromise;
     const cachedChannels: Channel[] = await db.getAll('channels');
     this.channels.set(cachedChannels);
 
-    // 2️⃣ Firestore abonnieren (onSnapshot für Echtzeit-Updates)
     const channelsRef = collection(this.fireService.firestore, 'channels');
     onSnapshot(channelsRef, async (snapshot) => {
       const updatedChannels: Channel[] = [];
@@ -66,8 +64,12 @@ export class ChatRoomService {
         }
       }
       this.channels.set(updatedChannels);
-      console.log('channels', updatedChannels);
+      console.log('channels updated', updatedChannels);
     });
+  }
+
+  getChannelById(channelId: string): Signal<Channel | undefined> {
+    return computed(() => this.channels().find(channel => channel.chanId === channelId));
   }
 
   async addChannel(channel: Channel) {

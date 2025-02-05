@@ -37,6 +37,7 @@ export class MenuSideLeftComponent {
   }
 
   ngOnInit(): void {
+
     this.userService.subUserList();
     this.sortListOfUser();
   }
@@ -48,7 +49,7 @@ export class MenuSideLeftComponent {
       // this.chat.channelList;
     } else {
       // Beende das Abonnement, wenn das Menü nicht sichtbar ist
-      this.chat.unsubscribe('channel');
+      // this.chat.unsubscribe('channel');
     }
   }
 
@@ -60,13 +61,13 @@ export class MenuSideLeftComponent {
     // }
   }
 
-  async openChannel(chanId: string): Promise<void> {
-    this.chat.unsubscribe('channel');
+   openChannel(chanId: string){
+    // this.chat.unsubscribe('channel');
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
     this.state.isThreadOpen = false;
-    // await this.chat.openChatById(chanId);
+    this.router.navigate(['main/chat/', chanId]);
   }
 
   async openMessage(user: User): Promise<void> {

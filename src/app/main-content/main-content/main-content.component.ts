@@ -38,8 +38,12 @@ export class MainContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.chat.loadChannels();
+    this.loadData();
     console.log('chats ind db', this.chat.channels());
+  }
+
+  async loadData() {
+    await this.chat.loadChannels();
   }
 
   ngOnDestroy(): void {
