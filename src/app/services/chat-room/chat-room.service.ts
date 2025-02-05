@@ -29,7 +29,7 @@ export class ChatRoomService {
   // public currentUserChannelsSpecificPeopleUid: string[] = [];
   // public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
 
-  private dbPromise = openDB('chatDB', 1, {
+  private dbPromise = openDB('ChatDB', 1, {
     upgrade(db) {
       db.createObjectStore('channels', { keyPath: 'chanId' });
     },
@@ -37,70 +37,58 @@ export class ChatRoomService {
 
   channels = signal<Channel[]>([]);
 
-  constructor(private firestore: Firestore) {
-    this.loadChannelsFromIndexedDB();
-    this.observeFirestoreChanges();
-    console.log('data', this.channels());
-  }
+  constructor() {}
 
-  async loadChannelsFromIndexedDB() {
+  async loadChannels() {
+    const userId = this.fireService.currentUser()?.uId;
+    if (!userId) return;
+
+    // 1️⃣ Erst aus IndexedDB laden (Offline-Support)
     const db = await this.dbPromise;
-    const cachedChannels = await db.getAll('channels');
+    const cachedChannels: Channel[] = await db.getAll('channels');
     this.channels.set(cachedChannels);
+
+    // 2️⃣ Firestore abonnieren (onSnapshot für Echtzeit-Updates)
+    const channelsRef = collection(this.fireService.firestore, 'channels');
+    onSnapshot(channelsRef, async (snapshot) => {
+      const updatedChannels: Channel[] = [];
+      const db = await this.dbPromise;
+
+      for (const doc of snapshot.docs) {
+        const channel = doc.data() as Channel;
+        if (channel.specificPeople.includes(userId)) {
+          updatedChannels.push(channel);
+          await db.put('channels', channel); // Update IndexedDB
+        }
+      }
+      this.channels.set(updatedChannels);
+    });
   }
 
   async addChannel(channel: Channel) {
+    const channelRef = doc(this.fireService.firestore, `channels/${channel.chanId}`);
+    await setDoc(channelRef, channel);
     this.channels.update((channels) => [...channels, channel]);
     const db = await this.dbPromise;
-    await db.put('channels', channel);
-    const docRef = doc(collection(this.firestore, 'channels'), channel.chanId);
-    await setDoc(docRef, channel);
+    await db.put('channels', channel); // IndexedDB aktualisieren
   }
 
   async updateChannel(channel: Channel) {
+    const channelRef = doc(this.fireService.firestore, `channels/${channel.chanId}`);
+    await setDoc(channelRef, channel, { merge: true });
     this.channels.update((channels) =>
-      channels.map((ch) => (ch.chanId === channel.chanId ? channel : ch))
+      channels.map((c) => (c.chanId === channel.chanId ? channel : c))
     );
     const db = await this.dbPromise;
     await db.put('channels', channel);
-    const docRef = doc(this.firestore, 'channels', channel.chanId);
-    await updateDoc(docRef, { ...channel });
   }
 
   async deleteChannel(chanId: string) {
-    this.channels.update((channels) =>
-      channels.filter((ch) => ch.chanId !== chanId)
-    );
+    const channelRef = doc(this.fireService.firestore, `channels/${chanId}`);
+    await setDoc(channelRef, { deleted: true }, { merge: true }); // Soft Delete
+    this.channels.update((channels) => channels.filter((c) => c.chanId !== chanId));
     const db = await this.dbPromise;
     await db.delete('channels', chanId);
-    const docRef = doc(this.firestore, 'channels', chanId);
-    await deleteDoc(docRef);
-  }
-
-  private observeFirestoreChanges() {
-    const collectionRef = collection(this.firestore, 'channels');
-    onSnapshot(collectionRef, (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        const channel = change.doc.data() as Channel;
-        if (change.type === 'added' || change.type === 'modified') {
-          this.channels.update((channels) => {
-            const index = channels.findIndex(
-              (ch) => ch.chanId === channel.chanId
-            );
-            if (index !== -1) {
-              channels[index] = channel;
-            } else {
-              channels.push(channel);
-            }
-            return [...channels];
-          });
-        } else if (change.type === 'removed') {
-          this.channels.update((channels) =>
-            channels.filter((ch) => ch.chanId !== channel.chanId)
-          );
-        }
-      });
-    });
   }
 }
 
