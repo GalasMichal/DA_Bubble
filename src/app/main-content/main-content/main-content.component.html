@@ -9,11 +9,11 @@
     <div class="main-content" [ngClass]="{'show-responsive-main-content': stateServer.responsiveChat}">
       <router-outlet></router-outlet>
     </div>
-    @if (stateServer.isThreadOpen && this.user.selectedUserMessage() && this.chat.currentChannelData) {
-      <div [ngClass]="stateServer.isThreadOpen ? 'thread-container' : 'd-none'" [class.animate]="stateServer.isThreadOpen">
-        <app-thread-answer  [currentChat]="this.chat.currentChannelData"></app-thread-answer>
-      </div>
-    }
+    <!-- @if (stateServer.isThreadOpen && this.user.selectedUserMessage() && this.chat.currentChannelData) {
+      <div [ngClass]="stateServer.isThreadOpen ? 'thread-container' : 'd-none'" [class.animate]="stateServer.isThreadOpen"> -->
+        <app-thread-answer></app-thread-answer>
+      <!-- </div> -->
+    <!-- } -->
 
 
     <button class="side-menu-btn" (click)="this.stateServer.isMenuOpen= !this.stateServer.isMenuOpen">Side Menu <img

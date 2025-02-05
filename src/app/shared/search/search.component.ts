@@ -56,7 +56,7 @@ export class SearchComponent {
     this.stateControl.responsiveArrow = true;
     this.stateControl.responsiveMenu = true;
     this.stateControl.isThreadOpen = false
-    this.chat.openChatById(chanId);
+    // this.chat.openChatById(chanId);
   }
 
   sortListOfUser() {
@@ -70,37 +70,37 @@ export class SearchComponent {
     return sortAllUser
   };
 
-  onKeyUp(value: string) {
-    this.searchTerm = value;
+  // onKeyUp(value: string) {
+  //   this.searchTerm = value;
 
-    if(!value.startsWith('@') && !value.startsWith('#') && (value !== '')) {
-      this.allResults = [
-        ...this.sortListOfUser().filter(item =>
-          item.displayName.toLowerCase().includes(value.slice(1).toLowerCase())
-        ),
-        ...this.chat.currentUserChannels.filter(item =>
-          item.channelName.toLowerCase().includes(value.slice(1).toLowerCase())
-        ),
-      ];
-      console.log(this.allResults);
-    } else if (value.startsWith('@')) {
-      this.userResults = this.sortListOfUser().filter(item =>
-        item.displayName.toLowerCase().includes(value.slice(1).toLowerCase())
-      );
-    } else if (value.startsWith('#')) {
-      const userId = this.fb.currentUser()!.uId;
-      this.chat.getUserChannels(userId).then((userChannels) => {
-        this.channelResults = userChannels.filter(item =>
-          item.channelName.toLowerCase().includes(value.slice(1).toLowerCase())
-        );
+  //   if(!value.startsWith('@') && !value.startsWith('#') && (value !== '')) {
+  //     this.allResults = [
+  //       ...this.sortListOfUser().filter(item =>
+  //         item.displayName.toLowerCase().includes(value.slice(1).toLowerCase())
+  //       ),
+  //       ...this.chat.currentUserChannels.filter(item =>
+  //         item.channelName.toLowerCase().includes(value.slice(1).toLowerCase())
+  //       ),
+  //     ];
+  //     console.log(this.allResults);
+  //   } else if (value.startsWith('@')) {
+  //     this.userResults = this.sortListOfUser().filter(item =>
+  //       item.displayName.toLowerCase().includes(value.slice(1).toLowerCase())
+  //     );
+  //   } else if (value.startsWith('#')) {
+  //     const userId = this.fb.currentUser()!.uId;
+  //     this.chat.getUserChannels(userId).then((userChannels) => {
+  //       this.channelResults = userChannels.filter(item =>
+  //         item.channelName.toLowerCase().includes(value.slice(1).toLowerCase())
+  //       );
 
-      })
-    } else if (value === '') {
-      this.channelResults = [];
-      this.userResults = [];
-      this.allResults = [];
-    }
-  }
+  //     })
+  //   } else if (value === '') {
+  //     this.channelResults = [];
+  //     this.userResults = [];
+  //     this.allResults = [];
+  //   }
+  // }
 
   async openMessage(user: User) {
       this.searchTerm = user.displayName;

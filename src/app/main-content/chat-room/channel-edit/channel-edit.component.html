@@ -1,7 +1,7 @@
 <div class="container">
     <div class="container-content">
       <div class="title">
-        <h2># {{chat.currentChannelData?.channelName}}</h2>
+        <h2># channel name</h2>
         <button  class="close-btn" (click)="closeChannelEdit()">
           <app-close></app-close>
         </button>
@@ -27,7 +27,7 @@
       </svg>
           </button>
           </div>
-        <p><span style="font-weight: bold;">#  </span>{{chat.currentChannelData?.channelName}}</p>
+        <p><span style="font-weight: bold;">#  </span>Channel name</p>
       </div>
 
       <!-- EDIT -->
@@ -43,7 +43,7 @@
           </button>
 
         </div>
-        <input type="text" #channelName class="input-field-hash-icon" placeholder="z.B. Kooperationsprojekte" name="channelName" [(ngModel)]="chat.currentChannelData!.channelName" autocomplete="off"/>
+        <input type="text" #channelName class="input-field-hash-icon" placeholder="z.B. Kooperationsprojekte" name="channelName"  autocomplete="off"/>
       </div>
       <!-- Channel-Name END -->
 
@@ -52,8 +52,8 @@
       <div class="channel-info-container" [ngClass]="{'d-none': channelEditDescription}">
         <div class="edit-name-container">
           <h3>Beschreibung</h3>
-          <button (click)="onEditDescription()" class="edit" [class.disabled]="isDisabled">Bearbeiten</button>
-          <button (click)="onEditDescription()" class="edit-img" [class.disabled]="isDisabled">
+          <!-- <button (click)="onEditDescription()" class="edit" [class.disabled]="isDisabled">Bearbeiten</button> -->
+          <!-- <button (click)="onEditDescription()" class="edit-img" [class.disabled]="isDisabled">
             <svg
         width="19"
         height="19"
@@ -66,18 +66,18 @@
           fill="#1C1B1F"
         />
       </svg>
-          </button>
+          </button> -->
         </div>
 
         <p>
-          {{chat.currentChannelData?.channelDescription}}
+          <!-- {{chat.currentChannelData?.channelDescription}} -->
         </p>
 
         <div class="separator"></div>
 
         <div class="creat-user">
           <h3>Erstellt von</h3>
-          <div class="user-link">{{ chat.currentChannelData!.createdBy[0].displayName }}</div>
+          <!-- <div class="user-link">{{ chat.currentChannelData!.createdBy[0].displayName }}</div> -->
         </div>
       </div>
 
@@ -94,14 +94,14 @@
           </button>
 
         </div>
-        <input #description type="text"
-          placeholder="Dein Text hier" name="description" [(ngModel)]="chat.currentChannelData!.channelDescription" autocomplete="off"/>
+        <!-- <input #description type="text"
+          placeholder="Dein Text hier" name="description" [(ngModel)]="chat.currentChannelData!.channelDescription" autocomplete="off"/> -->
 
           <div class="separator"></div>
 
           <div class="creat-user">
             <h3>Erstellt von</h3>
-            <div class="user-link">{{ chat.currentChannelData!.createdBy[0].displayName }}</div>
+            <!-- <div class="user-link">{{ chat.currentChannelData!.createdBy[0].displayName }}</div> -->
           </div>
 
         </div>
@@ -111,10 +111,10 @@
 
     <div class="btn-container">
 
-      <button class="channel-btn" [class.disabled]="isDisabled" (click)="onDeleteChannel(chat.currentChannelData!.chanId)">Channel löschen</button>
+      <!-- <button class="channel-btn" [class.disabled]="isDisabled" (click)="onDeleteChannel(chat.currentChannelData!.chanId)">Channel löschen</button> -->
 
       <button class="channel-btn" [disabled]="isDisabledCreatedBy" (click)="leaveChannel()" >Channel verlassen</button>
-      <button class="change-btn" [class.disabled]="isDisabled" (click)="onUpdateChannel(chat.currentChannelData!.chanId, 'Änderungen wurden gespeichert')">Änderungen speichern</button>
+      <button class="change-btn" >Änderungen speichern</button>
     </div>
     <app-toast [ngClass]="{ 'show-success': stateServer.showToast }"></app-toast>
 

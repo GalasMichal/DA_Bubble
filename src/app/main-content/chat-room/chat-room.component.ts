@@ -67,7 +67,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.chat.unsubscribeAll?.();
-    this.chat.currentChannelData = null;
+    // this.chat.currentChannelData = null;
   }
 
   // async loadSpecificPeopleFromChannel(): Promise<void> {
@@ -78,7 +78,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     const currentChannel = this.route.snapshot.paramMap.get('id');
 
     if (currentChannel) {
-      this.chat.openChatById(currentChannel);
+      // this.chat.openChatById(currentChannel);
     }
   }
 
@@ -133,7 +133,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   onOpenAddUsers() {
     const isDisabled =
-      this.chat.currentChannelData!.createdBy[0].uId !==
+      // this.chat.currentChannelData!.createdBy[0].uId !==
       this.fb.currentUser()?.uId;
     this.counter++;
 
@@ -172,15 +172,15 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.showAllChoosenUsers();
   }
 
-  restOfUser(): number {
-    return this.chat.currentUserChannelsSpecificPeopleObject.length - 3;
-  }
+  // restOfUser(): number {
+  //   // return this.chat.currentUserChannelsSpecificPeopleObject.length - 3;
+  // }
 
   openTeam(chat: Object) {
-    const currentChannelID = this.chat.currentChannel;
+    // const currentChannelID = this.chat.currentChannel;
     // console.log('ID', currentChannelID);
 
-    const currentChannelName = this.chat.currentChannelData;
+    // const currentChannelName = this.chat.currentChannelData;
     // console.log('Name', currentChannelName);
 
     this.dialog.open(ChannelEditComponent, {
@@ -199,19 +199,19 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   showAllChoosenUsers(): void {
-    this.stateControl.choosenUser = [];
-    this.stateControl.choosenUserFirebase = [];
+  //   this.stateControl.choosenUser = [];
+  //   this.stateControl.choosenUserFirebase = [];
 
-    if (this.chat.currentChannelData !== undefined) {
-      const listOfAllChoosenUsers =
-        this.chat.currentUserChannelsSpecificPeopleObject;
-      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-        const object = listOfAllChoosenUsers[i];
-        if (object.uId !== this.chat.currentChannelData!.createdBy[0].uId) {
-          this.stateControl.choosenUser.push(object);
-          this.stateControl.choosenUserFirebase.push(object.uId);
-        }
-      }
-    }
-  }
-}
+  //   if (this.chat.currentChannelData !== undefined) {
+  //     const listOfAllChoosenUsers =
+  //       this.chat.currentUserChannelsSpecificPeopleObject;
+  //     for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+  //       const object = listOfAllChoosenUsers[i];
+  //       if (object.uId !== this.chat.currentChannelData!.createdBy[0].uId) {
+  //         this.stateControl.choosenUser.push(object);
+  //         this.stateControl.choosenUserFirebase.push(object.uId);
+  //       }
+  //     }
+  //   }
+  // }
+}}

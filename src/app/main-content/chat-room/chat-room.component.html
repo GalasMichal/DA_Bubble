@@ -1,5 +1,5 @@
 <section>
- @if(chat.currentChannelData) {
+
   <header>
 
     <button class="header-left-container" (click)="openTeam(chat)">
@@ -13,7 +13,7 @@
         </svg>
 
           <!-- Name of the channel -->
-          <h1>{{ chat.currentChannelData.channelName }}</h1>
+          <h1>channel name</h1>
         <!-- Name of the channel end-->
 
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,19 +29,20 @@
     <div class="header-right-container">
       <button class="user-container" (click)="openShowUsers()">
         <ul class="user-container-list">
-          @for (user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
+          <!-- @for (user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
             @if($index < 3){
               <li>
                 <app-avatar [user]="user" [userList]="true"></app-avatar>
               </li>
             }
-          }
-          @if(restOfUser() > 0) {
+          } -->
+          <!-- @if(restOfUser() > 0) {
             <div class=""> + {{ restOfUser() }}</div>
-          }
+          } -->
         </ul>
       </button>
-      <button (click)="onOpenAddUsers()" class="add-user" [class.disabled]="chat.currentChannelData.createdBy[0].uId !== fb.currentUser()?.uId">
+      <!-- [class.disabled]="chat.currentChannelData.createdBy[0].uId !== fb.currentUser()?.uId" -->
+      <button (click)="onOpenAddUsers()" class="add-user" >
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="20" fill="#ECEEFE"/>
           <mask id="mask0_754_13277" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
@@ -80,21 +81,21 @@
       </defs>
     </svg>
   </div>
-  @if(chat.currentChannelData.channelName === "Willkommen") {
+  <!-- @if(chat.currentChannelData.channelName === "Willkommen") { -->
     <div class="welcome-content">
 
       <div class="user-time">
           <h2> DABubble-Team</h2>
-        <span>{{ chat.currentChannelData.createdAt | date:'dd.MM.yyyy HH:mm'  }}</span>
+        <!-- <span>{{ chat.currentChannelData.createdAt | date:'dd.MM.yyyy HH:mm'  }}</span> -->
       </div>
 
 
         <h1>Willkommen in eurem privaten Channel!</h1>
 
         <div class="added-user-container">
-            @for(user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
+            <!-- @for(user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
               <button (click)="openProfileUserSingle(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
-            }
+            } -->
 
         </div>
 
@@ -115,37 +116,39 @@
         Euer DABubble-Team
       </p>
     </div>
-  }
 
+<!--
   @else {
+    } -->
+
     <div class="welcome-content">
 
     <div class="user-time">
-        <h2> {{chat.currentChannelData.createdBy[0].displayName}} </h2>
-      <span>{{ chat.currentChannelData.createdAt | date:'dd.MM.yyyy HH:mm'  }}</span>
+        <h2> created by name </h2>
+      <!-- <span>{{ chat.currentChannelData.createdAt | date:'dd.MM.yyyy HH:mm'  }}</span> -->
     </div>
 
 
     <h1>Willkommen in eurem privaten Channel!</h1>
 
     <div class="added-user-container">
-        @for(user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
+        <!-- @for(user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
           <button (click)="openProfileUserSingle(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
-        }
+        } -->
 
     </div>
-    @if(chat.currentChannelData.channelDescription === "") {
+    <!-- @if(chat.currentChannelData.channelDescription === "") {
       @if (chat.currentChannelData.createdBy[0].uId === this.fb.currentUser()?.uId) {
               <button class="add-description" (click)="openTeam(chat)">Beschreibung hinzufügen...</button>
             }
 
-        }
+        } -->
         <p>
-          {{ chat.currentChannelData.channelDescription}}
+          channel description
         </p>
         <br>
     </div>
-  }
+
   <button (click)="scrollToBottomButton()"
   class="c-scroll-bottom js-scroll-bottom"
   [ngClass]="{'c-scroll-bottom--visible': isVisible}"
@@ -156,15 +159,15 @@
   </div>
 
   <!-- <app-loader></app-loader> -->
-  @for (singleMessage of this.chat.answers; track this.chat.answers; let index = $index, let first = $first, last = $last) {
-    <app-message-answer
+  <!-- @for (singleMessage of this.chat.answers; track this.chat.answers; let index = $index, let first = $first, last = $last) { -->
+    <!-- <app-message-answer
     (click)="showId(this.chat)"
     [userMessage]="singleMessage"
         [index]="index"
         (finalChange)="onTextUpdate($event)"
         >
-      </app-message-answer>
-    }
+      </app-message-answer> -->
+    <!-- } -->
 
   </div>
   <app-message-field [ngClass]="{'edit-field': stateControl.globalEdit}"
@@ -173,5 +176,5 @@
   [textAreaEditId]="textAreaId"
   [textAreaIsEdited]="textAreaEdited"
   ></app-message-field>
- }
+ 
 </section>

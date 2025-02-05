@@ -33,28 +33,10 @@ export class MenuSideLeftComponent {
   channelUsers: Channel[] = [];
 
   constructor() {
-    // Reaktive Überwachung des Benutzerstatus
-    effect(() => {
-      const currentUser = this.fb.currentUser();
-      if (currentUser) {
-        const userId = currentUser.uId;
-        this.chat.getUserChannels(userId).then((userChannels) => {
-          this.channelUsers = userChannels;
-        });
-      }
-    });
+
   }
 
   ngOnInit(): void {
-    // // Wiederherstellung des aktuellen Channels bei Seiten-Neuladen
-    // if (typeof window !== 'undefined' && window.localStorage) {
-    //   const savedChannelId = localStorage.getItem('currentChannel');
-    //   if (savedChannelId) {
-    //     this.openChannel(savedChannelId);
-    //   }
-    // }
-    // this.ms.loadCurrentMessageData();
-    this.chat.subChannelList();
     this.userService.subUserList();
     this.sortListOfUser();
   }
@@ -62,8 +44,8 @@ export class MenuSideLeftComponent {
   toggleMenuSubscription() {
     if (this.isFirstDropdownMenuOpen || this.state.isMenuOpen) {
       // Starte das Abonnement, wenn das Menü sichtbar ist
-      this.chat.subChannelList();
-      this.chat.channelList;
+      // this.chat.subChannelList();
+      // this.chat.channelList;
     } else {
       // Beende das Abonnement, wenn das Menü nicht sichtbar ist
       this.chat.unsubscribe('channel');
@@ -84,7 +66,7 @@ export class MenuSideLeftComponent {
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
     this.state.isThreadOpen = false;
-    await this.chat.openChatById(chanId);
+    // await this.chat.openChatById(chanId);
   }
 
   async openMessage(user: User): Promise<void> {
@@ -131,7 +113,7 @@ export class MenuSideLeftComponent {
   }
 
   sortOfAllChannels() {
-    const sortAllChannels = this.chat.channelList;
+    const sortAllChannels = this.chat.channels();
     sortAllChannels.sort((a, b) => {
       if (a.chanId === this.fb.mainChannel) return -1;
       if (b.chanId === this.fb.mainChannel) return 1;

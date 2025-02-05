@@ -32,7 +32,7 @@ export class AddUsersComponent {
   }
   async addUserToChat() {
     this.stateServer.choosenUserFirebase.push(
-      this.chat.currentChannelData!.createdBy[0].uId
+      // this.chat.currentChannelData!.createdBy[0].uId
     );
     // await this.chat.updateSpecificPeopleInChannelFromState();
     this.closeAddUsers();

@@ -70,7 +70,7 @@ export class MessageAnswerComponent {
   constructor() { }
 
   async ngOnInit() {
-    await this.chat.getAnswersFromMessage();
+    // await this.chat.getAnswersFromMessage();
     this.updateCurrentMessage();
 
     // Prüfen, ob der aktuelle Benutzer die Nachricht gesendet hat
@@ -86,8 +86,8 @@ export class MessageAnswerComponent {
 
   async openThread(userMessage: Message) {
     // this.state.isThreadOpen = false;
-    this.chat.currentMessageId = userMessage.threadId;
-    await this.chat.getAnswersFromMessage();
+    // this.chat.currentMessageId = userMessage.threadId;
+    // await this.chat.getAnswersFromMessage();
     this.state.isThreadOpen = true;
     this.state.responsiveChat = false;
     this.userService.setThreadMessage(userMessage); // Nachricht setzen
@@ -96,19 +96,19 @@ export class MessageAnswerComponent {
 
   // Methode zum Aktualisieren der Reaktionen in Firestore
   async updateReactionsInFirestore() {
-    const channelId = this.chat.currentChannelData!.chanId;
+    // const channelId = this.chat.currentChannelData!.chanId;
     const messageId = this.userMessage!.threadId;
 
-    const messageDocRef = doc(
-      this.firestore,
-      'channels',
-      channelId,
-      'messages',
-      messageId
-    );
+    // const messageDocRef = doc(
+    //   this.firestore,
+    //   'channels',
+    //   channelId,
+    //   'messages',
+    //   messageId
+    // );
 
     // Aktualisiere die Reaktionen im Firestore-Dokument
-    await updateDoc(messageDocRef, { reactions: this.userMessage?.reactions });
+    // await updateDoc(messageDocRef, { reactions: this.userMessage?.reactions });
   }
 
   async openProfileUserSingle(userId: string) {

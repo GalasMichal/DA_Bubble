@@ -6,7 +6,7 @@
       <img src="/assets/media/icons/search.svg" alt="Search" />
     </button>
 
-    <input
+    <!-- <input
       type="search"
       id="search"
       name="search"
@@ -17,7 +17,7 @@
       (blur)="hideResults()"
       required
       autocomplete="off"
-    />
+    /> -->
     @if(searchTerm !== '') {
       <button class="close-btn" (click)="clearSearch()">
         <app-close></app-close>
@@ -49,9 +49,9 @@
           <span>{{ result.channelName }}</span>
         </button>
       </li>
-      } 
-      @for(result of allResults; track $index) {   
-      
+      }
+      @for(result of allResults; track $index) {
+
         @if(result.displayName !== undefined) {
       <li>
         <button (click)="openMessage(result)">
@@ -66,7 +66,7 @@
           <span>{{ result.channelName }}</span>
         </button>
       </li>
-      } 
+      }
     }
     </ul>
   </div>

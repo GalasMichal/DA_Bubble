@@ -6,6 +6,7 @@ import {
   Firestore,
   onSnapshot,
   setDoc,
+  Unsubscribe,
   updateDoc,
 } from '@angular/fire/firestore';
 import { Channel } from '../../models/interfaces/channel.model';
@@ -24,7 +25,7 @@ export class ChatRoomService {
   // public userList: AppUser[] = [];
   // public answers: Message[] = [];
   // public messageAnswerList = signal<Message[]>([]);
-  // private subscriptions: { [key: string]: Unsubscribe } = {};
+  private subscriptions: { [key: string]: Unsubscribe } = {};
   // public currentUserChannels: Channel[] = [];
   // public currentUserChannelsSpecificPeopleUid: string[] = [];
   // public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
@@ -37,7 +38,10 @@ export class ChatRoomService {
 
   channels = signal<Channel[]>([]);
 
-  constructor() {}
+  constructor() {
+
+
+  }
 
   async loadChannels() {
     const userId = this.fireService.currentUser()?.uId;
@@ -62,11 +66,15 @@ export class ChatRoomService {
         }
       }
       this.channels.set(updatedChannels);
+      console.log('channels', updatedChannels);
     });
   }
 
   async addChannel(channel: Channel) {
-    const channelRef = doc(this.fireService.firestore, `channels/${channel.chanId}`);
+    const channelRef = doc(
+      this.fireService.firestore,
+      `channels/${channel.chanId}`
+    );
     await setDoc(channelRef, channel);
     this.channels.update((channels) => [...channels, channel]);
     const db = await this.dbPromise;
@@ -74,7 +82,10 @@ export class ChatRoomService {
   }
 
   async updateChannel(channel: Channel) {
-    const channelRef = doc(this.fireService.firestore, `channels/${channel.chanId}`);
+    const channelRef = doc(
+      this.fireService.firestore,
+      `channels/${channel.chanId}`
+    );
     await setDoc(channelRef, channel, { merge: true });
     this.channels.update((channels) =>
       channels.map((c) => (c.chanId === channel.chanId ? channel : c))
@@ -86,9 +97,22 @@ export class ChatRoomService {
   async deleteChannel(chanId: string) {
     const channelRef = doc(this.fireService.firestore, `channels/${chanId}`);
     await setDoc(channelRef, { deleted: true }, { merge: true }); // Soft Delete
-    this.channels.update((channels) => channels.filter((c) => c.chanId !== chanId));
+    this.channels.update((channels) =>
+      channels.filter((c) => c.chanId !== chanId)
+    );
     const db = await this.dbPromise;
     await db.delete('channels', chanId);
+  }
+
+  unsubscribe(key: string) {
+    if (this.subscriptions[key]) {
+      this.subscriptions[key]();
+      delete this.subscriptions[key];
+    }
+  }
+
+  unsubscribeAll() {
+    Object.keys(this.subscriptions).forEach((key) => this.unsubscribe(key));
   }
 }
 

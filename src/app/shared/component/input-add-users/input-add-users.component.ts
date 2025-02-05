@@ -38,20 +38,20 @@ export class InputAddUsersComponent {
   }
 
   showAllChoosenUsers() {
-    this.stateServer.choosenUser = [];
-    this.stateServer.choosenUserFirebase = [];
+    // this.stateServer.choosenUser = [];
+    // this.stateServer.choosenUserFirebase = [];
 
-    if (this.chat.currentChannelData !== undefined) {
-      const listOfAllChoosenUsers =
-        this.chat.currentUserChannelsSpecificPeopleObject;
-      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-        const object = listOfAllChoosenUsers[i];
-        if (object.uId !== this.chat.currentChannelData!.createdBy[0].uId) {
-          this.stateServer.choosenUser.push(object);
-          this.stateServer.choosenUserFirebase.push(object.uId);
-        }
-      }
-    }
+    // if (this.chat.currentChannelData !== undefined) {
+    //   const listOfAllChoosenUsers =
+    //     this.chat.currentUserChannelsSpecificPeopleObject;
+    //   for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+    //     const object = listOfAllChoosenUsers[i];
+    //     if (object.uId !== this.chat.currentChannelData!.createdBy[0].uId) {
+    //       this.stateServer.choosenUser.push(object);
+    //       this.stateServer.choosenUserFirebase.push(object.uId);
+    //     }
+    //   }
+    // }
   }
 
   filterOnlyAvaliableUser() {

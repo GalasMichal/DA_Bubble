@@ -24,7 +24,7 @@ import { ChatRoomService } from '../../services/chat-room/chat-room.service';
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
-export class MainContentComponent implements OnInit{
+export class MainContentComponent implements OnInit {
   stateServer: StateControlService = inject(StateControlService);
   user = inject(UserServiceService);
   chat = inject(ChatRoomService);
@@ -38,16 +38,8 @@ export class MainContentComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.chat.channelList;
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        this.db.getUserByUid(user.uid);
-
-        // Laden des Benutzers
-      } else {
-        this.router.navigate(['']);
-      }
-    });
+    this.chat.loadChannels();
+    console.log('chats ind db', this.chat.channels());
   }
 
   ngOnDestroy(): void {

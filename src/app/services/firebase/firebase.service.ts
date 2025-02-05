@@ -49,7 +49,7 @@ export class FirebaseService {
   private auth: Auth = inject(Auth);
   provider = new GoogleAuthProvider();
   router = inject(Router);
-  chat = inject(ChatRoomService);
+
   user = inject(UserServiceService);
   userService = inject(UserServiceService);
   stateControl = inject(StateControlService);

@@ -25,7 +25,7 @@ import { ConfirmLeaveChannelComponent } from '../confirm-leave-channel/confirm-l
 export class ChannelEditComponent {
   readonly dialog = inject(MatDialogRef<ChannelEditComponent>);
   dialogConfirm = inject(MatDialog);
-
+  isDisabled: boolean = false;
   channelEditTitel: boolean = false;
   channelEditDescription: boolean = false;
   chat = inject(ChatRoomService);
@@ -34,22 +34,22 @@ export class ChannelEditComponent {
   fb = inject(FirebaseService);
   router = inject(Router);
 
-  currentTitle = this.chat.currentChannelData?.channelName;
-  currentDescription = this.chat.currentChannelData?.channelDescription;
+  // currentTitle = this.chat.currentChannelData?.channelName;
+  // currentDescription = this.chat.currentChannelData?.channelDescription;
   newTitle: string = '';
   newDescription: string = '';
   counter: number = 0;
-  isDisabled =
-    this.chat.currentChannelData?.createdBy[0].uId !==
-    this.fb.currentUser()?.uId;
-  isDisabledCreatedBy =
-    this.chat.currentChannelData?.createdBy[0].uId ===
-    this.fb.currentUser()?.uId;
+  // isDisabled =
+  //   this.chat.currentChannelData?.createdBy[0].uId !==
+  //   this.fb.currentUser()?.uId;
+  isDisabledCreatedBy = false;
+    // this.chat.currentChannelData?.createdBy[0].uId ===
+    // this.fb.currentUser()?.uId;
 
   constructor() {
-    if (this.stateServer.createChannelActiveInput) {
-      this.showAllChoosenUsers();
-    }
+    // if (this.stateServer.createChannelActiveInput) {
+    //   this.showAllChoosenUsers();
+    // }
   }
 
   closeChannelEdit() {
@@ -63,23 +63,23 @@ export class ChannelEditComponent {
   }
 
   onEditTittle() {
-    this.counter++;
+    // this.counter++;
 
-    if (this.isDisabled) {
-      this.onCounter();
-    } else {
-      this.editChannelTittle();
-    }
+    // if (this.isDisabled) {
+    //   this.onCounter();
+    // } else {
+    //   this.editChannelTittle();
+    // }
   }
 
   onEditDescription() {
-    this.counter++;
+    // this.counter++;
 
-    if (this.isDisabled) {
-      this.onCounter();
-    } else {
-      this.editChannelDescription();
-    }
+    // if (this.isDisabled) {
+    //   this.onCounter();
+    // } else {
+    //   this.editChannelDescription();
+    // }
   }
 
   showDialog() {
@@ -93,8 +93,8 @@ export class ChannelEditComponent {
   }
 
   saveChannelTittle() {
-    this.channelEditTitel = !this.channelEditTitel;
-    this.newTitle = this.chat.currentChannelData!.channelName;
+    // this.channelEditTitel = !this.channelEditTitel;
+    // this.newTitle = this.chat.currentChannelData!.channelName;
   }
 
   editChannelDescription() {
@@ -102,29 +102,29 @@ export class ChannelEditComponent {
   }
 
   saveChannelDescription() {
-    this.channelEditDescription = !this.channelEditDescription;
-    this.newDescription = this.chat.currentChannelData!.channelDescription;
+    // this.channelEditDescription = !this.channelEditDescription;
+    // this.newDescription = this.chat.currentChannelData!.channelDescription;
   }
 
   onUpdateChannel(chanId: string, text: string) {
     this.counter++;
 
-    if (this.isDisabled) {
-      this.onCounter();
-    } else {
-      this.updateChannel(chanId, text);
-    }
+    // if (this.isDisabled) {
+    //   this.onCounter();
+    // } else {
+    //   this.updateChannel(chanId, text);
+    // }
   }
 
   updateChannel(chanId: string, text: string) {
     const newTitleNewDescription = doc(this.firestore, 'channels', chanId);
 
     updateDoc(newTitleNewDescription, {
-      channelName: this.newTitle === '' ? this.currentTitle : this.newTitle,
-      channelDescription:
-        this.newDescription === ''
-          ? this.currentDescription
-          : this.newDescription,
+      // channelName: this.newTitle === '' ? this.currentTitle : this.newTitle,
+      // channelDescription:
+      //   this.newDescription === ''
+      //     ? this.currentDescription
+      //     : this.newDescription,
     });
 
     this.stateServer.showToast = true;
@@ -137,13 +137,13 @@ export class ChannelEditComponent {
   }
 
   onDeleteChannel(chanId: string) {
-    this.counter++;
+    // this.counter++;
 
-    if (this.isDisabled) {
-      this.onCounter();
-    } else {
-      this.deleteChannel(chanId);
-    }
+    // if (this.isDisabled) {
+    //   this.onCounter();
+    // } else {
+    //   this.deleteChannel(chanId);
+    // }
   }
 
   deleteChannel(chanId: string) {
@@ -166,18 +166,18 @@ export class ChannelEditComponent {
   }
 
   showAllChoosenUsers() {
-    this.stateServer.choosenUser = [];
-    this.stateServer.choosenUserFirebase = [];
+    // this.stateServer.choosenUser = [];
+    // this.stateServer.choosenUserFirebase = [];
 
-    if (this.chat.currentChannelData !== undefined) {
-      const listOfAllChoosenUsers =
-        this.chat.currentUserChannelsSpecificPeopleObject;
-      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-        const object = listOfAllChoosenUsers[i];
-        this.stateServer.choosenUser.push(object);
-        this.stateServer.choosenUserFirebase.push(object.uId);
-      }
-    }
+    // if (this.chat.currentChannelData !== undefined) {
+    //   const listOfAllChoosenUsers =
+    //     this.chat.currentUserChannelsSpecificPeopleObject;
+    //   for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+    //     const object = listOfAllChoosenUsers[i];
+    //     this.stateServer.choosenUser.push(object);
+    //     this.stateServer.choosenUserFirebase.push(object.uId);
+    //   }
+    // }
   }
 
   leaveChannel() {

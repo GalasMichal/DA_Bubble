@@ -26,14 +26,14 @@ export class ThreadAnswerComponent {
   user = inject(UserServiceService);
   chat = inject(ChatRoomService);
 
-  @Input() currentChat: Channel | null = null;
-  public answers: Signal<Message[]> = computed(() =>
-    this.chat.messageAnswerList()
-  );
+  //  @Input() currentChat: Channel | null = null;
+  //  public answers: Signal<Message[]> = computed(() =>
+  // this.chat.messageAnswerList()
+  //  );
 
   constructor() {}
   ngOnInit(): void {
-    this.chat.getAnswersFromMessage();
+    // this.chat.getAnswersFromMessage();
   }
   closeThread() {
     this.state.isThreadOpen = false;

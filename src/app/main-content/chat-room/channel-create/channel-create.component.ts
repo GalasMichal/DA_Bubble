@@ -116,7 +116,7 @@ export class ChannelCreateComponent {
   }
 
   createChannel(event: Event, newChannel: Channel) {
-    this.chat.addChannelToFirestore(newChannel);
+    // this.chat.addChannelToFirestore(newChannel);
     this.closeDialogAddMembers(event);
   }
 }

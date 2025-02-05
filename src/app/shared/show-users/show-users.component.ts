@@ -46,14 +46,14 @@ export class ShowUsersComponent {
     }
 
     onOpenAddUsers() {
-      const isDisabled = this.chat.currentChannelData?.createdBy[0].uId !== this.fb.currentUser()?.uId
+      // const isDisabled = this.chat.currentChannelData?.createdBy[0].uId !== this.fb.currentUser()?.uId
       this.counter++;
 
-      if (isDisabled) {
-        this.onCounter()
-      } else {
-        this.openAddUsers();
-      }
+      // if (isDisabled) {
+      //   this.onCounter()
+      // } else {
+      //   this.openAddUsers();
+      // }
     }
 
     openAddUsers() {
