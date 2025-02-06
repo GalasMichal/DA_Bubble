@@ -38,20 +38,22 @@ export class MainContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    onAuthStateChanged(this.auth, (user) => {
+    onAuthStateChanged(this.auth, async (user) => {
       if (user) {
+        // Warte auf die Benutzerinformationen, bevor du fortfährst
         console.log('user', user);
-        this.db.getUserByUid(user.uid);
-        console.log('user', this.db.currentUser());
-        // this.db.currentUser()
-        // Laden des Benutzers
+        await this.db.getUserByUid(user.uid);
+        console.log('currentUser', this.db.currentUser()); // Jetzt kannst du sicher auf den Benutzer zugreifen
+
+        // Lade Kanäle und beginne mit den Echtzeit-Updates
+        this.chat.loadChannelsFromDB(); // Lade Kanäle aus IndexedDB
+        this.chat.subscribeToChannelUpdates(); // Abonniere Echtzeit-Updates von Firestore
+        console.log('Channels aus DB', this.chat.channels());
       } else {
+        // Falls kein Benutzer angemeldet ist, navigiere zum Login-Bildschirm
         this.router.navigate(['']);
       }
     });
-    this.chat.loadChannelsFromDB();
-    this.chat.subscribeToChannelUpdates();
-    console.log('chats ind db', this.chat.channels());
   }
 
   ngOnDestroy(): void {
