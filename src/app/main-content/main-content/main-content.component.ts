@@ -40,20 +40,18 @@ export class MainContentComponent implements OnInit {
   ngOnInit(): void {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
+        console.log('user', user);
         this.db.getUserByUid(user.uid);
-
-         // Laden des Benutzers
+        console.log('user', this.db.currentUser());
+        // this.db.currentUser()
+        // Laden des Benutzers
       } else {
         this.router.navigate(['']);
       }
-
     });
-    this.loadData();
+    this.chat.loadChannelsFromDB();
+    this.chat.subscribeToChannelUpdates();
     console.log('chats ind db', this.chat.channels());
-  }
-
-  async loadData() {
-    await this.chat.loadChannels();
   }
 
   ngOnDestroy(): void {
