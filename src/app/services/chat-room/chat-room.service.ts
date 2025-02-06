@@ -38,7 +38,7 @@ export class ChatRoomService {
   private currentChannelSignal = signal<Channel | null>(null);
 
   channels = signal<Channel[]>([]);
-  
+
   setCurrentChannel(channel: Channel) {
     this.currentChannelSignal.set(channel);
   }
@@ -78,14 +78,15 @@ export class ChatRoomService {
 
 
   async addChannel(channel: Channel) {
+    const db = await this.dbPromise;
+    await db.put('channels', channel);
     const channelRef = doc(
       this.fireService.firestore,
       `channels/${channel.chanId}`
     );
     await setDoc(channelRef, channel);
     this.channels.update((channels) => [...channels, channel]);
-    const db = await this.dbPromise;
-    await db.put('channels', channel); // IndexedDB aktualisieren
+    // IndexedDB aktualisieren
   }
 
   async updateChannel(channel: Channel) {
