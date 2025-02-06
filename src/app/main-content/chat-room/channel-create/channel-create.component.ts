@@ -1,10 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
-import {
-  MatDialog,
-  MatDialogRef,
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import {
   FormControl,
@@ -113,7 +110,8 @@ export class ChannelCreateComponent {
   }
 
   createChannel(event: Event, newChannel: Channel) {
-    this.chat.addChannel(newChannel);
-    this.closeDialogAddMembers(event);
+    console.log('newChannel', newChannel);
+    this.chat.createChannel(newChannel);
+    // this.closeDialogAddMembers(event);
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable, Signal, computed, inject, signal } from '@angular/core';
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -46,19 +47,16 @@ export class ChatRoomService {
   getCurrentChannel(): Signal<Channel | null> {
     return this.currentChannelSignal;
   }
-  constructor() {
-  }
+  constructor() {}
 
-  async loadChannels() {
+  async subscribeToChannelUpdates() {
     const userId = this.fireService.currentUser()?.uId;
     if (!userId) return;
 
-    const db = await this.dbPromise;
-    const cachedChannels: Channel[] = await db.getAll('channels');
-    this.channels.set(cachedChannels);
-
     const channelsRef = collection(this.fireService.firestore, 'channels');
-    onSnapshot(channelsRef, async (snapshot) => {
+
+    // Starte den Snapshot-Listener und speichere die Unsubscribe-Funktion
+    const unsubscribe = onSnapshot(channelsRef, async (snapshot) => {
       const updatedChannels: Channel[] = [];
       const db = await this.dbPromise;
 
@@ -66,25 +64,38 @@ export class ChatRoomService {
         const channel = doc.data() as Channel;
         if (channel.specificPeople.includes(userId)) {
           updatedChannels.push(channel);
-          await db.put('channels', channel); // Update IndexedDB
+          await db.put('channels', channel); // IndexedDB aktualisieren
         }
       }
       this.channels.set(updatedChannels);
-      console.log('channels updated', updatedChannels);
+      console.log('Channels aus Firestore aktualisiert:', updatedChannels);
     });
+
+    // Speichert die Unsubscribe-Funktion mit einem eindeutigen Schlüssel (z. B. 'channelUpdates')
+    this.subscriptions['channelUpdates'] = unsubscribe;
   }
 
+  async loadChannelsFromDB() {
+    const userId = this.fireService.currentUser()?.uId;
+    if (!userId) return;
 
-  async addChannel(channel: Channel) {
     const db = await this.dbPromise;
-    await db.put('channels', channel);
-    const channelRef = doc(
-      this.fireService.firestore,
-      `channels/${channel.chanId}`
-    );
-    await setDoc(channelRef, channel);
+    const cachedChannels: Channel[] = await db.getAll('channels');
+
+    this.channels.set(cachedChannels);
+    console.log('Channels aus IndexedDB geladen:', cachedChannels);
+  }
+
+  async createChannel(channel: Channel) {
+    const db = await this.dbPromise;
+    const channelRef = collection(this.fireService.firestore, 'channels');
+    const channelDocRef = doc(channelRef);
+    const docRef = await setDoc(channelDocRef, channel);
+    channel.chanId = channelDocRef.id;
     this.channels.update((channels) => [...channels, channel]);
-    // IndexedDB aktualisieren
+
+    console.log(channel.chanId);
+    await db.put('channels', channel);
   }
 
   async updateChannel(channel: Channel) {

@@ -60,14 +60,12 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   dialogConfirm = inject(MatDialog);
-  // TU
-  currentChannel: Signal<Channel | null>  = signal<Channel | null>(null);
+  currentChannel: Signal<Channel | null> = signal<Channel | null>(null);
   channelId: string = '';
   ngOnInit(): void {
     this.channelId = this.route.snapshot.paramMap.get('id') || '';
     this.currentChannel = this.chat.getCurrentChannel();
     this.loadCurrentChannelAfterRefresh();
-    this.chat.loadChannels();
   }
 
   ngOnDestroy(): void {
@@ -81,7 +79,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   loadCurrentChannelAfterRefresh(): void {
     const currentChannel = this.route.snapshot.paramMap.get('id');
     if (currentChannel) {
-      
     }
   }
 
