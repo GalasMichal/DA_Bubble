@@ -38,6 +38,16 @@ export class MainContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.db.getUserByUid(user.uid);
+
+         // Laden des Benutzers
+      } else {
+        this.router.navigate(['']);
+      }
+
+    });
     this.loadData();
     console.log('chats ind db', this.chat.channels());
   }
