@@ -79,7 +79,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   loadCurrentChannelAfterRefresh(): void {
     const currentChannel = this.route.snapshot.paramMap.get('id');
-
     if (currentChannel) {
       // this.chat.openChatById(currentChannel);
     }
