@@ -13,7 +13,7 @@ import { ConfirmationComponent } from './landing-page/confirmation/confirmation.
 import { MainLayoutComponent } from './main-content/main-layout/main-layout.component';
 import { LandingLayoutComponent } from './landing-page/landing-layout/landing-layout.component';
 import { MainContentComponent } from './main-content/main-content/main-content.component';
-import { authGuard } from './auth.guard';
+// import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
   {

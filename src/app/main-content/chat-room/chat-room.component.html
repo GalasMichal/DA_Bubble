@@ -31,14 +31,14 @@
     <div class="header-right-container">
       <button class="user-container" (click)="openShowUsers()">
         <ul class="user-container-list">
-          <!-- @for (user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
+          <!-- @for (user of this.chat.channels.; track $index) {
             @if($index < 3){
               <li>
                 <app-avatar [user]="user" [userList]="true"></app-avatar>
               </li>
             }
-          } -->
-          <!-- @if(restOfUser() > 0) {
+          }
+          @if(restOfUser() > 0) {
             <div class=""> + {{ restOfUser() }}</div>
           } -->
         </ul>
@@ -168,8 +168,8 @@
         [index]="index"
         (finalChange)="onTextUpdate($event)"
         >
-      </app-message-answer> -->
-    <!-- } -->
+      </app-message-answer>
+    } -->
 
   </div>
   <app-message-field [ngClass]="{'edit-field': stateControl.globalEdit}"

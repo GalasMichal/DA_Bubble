@@ -47,8 +47,6 @@ export class ChatRoomService {
     return this.currentChannelSignal;
   }
   constructor() {
-
-
   }
 
   async loadChannels() {
