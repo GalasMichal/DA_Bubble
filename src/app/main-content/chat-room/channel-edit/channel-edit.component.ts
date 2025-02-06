@@ -1,4 +1,4 @@
-import { Component, inject, Input, input } from '@angular/core';
+import { Component, inject, Input, input, signal, Signal } from '@angular/core';
 import { CloseComponent } from '../../../shared/component/close/close.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
@@ -33,6 +33,7 @@ export class ChannelEditComponent {
   stateServer = inject(StateControlService);
   fb = inject(FirebaseService);
   router = inject(Router);
+  currentChannel: Signal<Channel | null> = signal<Channel | null>(null);
 
   // currentTitle = this.chat.currentChannelData?.channelName;
   // currentDescription = this.chat.currentChannelData?.channelDescription;
@@ -63,23 +64,23 @@ export class ChannelEditComponent {
   }
 
   onEditTittle() {
-    // this.counter++;
+    this.counter++;
 
-    // if (this.isDisabled) {
-    //   this.onCounter();
-    // } else {
-    //   this.editChannelTittle();
-    // }
+    if (this.isDisabled) {
+      this.onCounter();
+    } else {
+      this.editChannelTittle();
+    }
   }
 
   onEditDescription() {
-    // this.counter++;
+    this.counter++;
 
-    // if (this.isDisabled) {
-    //   this.onCounter();
-    // } else {
-    //   this.editChannelDescription();
-    // }
+    if (this.isDisabled) {
+      this.onCounter();
+    } else {
+      this.editChannelDescription();
+    }
   }
 
   showDialog() {
@@ -93,8 +94,8 @@ export class ChannelEditComponent {
   }
 
   saveChannelTittle() {
-    // this.channelEditTitel = !this.channelEditTitel;
-    // this.newTitle = this.chat.currentChannelData!.channelName;
+    this.channelEditTitel = !this.channelEditTitel;
+    this.newTitle = this.currentChannel()!.channelName;
   }
 
   editChannelDescription() {
@@ -102,29 +103,29 @@ export class ChannelEditComponent {
   }
 
   saveChannelDescription() {
-    // this.channelEditDescription = !this.channelEditDescription;
-    // this.newDescription = this.chat.currentChannelData!.channelDescription;
+    this.channelEditDescription = !this.channelEditDescription;
+    this.newDescription = this.currentChannel()!.channelDescription;
   }
 
   onUpdateChannel(chanId: string, text: string) {
     this.counter++;
 
-    // if (this.isDisabled) {
-    //   this.onCounter();
-    // } else {
-    //   this.updateChannel(chanId, text);
-    // }
+    if (this.isDisabled) {
+      this.onCounter();
+    } else {
+      this.updateChannel(chanId, text);
+    }
   }
 
   updateChannel(chanId: string, text: string) {
     const newTitleNewDescription = doc(this.firestore, 'channels', chanId);
 
     updateDoc(newTitleNewDescription, {
-      // channelName: this.newTitle === '' ? this.currentTitle : this.newTitle,
-      // channelDescription:
-      //   this.newDescription === ''
-      //     ? this.currentDescription
-      //     : this.newDescription,
+      channelName: this.newTitle === '' ? this.currentChannel()?.channelName : this.newTitle,
+      channelDescription:
+        this.newDescription === ''
+          ? this.currentChannel()?.channelDescription
+          : this.newDescription,
     });
 
     this.stateServer.showToast = true;
@@ -137,13 +138,13 @@ export class ChannelEditComponent {
   }
 
   onDeleteChannel(chanId: string) {
-    // this.counter++;
+    this.counter++;
 
-    // if (this.isDisabled) {
-    //   this.onCounter();
-    // } else {
-    //   this.deleteChannel(chanId);
-    // }
+    if (this.isDisabled) {
+      this.onCounter();
+    } else {
+      this.deleteChannel(chanId);
+    }
   }
 
   deleteChannel(chanId: string) {

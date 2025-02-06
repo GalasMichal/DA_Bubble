@@ -52,8 +52,8 @@
       <div class="channel-info-container" [ngClass]="{'d-none': channelEditDescription}">
         <div class="edit-name-container">
           <h3>Beschreibung</h3>
-          <!-- <button (click)="onEditDescription()" class="edit" [class.disabled]="isDisabled">Bearbeiten</button> -->
-          <!-- <button (click)="onEditDescription()" class="edit-img" [class.disabled]="isDisabled">
+          <button (click)="onEditDescription()" class="edit" [class.disabled]="isDisabled">Bearbeiten</button>
+          <button (click)="onEditDescription()" class="edit-img" [class.disabled]="isDisabled">
             <svg
         width="19"
         height="19"
@@ -66,18 +66,18 @@
           fill="#1C1B1F"
         />
       </svg>
-          </button> -->
+          </button>
         </div>
 
         <p>
-          <!-- {{chat.currentChannelData?.channelDescription}} -->
+          {{currentChannel()?.channelDescription}}
         </p>
 
         <div class="separator"></div>
 
         <div class="creat-user">
           <h3>Erstellt von</h3>
-          <!-- <div class="user-link">{{ chat.currentChannelData!.createdBy[0].displayName }}</div> -->
+          <div class="user-link">{{ currentChannel()!.createdBy[0].displayName }}</div>
         </div>
       </div>
 
@@ -94,24 +94,24 @@
           </button>
 
         </div>
-        <!-- <input #description type="text"
-          placeholder="Dein Text hier" name="description" [(ngModel)]="chat.currentChannelData!.channelDescription" autocomplete="off"/> -->
+        <input #description type="text"
+          placeholder="Dein Text hier" name="description" [(ngModel)]="currentChannel()!.channelDescription" autocomplete="off"/>
 
           <div class="separator"></div>
 
           <div class="creat-user">
             <h3>Erstellt von</h3>
-            <!-- <div class="user-link">{{ chat.currentChannelData!.createdBy[0].displayName }}</div> -->
+            <div class="user-link">{{ currentChannel()!.createdBy[0].displayName }}</div>
           </div>
 
         </div>
-        <!-- Description END-->
+        <!-- Description END -->
 
     </div>
 
     <div class="btn-container">
 
-      <!-- <button class="channel-btn" [class.disabled]="isDisabled" (click)="onDeleteChannel(chat.currentChannelData!.chanId)">Channel löschen</button> -->
+      <button class="channel-btn" [class.disabled]="isDisabled" (click)="onDeleteChannel(currentChannel()!.chanId)">Channel löschen</button>
 
       <button class="channel-btn" [disabled]="isDisabledCreatedBy" (click)="leaveChannel()" >Channel verlassen</button>
       <button class="change-btn" >Änderungen speichern</button>
