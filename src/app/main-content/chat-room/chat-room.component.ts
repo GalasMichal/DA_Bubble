@@ -60,6 +60,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   dialogConfirm = inject(MatDialog);
+  // TU
   currentChannel: Signal<Channel | null>  = signal<Channel | null>(null);
   channelId: string = '';
   ngOnInit(): void {
@@ -174,9 +175,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.showAllChoosenUsers();
   }
 
-  // restOfUser(): number {
-  //   // return this.chat.currentUserChannelsSpecificPeopleObject.length - 3;
-  // }
+  restOfUser(): number {
+    return this.currentChannel()!.specificPeople.length - 3;
+  }
 
   openTeam(chat: Object) {
     // const currentChannelID = this.chat.currentChannel;
