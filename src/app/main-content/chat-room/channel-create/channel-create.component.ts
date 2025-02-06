@@ -31,7 +31,6 @@ import { User } from '../../../models/interfaces/user.model';
     CommonModule,
     RouterModule,
     FormsModule,
-    MatDialogContent,
     ReactiveFormsModule,
     InputAddUsersComponent,
     CloseComponent,
@@ -116,7 +115,7 @@ export class ChannelCreateComponent {
   }
 
   createChannel(event: Event, newChannel: Channel) {
-    // this.chat.addChannelToFirestore(newChannel);
+    this.chat.addChannel(newChannel);
     this.closeDialogAddMembers(event);
   }
 }

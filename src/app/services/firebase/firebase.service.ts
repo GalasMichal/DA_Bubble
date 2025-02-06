@@ -10,7 +10,6 @@ import {
   User as FirebaseUser,
   fetchSignInMethodsForEmail,
   signOut,
-  authState,
 } from '@angular/fire/auth';
 import {
   collection,
