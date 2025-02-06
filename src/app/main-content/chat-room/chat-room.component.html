@@ -31,16 +31,17 @@
     <div class="header-right-container">
       <button class="user-container" (click)="openShowUsers()">
         <ul class="user-container-list">
-          <!-- @for (user of this.chat.channels.; track $index) {
+          <ng-container *ngFor="let user of currentChannel()?.specificPeople; let $index = index">
             @if($index < 3){
               <li>
-                <app-avatar [user]="user" [userList]="true"></app-avatar>
+                <app-avatar  [userList]="true"></app-avatar>
               </li>
             }
-          }
-          @if(restOfUser() > 0) {
-            <div class=""> + {{ restOfUser() }}</div>
-          } -->
+<!--
+         @if(restOfUser() > 0) {
+           <div class=""> + {{ sumRestOfUser() }}</div> -->
+           -->
+          </ng-container>
         </ul>
       </button>
       <!-- [class.disabled]="chat.currentChannelData.createdBy[0].uId !== fb.currentUser()?.uId" -->
