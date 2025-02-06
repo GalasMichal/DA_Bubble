@@ -1,5 +1,6 @@
 import { Injectable, Signal, computed, inject, signal } from '@angular/core';
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -46,8 +47,7 @@ export class ChatRoomService {
   getCurrentChannel(): Signal<Channel | null> {
     return this.currentChannelSignal;
   }
-  constructor() {
-  }
+  constructor() {}
 
   async loadChannels() {
     const userId = this.fireService.currentUser()?.uId;
@@ -74,17 +74,16 @@ export class ChatRoomService {
     });
   }
 
-
-  async addChannel(channel: Channel) {
+  async createChannel(channel: Channel) {
     const db = await this.dbPromise;
-    await db.put('channels', channel);
-    const channelRef = doc(
-      this.fireService.firestore,
-      `channels/${channel.chanId}`
-    );
-    await setDoc(channelRef, channel);
+    const channelRef = collection(this.fireService.firestore, 'channels');
+    const channelDocRef = doc(channelRef);
+    const docRef = await setDoc(channelDocRef, channel);
+    channel.chanId = channelDocRef.id;
     this.channels.update((channels) => [...channels, channel]);
-    // IndexedDB aktualisieren
+
+    console.log(channel.chanId);
+    await db.put('channels', channel);
   }
 
   async updateChannel(channel: Channel) {
