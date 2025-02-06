@@ -3,7 +3,6 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import {
   MatDialog,
-  MatDialogContent,
   MatDialogRef,
 } from '@angular/material/dialog';
 
@@ -22,7 +21,6 @@ import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
-import { User } from '../../../models/interfaces/user.model';
 
 @Component({
   selector: 'app-channel-create',
