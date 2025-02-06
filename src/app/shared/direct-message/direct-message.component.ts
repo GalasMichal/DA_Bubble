@@ -51,9 +51,10 @@ export class DirectMessageComponent implements OnInit {
 
   loadCurrentMessageAfterRefresh(): void {
     const messageId = this.route.snapshot.paramMap.get('id');
-
     if (messageId) {
       this.ms.loadMessagesFromChat(messageId);
+      
+      this.userService.messageReceiver
     }
   }
 }

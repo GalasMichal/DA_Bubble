@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserServiceService } from './services/user-service/user-service.service';
+import { LoaderComponent } from './shared/component/loader/loader.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -16,6 +17,7 @@ import { UserServiceService } from './services/user-service/user-service.service
     RouterModule,
     RouterOutlet,
     ReactiveFormsModule,
+    LoaderComponent
   ],
 
   templateUrl: './app.component.html',
