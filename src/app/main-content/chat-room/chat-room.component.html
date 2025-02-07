@@ -29,10 +29,10 @@
      <div class="header-right-container">
        <button class="user-container" (click)="openShowUsers()">
          <ul class="user-container-list">
-           @for (user of currentChannel()?.allMembers; track $index) {
+           @for (user of this.chat.currentUserChannelsSpecificPeopleObject; track $index) {
              @if($index < 3){
                <li>
-                 <!-- <app-avatar [user]="user" [userList]="true"></app-avatar> -->
+                 <app-avatar [user]="user" [userList]="true"></app-avatar>
                </li>
              }
            }

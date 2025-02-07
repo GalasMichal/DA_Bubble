@@ -29,7 +29,7 @@ export class ChatRoomService {
   private subscriptions: { [key: string]: Unsubscribe } = {};
   // public currentUserChannels: Channel[] = [];
   // public currentUserChannelsSpecificPeopleUid: string[] = [];
-  // public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
+  public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
 
   private dbPromise = openDB('ChatDB', 1, {
     upgrade(db) {

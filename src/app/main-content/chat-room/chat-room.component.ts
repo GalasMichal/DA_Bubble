@@ -87,7 +87,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   ngAfterViewChecked(): void {
     if (this.stateControl.scrollToBottomGlobal) {
       if (this.scrollToBottom?.nativeElement) {
-        this.scrollToBottom.nativeElement.scrollTop =
+        this.scrollToBottom.nativeElement.scrollTwileop =
           this.scrollToBottom.nativeElement.scrollHeight;
       }
     }
@@ -199,19 +199,19 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   showAllChoosenUsers(): void {
-    //   this.stateControl.choosenUser = [];
-    //   this.stateControl.choosenUserFirebase = [];
-    //   if (this.chat.currentChannelData !== undefined) {
-    //     const listOfAllChoosenUsers =
-    //       this.chat.currentUserChannelsSpecificPeopleObject;
-    //     for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-    //       const object = listOfAllChoosenUsers[i];
-    //       if (object.uId !== this.chat.currentChannelData!.createdBy[0].uId) {
-    //         this.stateControl.choosenUser.push(object);
-    //         this.stateControl.choosenUserFirebase.push(object.uId);
-    //       }
-    //     }
-    //   }
-    // }
-  }
+      this.stateControl.choosenUser = [];
+      this.stateControl.choosenUserFirebase = [];
+      if (this.userService.userList !== undefined) {
+        const listOfAllChoosenUsers =
+          this.userService.userList;
+        for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+          const object = listOfAllChoosenUsers[i];
+          if (object.uId !== this.currentChannel()!.createdBy[0].uId) {
+            this.stateControl.choosenUser.push(object);
+            this.stateControl.choosenUserFirebase.push(object.uId);
+          }
+        }
+      }
+    }
+
 }
