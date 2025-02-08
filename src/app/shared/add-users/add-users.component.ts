@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import {
   MatDialog,
   MatDialogContent,
@@ -21,7 +21,7 @@ export class AddUsersComponent {
   readonly dialog = inject(MatDialog);
   chat = inject(ChatRoomService);
   stateServer = inject(StateControlService);
-
+  currentChannel = computed(() => this.chat.currentChannelSignal());
   activeButton: boolean = false;
 
   closeAddUsers() {
@@ -31,11 +31,9 @@ export class AddUsersComponent {
     this.activeButton = value;
   }
   async addUserToChat() {
-    this.stateServer.choosenUserFirebase.push(
-      // this.chat.currentChannelData!.createdBy[0].uId
-    );
     // await this.chat.updateSpecificPeopleInChannelFromState();
     this.closeAddUsers();
+    console.log('this.stateServer.choosenUser FINAL: ', this.stateServer.choosenUser);
     this.stateServer.choosenUser = [];
   }
 }

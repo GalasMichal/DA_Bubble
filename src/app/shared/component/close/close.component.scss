@@ -7,6 +7,11 @@
   border: solid .0625rem transparent;
   border-radius: $b-radius-2;
   transition: all 175ms ease-in-out;
+  &[disabled] {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.1;
+  }
   &:hover,
   &:focus-visible {
     background: $bg-color;

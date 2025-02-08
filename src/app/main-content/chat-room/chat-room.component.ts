@@ -211,6 +211,15 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     }
   }
 
+
+/**
+ * Filters and returns a list of users who are specifically chosen in the current channel.
+ * 
+ * This function retrieves the list of user IDs from the current channel's `specificPeople` array 
+ * and filters the `userService.userList` to include only users whose IDs match.
+ * You receive arra with obejct from users.
+ * @returns {Array} An array of user objects that are part of the selected users in the channel.
+ */
   filterAllUsersInChannel() {
     const showAllChoosenUsers = this.currentChannel()?.specificPeople; // Array of user IDs
     const allUsers = this.userService.userList; // Array of User objects

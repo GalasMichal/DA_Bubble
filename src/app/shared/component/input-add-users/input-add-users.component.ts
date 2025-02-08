@@ -20,6 +20,7 @@ export class InputAddUsersComponent {
   userService = inject(UserServiceService);
   stateServer = inject(StateControlService);
   chat = inject(ChatRoomService);
+  fb = inject(FirebaseService);
   fireService = inject(FirebaseService);
   currentChannel = computed(() => this.chat.currentChannelSignal());
 
@@ -33,26 +34,7 @@ export class InputAddUsersComponent {
   }
 
   constructor() {
-    if (this.stateServer.createChannelActiveInput) {
-      this.showAllChoosenUsers();
-    }
-  }
-
-  showAllChoosenUsers() {
-    // this.stateServer.choosenUser = [];
-    // this.stateServer.choosenUserFirebase = [];
-
-    // if (this.chat.currentChannelData !== undefined) {
-    //   const listOfAllChoosenUsers =
-    //     this.chat.currentUserChannelsSpecificPeopleObject;
-    //   for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-    //     const object = listOfAllChoosenUsers[i];
-    //     if (object.uId !== this.chat.currentChannelData!.createdBy[0].uId) {
-    //       this.stateServer.choosenUser.push(object);
-    //       this.stateServer.choosenUserFirebase.push(object.uId);
-    //     }
-    //   }
-    // }
+      this.filterAllUsersInChannel();
   }
 
   filterOnlyAvaliableUser() {
@@ -65,34 +47,34 @@ export class InputAddUsersComponent {
         user.uId !== this.fireService.currentUser()?.uId
     );
   }
-  // filterOnlyAvaliableUser() {
-  //   const showAllChoosenUsers = this.currentChannel()?.specificPeople; // Array of user IDs
-  //   const allUsers = this.userService.userList; // Array of User objects
 
-  //   const filteredUsers = allUsers.filter((user) =>
-  //     showAllChoosenUsers?.includes(user.uId)
-  //   );
-  //   return filteredUsers
-  // }
+// Show all users except this user which created this channel
+  filterAllUsersInChannel() {
+    const currentChannel = this.currentChannel();
+    // const creatorId = this.currentChannel()?.createdBy[0].uId; // Creator's ID
+    const showAllChoosenUsers = currentChannel?.specificPeople; // Array of user IDs
+    const allUsers = this.userService.userList; // Array of User objects
 
-  addUser(index: number, event: Event, uId: string) {
-    event.preventDefault();
-    const indexListOfAllUsers = this.filterOnlyAvaliableUser()[index];
-    this.stateServer.choosenUser.push(indexListOfAllUsers);
-    // this.chat.currentChannelSignal()?.specificPeople.push(indexListOfAllUsers.uId);
-    console.log();
-    this.stateServer.choosenUserFirebase.push(uId);
+    const filteredUsers = allUsers.filter(
+      (user) => showAllChoosenUsers?.includes(user.uId) && user.uId);
+    this.stateServer.choosenUser = filteredUsers; // Assign filtered users
+}
 
+addUser(uId: string) {
+  const selectedUser = this.userService.userList.find(user => user.uId === uId);
+  
+  if (selectedUser) {
+    this.stateServer.choosenUser.push(selectedUser); // Füge den Benutzer hinzu
     this.makeButtonActiveReactive();
-    this.filterOnlyAvaliableUser();
   }
+  console.log(this.stateServer.choosenUser);
+}
 
-  removeUser(index: number, event: Event) {
-    event.preventDefault();
+  removeUser(index: number) {
     this.stateServer.choosenUser.splice(index, 1);
-    this.stateServer.choosenUserFirebase.splice(index, 1);
     this.makeButtonActiveReactive();
-    this.filterOnlyAvaliableUser();
+    console.log(this.stateServer.choosenUser);
+    
   }
 
   makeButtonActiveReactive() {

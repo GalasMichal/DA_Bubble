@@ -8,10 +8,12 @@
             <app-avatar [user]="user" [userList]="true"></app-avatar>
           </div>
           <div>{{user.displayName}}</div>
-          <button class="close-btn" (click)="removeUser($index, $event)">
-            <app-close></app-close>
-          </button>
-        </li>
+          <button 
+  class="close-btn" 
+  (click)="removeUser($index)" 
+  [disabled]="user.uId === fb.currentUser()?.uId">
+  <app-close></app-close>
+</button>
       }
     </ul>
     <input type="text" id="name-input" placeholder="Name eingeben" autocomplete="off" />
@@ -19,7 +21,7 @@
   <div class="list-of-user-container">
     <ul class="list-of-user-content">
       @for(user of filterOnlyAvaliableUser(); track $index) {
-        <li (click)="addUser($index, $event, user.uId)">
+        <li (click)="addUser(user.uId)">
             <button class="single-user">
               <div class="user-img">
                 <app-avatar [user]="user" [userList]="true"></app-avatar>
