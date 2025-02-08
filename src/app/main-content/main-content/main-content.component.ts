@@ -46,8 +46,8 @@ export class MainContentComponent implements OnInit {
         console.log('currentUser', this.db.currentUser()); // Jetzt kannst du sicher auf den Benutzer zugreifen
 
         // Lade Kanäle und beginne mit den Echtzeit-Updates
-        this.chat.loadChannelsFromDB(); // Lade Kanäle aus IndexedDB
-        this.chat.subscribeToChannelUpdates(); // Abonniere Echtzeit-Updates von Firestore
+        this.chat.getChannelsFromIndexedDB(); // Lade Kanäle aus IndexedDB
+        this.chat.subscribeToFirestoreChannels(); // Abonniere Echtzeit-Updates von Firestore
         console.log('Channels aus DB', this.chat.channels());
       } else {
         // Falls kein Benutzer angemeldet ist, navigiere zum Login-Bildschirm
