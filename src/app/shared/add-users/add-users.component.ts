@@ -31,9 +31,9 @@ export class AddUsersComponent {
     this.activeButton = value;
   }
   async addUserToChat() {
-    // await this.chat.updateSpecificPeopleInChannelFromState();
     this.closeAddUsers();
-    console.log('this.stateServer.choosenUser FINAL: ', this.stateServer.choosenUser);
+    const allChoosenUsersId = this.stateServer.choosenUser.map(user => user.uId);
+    this.currentChannel()!.specificPeople = allChoosenUsersId
     this.stateServer.choosenUser = [];
   }
 }

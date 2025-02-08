@@ -51,7 +51,6 @@ export class InputAddUsersComponent {
 // Show all users except this user which created this channel
   filterAllUsersInChannel() {
     const currentChannel = this.currentChannel();
-    // const creatorId = this.currentChannel()?.createdBy[0].uId; // Creator's ID
     const showAllChoosenUsers = currentChannel?.specificPeople; // Array of user IDs
     const allUsers = this.userService.userList; // Array of User objects
 
@@ -64,7 +63,7 @@ addUser(uId: string) {
   const selectedUser = this.userService.userList.find(user => user.uId === uId);
   
   if (selectedUser) {
-    this.stateServer.choosenUser.push(selectedUser); // Füge den Benutzer hinzu
+    this.stateServer.choosenUser.push(selectedUser);
     this.makeButtonActiveReactive();
   }
   console.log(this.stateServer.choosenUser);

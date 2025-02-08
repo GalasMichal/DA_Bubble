@@ -92,8 +92,7 @@ export class ChatRoomService {
 
   async updateChannel(channel: Channel) {
     const channelRef = doc(
-      this.fireService.firestore,
-      `channels/${channel.chanId}`
+      this.fireService.firestore, `channels/${channel.chanId}`
     );
     await setDoc(channelRef, channel, { merge: true });
     this.channels.update((channels) =>
