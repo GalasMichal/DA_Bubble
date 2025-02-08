@@ -100,8 +100,7 @@ export class ChatRoomService {
 
   async updateChannel(channel: Channel) {
     const channelRef = doc(
-      this.fireService.firestore,
-      `channels/${channel.chanId}`
+      this.fireService.firestore, `channels/${channel.chanId}`
     );
     await setDoc(channelRef, channel, { merge: true });
     this.channels.update((channels) =>
@@ -113,12 +112,9 @@ export class ChatRoomService {
 
   async deleteChannel(chanId: string) {
     deleteDoc(doc(this.fireService.firestore, 'channels', chanId));
-
-    // const channelRef = doc(this.fireService.firestore, 'channels', chanId);
-    // await setDoc(channelRef, { deleted: true }, { merge: true }); // Soft Delete
-    // this.channels.update((channels) =>
-    //   channels.filter((c) => c.chanId !== chanId)
-    // );
+    this.channels.update((channels) =>
+      channels.filter((c) => c.chanId !== chanId)
+    );
     const db = await this.dbPromise;
     await db.delete('channels', chanId);
   }

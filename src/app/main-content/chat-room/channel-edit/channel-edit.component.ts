@@ -36,7 +36,7 @@ export class ChannelEditComponent {
   currentChannel = computed(() => this.chat.currentChannelSignal());
 
   currentTitle = this.currentChannel()?.channelName;
-  currentDescription = this.currentChannel()?.channelDescription;
+  channelDescription = this.currentChannel()?.channelDescription;
   newTitle: string = '';
   newDescription: string = '';
   counter: number = 0;
@@ -119,7 +119,7 @@ export class ChannelEditComponent {
     const newTitleNewDescription = doc(this.firestore, 'channels', chanId);
 
     updateDoc(newTitleNewDescription, {
-      channelName: this.newTitle === '' ? this.currentChannel()?.channelName : this.newTitle,
+      currentTitle: this.newTitle === '' ? this.currentChannel()?.channelName : this.newTitle,
       channelDescription:
         this.newDescription === ''
           ? this.currentChannel()?.channelDescription
