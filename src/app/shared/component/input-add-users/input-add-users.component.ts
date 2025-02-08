@@ -69,6 +69,8 @@ export class InputAddUsersComponent {
     event.preventDefault();
     const indexListOfAllUsers = this.filterOnlyAvaliableUser()[index];
     this.stateServer.choosenUser.push(indexListOfAllUsers);
+    // this.chat.currentChannelSignal()?.specificPeople.push(indexListOfAllUsers.uId);
+    console.log();
     this.stateServer.choosenUserFirebase.push(uId);
 
     this.makeButtonActiveReactive();

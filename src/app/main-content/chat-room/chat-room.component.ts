@@ -199,19 +199,27 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   showAllChoosenUsers(): void {
-      this.stateControl.choosenUser = [];
-      this.stateControl.choosenUserFirebase = [];
-      if (this.userService.userList !== undefined) {
-        const listOfAllChoosenUsers =
-          this.userService.userList;
-        for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-          const object = listOfAllChoosenUsers[i];
-          if (object.uId !== this.currentChannel()!.createdBy[0].uId) {
-            this.stateControl.choosenUser.push(object);
-            this.stateControl.choosenUserFirebase.push(object.uId);
-          }
+    this.stateControl.choosenUser = [];
+    this.stateControl.choosenUserFirebase = [];
+    if (this.userService.userList !== undefined) {
+      const listOfAllChoosenUsers = this.userService.userList;
+      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
+        const object = listOfAllChoosenUsers[i];
+        if (object.uId !== this.currentChannel()!.createdBy[0].uId) {
+          this.stateControl.choosenUser.push(object);
+          this.stateControl.choosenUserFirebase.push(object.uId);
         }
       }
     }
+  }
 
+  filterOnlyAvaliableUser() {
+    const showAllChoosenUsers = this.currentChannel()?.specificPeople; // Array of user IDs
+    const allUsers = this.userService.userList; // Array of User objects
+
+    const filteredUsers = allUsers.filter((user) =>
+      showAllChoosenUsers?.includes(user.uId)
+    );
+    return filteredUsers
+  }
 }

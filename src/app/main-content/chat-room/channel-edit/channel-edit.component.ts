@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, signal, Signal } from '@angular/core';
+import { Component, computed, inject, Input, input, signal, Signal } from '@angular/core';
 import { CloseComponent } from '../../../shared/component/close/close.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
@@ -33,24 +33,22 @@ export class ChannelEditComponent {
   stateServer = inject(StateControlService);
   fb = inject(FirebaseService);
   router = inject(Router);
-  currentChannel: Signal<Channel | null> = signal<Channel | null>(null);
+  currentChannel = computed(() => this.chat.currentChannelSignal());
 
-  // currentTitle = this.chat.currentChannelData?.channelName;
-  // currentDescription = this.chat.currentChannelData?.channelDescription;
+  currentTitle = this.currentChannel()?.channelName;
+  currentDescription = this.currentChannel()?.channelDescription;
   newTitle: string = '';
   newDescription: string = '';
   counter: number = 0;
-  // isDisabled =
-  //   this.chat.currentChannelData?.createdBy[0].uId !==
-  //   this.fb.currentUser()?.uId;
+  // isDisabled = this.currentChannel()?.createdBy[0].uId !== this.fb.currentUser()?.uId;
   isDisabledCreatedBy = false;
-    // this.chat.currentChannelData?.createdBy[0].uId ===
+    // this.currentChannel()?.createdBy[0].uId ===
     // this.fb.currentUser()?.uId;
 
   constructor() {
-    // if (this.stateServer.createChannelActiveInput) {
-    //   this.showAllChoosenUsers();
-    // }
+    if (this.stateServer.createChannelActiveInput) {
+      this.showAllChoosenUsers();
+    }
   }
 
   closeChannelEdit() {
@@ -157,7 +155,7 @@ export class ChannelEditComponent {
 
     confirmDialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        deleteDoc(doc(this.firestore, 'channels', chanId));
+        this.chat.deleteChannel(chanId)
         this.dialogConfirm.closeAll();
         this.router.navigate(['main']);
       } else {

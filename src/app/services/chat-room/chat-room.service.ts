@@ -36,7 +36,7 @@ export class ChatRoomService {
       db.createObjectStore('channels', { keyPath: 'chanId' });
     },
   });
-  private currentChannelSignal = signal<Channel | null>(null);
+  public currentChannelSignal = signal<Channel | null>(null);
 
   channels = signal<Channel[]>([]);
 
@@ -112,11 +112,13 @@ export class ChatRoomService {
   }
 
   async deleteChannel(chanId: string) {
-    const channelRef = doc(this.fireService.firestore, `channels/${chanId}`);
-    await setDoc(channelRef, { deleted: true }, { merge: true }); // Soft Delete
-    this.channels.update((channels) =>
-      channels.filter((c) => c.chanId !== chanId)
-    );
+    deleteDoc(doc(this.fireService.firestore, 'channels', chanId));
+
+    // const channelRef = doc(this.fireService.firestore, 'channels', chanId);
+    // await setDoc(channelRef, { deleted: true }, { merge: true }); // Soft Delete
+    // this.channels.update((channels) =>
+    //   channels.filter((c) => c.chanId !== chanId)
+    // );
     const db = await this.dbPromise;
     await db.delete('channels', chanId);
   }
