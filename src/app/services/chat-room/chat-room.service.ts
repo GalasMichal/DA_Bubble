@@ -86,13 +86,13 @@ export class ChatRoomService {
     const newChannelRef = doc(channelRef);
     await setDoc(newChannelRef, { ...channel, chanId: newChannelRef.id });
     channel.chanId = newChannelRef.id;
-    this.channels.update((channels) => [...channels, channel]);
     await db.put('channels', channel);
   }
 
   async updateChannel(channel: Channel) {
     const channelRef = doc(
-      this.fireService.firestore, `channels/${channel.chanId}`
+      this.fireService.firestore,
+      `channels/${channel.chanId}`
     );
     await setDoc(channelRef, channel, { merge: true });
     this.channels.update((channels) =>
@@ -100,6 +100,13 @@ export class ChatRoomService {
     );
     const db = await this.dbPromise;
     await db.put('channels', channel);
+  }
+
+  async clearIndexedDB() {
+    const db = await this.dbPromise;
+    await db.clear('channels'); // Löscht alle Channels aus IndexedDB
+    this.channels.set([]); // Leert das lokale Signal
+    console.log('IndexedDB wurde geleert.');
   }
 
   async deleteChannel(chanId: string) {
