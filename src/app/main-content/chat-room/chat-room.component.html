@@ -29,7 +29,7 @@
      <div class="header-right-container">
        <button class="user-container" (click)="openShowUsers()">
          <ul class="user-container-list">
-           @for (user of filterOnlyAvaliableUser(); track $index) {
+           @for (user of filterAllUsersInChannel(); track $index) {
              @if($index < 3){
                <li>
                  <app-avatar [user]="user" [userList]="true"></app-avatar>
@@ -92,7 +92,7 @@
          <h1>Willkommen in eurem privaten Channel!</h1>
  
          <div class="added-user-container">
-             @for(user of filterOnlyAvaliableUser(); track $index) {
+             @for(user of filterAllUsersInChannel(); track $index) {
                <button (click)="openProfileUserSingle(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
              }
  
@@ -129,7 +129,7 @@
      <h1>Willkommen in eurem privaten Channel!</h1>
  
      <div class="added-user-container">
-         @for(user of filterOnlyAvaliableUser(); track $index) {
+         @for(user of filterAllUsersInChannel(); track $index) {
            <button (click)="openProfileUserSingle(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
          }
  

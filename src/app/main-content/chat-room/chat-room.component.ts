@@ -211,7 +211,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     }
   }
 
-  filterOnlyAvaliableUser() {
+  filterAllUsersInChannel() {
     const showAllChoosenUsers = this.currentChannel()?.specificPeople; // Array of user IDs
     const allUsers = this.userService.userList; // Array of User objects
 
