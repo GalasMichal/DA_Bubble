@@ -8,7 +8,7 @@
     </div>
 
     <ul class="added-user">
-      @for (user of this.stateServer.choosenUser; track $index) {
+      @for (user of filterOnlyAvaliableUser(); track $index) {
       <button>
         <li>
           <div class="user-img">

@@ -29,7 +29,7 @@
      <div class="header-right-container">
        <button class="user-container" (click)="openShowUsers()">
          <ul class="user-container-list">
-           @for (user of this.filterOnlyAvaliableUser(); track $index) {
+           @for (user of filterOnlyAvaliableUser(); track $index) {
              @if($index < 3){
                <li>
                  <app-avatar [user]="user" [userList]="true"></app-avatar>

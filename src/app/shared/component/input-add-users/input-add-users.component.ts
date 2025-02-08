@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Output } from '@angular/core';
 import { AvatarComponent } from '../../avatar/avatar.component';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
 import { CloseComponent } from '../close/close.component';
@@ -21,6 +21,7 @@ export class InputAddUsersComponent {
   stateServer = inject(StateControlService);
   chat = inject(ChatRoomService);
   fireService = inject(FirebaseService);
+  currentChannel = computed(() => this.chat.currentChannelSignal());
 
   // Nicht fertig
   listOfAllUsers: User[] = [...this.userService.userList];
@@ -64,6 +65,15 @@ export class InputAddUsersComponent {
         user.uId !== this.fireService.currentUser()?.uId
     );
   }
+  // filterOnlyAvaliableUser() {
+  //   const showAllChoosenUsers = this.currentChannel()?.specificPeople; // Array of user IDs
+  //   const allUsers = this.userService.userList; // Array of User objects
+
+  //   const filteredUsers = allUsers.filter((user) =>
+  //     showAllChoosenUsers?.includes(user.uId)
+  //   );
+  //   return filteredUsers
+  // }
 
   addUser(index: number, event: Event, uId: string) {
     event.preventDefault();

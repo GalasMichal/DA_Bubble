@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { MatDialog, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -7,6 +7,7 @@ import { AddUsersComponent } from '../add-users/add-users.component';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { DialogGlobalComponent } from '../component/dialog-global/dialog-global.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
+import { UserServiceService } from '../../services/user-service/user-service.service';
 
 @Component({
   selector: 'app-show-users',
@@ -22,10 +23,11 @@ export class ShowUsersComponent {
 
     chat = inject(ChatRoomService);
     stateServer = inject(StateControlService);
+    userService = inject(UserServiceService);
     counter: number = 0;
     dialogConfirm = inject(MatDialog);
       fb = inject(FirebaseService);
-
+    currentChannel = computed(() => this.chat.currentChannelSignal());
     activeButton: boolean = false
 
     closeAddUsers() {
@@ -67,5 +69,16 @@ export class ShowUsersComponent {
         this.dialogConfirm.open(DialogGlobalComponent, {
           panelClass: 'dialog-global-container',
         });
+      }
+
+      filterOnlyAvaliableUser() {
+        const showAllChoosenUsers = this.currentChannel()?.specificPeople; // Array of user IDs
+        const allUsers = this.userService.userList; // Array of User objects
+    
+        const filteredUsers = allUsers.filter((user) =>
+          showAllChoosenUsers?.includes(user.uId)
+        );
+       
+        return filteredUsers
       }
 }
