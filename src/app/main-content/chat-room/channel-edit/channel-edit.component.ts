@@ -25,7 +25,7 @@ import { ConfirmLeaveChannelComponent } from '../confirm-leave-channel/confirm-l
 export class ChannelEditComponent {
   readonly dialog = inject(MatDialogRef<ChannelEditComponent>);
   dialogConfirm = inject(MatDialog);
-  isDisabled: boolean = false;
+  // isDisabled: boolean = false;
   channelEditTitel: boolean = false;
   channelEditDescription: boolean = false;
   chat = inject(ChatRoomService);
@@ -40,10 +40,10 @@ export class ChannelEditComponent {
   newTitle: string = '';
   newDescription: string = '';
   counter: number = 0;
-  // isDisabled = this.currentChannel()?.createdBy[0].uId !== this.fb.currentUser()?.uId;
-  isDisabledCreatedBy = false;
-    // this.currentChannel()?.createdBy[0].uId ===
-    // this.fb.currentUser()?.uId;
+  isDisabled = this.currentChannel()?.createdBy[0].uId !== this.fb.currentUser()?.uId;
+  isDisabledCreatedBy =
+    this.currentChannel()?.createdBy[0].uId ===
+    this.fb.currentUser()?.uId;
 
   constructor() {
     if (this.stateServer.createChannelActiveInput) {
