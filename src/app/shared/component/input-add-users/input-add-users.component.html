@@ -10,7 +10,7 @@
           <div>{{user.displayName}}</div>
           <button 
   class="close-btn" 
-  (click)="removeUser($index)" 
+  (click)="removeUser($index, $event)" 
   [disabled]="user.uId === fb.currentUser()?.uId">
   <app-close></app-close>
 </button>
@@ -21,7 +21,7 @@
   <div class="list-of-user-container">
     <ul class="list-of-user-content">
       @for(user of filterOnlyAvaliableUser(); track $index) {
-        <li (click)="addUser(user.uId)">
+        <li (click)="addUser(user.uId, $event)">
             <button class="single-user">
               <div class="user-img">
                 <app-avatar [user]="user" [userList]="true"></app-avatar>

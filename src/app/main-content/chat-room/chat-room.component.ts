@@ -5,8 +5,6 @@ import {
   inject,
   OnDestroy,
   OnInit,
-  Signal,
-  signal,
   ViewChild,
 } from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
@@ -26,7 +24,6 @@ import { DialogGlobalComponent } from '../../shared/component/dialog-global/dial
 import { ShowUsersComponent } from '../../shared/show-users/show-users.component';
 import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 import { MessageService } from '../../services/messages/message.service';
-import { sign } from 'node:crypto';
 import { Channel } from '../../models/interfaces/channel.model';
 
 @Component({
@@ -62,16 +59,14 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   dialogConfirm = inject(MatDialog);
-  // currentChannel: Signal<Channel | null> = signal<Channel | null>(null);
-    currentChannel = computed(() => this.chat.currentChannelSignal());
-
-
+  currentChannel = computed(() => this.chat.currentChannelSignal());
   currentMessage = computed(() => this.chat.messages());
+
   channelId: string = '';
   ngOnInit(): void {
     this.channelId = this.route.snapshot.paramMap.get('id') || '';
     this.currentChannel = this.chat.getCurrentChannel();
-    this.loadCurrentChannelAfterRefresh();
+    this.loadCurrentChannelAfterRefresh();    
   }
 
   ngOnDestroy(): void {
@@ -82,7 +77,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   //   await this.chat.loadSpecificPeopleFromChannel();
   // }
 
-  loadCurrentChannelAfterRefresh(): void {
+  loadCurrentChannelAfterRefresh() {
     const currentChannelId = this.route.snapshot.paramMap.get('id');
     if (currentChannelId) {
       console.log(currentChannelId);

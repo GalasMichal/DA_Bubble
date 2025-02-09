@@ -35,5 +35,7 @@ export class AddUsersComponent {
     const allChoosenUsersId = this.stateServer.choosenUser.map(user => user.uId);
     this.currentChannel()!.specificPeople = allChoosenUsersId
     this.stateServer.choosenUser = [];
+    this.stateServer.choosenUserFirebase = [];
+
   }
 }

@@ -112,6 +112,6 @@ export class ChannelCreateComponent {
   createChannel(event: Event, newChannel: Channel) {
     console.log('newChannel', newChannel);
     this.chat.createChannel(newChannel);
-    // this.closeDialogAddMembers(event);
+    this.closeDialogAddMembers(event);
   }
 }

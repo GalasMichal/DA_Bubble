@@ -59,20 +59,25 @@ export class InputAddUsersComponent {
     this.stateServer.choosenUser = filteredUsers; // Assign filtered users
 }
 
-addUser(uId: string) {
+addUser(uId: string, event: Event) {
+  event.preventDefault();
   const selectedUser = this.userService.userList.find(user => user.uId === uId);
   
   if (selectedUser) {
     this.stateServer.choosenUser.push(selectedUser);
+    this.stateServer.choosenUserFirebase.push(selectedUser.uId);
+
     this.makeButtonActiveReactive();
   }
   console.log(this.stateServer.choosenUser);
 }
 
-  removeUser(index: number) {
+  removeUser(index: number, event: Event) {
+    event.preventDefault();
     this.stateServer.choosenUser.splice(index, 1);
+    this.stateServer.choosenUserFirebase.splice(index, 1);
     this.makeButtonActiveReactive();
-    console.log(this.stateServer.choosenUser);
+    console.log('choosenUserFirebase: ', this.stateServer.choosenUserFirebase);
     
   }
 
