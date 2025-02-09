@@ -478,6 +478,7 @@ export class FirebaseService {
       this.handleError(error);
     }
   }
+  
   private handleError(error: any): void {
     if (!error) {
       alert('Ein unbekannter Fehler ist aufgetreten.');

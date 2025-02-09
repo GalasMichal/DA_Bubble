@@ -59,7 +59,7 @@ export class MessageFieldComponent {
   }
 
   async sendMessage() {
-    this.stateControl.scrollToBottomGlobal = true;
+    this.stateControl.scrollToBottomGlobal = true; //scroll to bottom
     const currentUser = this.fb.currentUser();
 
     if (this.textAreaIsEdited && this.textArea !== '') {
