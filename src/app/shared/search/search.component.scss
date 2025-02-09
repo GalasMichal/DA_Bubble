@@ -114,6 +114,12 @@
   }
 }
 
+.selected-result {
+  background-color: $bg-color !important;
+  border-radius: $b-radius-2;
+  color: $primary-hover;
+}
+
 .show-found {
   display: none;
 }
