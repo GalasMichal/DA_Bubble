@@ -99,7 +99,7 @@ export class ChatRoomService {
   }
 
   async deleteChannel(chanId: string) {
-    await deleteDoc(doc(this.fireService.firestore, 'channels', chanId));
+    // await deleteDoc(doc(this.fireService.firestore, 'channels', chanId));
     const db = await this.dbPromise;
     await db.delete('channels', chanId);
   }
