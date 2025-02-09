@@ -110,9 +110,9 @@ export class MessageFieldComponent {
           }
         } else {
           this.textArea = '';
-          // const messageDocRef = await this.chat.addMessageToChannel(newMessage) as unknown as DocumentReference;
+          const messageDocRef = await this.currentChannel()!.chanId
           // Die Methode updateMessageThreadId wird jetzt aufgerufen
-          // await this.chat.updateMessageThreadId(messageDocRef);
+          await this.chat.createMessage(messageDocRef, newMessage);
         }
       }
     }
