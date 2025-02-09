@@ -15,7 +15,7 @@ import { MessageFieldComponent } from '../../shared/component/message-field/mess
 import { MessageAnswerComponent } from '../../shared/message-answer/message-answer.component';
 import { ChannelEditComponent } from './channel-edit/channel-edit.component';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -56,19 +56,20 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   dialog = inject(MatDialog);
   chat = inject(ChatRoomService);
   ms = inject(MessageService);
-  router = inject(ActivatedRoute);
+  route = inject(ActivatedRoute);
+  router = inject(Router);
   stateControl = inject(StateControlService);
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   dialogConfirm = inject(MatDialog);
   // currentChannel: Signal<Channel | null> = signal<Channel | null>(null);
-  currentChannel = computed(() => this.chat.currentChannelSignal());
+    currentChannel = computed(() => this.chat.currentChannelSignal());
 
 
   currentMessage = computed(() => this.chat.messages());
   channelId: string = '';
   ngOnInit(): void {
-    this.channelId = this.router.snapshot.paramMap.get('id') || '';
+    this.channelId = this.route.snapshot.paramMap.get('id') || '';
     this.currentChannel = this.chat.getCurrentChannel();
     this.loadCurrentChannelAfterRefresh();
   }
@@ -82,14 +83,13 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   // }
 
   loadCurrentChannelAfterRefresh(): void {
-    const currentChannel = this.router.snapshot.paramMap.get('id');
-    console.log(currentChannel);
-
-    if(currentChannel) {
-
-    }
-    
-}
+    const currentChannelId = this.route.snapshot.paramMap.get('id');
+    if (currentChannelId) {
+      console.log(currentChannelId);
+        this.router.navigate(['main/chat', currentChannelId]);
+        this.chat.loadMessages(currentChannelId)
+      }
+  }
 
   isVisible: boolean = false;
 
