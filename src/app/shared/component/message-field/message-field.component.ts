@@ -110,7 +110,7 @@ export class MessageFieldComponent {
           }
         } else {
           this.textArea = '';
-          const messageDocRef = await this.currentChannel()!.chanId
+          const messageDocRef = this.currentChannel()!.chanId
           // Die Methode updateMessageThreadId wird jetzt aufgerufen
           await this.chat.createMessage(messageDocRef, newMessage);
         }

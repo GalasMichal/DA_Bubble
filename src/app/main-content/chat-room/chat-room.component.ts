@@ -56,17 +56,19 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   dialog = inject(MatDialog);
   chat = inject(ChatRoomService);
   ms = inject(MessageService);
-  route = inject(ActivatedRoute);
+  router = inject(ActivatedRoute);
   stateControl = inject(StateControlService);
   userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   dialogConfirm = inject(MatDialog);
-  currentChannel: Signal<Channel | null> = signal<Channel | null>(null);
+  // currentChannel: Signal<Channel | null> = signal<Channel | null>(null);
+  currentChannel = computed(() => this.chat.currentChannelSignal());
+
 
   currentMessage = computed(() => this.chat.messages());
   channelId: string = '';
   ngOnInit(): void {
-    this.channelId = this.route.snapshot.paramMap.get('id') || '';
+    this.channelId = this.router.snapshot.paramMap.get('id') || '';
     this.currentChannel = this.chat.getCurrentChannel();
     this.loadCurrentChannelAfterRefresh();
   }
@@ -80,10 +82,14 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   // }
 
   loadCurrentChannelAfterRefresh(): void {
-    const currentChannel = this.route.snapshot.paramMap.get('id');
-    if (currentChannel) {
+    const currentChannel = this.router.snapshot.paramMap.get('id');
+    console.log(currentChannel);
+
+    if(currentChannel) {
+
     }
-  }
+    
+}
 
   isVisible: boolean = false;
 
