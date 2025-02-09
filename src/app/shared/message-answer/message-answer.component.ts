@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ReactionBarComponent } from '../component/reaction-bar/reaction-bar.component';
 import { TimeSeparatorComponent } from './time-separator/time-separator.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -37,6 +37,7 @@ export class MessageAnswerComponent {
   state = inject(StateControlService);
   userService = inject(UserServiceService);
   dialog = inject(MatDialog);
+  currentChannel = computed(() => this.chat.currentChannelSignal());
 
   meUser: boolean = false;
 
@@ -85,7 +86,7 @@ export class MessageAnswerComponent {
   }
 
   async openThread(userMessage: Message) {
-    // this.state.isThreadOpen = false;
+    this.state.isThreadOpen = false;
     // this.chat.currentMessageId = userMessage.threadId;
     // await this.chat.getAnswersFromMessage();
     this.state.isThreadOpen = true;
@@ -96,19 +97,19 @@ export class MessageAnswerComponent {
 
   // Methode zum Aktualisieren der Reaktionen in Firestore
   async updateReactionsInFirestore() {
-    // const channelId = this.chat.currentChannelData!.chanId;
+    const channelId = this.currentChannel()!.chanId;
     const messageId = this.userMessage!.threadId;
 
-    // const messageDocRef = doc(
-    //   this.firestore,
-    //   'channels',
-    //   channelId,
-    //   'messages',
-    //   messageId
-    // );
+    const messageDocRef = doc(
+      this.firestore,
+      'channels',
+      channelId,
+      'messages',
+      messageId
+    );
 
     // Aktualisiere die Reaktionen im Firestore-Dokument
-    // await updateDoc(messageDocRef, { reactions: this.userMessage?.reactions });
+    await updateDoc(messageDocRef, { reactions: this.userMessage?.reactions });
   }
 
   async openProfileUserSingle(userId: string) {

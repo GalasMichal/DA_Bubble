@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   ElementRef,
   inject,
   OnDestroy,
@@ -61,6 +62,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   fb = inject(FirebaseService);
   dialogConfirm = inject(MatDialog);
   currentChannel: Signal<Channel | null> = signal<Channel | null>(null);
+
+  currentMessage = computed(() => this.chat.messages());
   channelId: string = '';
   ngOnInit(): void {
     this.channelId = this.route.snapshot.paramMap.get('id') || '';

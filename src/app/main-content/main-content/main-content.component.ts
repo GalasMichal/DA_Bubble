@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-side-left.component';
@@ -33,6 +33,7 @@ export class MainContentComponent implements OnInit {
   private auth = inject(Auth);
   userService = inject(UserServiceService);
 
+  currentChannel = computed(() => this.chat.currentChannelSignal());
   constructor() {
     this.stateServer.isUserLoggedIn = true;
   }

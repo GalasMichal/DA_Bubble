@@ -156,7 +156,7 @@
    </div>
  
    <!-- <app-loader></app-loader> -->
-   <!-- @for (singleMessage of this.chat.answers; track this.chat.answers; let index = $index, let first = $first, last = $last) {
+   @for (singleMessage of this.currentMessage(); track this.currentMessage; let index = $index, let first = $first, last = $last) {
      <app-message-answer
      (click)="showId(this.chat)"
      [userMessage]="singleMessage"
@@ -164,7 +164,7 @@
          (finalChange)="onTextUpdate($event)"
          >
        </app-message-answer>
-     } -->
+     }
  
    </div>
    <app-message-field [ngClass]="{'edit-field': stateControl.globalEdit}"

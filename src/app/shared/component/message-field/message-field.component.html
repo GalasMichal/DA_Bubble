@@ -5,23 +5,23 @@
       <app-close></app-close>
     </button>
   </div>
-  <!-- <div class="image-preview">
+  <div class="image-preview">
 
-  </div> -->
+  </div>
 <div class="flex">
-  <!-- <img src="{{this.storageService.uploadMsg()}}" alt="" srcset="" class="image-preview">
+  <img src="{{this.storageService.uploadMsg()}}" alt="" srcset="" class="image-preview">
   <textarea [ngClass]="{'textarea-edit': stateControl.globalEdit}" (click)="closeEmojiWindow()" [(ngModel)]="textArea"
-    class="input-field txt" type="text" [placeholder]="chat.currentChannelData
-    ? 'Nachricht an # ' + chat.currentChannelData.channelName + ' schreiben'
+    class="input-field txt" type="text" [placeholder]="currentChannel()
+    ? 'Nachricht an # ' + currentChannel()?.channelName + ' schreiben'
     : 'Nachricht schreiben'" wrap="hard">
-  </textarea> -->
+  </textarea>
 </div>
 
 
 
-<!-- @if (chat.currentChannelData != undefined) {
+<!-- @if (currentChannel() != undefined) {
   <textarea [ngClass]="{'textarea-edit': stateControl.globalEdit}" (click)="closeEmojiWindow()" [(ngModel)]="textArea"
-    class="input-field txt" type="text" placeholder="Nachricht an # {{chat.currentChannelData.channelName}} schreiben"
+    class="input-field txt" type="text" placeholder="Nachricht an # {{currentChannel()!.channelName}} schreiben"
     wrap="hard"></textarea>
   }@else {
   <textarea [ngClass]="{'textarea-edit': stateControl.globalEdit}" (click)="closeEmojiWindow()" [(ngModel)]="textArea"
@@ -101,7 +101,7 @@
       </svg>
     </button>
     }@else {
-    <!-- <button (click)="sendMessage()">
+    <button (click)="sendMessage()">
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="mask0_75025_4553" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="30"
           height="30">
@@ -113,7 +113,7 @@
             fill="#444DF2" />
         </g>
       </svg>
-    </button> -->
+    </button>
     }
 
   </div>
