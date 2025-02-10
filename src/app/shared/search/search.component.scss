@@ -130,6 +130,10 @@
             border-radius: $b-radius-1 $b-radius-1 0 0;
             border-bottom: 0;
           }
+          // remove default x from input
+          &::-webkit-search-cancel-button {
+            appearance: none;
+          }
         }
       }
     }
