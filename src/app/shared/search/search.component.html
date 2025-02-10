@@ -6,11 +6,12 @@
       <img src="/assets/media/icons/search.svg" alt="Search" />
     </button>
 
-    <input
+    <input class="gray"
       type="search"
       id="search"
       name="search"
       #searchInput
+      [placeholder]="placeholderText"
       [value]="searchTerm"
       (keyup)="onKeyUp(searchInput.value)"
       (focus)="showResults()"

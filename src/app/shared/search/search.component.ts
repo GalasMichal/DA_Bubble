@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, inject, viewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, Input, viewChild } from '@angular/core';
 import { SearchService } from '../../services/search/search.service';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -36,7 +36,7 @@ export class SearchComponent {
   allResults: Array<any>= []
   currentIndex: number = -1; 
   isResultsVisible = false;
-
+  @Input() placeholderText: string = '';
   currentUserChannels = computed(() => this.chat.channels());
 
   clearSearch() {
