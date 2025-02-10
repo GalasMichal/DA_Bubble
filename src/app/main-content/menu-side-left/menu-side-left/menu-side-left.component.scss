@@ -228,6 +228,7 @@
       box-shadow: $shadow;
       background: $secondary;
       border-radius: 50%;
+      z-index: 1;
       button {
         &:hover {
           background: none;
