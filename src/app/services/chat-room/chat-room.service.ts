@@ -129,9 +129,10 @@ export class ChatRoomService {
     this.subscriptions['messageUpdates'] = onSnapshot(
       messagesRef,
       async (snapshot) => {
-        const messages: Message[] = snapshot.docs.map(
-          (doc) => doc.data() as Message
-        );
+        const messages: Message[] = snapshot.docs
+        .map((doc) => doc.data() as Message)
+        // sort of messages
+        .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
         this.messages.set(messages);
         console.log('Nachrichten aktualisiert:', messages);
       }
