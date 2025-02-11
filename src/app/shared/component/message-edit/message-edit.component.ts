@@ -12,13 +12,11 @@ export class MessageEditComponent {
 
   @Input() editText: string = "";
   @Input() channelId: string = ""
-  @Input() messageId: string = "";
-  @Output() edit = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
+  @Input() messageId?: string = "";
+  @Output() editMessage = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
 
   
-  editThisMessage(textToEdit: string, channelId:string, messageId: string) {
-    this.edit.emit({ textToEdit, channelId, messageId})
-    console.log('textToEdit: ', textToEdit, 'channelId: ', channelId, 'messageId: ', messageId);
-        
+  editThisMessage(textToEdit: string, channelId:string, messageId: string = "") {
+    this.editMessage.emit({ textToEdit, channelId, messageId})
   }
 }

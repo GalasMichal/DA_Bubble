@@ -25,11 +25,11 @@ export class ReactionBarComponent {
   @Input() index: number = 0;
   @Input() editText: string = "";
   @Input() channelId: string = ""
-  @Input() messageId: string = "";
+  @Input() messageId?: string = "";
   @Input() createdById: string = "";
 
 
-  @Output() textChange = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
+  @Output() editMessage = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
   @Output() emojiSelected = new EventEmitter<string>();
   isEmojiPickerVisibleMessage: boolean[] = [false];
  
@@ -41,11 +41,12 @@ export class ReactionBarComponent {
       if (this.createdById === this.fb.currentUser()?.uId) {
         this.meUser = true;
       }
+      console.log();
+      
   }
 
   onEditMessage(event: { textToEdit: string, channelId:string, messageId: string }) {
-    this.textChange.emit({ textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId });
-    console.log('textToEdit3: ', event.textToEdit, 'channelId: ', event.channelId, 'messageId: ', event.messageId);
+    this.editMessage.emit({ textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId });
       
   }
 

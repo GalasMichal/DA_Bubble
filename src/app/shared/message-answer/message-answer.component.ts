@@ -46,15 +46,14 @@ export class MessageAnswerComponent {
   @Input() threadAnswerOpen: boolean = false;
   @Input() userMessage: Message | null = null;
   @Input() answer: Message | null = null;
-  @Output() finalChange = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
+  @Output() editMessage = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
 
   currentMessage: Message | null = null;
 
   emojis: { symbol: string; count: number }[] = [];
 
   onReactionBarChange(event: { textToEdit: string, channelId:string, messageId: string}) {
-    this.finalChange.emit({textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId}); // Weiterleitung an den Parent
-    console.log('textToEdit2: ', event.textToEdit, 'channelId: ', event.channelId, 'messageId: ', event.messageId);
+    this.editMessage.emit({textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId}); // Weiterleitung an den Parent
   }
 
   onEmojiSelected(emoji: string) {

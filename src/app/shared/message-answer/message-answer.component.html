@@ -12,12 +12,12 @@
         class="reaction-bar"
         [editText]="currentMessage.text"
         [channelId]="currentMessage.chatId"
-        [messageId]="currentMessage.threadId"
+        [messageId]="currentMessage.messageId"
         [createdById]="currentMessage.messageSendBy.uId"
         [ngClass]="{'reaction-bar-right': meUser}"
         [index]="index"
         (emojiSelected)="onEmojiSelected($event)"
-        (textChange)="onReactionBarChange($event)"
+        (editMessage)="onReactionBarChange($event)"
         >
       </app-reaction-bar>
         <img class="avatar" 
