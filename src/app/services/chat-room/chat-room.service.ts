@@ -12,7 +12,7 @@ import {
 } from '@angular/fire/firestore';
 import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import { StateControlService } from '../state-control/state-control.service';
 import { FirebaseService } from '../firebase/firebase.service';
@@ -25,6 +25,8 @@ export class ChatRoomService {
   private fireService = inject(FirebaseService);
   private subscriptions: { [key: string]: Unsubscribe } = {};
   public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
+  router = inject(Router);
+  route = inject(ActivatedRoute);
 
   private dbPromise = openDB('ChatDB', 1, {
     upgrade(db) {
@@ -145,8 +147,18 @@ export class ChatRoomService {
     const newMessageRef = doc(messagesRef);
     await setDoc(newMessageRef, { ...message, messageId: newMessageRef.id });
     message.messageId = newMessageRef.id;
-    this.messages.update((messages) => [...messages, message]);
-    await db.put('messages', message);
+  }
+
+  async loadCurrentChannelAfterRefresh(currentChannelId: string) {
+    const db = await this.dbPromise;
+    const channel = await db.get('channels', currentChannelId);
+
+    if (channel) {
+      this.currentChannelSignal.set(channel);
+      console.log('Channel aus IndexedDB geladen:', channel);
+    } else {
+      console.warn('Kein Channel mit dieser ID gefunden.');
+    }
   }
 
   async updateMessage(chanId: string, message: Message) {

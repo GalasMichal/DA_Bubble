@@ -32,7 +32,7 @@ export class MainContentComponent implements OnInit {
   router = inject(Router);
   private auth = inject(Auth);
   userService = inject(UserServiceService);
-
+  route = inject(ActivatedRoute);
   currentChannel = computed(() => this.chat.currentChannelSignal());
   constructor() {
     this.stateServer.isUserLoggedIn = true;
@@ -47,7 +47,6 @@ export class MainContentComponent implements OnInit {
         // this.chat.clearIndexedDB();
         await this.db.getUserByUid(user.uid);
         console.log('currentUser', this.db.currentUser()); // Jetzt kannst du sicher auf den Benutzer zugreifen
-
         // Lade Kanäle und beginne mit den Echtzeit-Updates
         this.chat.getChannelsFromIndexedDB(); // Lade Kanäle aus IndexedDB
         this.chat.subscribeToFirestoreChannels(); // Abonniere Echtzeit-Updates von Firestore

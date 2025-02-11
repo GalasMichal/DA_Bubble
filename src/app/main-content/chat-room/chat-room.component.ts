@@ -65,8 +65,13 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   channelId: string = '';
   ngOnInit(): void {
     this.channelId = this.route.snapshot.paramMap.get('id') || '';
+
+    console.log('Extracted channel ID from URL:', this.channelId);
+    if (!this.channelId) return;
+    console.log('Lade Channel nach Refresh:', this.channelId);
+    this.chat.loadCurrentChannelAfterRefresh(this.channelId);
+    this.chat.loadMessages(this.channelId);
     this.currentChannel = this.chat.getCurrentChannel();
-    this.loadCurrentChannelAfterRefresh();    
   }
 
   ngOnDestroy(): void {
@@ -76,15 +81,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   // async loadSpecificPeopleFromChannel(): Promise<void> {
   //   await this.chat.loadSpecificPeopleFromChannel();
   // }
-
-  loadCurrentChannelAfterRefresh() {
-    const currentChannelId = this.route.snapshot.paramMap.get('id');
-    if (currentChannelId) {
-      console.log(currentChannelId);
-        this.router.navigate(['main/chat', currentChannelId]);
-        this.chat.loadMessages(currentChannelId)
-      }
-  }
 
   isVisible: boolean = false;
 
@@ -136,7 +132,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   onOpenAddUsers() {
-    const isDisabled = this.chat.currentChannelSignal()?.createdBy[0].uId !== this.fb.currentUser()?.uId;
+    const isDisabled =
+      this.chat.currentChannelSignal()?.createdBy[0].uId !==
+      this.fb.currentUser()?.uId;
     this.counter++;
 
     if (isDisabled) {
@@ -215,15 +213,14 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     }
   }
 
-
-/**
- * Filters and returns a list of users who are specifically chosen in the current channel.
- * 
- * This function retrieves the list of user IDs from the current channel's `specificPeople` array 
- * and filters the `userService.userList` to include only users whose IDs match.
- * You receive arra with obejct from users.
- * @returns {Array} An array of user objects that are part of the selected users in the channel.
- */
+  /**
+   * Filters and returns a list of users who are specifically chosen in the current channel.
+   *
+   * This function retrieves the list of user IDs from the current channel's `specificPeople` array
+   * and filters the `userService.userList` to include only users whose IDs match.
+   * You receive arra with obejct from users.
+   * @returns {Array} An array of user objects that are part of the selected users in the channel.
+   */
   filterAllUsersInChannel() {
     const showAllChoosenUsers = this.currentChannel()?.specificPeople; // Array of user IDs
     const allUsers = this.userService.userList; // Array of User objects
@@ -231,6 +228,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     const filteredUsers = allUsers.filter((user) =>
       showAllChoosenUsers?.includes(user.uId)
     );
-    return filteredUsers
+    return filteredUsers;
   }
 }
