@@ -17,6 +17,8 @@ export class MessageEditComponent {
 
   
   editThisMessage(textToEdit: string, channelId:string, messageId: string) {
-    this.edit.emit({ textToEdit, channelId, messageId})    
+    this.edit.emit({ textToEdit, channelId, messageId})
+    console.log('textToEdit: ', textToEdit, 'channelId: ', channelId, 'messageId: ', messageId);
+        
   }
 }

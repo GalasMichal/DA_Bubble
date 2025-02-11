@@ -63,11 +63,12 @@ export class MessageFieldComponent {
     const currentUser = this.fb.currentUser();
 
     if (this.textAreaIsEdited && this.textArea !== '') {
-      // this.chat.updateMessageTextInFirestore(
-      //   this.textArea,
-      //   this.channelIdEdit,
-      //   this.textAreaEditId
-      // );
+      debugger
+      this.chat.updateMessageTextInFirestore(
+        this.textArea,
+        this.channelIdEdit,
+        this.textAreaEditId
+      );
       this.textArea = '';
       this.textAreaIsEdited = false;
       this.stateControl.globalEdit = false;

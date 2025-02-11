@@ -44,7 +44,9 @@ export class ReactionBarComponent {
   }
 
   onEditMessage(event: { textToEdit: string, channelId:string, messageId: string }) {
-    this.textChange.emit({ textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId });    
+    this.textChange.emit({ textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId });
+    console.log('textToEdit3: ', event.textToEdit, 'channelId: ', event.channelId, 'messageId: ', event.messageId);
+      
   }
 
   addEmoji(event: any) {

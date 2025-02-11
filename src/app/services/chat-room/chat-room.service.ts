@@ -7,6 +7,7 @@ import {
   Firestore,
   onSnapshot,
   setDoc,
+  Timestamp,
   Unsubscribe,
   updateDoc,
 } from '@angular/fire/firestore';
@@ -194,5 +195,26 @@ export class ChatRoomService {
 
   unsubscribeAll() {
     Object.keys(this.subscriptions).forEach((key) => this.unsubscribe(key));
+  }
+
+  async updateMessageTextInFirestore(
+    textAreaEdited: string,
+    chanId: string,
+    textAreaEditId: string
+  ) {
+    const messageDocRef = doc(
+      this.fireService.firestore,
+      'channels',
+      chanId,
+      'messages',
+      textAreaEditId
+    );
+
+    // Aktualisiere die Reaktionen im Firestore-Dokument
+    await updateDoc(messageDocRef, {
+      text: textAreaEdited,
+      lastEdit: Timestamp.now(),
+      editCount: 1
+    });
   }
 }
