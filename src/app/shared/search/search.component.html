@@ -46,7 +46,7 @@
       </li>
       } @for(result of channelResults; track $index) {
       <li [id]="'result-' + $index" >
-        <button (click)="openChannel(result.chanId, result.channelName)" [class.selected-result]="$index === currentIndex">
+        <button (click)="openChannel(result, result.channelName)" [class.selected-result]="$index === currentIndex">
           #
           <span>{{ result.channelName }}</span>
         </button>

@@ -55,6 +55,7 @@ emoji-mart {
 .show-emoji {
   visibility: visible;
   transform: translateY(0);
+  z-index: 1;
 }
 
 .emoji {

@@ -126,13 +126,14 @@ export class SearchComponent {
     }
   }
 
-  openChannel(chanId: string, name: string) {
+  openChannel(channel: Channel, name: string) {
     this.searchTerm = name;
     this.stateControl.responsiveChat = true;
     this.stateControl.responsiveArrow = true;
     this.stateControl.responsiveMenu = true;
     this.stateControl.isThreadOpen = false
-    // this.chat.openChatById(chanId);
+    this.chat.setCurrentChannel(channel);
+    this.router.navigate(['main/chat', channel.chanId]);
   }
 
   sortListOfUser() {
