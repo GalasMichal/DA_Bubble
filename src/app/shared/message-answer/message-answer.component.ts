@@ -52,6 +52,7 @@ export class MessageAnswerComponent {
 
   emojis: { symbol: string; count: number }[] = [];
 
+  // Edit of the message
   onReactionBarChange(event: { textToEdit: string, channelId:string, messageId: string}) {
     this.editMessage.emit({textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId}); // Weiterleitung an den Parent
   }
@@ -98,7 +99,7 @@ export class MessageAnswerComponent {
   // Methode zum Aktualisieren der Reaktionen in Firestore
   async updateReactionsInFirestore() {
     const channelId = this.currentChannel()!.chanId;
-    const messageId = this.userMessage!.threadId;
+    const messageId = this.userMessage!.messageId!;
 
     const messageDocRef = doc(
       this.firestore,
