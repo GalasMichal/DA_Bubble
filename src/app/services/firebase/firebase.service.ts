@@ -297,6 +297,7 @@ export class FirebaseService {
     } catch (error) {
       this.handleLogoutError(error);
     }
+    this.stateControl.responsiveArrow = false;
   }
 
   // Methode zum Senden einer E-Mail an den Benutzer

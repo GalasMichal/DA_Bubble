@@ -11,16 +11,16 @@ import { StateControlService } from '../../services/state-control/state-control.
   styleUrl: './logo.component.scss'
 })
 export class LogoComponent {
-    stateServer = inject(StateControlService);  
+  stateControl = inject(StateControlService);  
 
     showMenu() {      
-      if(this.stateServer.isThreadOpen) {
-        this.stateServer.responsiveChat = true;
-        this.stateServer.isThreadOpen = false;
+      if(this.stateControl.isThreadOpen) {
+        this.stateControl.responsiveChat = true;
+        this.stateControl.isThreadOpen = false;
       } else {
-        this.stateServer.responsiveArrow = false;
-        this.stateServer.responsiveMenu = false;
-        this.stateServer.responsiveChat = false;
+        this.stateControl.responsiveArrow = false;
+        this.stateControl.responsiveMenu = false;
+        this.stateControl.responsiveChat = false;
       }
     }
 }
