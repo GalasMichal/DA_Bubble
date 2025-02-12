@@ -171,6 +171,11 @@ header {
 @media (max-width: 800px) {
   header {
     padding: 1.5625rem 0.8125rem;
+    .header-left-container {
+      .channel-name {
+        font-size: 1.125rem;
+      }
+    }
   }
   .user-container {
     display: none;
