@@ -31,6 +31,7 @@ export class MenuSideLeftComponent {
   router = inject(Router);
   state = inject(StateControlService);
   channelUsers: Channel[] = [];
+  selectedChannelId: string | null = null; // Store selected channel ID
 
   constructor() {
 
@@ -62,6 +63,7 @@ export class MenuSideLeftComponent {
   }
 
    openChannel(channel: Channel): void {
+    this.selectedChannelId = channel.chanId; // Highlight the selected channel 
     // this.chat.unsubscribe('channel');
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
@@ -72,6 +74,7 @@ export class MenuSideLeftComponent {
   }
 
   async openMessage(user: User): Promise<void> {
+    this.selectedChannelId = user.uId; //Highlight the selected channel 
     this.state.isThreadOpen = false;
     this.userService.messageReceiver = user;
     this.state.responsiveChat = true;
