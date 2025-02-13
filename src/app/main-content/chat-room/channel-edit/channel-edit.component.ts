@@ -107,30 +107,24 @@ export class ChannelEditComponent {
     this.newDescription = this.currentChannel()!.channelDescription;
   }
 
-  onUpdateChannel(chanId: string, text: string) {
+  onUpdateChannel(text: string) {
     this.counter++;
 
     if (this.isDisabled) {
       this.onCounter();
     } else {
-      this.updateChannel(chanId, text);
+      this.updateChannel(text);
     }
   }
 
-  updateChannel(chanId: string, text: string) {
-    const newTitleNewDescription = doc(this.firestore, 'channels', chanId);
-debugger
-    updateDoc(newTitleNewDescription, {
-      channelName: this.newTitle === '' ? this.currentChannel()?.channelName : this.newTitle,
-      channelDescription:
-        this.newDescription === ''
-          ? this.currentChannel()?.channelDescription
-          : this.newDescription,
-    });
-
+  updateChannel(text: string) {
+    const newName = this.newTitle === '' ? this.currentChannel()!.channelName : this.newTitle;
+    const newDescription = this.newDescription === '' ? this.currentChannel()!.channelDescription: this.newDescription;
+    this.currentChannel()!.channelName = newName;
+    this.currentChannel()!.channelDescription = newDescription;
+    this.chat.updateChannel(this.currentChannel()!)
     this.stateServer.showToast = true;
     this.stateServer.showToastText.set(text);
-
     this.stateServer.removeShowToast();
     setTimeout(() => {
       this.dialog.close();
@@ -165,21 +159,6 @@ debugger
       }
     });
   }
-
-  // showAllChoosenUsers() {
-    // this.stateServer.choosenUser = [];
-    // this.stateServer.choosenUserFirebase = [];
-
-    // if (this.chat.currentChannelData !== undefined) {
-    //   const listOfAllChoosenUsers =
-    //     this.chat.currentUserChannelsSpecificPeopleObject;
-    //   for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-    //     const object = listOfAllChoosenUsers[i];
-    //     this.stateServer.choosenUser.push(object);
-    //     this.stateServer.choosenUserFirebase.push(object.uId);
-    //   }
-    // }
-  // }
 
   // Show all users except this user which created this channel
   filterAllUsersInChannel() {
