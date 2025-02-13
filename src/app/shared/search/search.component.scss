@@ -168,6 +168,14 @@
       display: none;
     }
   }
+
+  ::ng-deep {
+    .search-message-new app-search {
+      .search-container {
+        display: flex;
+      }
+    }
+  }
   ::ng-deep .main-content-container {
     .sidenav .side-nav-wrapper {
       .search-container {

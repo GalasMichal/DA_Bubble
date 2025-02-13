@@ -35,7 +35,6 @@ export class UserServiceService {
         const userData = element.data() as User;
         this.userList.push(userData);
       });
-      console.log('userList: ', this.userList);
     });
   }
 
