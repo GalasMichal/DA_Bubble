@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { User } from '../../../models/interfaces/user.model';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
-import { log } from 'console';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 @Component({
@@ -23,7 +22,7 @@ export class InputAddUsersComponent {
   fb = inject(FirebaseService);
   fireService = inject(FirebaseService);
   currentChannel = computed(() => this.chat.currentChannelSignal());
-  // Nicht fertig
+
   listOfAllUsers: User[] = [...this.userService.userList];
 
   @Output() activeButton: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -64,7 +63,6 @@ export class InputAddUsersComponent {
     const filteredUsers = allUsers.filter(
       (user) => showAllChoosenUsers?.includes(user.uId));
     this.stateServer.choosenUser = filteredUsers; // Assign filtered users
-    console.log('INPUT-ADD-ISERS: this.stateServer.choosenUser ', this.stateServer.choosenUser);
 }
 
 addUser(uId: string, event: Event) {
@@ -74,15 +72,12 @@ addUser(uId: string, event: Event) {
     this.stateServer.choosenUser.push(selectedUser);
     this.makeButtonActiveReactive();
   }
-  console.log(this.stateServer.choosenUser);
-
 }
 
   removeUser(index: number, event: Event) {
     event.preventDefault();
     this.stateServer.choosenUser.splice(index, 1);
     this.makeButtonActiveReactive();
-    console.log('choosenUserFirebase: ', this.stateServer.choosenUser);    
   }
 
   makeButtonActiveReactive() {

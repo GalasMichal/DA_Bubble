@@ -26,7 +26,6 @@ import { getDoc } from 'firebase/firestore';
 export class ChatRoomService {
   private fireService = inject(FirebaseService);
   private subscriptions: { [key: string]: Unsubscribe } = {};
-  public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
   state = inject(StateControlService);
   router = inject(Router);
   route = inject(ActivatedRoute);

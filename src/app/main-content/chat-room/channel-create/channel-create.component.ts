@@ -60,7 +60,7 @@ export class ChannelCreateComponent {
     } else if (event.target.value === 'allMembers') {
       this.isSpecificPeople = false;
       this.allMembers = true;
-      // add all user
+      // add all users
       this.choosenSpecificPeople = this.userService.userList.map(user => user.uId)
     }
   }
@@ -113,7 +113,6 @@ export class ChannelCreateComponent {
   }
 
   createChannel(event: Event, newChannel: Channel) {
-    console.log('newChannel', newChannel);
     this.chat.createChannel(newChannel);
     this.closeDialogAddMembers(event);
   }
