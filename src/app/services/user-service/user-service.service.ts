@@ -13,7 +13,7 @@ export class UserServiceService {
   firestore = inject(Firestore);
   unsubscribe: any;
   public userList: AppUser[] = [];
-  public userListUid: string[] = [];
+  // public userListUid: string[] = [];
 
 
   messageReceiver: User | null = null;
@@ -27,15 +27,15 @@ export class UserServiceService {
   setThreadMessage(message: Message) {
     this.selectedUserMessage.set(message); // Nachricht setzen
   }
-
+  // Load users from firabse
   subUserList() {
     this.unsubscribe = onSnapshot(this.getUsers(), (list) => {
       this.userList = [];
       list.forEach((element) => {
         const userData = element.data() as User;
         this.userList.push(userData);
-        this.userListUid.push(userData.uId);
       });
+      console.log('userList: ', this.userList);
     });
   }
 

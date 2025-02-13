@@ -39,7 +39,7 @@ export class MenuSideLeftComponent {
 
   ngOnInit(): void {
 
-    this.userService.subUserList();
+    this.userService.subUserList(); // Load users from Friebase
     this.sortListOfUser();
   }
 

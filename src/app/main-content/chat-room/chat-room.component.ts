@@ -132,9 +132,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   onOpenAddUsers() {
-    const isDisabled =
-      this.chat.currentChannelSignal()?.createdBy[0].uId !==
-      this.fb.currentUser()?.uId;
+    const isDisabled = false;
+      // this.chat.currentChannelSignal()?.createdBy[0].uId !==
+      // this.fb.currentUser()?.uId;
     this.counter++;
 
     if (isDisabled) {
@@ -168,8 +168,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.dialog.open(ShowUsersComponent, {
       panelClass: 'show-users-container',
     });
-
-    this.showAllChoosenUsers();
   }
 
   restOfUser(): number {
@@ -177,12 +175,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   openTeam(chat: Object) {
-    // const currentChannelID = this.chat.currentChannel;
-    // console.log('ID', currentChannelID);
-
-    // const currentChannelName = this.chat.currentChannelData;
-    // console.log('Name', currentChannelName);
-
     this.dialog.open(ChannelEditComponent, {
       panelClass: 'team-container',
     });
@@ -196,21 +188,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.userDialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',
     });
-  }
-
-  showAllChoosenUsers(): void {
-    this.stateControl.choosenUser = [];
-    this.stateControl.choosenUserFirebase = [];
-    if (this.userService.userList !== undefined) {
-      const listOfAllChoosenUsers = this.userService.userList;
-      for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-        const object = listOfAllChoosenUsers[i];
-        if (object.uId !== this.currentChannel()!.createdBy[0].uId) {
-          this.stateControl.choosenUser.push(object);
-          this.stateControl.choosenUserFirebase.push(object.uId);
-        }
-      }
-    }
   }
 
   /**

@@ -18,6 +18,7 @@ import { Message } from '../../models/interfaces/message.model';
 import { StateControlService } from '../state-control/state-control.service';
 import { FirebaseService } from '../firebase/firebase.service';
 import { openDB } from 'idb';
+import { getDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,7 @@ export class ChatRoomService {
   private fireService = inject(FirebaseService);
   private subscriptions: { [key: string]: Unsubscribe } = {};
   public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
+  state = inject(StateControlService);
   router = inject(Router);
   route = inject(ActivatedRoute);
 

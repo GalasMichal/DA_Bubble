@@ -14,6 +14,7 @@ import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../../shared/component/dialog-global/dialog-global.component';
 import { Router } from '@angular/router';
 import { ConfirmLeaveChannelComponent } from '../confirm-leave-channel/confirm-leave-channel.component';
+import { UserServiceService } from '../../../services/user-service/user-service.service';
 
 @Component({
   selector: 'app-channel-edit',
@@ -31,6 +32,7 @@ export class ChannelEditComponent {
   chat = inject(ChatRoomService);
   firestore = inject(Firestore);
   stateServer = inject(StateControlService);
+  userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   router = inject(Router);
   currentChannel = computed(() => this.chat.currentChannelSignal());
@@ -47,7 +49,7 @@ export class ChannelEditComponent {
 
   constructor() {
     if (this.stateServer.createChannelActiveInput) {
-      this.showAllChoosenUsers();
+      this.filterAllUsersInChannel()
     }
   }
 
@@ -164,7 +166,7 @@ debugger
     });
   }
 
-  showAllChoosenUsers() {
+  // showAllChoosenUsers() {
     // this.stateServer.choosenUser = [];
     // this.stateServer.choosenUserFirebase = [];
 
@@ -177,7 +179,19 @@ debugger
     //     this.stateServer.choosenUserFirebase.push(object.uId);
     //   }
     // }
-  }
+  // }
+
+  // Show all users except this user which created this channel
+  filterAllUsersInChannel() {
+    this.stateServer.choosenUser = [];
+    const currentChannel = this.currentChannel();
+    const showAllChoosenUsers = currentChannel?.specificPeople; // Array of user IDs
+    const allUsers = this.userService.userList; // Array of User objects
+
+    const filteredUsers = allUsers.filter(
+      (user) => showAllChoosenUsers?.includes(user.uId) && user.uId);
+    this.stateServer.choosenUser = filteredUsers; // Assign filtered users
+}
 
   leaveChannel() {
     const currentUser = this.fb.currentUser();
@@ -190,9 +204,9 @@ debugger
     );
     confirmLeaveDialog.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.stateServer.choosenUserFirebase =
-          this.stateServer.choosenUserFirebase.filter(
-            (user) => user !== currentUser!.uId
+        this.stateServer.choosenUser =
+          this.stateServer.choosenUser.filter(
+            (user) => user.uId !== currentUser!.uId
           );
         // this.chat.updateSpecificPeopleInChannelFromState();
         this.dialogConfirm.closeAll();
