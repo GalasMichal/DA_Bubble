@@ -38,7 +38,7 @@
   [ngClass]="{'textarea-edit': stateControl.globalEdit}" 
   (click)="closeEmojiWindow()"
   (click)="closeUserWindow()" 
-  (keyup)="handleKeyUp($event)"
+  (keyup)="handleKeyUp(textArea)"
   [(ngModel)]="textArea"
   class="input-field txt" 
   type="text" 

@@ -27,7 +27,13 @@ import { User } from '../../../models/interfaces/user.model';
 @Component({
   selector: 'app-message-field',
   standalone: true,
-  imports: [FormsModule, PickerComponent, CommonModule, CloseComponent, AvatarComponent],
+  imports: [
+    FormsModule,
+    PickerComponent,
+    CommonModule,
+    CloseComponent,
+    AvatarComponent,
+  ],
   templateUrl: './message-field.component.html',
   styleUrl: './message-field.component.scss',
 })
@@ -113,7 +119,7 @@ export class MessageFieldComponent {
           }
         } else {
           this.textArea = '';
-          const messageDocRef = this.currentChannel()!.chanId
+          const messageDocRef = this.currentChannel()!.chanId;
           // Die Methode updateMessageThreadId wird jetzt aufgerufen
           await this.chat.createMessage(messageDocRef, newMessage);
         }
@@ -201,9 +207,8 @@ export class MessageFieldComponent {
     this.isUsersPickerVisible = false;
   }
 
-
   showUserWindow() {
-    this.textArea += `@`
+    this.textArea += `@`;
     this.isUsersPickerVisible = !this.isUsersPickerVisible;
   }
 
@@ -212,10 +217,11 @@ export class MessageFieldComponent {
     this.textArea = '';
     this.textAreaIsEdited = false;
   }
-  handleKeyUp(event: KeyboardEvent) {
-    const currentChar = this.textArea.charAt(0);    
-    if (currentChar === '@') {
+  handleKeyUp(textArea: string) {
+    if (/@\S*$/g.test(textArea)) {
       this.isUsersPickerVisible = true;
+    } else {
+      this.isUsersPickerVisible = false;
     }
   }
 
@@ -225,13 +231,13 @@ export class MessageFieldComponent {
   }
 
   sortListOfUser(): User[] {
-      const sortAllUser = [...this.userService.userList];
-      sortAllUser.sort((a, b) => {
-        if (a.uId === this.fb.currentUser()?.uId) return -1;
-        if (b.uId === this.fb.currentUser()?.uId) return 1;
-  
-        return a.displayName.localeCompare(b.displayName);
-      });
-      return sortAllUser;
-    }
+    const sortAllUser = [...this.userService.userList];
+    sortAllUser.sort((a, b) => {
+      if (a.uId === this.fb.currentUser()?.uId) return -1;
+      if (b.uId === this.fb.currentUser()?.uId) return 1;
+
+      return a.displayName.localeCompare(b.displayName);
+    });
+    return sortAllUser;
+  }
 }
