@@ -158,3 +158,59 @@ emoji-mart {
   visibility: visible;
   transform: translateY(0);
 }
+
+
+.added-user {
+  color: #4954c5;
+  background-color: #e4dcdb;
+  padding-inline: 0.125rem;
+  &:hover {
+    color: $white;
+    background-color: #5865f2;
+  }
+}
+
+.users-container {
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  visibility: hidden;
+  max-height: 26.875rem;
+  max-height: 16.875rem;
+  bottom: 9.5rem;
+  left: 120px;
+  z-index: 1;
+  overflow: scroll;
+  ul {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    background: $white;
+    padding-block: 1rem;
+    border: 1px solid $secondary;
+    outline: $secondary;
+    transition-timing-function: ease-in-out;
+    transition-duration: 175ms;
+    transform: translateY(100%);
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: none;
+      width: fit-content;
+      text-align: start;
+      padding: 0.25rem 1.75rem;
+      &:hover {
+        background: $bg-color;
+        border-radius: $b-radius-2;
+        color: $primary-hover;
+      }
+    }
+  }
+}
+
+.show-users {
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}

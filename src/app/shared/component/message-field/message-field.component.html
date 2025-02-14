@@ -1,4 +1,28 @@
 <div class="message-field-container" [ngClass]="{'edit-field': stateControl.globalEdit}" tabindex="0">
+  <div class="users-container">
+    <ul [ngClass]="{'show-users': isUsersPickerVisible}">
+      @for(user of this.sortListOfUser(); track $index) {
+        @if(user.uId === this.fb.currentUser()?.uId) {
+          <li>
+            <button (click)="addUserToMessage(user.displayName)" class="single-user">
+                <app-avatar [user]="user" [userList]="true"></app-avatar>
+              <span>{{user.displayName}} (Du)</span> 
+            </button>
+          </li>
+        } @else () {
+          <li>
+            <button (click)="addUserToMessage(user.displayName)">
+                <app-avatar [user]="user" [userList]="true"></app-avatar>
+              <span>{{user.displayName}}</span>
+            </button>
+          </li>
+
+        }
+      }
+      </ul>
+
+  </div>
+
   <div class="edit-field-info" [ngClass]="{'show-edit-filed': stateControl.globalEdit}">
     <span>Nachricht bearbeiten</span>
     <button class="close-btn" (click)="closeEdit()">
@@ -10,8 +34,15 @@
   </div>
 <div class="flex">
   <img src="{{this.storageService.uploadMsg()}}" alt="" srcset="" class="image-preview">
-  <textarea [ngClass]="{'textarea-edit': stateControl.globalEdit}" (click)="closeEmojiWindow()" [(ngModel)]="textArea"
-    class="input-field txt" type="text" [placeholder]="currentChannel()
+  <textarea 
+  [ngClass]="{'textarea-edit': stateControl.globalEdit}" 
+  (click)="closeEmojiWindow()"
+  (click)="closeUserWindow()" 
+  (keyup)="handleKeyUp($event)"
+  [(ngModel)]="textArea"
+  class="input-field txt" 
+  type="text" 
+  [placeholder]="currentChannel()
     ? 'Nachricht an # ' + currentChannel()?.channelName + ' schreiben'
     : 'Nachricht schreiben'" wrap="hard">
   </textarea>
@@ -73,7 +104,7 @@
       </svg>
 
     </button>
-    <button>
+    <button (click)="showUserWindow()">
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="mask0_75025_4549" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
           height="24">
