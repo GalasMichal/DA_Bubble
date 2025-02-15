@@ -26,6 +26,7 @@
   }
 }
 
+// avatar in profile when you can adit this one.
 ::ng-deep {
   .profile-content app-avatar {
     position: relative;
@@ -33,8 +34,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 2;
-
       img {
         width: 12.5rem;
         height: 12.5rem;
@@ -75,6 +74,7 @@
   }
 }
 
+// avatars menu-side-left
 ::ng-deep {
   .single-user {
     display: flex;
@@ -85,7 +85,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 2;
+        z-index: 1;
 
         img {
           height: 3.125rem;
@@ -94,7 +94,7 @@
         .online {
           height: 1.0625rem;
           width: 1.0625rem;
-          z-index: 3;
+          z-index: 2;
         }
       }
     }
