@@ -49,6 +49,7 @@ app-direct-message {
 app-header-landing,
 app-message-field {
   width: 100%;
+  padding: 0 1.5625rem 1.5625rem 1.5625rem;
 }
 
 app-main-layout,
@@ -162,10 +163,6 @@ app-search {
 
 .full-width {
   width: 100%;
-}
-
-.padding-25 {
-  padding: 1.5625rem;
 }
 
 .d-none {
