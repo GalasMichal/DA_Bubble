@@ -5,7 +5,6 @@ import { RegisterUserComponent } from './landing-page/register-user/register-use
 import { LoginComponent } from './landing-page/login/login.component';
 import { CreateAvatarComponent } from './landing-page/create-avatar/create-avatar.component';
 import { PwdResetComponent } from './landing-page/pwd-reset/pwd-reset.component';
-import { PwdRecoveryComponent } from './landing-page/pwd-recovery/pwd-recovery.component';
 import { ChatRoomComponent } from './main-content/chat-room/chat-room.component';
 import { MessageNewComponent } from './shared/component/message-new/message-new.component';
 import { DirectMessageComponent } from './shared/direct-message/direct-message.component';
@@ -14,6 +13,7 @@ import { MainLayoutComponent } from './main-content/main-layout/main-layout.comp
 import { LandingLayoutComponent } from './landing-page/landing-layout/landing-layout.component';
 import { MainContentComponent } from './main-content/main-content/main-content.component';
 import { authGuard } from './auth.guard';
+import { PwdRecoveryComponent } from './landing-page/pwd-recovery/pwd-recovery.component';
 
 export const routes: Routes = [
   {

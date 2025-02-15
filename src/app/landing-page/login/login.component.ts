@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,9 +8,7 @@ import {
 } from '@angular/forms';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import {
-  Router,
   RouterLink,
-  RouterModule,
 } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -25,7 +23,6 @@ import { StateControlService } from '../../services/state-control/state-control.
      CommonModule,
      ReactiveFormsModule,
      FormsModule,
-     RouterModule,
      RouterLink,
   ],
 })
