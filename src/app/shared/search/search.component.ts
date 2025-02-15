@@ -132,6 +132,7 @@ export class SearchComponent {
     this.stateControl.responsiveArrow = true;
     this.stateControl.responsiveMenu = true;
     this.stateControl.isThreadOpen = false
+    this.stateControl.isSendButtonActive = false; //make send button active
     this.chat.setCurrentChannel(channel);
     this.router.navigate(['main/chat', channel.chanId]);
   }
@@ -184,7 +185,7 @@ export class SearchComponent {
       this.stateControl.responsiveChat = true;
       this.stateControl.responsiveArrow = true;
       this.stateControl.responsiveMenu = true;
-
+      this.stateControl.isSendButtonActive = false; //make send button active
     // Prüfen, ob ein privater Chat bereits existiert
     const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
     console.log('chatID', existingChatId);

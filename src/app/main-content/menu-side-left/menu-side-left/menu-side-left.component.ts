@@ -133,6 +133,7 @@ export class MenuSideLeftComponent {
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
     this.state.isThreadOpen = false;
+    this.state.isSendButtonActive = true;
     this.router.navigate(['main']);
   }
 }
