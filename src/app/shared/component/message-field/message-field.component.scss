@@ -95,12 +95,6 @@
       cursor: auto;
       background-color: transparent !important;
       border: none !important;
-    }
-    &.disabled {
-      cursor: auto;
-      &:hover {
-        background-color: transparent;
-      }
       svg path {
         fill: $gray;
       }
