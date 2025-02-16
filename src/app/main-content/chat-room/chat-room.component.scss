@@ -185,11 +185,26 @@ header {
   }
 
   .welcome-container {
+    margin: 0;
     .avatar-container {
       .avatar {
         max-width: 10vw;
         max-height: 10vh;
       }
+    }
+  }
+
+  .welcome-content {
+    .user-time {
+      h2 {
+        font-size: 1.125rem;
+      }
+      span {
+        font-size: .75rem;
+      }
+    }
+    h1 {
+      font-size: 1.3rem;
     }
   }
 }
@@ -219,8 +234,8 @@ header {
 }
 
 .c-icon {
-  width: 2.1875rem;
-  height: 2.1875rem;
+  width: 1.1875rem;
+  height: 1.1875rem;
   margin: .3125rem;
   fill: currentColor;
   transform: rotate(180deg);
@@ -249,11 +264,11 @@ header {
 
 @media (max-width: 1100px) {
   .c-scroll-bottom {
-    bottom: 1rem;
+    bottom: 13rem;
     right: 1rem;
   }
   .c-icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1rem;
+    height: 1rem;
   }
 }

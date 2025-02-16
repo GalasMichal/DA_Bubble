@@ -147,27 +147,27 @@
          <br>
      </div>
    }
-   <button (click)="scrollToBottomButton()"
-   class="c-scroll-bottom js-scroll-bottom"
-   [ngClass]="{'c-scroll-bottom--visible': isVisible}"
-   >
-     <img class="c-icon c-scroll-bottom__icon" src="assets/media/icons/arrow-bottom.svg" alt="arrow">
-   </button>
- 
-   </div>
- 
+   
+  </div>
+  
    <!-- <app-loader></app-loader> -->
    @for (singleMessage of this.currentMessage(); track this.currentMessage; let index = $index, let first = $first, last = $last) {
      <app-message-answer
      (click)="showId(this.chat)"
      [userMessage]="singleMessage"
-         [index]="index"
-         (editMessage)="onTextUpdate($event)"
-         >
-       </app-message-answer>
-     }
- 
-   </div>
+     [index]="index"
+     (editMessage)="onTextUpdate($event)"
+     >
+    </app-message-answer>
+  }
+  
+</div>
+<button (click)="scrollToBottomButton()"
+class="c-scroll-bottom js-scroll-bottom"
+[ngClass]="{'c-scroll-bottom--visible': isVisible}"
+>
+  <img class="c-icon c-scroll-bottom__icon" src="assets/media/icons/arrow-bottom.svg" alt="arrow">
+</button>
    <app-message-field [ngClass]="{'edit-field': stateControl.globalEdit}"
    [textAreaEdit]="textArea"
    [channelIdEdit]="channelId"
