@@ -7,22 +7,22 @@
   flex-direction: column;
   position: relative;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   border: solid 1px $primary-light;
-  padding: 20px;
-  height: 170px;
+  padding: 1.25rem;
+  height: 10.625rem;
 
   &:focus-within {
-    border: solid 1px $primary-hover;
+    border: solid .0625rem $primary-hover;
     outline: $primary-hover;
-    box-shadow: 0px 0px 19px -10px $primary-hover;
+    box-shadow: 0 0 1.1875rem -0.625rem $primary-hover;
   }
 
   .edit-field-info {
     display: none;
     justify-content: space-between;
     align-items: center;
-    transform: translateY(-15px);
+    transform: translateY(-0.9375rem);
   }
 
   textarea {
@@ -31,7 +31,7 @@
     resize: none;
 
     &:focus {
-      border: solid 1px none;
+      border: solid .0625rem none;
       outline: none;
     }
   }
@@ -47,9 +47,9 @@
 
 .image-preview {
   text-align: center;
-  max-width: 85px;
-  max-height: 85px;
-  border-radius: 5px;
+  max-width: 5.3125rem;
+  max-height: 5.3125rem;
+  border-radius: .3125rem;
 }
 
 .input-field {
@@ -79,7 +79,7 @@
     }
 
     &:focus {
-      border: solid 1px transparent;
+      border: solid .0625rem transparent;
       background: $bg-color;
       outline: transparent;
     }
@@ -104,12 +104,12 @@
 
 .edit-field {
   background: $white;
-  border: solid 2px $primary-hover;
+  border: solid .125rem $primary-hover;
 
   &:focus-within {
-    border: solid 2px $primary-hover;
+    border: solid .125rem $primary-hover;
     outline: $primary-hover;
-    box-shadow: 0px 0px 19px -10px $primary-hover;
+    box-shadow: 0 0 1.1875rem -0.625rem $primary-hover;
   }
 }
 
@@ -119,8 +119,8 @@
 
 .textarea-edit {
   background: rgba(0, 0, 0, 0.08);
-  border-radius: 12px 0 0 12px;
-  padding: 10px 5px 10px 10px;
+  border-radius: .75rem 0 0 .75rem;
+  padding: .625rem .3125rem .625rem .625rem;
 }
 
 .icons {
@@ -128,8 +128,8 @@
 }
 
 .vector-container {
-  height: 40px;
-  border-right: 1px solid $primary-light;
+  height: 2.5rem;
+  border-right: solid .0625rem $primary-light;
 }
 
 .textarea-btn-container {
@@ -186,7 +186,7 @@ emoji-mart {
   max-height: 26.875rem;
   max-height: 16.875rem;
   bottom: 9.5rem;
-  left: 120px;
+  left: 7.5rem;
   z-index: 1;
   overflow: scroll;
   ul {
@@ -195,7 +195,7 @@ emoji-mart {
     flex-direction: column;
     background: $white;
     padding-block: 1rem;
-    border: 1px solid $secondary;
+    border: solid .0625rem $secondary;
     outline: $secondary;
     transition-timing-function: ease-in-out;
     transition-duration: 175ms;
@@ -221,4 +221,11 @@ emoji-mart {
 .show-users {
   visibility: visible !important;
   transform: translateY(0) !important;
+}
+
+@media (max-width: 800px) {
+  .message-field-container {
+    padding: .625rem;
+    height: 100%;
+  }
 }
