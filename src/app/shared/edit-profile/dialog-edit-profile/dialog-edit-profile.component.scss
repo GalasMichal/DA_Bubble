@@ -88,13 +88,3 @@
       gap: 1rem;
     }
   }
-
-  @media (max-width: 500px) {
-    ::ng-deep
-    .dialog-edit-profile-container
-    .mat-mdc-dialog-container
-    .mdc-dialog__container
-    .mat-mdc-dialog-surface {
-    border-radius: 0;
-    }
-  }
