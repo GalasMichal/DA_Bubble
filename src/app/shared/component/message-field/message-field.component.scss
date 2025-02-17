@@ -226,5 +226,8 @@ emoji-mart {
   .message-field-container {
     padding: .625rem;
     height: 100%;
+    .message-field-content {
+      height: 2rem;
+    }
   }
 }
