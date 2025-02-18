@@ -12,6 +12,7 @@ import { User } from '../../../models/interfaces/user.model';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { SearchComponent } from '../../../shared/search/search.component';
 import { Channel } from '../../../models/interfaces/channel.model';
+import { StorageService } from '../../../services/storage/storage.service';
 
 @Component({
   selector: 'app-menu-side-left',
@@ -30,6 +31,7 @@ export class MenuSideLeftComponent {
   userService = inject(UserServiceService);
   router = inject(Router);
   state = inject(StateControlService);
+  storageService = inject(StorageService); // StorageService injizieren
   channelUsers: Channel[] = [];
   selectedChannelId: string | null = null; // Store selected channel ID
 
@@ -60,6 +62,7 @@ export class MenuSideLeftComponent {
   }
 
   openChannel(channel: Channel): void {
+    this.storageService.uploadMsg.set('') // remove image from text area
     this.selectedChannelId = channel.chanId; // Highlight the selected channel
     // this.chat.unsubscribe('channel');
     this.state.responsiveChat = true;
@@ -71,6 +74,7 @@ export class MenuSideLeftComponent {
   }
 
   async openMessage(user: User): Promise<void> {
+    this.storageService.uploadMsg.set('') // remove image from text area
     this.selectedChannelId = user.uId; //Highlight the selected channel
     this.state.isThreadOpen = false;
     this.userService.messageReceiver = user;
