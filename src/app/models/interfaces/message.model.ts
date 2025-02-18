@@ -1,5 +1,3 @@
-import { Time } from '@angular/common';
-import { Reaction } from './reactions.model';
 import { Timestamp } from 'firebase/firestore';
 import { User } from './user.model';
 
@@ -17,7 +15,7 @@ export interface Message {
       uId?: string; // Optional uId.
     }[];
   }[];
-  answers?: [];
+  answers: Message[];
   threadId: string;
   answerCount: number;
   lastAnswer: string;

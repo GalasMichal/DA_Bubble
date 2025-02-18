@@ -15,7 +15,6 @@ import { FormsModule } from '@angular/forms';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { Message } from '../../../models/interfaces/message.model';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
-import { DocumentReference, Timestamp } from '@angular/fire/firestore';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { CloseComponent } from '../close/close.component';
@@ -23,6 +22,7 @@ import { MessageService } from '../../../services/messages/message.service';
 import { StorageService } from '../../../services/storage/storage.service';
 import { AvatarComponent } from '../../avatar/avatar.component';
 import { User } from '../../../models/interfaces/user.model';
+import { Timestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-message-field',
@@ -57,7 +57,7 @@ export class MessageFieldComponent {
   @Input() textAreaIsEdited: boolean = false;
   @Output() editStatusChange = new EventEmitter<boolean>();
   @Input() directMessage: boolean = false;
-
+  selectedMessage = computed(() => this.userService.selectedUserMessage());
   ngOnChanges(changes: SimpleChanges): void {
     if (
       changes['textAreaEdit'] &&
@@ -86,9 +86,14 @@ export class MessageFieldComponent {
     this.textArea = this.textArea || ''; // Falls textArea null ist, wird sie auf einen leeren String gesetzt
 
     if (currentUser) {
-      const newMessage: Message = {
+      const currentChannel = this.currentChannel();
+      if (!currentChannel) {
+        console.error('Kein Channel ausgewählt!');
+        return;
+      }
+      let newMessage: Message = {
         text: this.textArea,
-        chatId: this.currentChannel()!.chanId,
+        chatId: currentChannel.chanId,
         timestamp: Timestamp.now(),
         messageSendBy: currentUser,
         reactions: [],
@@ -99,6 +104,7 @@ export class MessageFieldComponent {
         lastEdit: Timestamp.now(),
         storageData: '',
         taggedUser: [],
+        answers: [],
       };
 
       if (this.textArea !== '' || this.selectedFile) {
@@ -112,10 +118,14 @@ export class MessageFieldComponent {
         }
 
         if (this.isThreadAnswerOpen) {
-          const selectedMessage = this.userService.selectedUserMessage();
+          const selectedMessage = this.selectedMessage();
           if (selectedMessage) {
+            if (!Array.isArray(selectedMessage.answers)) {
+              selectedMessage.answers = []; // Initialisierung
+            }
+            selectedMessage.answers.push(newMessage);
             this.textArea = '';
-            // this.chat.addAnswerToMessage(selectedMessage.threadId, newMessage);
+            this.chat.updateMessage(selectedMessage.chatId, newMessage);
           }
         } else {
           this.textArea = '';
@@ -146,6 +156,7 @@ export class MessageFieldComponent {
         lastEdit: Timestamp.now(),
         storageData: '',
         taggedUser: [],
+        answers: [],
       };
 
       if (this.textArea.trim() !== '' || this.selectedFile) {

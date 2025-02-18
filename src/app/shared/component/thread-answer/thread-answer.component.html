@@ -14,12 +14,10 @@
     <app-message-answer [userMessage]="this.user.selectedUserMessage()" [hideDetails]="true"></app-message-answer>
 
     }
-    <!-- @for ( answer of answers(); track $index) { -->
-      <app-message-answer [threadAnswerOpen]="true"  [hideDetails]="true"></app-message-answer>
+    @for ( answer of this.user.selectedUserMessage()?.answers; track $index) {
+    <app-message-answer [userMessage]="answer" [threadAnswerOpen]="true" [hideDetails]="true"></app-message-answer>
+    }
+  </div>
 
-        </div>
-      <app-message-field [isThreadAnswerOpen]="true"></app-message-field>
+  <app-message-field [isThreadAnswerOpen]="true"></app-message-field>
 </section>
-
-
-

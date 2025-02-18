@@ -132,9 +132,9 @@ export class ChatRoomService {
       messagesRef,
       async (snapshot) => {
         const messages: Message[] = snapshot.docs
-        .map((doc) => doc.data() as Message)
-        // sort of messages
-        .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
+          .map((doc) => doc.data() as Message)
+          // sort of messages
+          .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
         this.messages.set(messages);
         console.log('Nachrichten aktualisiert:', messages);
       }
@@ -215,7 +215,7 @@ export class ChatRoomService {
     await updateDoc(messageDocRef, {
       text: textAreaEdited,
       lastEdit: Timestamp.now(),
-      editCount: 1
+      editCount: 1,
     });
   }
 }
