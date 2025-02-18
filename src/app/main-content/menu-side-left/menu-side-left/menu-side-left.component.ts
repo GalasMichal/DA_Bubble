@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -33,12 +33,9 @@ export class MenuSideLeftComponent {
   channelUsers: Channel[] = [];
   selectedChannelId: string | null = null; // Store selected channel ID
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit(): void {
-
     this.userService.subUserList(); // Load users from Friebase
     this.sortListOfUser();
   }
@@ -62,8 +59,8 @@ export class MenuSideLeftComponent {
     // }
   }
 
-   openChannel(channel: Channel): void {
-    this.selectedChannelId = channel.chanId; // Highlight the selected channel 
+  openChannel(channel: Channel): void {
+    this.selectedChannelId = channel.chanId; // Highlight the selected channel
     // this.chat.unsubscribe('channel');
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
@@ -74,7 +71,7 @@ export class MenuSideLeftComponent {
   }
 
   async openMessage(user: User): Promise<void> {
-    this.selectedChannelId = user.uId; //Highlight the selected channel 
+    this.selectedChannelId = user.uId; //Highlight the selected channel
     this.state.isThreadOpen = false;
     this.userService.messageReceiver = user;
     this.state.responsiveChat = true;
@@ -116,16 +113,15 @@ export class MenuSideLeftComponent {
     });
     return sortAllUser;
   }
-
+  sortAllChannels = computed(() => this.chat.channels());
   sortOfAllChannels() {
-    const sortAllChannels = this.chat.channels();
-    sortAllChannels.sort((a, b) => {
+    this.sortAllChannels().sort((a, b) => {
       if (a.chanId === this.fb.mainChannel) return -1;
       if (b.chanId === this.fb.mainChannel) return 1;
 
       return a.channelName.localeCompare(b.channelName);
     });
-    return sortAllChannels;
+    return this.sortAllChannels();
   }
 
   writeMessage(): void {
