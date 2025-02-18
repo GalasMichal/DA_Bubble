@@ -75,7 +75,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.chat.unsubscribeAll?.();
+    this.chat.unsubscribeAll();
   }
 
   // async loadSpecificPeopleFromChannel(): Promise<void> {
