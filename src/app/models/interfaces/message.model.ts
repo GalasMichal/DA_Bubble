@@ -1,7 +1,5 @@
-import { Time } from "@angular/common";
-import { Reaction } from "./reactions.model";
-import { Timestamp } from "firebase/firestore";
-import { User } from "./user.model";
+import { Timestamp } from 'firebase/firestore';
+import { User } from './user.model';
 
 export interface Message {
   messageId?: string;
@@ -13,15 +11,16 @@ export interface Message {
     symbol: string;
     count: number;
     users: {
-      userName?: string;  // Optional userName.
-      uId?: string;       // Optional uId.
+      userName?: string; // Optional userName.
+      uId?: string; // Optional uId.
     }[];
   }[];
+  answers: Message[];
   threadId: string;
   answerCount: number;
   lastAnswer: string;
   editCount: number;
-  lastEdit: Timestamp ;
+  lastEdit: Timestamp;
   storageData: string;
   taggedUser: string[];
   date?: string;

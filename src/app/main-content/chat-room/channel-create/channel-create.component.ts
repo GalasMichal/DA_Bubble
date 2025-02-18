@@ -38,7 +38,7 @@ export class ChannelCreateComponent {
   channelForm: FormGroup;
   selectedOption: string = '';
   isSpecificPeople: boolean = false;
-  choosenSpecificPeople: string[] = []
+  choosenSpecificPeople: string[] = [];
   allMembers: boolean = false;
   allMembersInChannel: string[] = [];
 
@@ -56,12 +56,16 @@ export class ChannelCreateComponent {
       this.isSpecificPeople = true;
       this.allMembers = true;
       // add only choosen user
-      this.choosenSpecificPeople = this.stateServer.choosenUser.map(user => user.uId)
+      this.choosenSpecificPeople = this.stateServer.choosenUser.map(
+        (user) => user.uId
+      );
     } else if (event.target.value === 'allMembers') {
       this.isSpecificPeople = false;
       this.allMembers = true;
       // add all users
-      this.choosenSpecificPeople = this.userService.userList.map(user => user.uId)
+      this.choosenSpecificPeople = this.userService.userList.map(
+        (user) => user.uId
+      );
     }
   }
 
@@ -95,8 +99,6 @@ export class ChannelCreateComponent {
   }
 
   createChannelModel(event: Event) {
-    
-    debugger
     const formValues = this.channelForm.value;
     const newChannel: Channel = {
       chanId: '',
