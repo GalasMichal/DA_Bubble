@@ -120,12 +120,9 @@ export class MessageFieldComponent {
         if (this.isThreadAnswerOpen) {
           const selectedMessage = this.selectedMessage();
           if (selectedMessage) {
-            if (!Array.isArray(selectedMessage.answers)) {
-              selectedMessage.answers = []; // Initialisierung
-            }
             selectedMessage.answers.push(newMessage);
             this.textArea = '';
-            this.chat.updateMessage(selectedMessage.chatId, newMessage);
+            this.chat.updateMessage(selectedMessage.chatId, selectedMessage);
           }
         } else {
           this.textArea = '';
