@@ -9,12 +9,12 @@ footer {
   height: 3.125rem;
   ul {
     display: flex;
-    gap: 30px;
+    gap: 1.875rem;
     li a {
       font-size: 1.125rem;
       text-decoration: none;
       color: $primary-hover;
-      border: transparent 1px solid;
+      border: transparent .0625rem solid;
       border-radius: $b-radius-2;
       padding: 0.625rem 0.9375rem;
       @include firstTranistion();

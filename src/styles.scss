@@ -46,9 +46,15 @@ app-direct-message {
   overflow: hidden;
 }
 
-app-header-landing,
+
 app-message-field {
   width: 100%;
+  flex-shrink: 0;
+  padding: 0 1.5625rem 1.5625rem 1.5625rem;
+}
+
+app-header-landing {
+  padding: 0 1.5625rem 1.5625rem 1.5625rem;
 }
 
 app-main-layout,
@@ -164,10 +170,6 @@ app-search {
   width: 100%;
 }
 
-.padding-25 {
-  padding: 1.5625rem;
-}
-
 .d-none {
   display: none;
 }
@@ -199,6 +201,7 @@ app-footer {
 
 app-input-add-users {
    overflow-y: auto;
+   height: 350px;
 }
 
 app-reaction-cloud {
@@ -347,5 +350,8 @@ app-toast {
   }
   .hide-responsive {
     display: none !important;
+  }
+  app-message-field {
+    padding: 0 0.5625rem 1.5625rem 0.5625rem;
   }
 }

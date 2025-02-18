@@ -13,12 +13,10 @@ import { FooterComponent } from '../footer/footer.component';
     CommonModule,
     RouterModule,
     RouterLink,
-    LogoComponent,
     BackComponent,
-    FooterComponent,
   ],
   templateUrl: './imprint.component.html',
-  styleUrls: ['./imprint.component.scss', './imprint.component.media.scss'],
+  styleUrls: ['./imprint.component.scss'],
 })
 export class ImprintComponent {
   readonly location = inject(Location);

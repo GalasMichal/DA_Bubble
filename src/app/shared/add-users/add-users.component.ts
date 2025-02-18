@@ -34,8 +34,7 @@ export class AddUsersComponent {
     this.closeAddUsers();
     const allChoosenUsersId = this.stateServer.choosenUser.map(user => user.uId);
     this.currentChannel()!.specificPeople = allChoosenUsersId
+    this.chat.updateChannel(this.currentChannel()!)
     this.stateServer.choosenUser = [];
-    this.stateServer.choosenUserFirebase = [];
-
   }
 }

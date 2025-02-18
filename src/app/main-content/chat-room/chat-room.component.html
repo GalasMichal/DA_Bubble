@@ -41,7 +41,8 @@
            }
          </ul>
        </button>
-       <button (click)="onOpenAddUsers()" class="add-user" [class.disabled]="currentChannel()!.createdBy[0].uId !== fb.currentUser()?.uId">
+       <!--  [class.disabled]="currentChannel()!.createdBy[0].uId !== fb.currentUser()?.uId" -->
+       <button (click)="onOpenAddUsers()" class="add-user">
          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
            <rect width="40" height="40" rx="20" fill="#ECEEFE"/>
            <mask id="mask0_754_13277" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
@@ -146,27 +147,27 @@
          <br>
      </div>
    }
-   <button (click)="scrollToBottomButton()"
-   class="c-scroll-bottom js-scroll-bottom"
-   [ngClass]="{'c-scroll-bottom--visible': isVisible}"
-   >
-     <img class="c-icon c-scroll-bottom__icon" src="assets/media/icons/arrow-bottom.svg" alt="arrow">
-   </button>
- 
-   </div>
- 
+   
+  </div>
+  
    <!-- <app-loader></app-loader> -->
    @for (singleMessage of this.currentMessage(); track this.currentMessage; let index = $index, let first = $first, last = $last) {
      <app-message-answer
      (click)="showId(this.chat)"
      [userMessage]="singleMessage"
-         [index]="index"
-         (editMessage)="onTextUpdate($event)"
-         >
-       </app-message-answer>
-     }
- 
-   </div>
+     [index]="index"
+     (editMessage)="onTextUpdate($event)"
+     >
+    </app-message-answer>
+  }
+  
+</div>
+<button (click)="scrollToBottomButton()"
+class="c-scroll-bottom js-scroll-bottom"
+[ngClass]="{'c-scroll-bottom--visible': isVisible}"
+>
+  <img class="c-icon c-scroll-bottom__icon" src="assets/media/icons/arrow-bottom.svg" alt="arrow">
+</button>
    <app-message-field [ngClass]="{'edit-field': stateControl.globalEdit}"
    [textAreaEdit]="textArea"
    [channelIdEdit]="channelId"

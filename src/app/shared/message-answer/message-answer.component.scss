@@ -111,7 +111,7 @@
 
 .line-separator {
   height: 0.0625rem;
-  width: 60%;
+  flex: 1;
   background-color: $primary-light;
 }
 
@@ -187,6 +187,7 @@
   .chat-content {
     .user-message-container {
       padding: 0.625rem 0.5rem;
+      gap: 0.5rem;
       .message-content {
         .message-container {
           .messages-main-chat {

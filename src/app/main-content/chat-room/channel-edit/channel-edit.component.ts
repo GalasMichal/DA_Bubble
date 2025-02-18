@@ -14,6 +14,7 @@ import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { DialogGlobalComponent } from '../../../shared/component/dialog-global/dialog-global.component';
 import { Router } from '@angular/router';
 import { ConfirmLeaveChannelComponent } from '../confirm-leave-channel/confirm-leave-channel.component';
+import { UserServiceService } from '../../../services/user-service/user-service.service';
 
 @Component({
   selector: 'app-channel-edit',
@@ -31,6 +32,7 @@ export class ChannelEditComponent {
   chat = inject(ChatRoomService);
   firestore = inject(Firestore);
   stateServer = inject(StateControlService);
+  userService = inject(UserServiceService);
   fb = inject(FirebaseService);
   router = inject(Router);
   currentChannel = computed(() => this.chat.currentChannelSignal());
@@ -47,7 +49,7 @@ export class ChannelEditComponent {
 
   constructor() {
     if (this.stateServer.createChannelActiveInput) {
-      this.showAllChoosenUsers();
+      this.filterAllUsersInChannel()
     }
   }
 
@@ -105,30 +107,24 @@ export class ChannelEditComponent {
     this.newDescription = this.currentChannel()!.channelDescription;
   }
 
-  onUpdateChannel(chanId: string, text: string) {
+  onUpdateChannel(text: string) {
     this.counter++;
 
     if (this.isDisabled) {
       this.onCounter();
     } else {
-      this.updateChannel(chanId, text);
+      this.updateChannel(text);
     }
   }
 
-  updateChannel(chanId: string, text: string) {
-    const newTitleNewDescription = doc(this.firestore, 'channels', chanId);
-debugger
-    updateDoc(newTitleNewDescription, {
-      channelName: this.newTitle === '' ? this.currentChannel()?.channelName : this.newTitle,
-      channelDescription:
-        this.newDescription === ''
-          ? this.currentChannel()?.channelDescription
-          : this.newDescription,
-    });
-
+  updateChannel(text: string) {
+    const newName = this.newTitle === '' ? this.currentChannel()!.channelName : this.newTitle;
+    const newDescription = this.newDescription === '' ? this.currentChannel()!.channelDescription: this.newDescription;
+    this.currentChannel()!.channelName = newName;
+    this.currentChannel()!.channelDescription = newDescription;
+    this.chat.updateChannel(this.currentChannel()!)
     this.stateServer.showToast = true;
     this.stateServer.showToastText.set(text);
-
     this.stateServer.removeShowToast();
     setTimeout(() => {
       this.dialog.close();
@@ -164,20 +160,17 @@ debugger
     });
   }
 
-  showAllChoosenUsers() {
-    // this.stateServer.choosenUser = [];
-    // this.stateServer.choosenUserFirebase = [];
+  // Show all users except this user which created this channel
+  filterAllUsersInChannel() {
+    this.stateServer.choosenUser = [];
+    const currentChannel = this.currentChannel();
+    const showAllChoosenUsers = currentChannel?.specificPeople; // Array of user IDs
+    const allUsers = this.userService.userList; // Array of User objects
 
-    // if (this.chat.currentChannelData !== undefined) {
-    //   const listOfAllChoosenUsers =
-    //     this.chat.currentUserChannelsSpecificPeopleObject;
-    //   for (let i = 0; i < listOfAllChoosenUsers.length; i++) {
-    //     const object = listOfAllChoosenUsers[i];
-    //     this.stateServer.choosenUser.push(object);
-    //     this.stateServer.choosenUserFirebase.push(object.uId);
-    //   }
-    // }
-  }
+    const filteredUsers = allUsers.filter(
+      (user) => showAllChoosenUsers?.includes(user.uId) && user.uId);
+    this.stateServer.choosenUser = filteredUsers; // Assign filtered users
+}
 
   leaveChannel() {
     const currentUser = this.fb.currentUser();
@@ -190,9 +183,9 @@ debugger
     );
     confirmLeaveDialog.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.stateServer.choosenUserFirebase =
-          this.stateServer.choosenUserFirebase.filter(
-            (user) => user !== currentUser!.uId
+        this.stateServer.choosenUser =
+          this.stateServer.choosenUser.filter(
+            (user) => user.uId !== currentUser!.uId
           );
         // this.chat.updateSpecificPeopleInChannelFromState();
         this.dialogConfirm.closeAll();

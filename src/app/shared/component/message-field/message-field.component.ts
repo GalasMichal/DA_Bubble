@@ -21,11 +21,19 @@ import { StateControlService } from '../../../services/state-control/state-contr
 import { CloseComponent } from '../close/close.component';
 import { MessageService } from '../../../services/messages/message.service';
 import { StorageService } from '../../../services/storage/storage.service';
+import { AvatarComponent } from '../../avatar/avatar.component';
+import { User } from '../../../models/interfaces/user.model';
 
 @Component({
   selector: 'app-message-field',
   standalone: true,
-  imports: [FormsModule, PickerComponent, CommonModule, CloseComponent],
+  imports: [
+    FormsModule,
+    PickerComponent,
+    CommonModule,
+    CloseComponent,
+    AvatarComponent,
+  ],
   templateUrl: './message-field.component.html',
   styleUrl: './message-field.component.scss',
 })
@@ -33,13 +41,14 @@ export class MessageFieldComponent {
   chat = inject(ChatRoomService);
   stateControl = inject(StateControlService);
   fb = inject(FirebaseService);
-  user = inject(UserServiceService);
+  userService = inject(UserServiceService);
   msg = inject(MessageService);
   storageService = inject(StorageService); // StorageService injizieren
   textArea: string = ''; // Initialisierung als leerer String
   isEmojiPickerVisible: boolean = false;
   selectedFile: File | null = null; // Für den Dateiupload
   currentChannel = computed(() => this.chat.currentChannelSignal());
+  isUsersPickerVisible: boolean = false;
 
   @Input() isThreadAnswerOpen = false;
   @Input() textAreaEdit: string = '';
@@ -103,14 +112,14 @@ export class MessageFieldComponent {
         }
 
         if (this.isThreadAnswerOpen) {
-          const selectedMessage = this.user.selectedUserMessage();
+          const selectedMessage = this.userService.selectedUserMessage();
           if (selectedMessage) {
             this.textArea = '';
             // this.chat.addAnswerToMessage(selectedMessage.threadId, newMessage);
           }
         } else {
           this.textArea = '';
-          const messageDocRef = this.currentChannel()!.chanId
+          const messageDocRef = this.currentChannel()!.chanId;
           // Die Methode updateMessageThreadId wird jetzt aufgerufen
           await this.chat.createMessage(messageDocRef, newMessage);
         }
@@ -121,7 +130,7 @@ export class MessageFieldComponent {
   async sendDirectMessage() {
     this.stateControl.scrollToBottomGlobal = false;
     let collRef = await this.msg.newPrivateMessageChannel(
-      this.user.messageReceiver!
+      this.userService.messageReceiver!
     );
     if (collRef) {
       const newMessage: Message = {
@@ -193,9 +202,42 @@ export class MessageFieldComponent {
   closeEmojiWindow() {
     this.isEmojiPickerVisible = false;
   }
+
+  closeUserWindow() {
+    this.isUsersPickerVisible = false;
+  }
+
+  showUserWindow() {
+    this.textArea += `@`;
+    this.isUsersPickerVisible = !this.isUsersPickerVisible;
+  }
+
   closeEdit() {
     this.stateControl.globalEdit = false;
     this.textArea = '';
     this.textAreaIsEdited = false;
+  }
+  handleKeyUp(textArea: string) {
+    if (/@\S*$/g.test(textArea)) {
+      this.isUsersPickerVisible = true;
+    } else {
+      this.isUsersPickerVisible = false;
+    }
+  }
+
+  addUserToMessage(displayName: string) {
+    this.textArea += `${displayName.trim()} `;
+    this.isUsersPickerVisible = false;
+  }
+
+  sortListOfUser(): User[] {
+    const sortAllUser = [...this.userService.userList];
+    sortAllUser.sort((a, b) => {
+      if (a.uId === this.fb.currentUser()?.uId) return -1;
+      if (b.uId === this.fb.currentUser()?.uId) return 1;
+
+      return a.displayName.localeCompare(b.displayName);
+    });
+    return sortAllUser;
   }
 }

@@ -37,6 +37,7 @@ export class ThreadAnswerComponent {
   }
   closeThread() {
     this.state.isThreadOpen = false;
+    this.state.responsiveChat = true;
   }
 
   getUserMessage() {}

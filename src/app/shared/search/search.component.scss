@@ -168,6 +168,15 @@
       display: none;
     }
   }
+
+  ::ng-deep {
+    .search-message-new app-search {
+      .search-container {
+        display: flex;
+      }
+    }
+  }
+  // left-side
   ::ng-deep .main-content-container {
     .sidenav .side-nav-wrapper {
       .search-container {
@@ -182,6 +191,12 @@
             height: 3.375rem;
             width: 100%;
             height: 100%;
+            &:focus {
+              border: 1px solid $secondary;
+              outline: $secondary;
+              border-radius: $b-radius-1 $b-radius-1 0 0;
+              border-bottom: 0;
+            }
           }
         }
       }

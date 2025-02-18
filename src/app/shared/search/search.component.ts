@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { Channel } from '../../models/interfaces/channel.model';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { CloseComponent } from "../component/close/close.component";
+import { log } from 'console';
 
 @Component({
   selector: 'app-search',
@@ -55,12 +56,13 @@ export class SearchComponent {
 
   onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'ArrowDown') {
+      console.log(event.view);
       this.navigateDown();
-    } else if (event.key === 'ArrowUp') {
+    } else if (event.key === 'ArrowUp') {   
       this.navigateUp();
     } else if (event.key === 'Enter') {
       this.selectResult();
-      this.isResultsVisible = false;
+      // this.hideResults()
     }
   }
 
@@ -93,7 +95,7 @@ export class SearchComponent {
       if (selectedResult.displayName) {
         this.openMessage(selectedResult);  // It's a user, open message
       } else if (selectedResult.channelName) {
-        this.openChannel(selectedResult.chanId, selectedResult.channelName);  // It's a channel, open channel
+        this.openChannel(selectedResult, selectedResult.channelName);  // It's a channel, open channel
       }
     }
   }
@@ -132,6 +134,7 @@ export class SearchComponent {
     this.stateControl.responsiveArrow = true;
     this.stateControl.responsiveMenu = true;
     this.stateControl.isThreadOpen = false
+    this.stateControl.isSendButtonActive = false; //make send button active
     this.chat.setCurrentChannel(channel);
     this.router.navigate(['main/chat', channel.chanId]);
   }
@@ -184,7 +187,7 @@ export class SearchComponent {
       this.stateControl.responsiveChat = true;
       this.stateControl.responsiveArrow = true;
       this.stateControl.responsiveMenu = true;
-
+      this.stateControl.isSendButtonActive = false; //make send button active
     // Prüfen, ob ein privater Chat bereits existiert
     const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
     console.log('chatID', existingChatId);
