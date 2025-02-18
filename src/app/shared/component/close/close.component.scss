@@ -4,7 +4,7 @@
 
 ::ng-deep .close-btn {
   background: none;
-  border: solid .0625rem transparent;
+  border: solid 0.0625rem transparent;
   border-radius: $b-radius-2;
   transition: all 175ms ease-in-out;
   &[disabled] {
@@ -23,6 +23,18 @@
   app-close {
     &:hover svg path {
       fill: $primary-hover;
+    }
+  }
+}
+
+// close button in message-field by image
+::ng-deep app-message-field {
+  .close-btn {
+    app-close {
+      svg {
+        width: 25px;
+        height: 25px;
+      }
     }
   }
 }

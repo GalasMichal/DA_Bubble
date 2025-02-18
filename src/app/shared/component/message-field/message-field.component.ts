@@ -188,6 +188,10 @@ export class MessageFieldComponent {
     }
   }
 
+  deleteFileInput() {
+    this.storageService.uploadMsg.set('')
+  }
+
   addEmoji(event: any) {
     this.stateControl.scrollToBottomGlobal = false;
     this.textArea = `${this.textArea}${event.emoji.native}`;
