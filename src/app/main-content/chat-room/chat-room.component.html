@@ -93,7 +93,7 @@
  
          <div class="added-user-container">
              @for(user of filterAllUsersInChannel(); track $index) {
-               <button (click)="openProfileUserSingle(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
+               <button (click)="openDialogProfile(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
              }
  
          </div>
@@ -130,7 +130,7 @@
  
      <div class="added-user-container">
          @for(user of filterAllUsersInChannel(); track $index) {
-           <button (click)="openProfileUserSingle(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
+           <button (click)="openDialogProfile(user.uId)" class="added-user"><span>&commat;</span>{{user.displayName}}</button>
          }
  
      </div>

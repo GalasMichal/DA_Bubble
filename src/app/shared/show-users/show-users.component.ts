@@ -84,11 +84,7 @@ export class ShowUsersComponent {
         return filteredUsers
       }
 
-      async openProfileUserSingle(userId: string) {
-          this.stateControl.scrollToBottomGlobal = false;
-          await this.userService.showProfileUserSingle(userId);
-          this.userDialog.open(ProfileSingleUserComponent, {
-            panelClass: 'profile-single-user-container',
-          });
+      async openDialogProfile(userId: string) {
+          await this.userService.openProfileUserSingle(userId)
         }
 }

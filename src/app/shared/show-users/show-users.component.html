@@ -9,7 +9,7 @@
 
     <ul class="added-user">
       @for (user of filterAllUsersInChannel(); track $index) {
-      <button (click)="openProfileUserSingle(user.uId)">
+      <button (click)="openDialogProfile(user.uId)">
         <li>
           <div class="user-img">
             <app-avatar [user]="user" [userList]="true"></app-avatar>
