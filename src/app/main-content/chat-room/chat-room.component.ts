@@ -128,9 +128,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   onOpenAddUsers() {
-    const isDisabled = false;
-    // this.chat.currentChannelSignal()?.createdBy[0].uId !==
-    // this.fb.currentUser()?.uId;
+    const isDisabled = this.chat.currentChannelSignal()?.createdBy[0].uId !== this.fb.currentUser()?.uId;
     this.counter++;
 
     if (isDisabled) {
