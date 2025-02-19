@@ -176,6 +176,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   showId(id: object) {}
 
+  /**
+   * Opens a dialog displaying the full profile of a user.
+   *
+   * @param userId - The unique identifier of the user whose profile will be displayed.
+   */
   async openDialogProfile(userId: string) {
     await this.userService.openProfileUserSingle(userId)
   }
