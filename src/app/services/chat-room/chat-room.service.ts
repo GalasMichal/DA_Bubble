@@ -5,6 +5,7 @@ import {
   deleteDoc,
   doc,
   Firestore,
+  getDocs,
   onSnapshot,
   setDoc,
   Timestamp,
@@ -19,6 +20,7 @@ import { StateControlService } from '../state-control/state-control.service';
 import { FirebaseService } from '../firebase/firebase.service';
 import { openDB } from 'idb';
 import { getDoc } from 'firebase/firestore';
+import { channel } from 'diagnostics_channel';
 
 @Injectable({
   providedIn: 'root',
@@ -42,7 +44,7 @@ export class ChatRoomService {
 
   setCurrentChannel(channel: Channel) {
     this.currentChannelSignal.set(channel);
-    this.loadMessages(channel.chanId);
+    this.subscribeToFirestoreMessages(channel.chanId);
   }
 
   getCurrentChannel(): Signal<Channel | null> {
@@ -123,20 +125,59 @@ export class ChatRoomService {
     );
   }
 
-  async loadMessages(chanId: string) {
+  async loadMessages() {
+    const db = await this.dbPromise;
+    const allMessages: Message[] = [];
+
+    for (const channel of this.channels()) {
+      const messagesRef = collection(
+        this.fireService.firestore,
+        `channels/${channel.chanId}/messages`
+      );
+      const snapshot = await getDocs(messagesRef);
+
+      const messages: Message[] = snapshot.docs
+        .map((doc) => doc.data() as Message)
+        .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
+
+      for (const message of messages) {
+        await db.put('messages', message);
+      }
+
+      allMessages.push(...messages);
+    }
+
+    this.messages.set(allMessages);
+    console.log('Nachrichten aus Firestore geladen:', allMessages);
+  }
+
+  subscribeToFirestoreMessages(chanId: string) {
+    console.log('Abonniere Nachrichten für Channel:', chanId);
+    if (this.subscriptions[`messages_${chanId}`]) {
+      return; // Verhindert Mehrfach-Abonnements
+    }
+
     const messagesRef = collection(
       this.fireService.firestore,
       `channels/${chanId}/messages`
     );
-    this.subscriptions['messageUpdates'] = onSnapshot(
+    this.subscriptions[`messages_${chanId}`] = onSnapshot(
       messagesRef,
       async (snapshot) => {
+        const db = await this.dbPromise;
         const messages: Message[] = snapshot.docs
           .map((doc) => doc.data() as Message)
-          // sort of messages
           .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
+
+        for (const message of messages) {
+          await db.put('messages', message);
+        }
+
         this.messages.set(messages);
-        console.log('Nachrichten aktualisiert:', messages);
+        console.log(
+          `Nachrichten für Channel ${chanId} aktualisiert:`,
+          messages
+        );
       }
     );
   }
@@ -150,6 +191,12 @@ export class ChatRoomService {
     const newMessageRef = doc(messagesRef);
     await setDoc(newMessageRef, { ...message, messageId: newMessageRef.id });
     message.messageId = newMessageRef.id;
+
+    await db.put('messages', message); // Speichert Nachricht in IndexedDB
+    console.log(
+      `Nachricht gespeichert in IndexedDB für Channel ${chanId}:`,
+      message
+    );
   }
 
   async loadCurrentChannelAfterRefresh(currentChannelId: string) {

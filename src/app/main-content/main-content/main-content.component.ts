@@ -51,6 +51,7 @@ export class MainContentComponent implements OnInit {
         this.chat.getChannelsFromIndexedDB(); // Lade Kanäle aus IndexedDB
         this.chat.subscribeToFirestoreChannels(); // Abonniere Echtzeit-Updates von Firestore
         console.log('Channels aus DB', this.chat.channels());
+        this.chat.loadMessages();
       } else {
         // Falls kein Benutzer angemeldet ist, navigiere zum Login-Bildschirm
         this.router.navigate(['']);

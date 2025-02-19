@@ -70,17 +70,13 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     if (!this.channelId) return;
     console.log('Lade Channel nach Refresh:', this.channelId);
     this.chat.loadCurrentChannelAfterRefresh(this.channelId);
-    this.chat.loadMessages(this.channelId);
+    this.chat.loadMessages();
     this.currentChannel = this.chat.getCurrentChannel();
   }
 
   ngOnDestroy(): void {
     this.chat.unsubscribeAll();
   }
-
-  // async loadSpecificPeopleFromChannel(): Promise<void> {
-  //   await this.chat.loadSpecificPeopleFromChannel();
-  // }
 
   isVisible: boolean = false;
 
@@ -133,8 +129,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   onOpenAddUsers() {
     const isDisabled = false;
-      // this.chat.currentChannelSignal()?.createdBy[0].uId !==
-      // this.fb.currentUser()?.uId;
+    // this.chat.currentChannelSignal()?.createdBy[0].uId !==
+    // this.fb.currentUser()?.uId;
     this.counter++;
 
     if (isDisabled) {
