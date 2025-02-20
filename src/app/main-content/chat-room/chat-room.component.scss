@@ -46,6 +46,11 @@ header {
     &:hover svg path {
       fill: $primary;
     }
+    .channel-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
   .header-right-container {
     display: flex;
@@ -163,7 +168,7 @@ header {
     }
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   header {
     padding: 1.5625rem 0.8125rem;
     .header-left-container {

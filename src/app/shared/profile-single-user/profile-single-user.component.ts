@@ -30,7 +30,7 @@ export class ProfileSingleUserComponent {
   dialogImage = inject(MatDialog);
 
   closeUserProfile() {
-    this.dialog.close();
+    this.dialogImage.closeAll();
   }
 
   async openMessage(user: User) {
@@ -42,7 +42,6 @@ export class ProfileSingleUserComponent {
 
     // Prüfen, ob ein privater Chat bereits existiert
     const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
-    console.log('chatID', existingChatId);
 
     if (existingChatId) {
       // Wenn der Chat existiert, zur spezifischen Nachricht navigieren

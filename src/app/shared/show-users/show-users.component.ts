@@ -8,6 +8,7 @@ import { AvatarComponent } from '../avatar/avatar.component';
 import { DialogGlobalComponent } from '../component/dialog-global/dialog-global.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
+import { ProfileSingleUserComponent } from '../profile-single-user/profile-single-user.component';
 
 @Component({
   selector: 'app-show-users',
@@ -20,9 +21,10 @@ export class ShowUsersComponent {
 
     readonly dialog = inject(MatDialogRef <AddUsersComponent>)
     readonly openUsers = inject(MatDialog)
+    userDialog = inject(MatDialog);
 
     chat = inject(ChatRoomService);
-    stateServer = inject(StateControlService);
+    stateControl = inject(StateControlService);
     userService = inject(UserServiceService);
     counter: number = 0;
     dialogConfirm = inject(MatDialog);
@@ -59,7 +61,7 @@ export class ShowUsersComponent {
     }
 
     openAddUsers() {
-      this.stateServer.createChannelActiveInput = true
+      this.stateControl.createChannelActiveInput = true
       this.openUsers.open(AddUsersComponent, {
         panelClass: 'add-users-container', // Custom class for profile dialog
       });
@@ -81,4 +83,13 @@ export class ShowUsersComponent {
        
         return filteredUsers
       }
+
+      /**
+       * Opens a dialog displaying the full profile of a user.
+       *
+       * @param userId - The unique identifier of the user whose profile will be displayed.
+       */
+      async openDialogProfile(userId: string) {
+          await this.userService.openProfileUserSingle(userId)
+        }
 }

@@ -128,9 +128,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   onOpenAddUsers() {
-    const isDisabled = false;
-    // this.chat.currentChannelSignal()?.createdBy[0].uId !==
-    // this.fb.currentUser()?.uId;
+    const isDisabled = this.chat.currentChannelSignal()?.createdBy[0].uId !== this.fb.currentUser()?.uId;
     this.counter++;
 
     if (isDisabled) {
@@ -178,12 +176,13 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
   showId(id: object) {}
 
-  async openProfileUserSingle(userId: string) {
-    this.stateControl.scrollToBottomGlobal = false;
-    await this.userService.showProfileUserSingle(userId);
-    this.userDialog.open(ProfileSingleUserComponent, {
-      panelClass: 'profile-single-user-container',
-    });
+  /**
+   * Opens a dialog displaying the full profile of a user.
+   *
+   * @param userId - The unique identifier of the user whose profile will be displayed.
+   */
+  async openDialogProfile(userId: string) {
+    await this.userService.openProfileUserSingle(userId)
   }
 
   /**

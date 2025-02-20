@@ -5,6 +5,9 @@ import { collection, doc, onSnapshot } from 'firebase/firestore';
 import { authState, getAuth, updateEmail, updateProfile, User as FirebaseUser } from '@angular/fire/auth';
 import { Message } from '../../models/interfaces/message.model';
 import { Observable } from 'rxjs';
+import { StateControlService } from '../state-control/state-control.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileSingleUserComponent } from '../../shared/profile-single-user/profile-single-user.component';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +17,8 @@ export class UserServiceService {
   unsubscribe: any;
   public userList: AppUser[] = [];
   // public userListUid: string[] = [];
-
+  stateControl = inject(StateControlService);
+   userDialog = inject(MatDialog);
 
   messageReceiver: User | null = null;
   auth = getAuth();
@@ -104,4 +108,12 @@ export class UserServiceService {
     getCurrentUser(): Observable<FirebaseUser | null> {
       return authState(this.auth); // Returns an observable of the current user
     }
+
+  async openProfileUserSingle(userId: string) {
+    this.stateControl.scrollToBottomGlobal = false;
+    await this.showProfileUserSingle(userId);
+    this.userDialog.open(ProfileSingleUserComponent, {
+      panelClass: 'profile-single-user-container',
+    });
+  }
 }
