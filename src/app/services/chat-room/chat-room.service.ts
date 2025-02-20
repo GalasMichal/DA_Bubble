@@ -47,9 +47,7 @@ export class ChatRoomService {
     if (this.currentChannelSignal()?.chanId === channel.chanId) {
       return;
     }
-
     this.currentChannelSignal.set(channel);
-    this.loadMessagesFromIndexedDB(channel.chanId);
     this.subscribeToFirestoreMessages(channel.chanId);
   }
 
@@ -137,32 +135,6 @@ export class ChatRoomService {
     );
   }
 
-  // async loadMessages() {
-  //   const db = await this.dbPromise;
-  //   const allMessages: Message[] = [];
-
-  //   for (const channel of this.channels()) {
-  //     const messagesRef = collection(
-  //       this.fireService.firestore,
-  //       `channels/${channel.chanId}/messages`
-  //     );
-  //     const snapshot = await getDocs(messagesRef);
-
-  //     const messages: Message[] = snapshot.docs
-  //       .map((doc) => doc.data() as Message)
-  //       .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
-
-  //     for (const message of messages) {
-  //       await db.put('messages', message);
-  //     }
-
-  //     allMessages.push(...messages);
-  //   }
-
-  //   this.messages.set(allMessages);
-  //   console.log('Nachrichten aus Firestore geladen:', allMessages);
-  // }
-
   async loadMessagesFromIndexedDB(chanId: string) {
     const db = await this.dbPromise;
     let cachedMessages: Message[] = await db.getAll('messages');
@@ -179,6 +151,8 @@ export class ChatRoomService {
   }
 
   async subscribeToFirestoreMessages(chanId: string) {
+    await this.loadMessagesFromIndexedDB(chanId);
+
     console.log('Abonniere Nachrichten für Channel:', chanId);
     const messagesRef = collection(
       this.fireService.firestore,

@@ -67,10 +67,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.channelId = this.route.snapshot.paramMap.get('id') || '';
     if (!this.channelId) return;
     console.log('Lade Channel nach Refresh:', this.channelId);
-    this.chat.loadCurrentChannelAfterRefresh(this.channelId);
+    if (!this.chat.currentChannelSignal()?.chanId) {
+      this.chat.loadCurrentChannelAfterRefresh(this.channelId);
+      this.chat.subscribeToFirestoreMessages(this.channelId);
+    }
     this.currentChannel = this.chat.getCurrentChannel();
-    this.chat.subscribeToFirestoreMessages(this.channelId);
-
     console.log(this.currentMessage(), 'Current Message');
   }
 
@@ -128,7 +129,9 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   }
 
   onOpenAddUsers() {
-    const isDisabled = this.chat.currentChannelSignal()?.createdBy[0].uId !== this.fb.currentUser()?.uId;
+    const isDisabled =
+      this.chat.currentChannelSignal()?.createdBy[0].uId !==
+      this.fb.currentUser()?.uId;
     this.counter++;
 
     if (isDisabled) {
@@ -182,7 +185,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
    * @param userId - The unique identifier of the user whose profile will be displayed.
    */
   async openDialogProfile(userId: string) {
-    await this.userService.openProfileUserSingle(userId)
+    await this.userService.openProfileUserSingle(userId);
   }
 
   /**

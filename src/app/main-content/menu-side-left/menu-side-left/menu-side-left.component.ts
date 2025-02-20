@@ -70,8 +70,6 @@ export class MenuSideLeftComponent {
     this.state.responsiveMenu = true;
     this.state.isThreadOpen = false;
     this.chat.setCurrentChannel(channel);
-    this.chat.loadMessagesFromIndexedDB(channel.chanId);
-    this.chat.subscribeToFirestoreMessages(channel.chanId);
     this.router.navigate(['main/chat', channel.chanId]);
   }
 
