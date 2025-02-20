@@ -82,7 +82,6 @@ export class CreateAvatarComponent {
         this.file // The file to upload
       );
       if (downloadUrl) {
-        debugger
         this.selectedAvatar = downloadUrl; // Set the selected avatar to the uploaded URL
       }
     } else {
