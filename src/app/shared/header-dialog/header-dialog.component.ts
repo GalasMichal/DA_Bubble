@@ -39,8 +39,7 @@ export class HeaderDialogComponent {
     // noch dazu muss kommen update signal to firebase oder update profile tu firebase
     this.closeDialog.close()
     this.stateControl.isUserLoggedIn = false;
-    this.stateControl.showConfirmationText =
-        'Du bist erfolgreich abgemeldet.';
+    this.stateControl.showConfirmationText.set('Du bist erfolgreich abgemeldet.');
     this.router.navigate(['confirmation']);
   }
 }
