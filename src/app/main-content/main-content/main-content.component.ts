@@ -43,15 +43,17 @@ export class MainContentComponent implements OnInit {
       if (user) {
         // Warte auf die Benutzerinformationen, bevor du fortfährst
         console.log('user', user);
+
         // Fallback für den Fall, dass du Index DB löschen musst
         // this.chat.clearIndexedDB();
+
         await this.db.getUserByUid(user.uid);
         console.log('currentUser', this.db.currentUser()); // Jetzt kannst du sicher auf den Benutzer zugreifen
+
         // Lade Kanäle und beginne mit den Echtzeit-Updates
         this.chat.getChannelsFromIndexedDB(); // Lade Kanäle aus IndexedDB
         this.chat.subscribeToFirestoreChannels(); // Abonniere Echtzeit-Updates von Firestore
         console.log('Channels aus DB', this.chat.channels());
-        this.chat.loadMessages();
       } else {
         // Falls kein Benutzer angemeldet ist, navigiere zum Login-Bildschirm
         this.router.navigate(['']);

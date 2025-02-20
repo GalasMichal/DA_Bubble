@@ -65,13 +65,13 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   channelId: string = '';
   ngOnInit(): void {
     this.channelId = this.route.snapshot.paramMap.get('id') || '';
-
-    console.log('Extracted channel ID from URL:', this.channelId);
     if (!this.channelId) return;
     console.log('Lade Channel nach Refresh:', this.channelId);
     this.chat.loadCurrentChannelAfterRefresh(this.channelId);
-    this.chat.loadMessages();
     this.currentChannel = this.chat.getCurrentChannel();
+    this.chat.subscribeToFirestoreMessages(this.channelId);
+
+    console.log(this.currentMessage(), 'Current Message');
   }
 
   ngOnDestroy(): void {

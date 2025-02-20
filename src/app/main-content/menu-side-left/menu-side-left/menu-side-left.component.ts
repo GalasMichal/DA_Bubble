@@ -62,7 +62,7 @@ export class MenuSideLeftComponent {
   }
 
   openChannel(channel: Channel): void {
-    this.storageService.uploadMsg.set('') // remove image from text area
+    this.storageService.uploadMsg.set(''); // remove image from text area
     this.selectedChannelId = channel.chanId; // Highlight the selected channel
     // this.chat.unsubscribe('channel');
     this.state.responsiveChat = true;
@@ -70,11 +70,13 @@ export class MenuSideLeftComponent {
     this.state.responsiveMenu = true;
     this.state.isThreadOpen = false;
     this.chat.setCurrentChannel(channel);
+    this.chat.loadMessagesFromIndexedDB(channel.chanId);
+    this.chat.subscribeToFirestoreMessages(channel.chanId);
     this.router.navigate(['main/chat', channel.chanId]);
   }
 
   async openMessage(user: User): Promise<void> {
-    this.storageService.uploadMsg.set('') // remove image from text area
+    this.storageService.uploadMsg.set(''); // remove image from text area
     this.selectedChannelId = user.uId; //Highlight the selected channel
     this.state.isThreadOpen = false;
     this.userService.messageReceiver = user;

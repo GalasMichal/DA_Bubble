@@ -1,4 +1,13 @@
-import { Component, computed, EventEmitter, inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { ReactionBarComponent } from '../component/reaction-bar/reaction-bar.component';
 import { TimeSeparatorComponent } from './time-separator/time-separator.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -24,7 +33,6 @@ import { ShowImageComponent } from '../component/show-image/show-image.component
     TimeSeparatorComponent,
     DatePipe,
     ReactionCloudComponent,
-
   ],
   templateUrl: './message-answer.component.html',
   styleUrl: './message-answer.component.scss',
@@ -46,19 +54,31 @@ export class MessageAnswerComponent {
   @Input() threadAnswerOpen: boolean = false;
   @Input() userMessage: Message | null = null;
   @Input() answer: Message | null = null;
-  @Output() editMessage = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
+  @Output() editMessage = new EventEmitter<{
+    textToEdit: string;
+    channelId: string;
+    messageId: string;
+  }>();
 
   currentMessage: Message | null = null;
 
   emojis: { symbol: string; count: number }[] = [];
 
   // Edit of the message
-  onReactionBarChange(event: { textToEdit: string, channelId:string, messageId: string}) {
-    this.editMessage.emit({textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId}); // Weiterleitung an den Parent
+  onReactionBarChange(event: {
+    textToEdit: string;
+    channelId: string;
+    messageId: string;
+  }) {
+    this.editMessage.emit({
+      textToEdit: event.textToEdit,
+      channelId: event.channelId,
+      messageId: event.messageId,
+    }); // Weiterleitung an den Parent
   }
 
   onEmojiSelected(emoji: string) {
-    this.increaseCounter(emoji)
+    this.increaseCounter(emoji);
     this.updateReactionsInFirestore();
   }
 
@@ -69,10 +89,9 @@ export class MessageAnswerComponent {
     }
   }
 
-  constructor() { }
+  constructor() {}
 
   async ngOnInit() {
-    // await this.chat.getAnswersFromMessage();
     this.updateCurrentMessage();
 
     // Prüfen, ob der aktuelle Benutzer die Nachricht gesendet hat
@@ -185,12 +204,12 @@ export class MessageAnswerComponent {
   }
 
   openDialogWithImage(image: string | undefined) {
-    if(!image) {
-      return
+    if (!image) {
+      return;
     }
     this.state.messageImage = image;
-      this.dialog.open(ShowImageComponent, {
-        panelClass: 'image-container',
-      });
-    }
+    this.dialog.open(ShowImageComponent, {
+      panelClass: 'image-container',
+    });
+  }
 }

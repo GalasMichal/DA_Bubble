@@ -1,71 +1,63 @@
-
 <div class="chat-content">
 
   @if (currentMessage) {
 
 
-    @if(!hideDetails ){
-      <app-time-separator [userDate]="currentMessage" class="full-width"></app-time-separator>
-     }
-      <div class="user-message-container" [ngClass]="{'user-message-container-right': meUser}">
-        <app-reaction-bar
-        class="reaction-bar"
-        [editText]="currentMessage.text"
-        [channelId]="currentMessage.chatId"
-        [messageId]="currentMessage.messageId"
-        [createdById]="currentMessage.messageSendBy.uId"
-        [ngClass]="{'reaction-bar-right': meUser}"
-        [index]="index"
-        (emojiSelected)="onEmojiSelected($event)"
-        (editMessage)="onReactionBarChange($event)"
-        >
-      </app-reaction-bar>
-        <img class="avatar" 
-        (click)="openDialogWithImage(currentMessage.messageSendBy.avatarUrl || './assets/media/icons/profile-icons/profile-icon.svg')" 
-        src={{currentMessage.messageSendBy.avatarUrl}} alt="profil-image"/>
+  @if(!hideDetails ){
+  <app-time-separator [userDate]="currentMessage" class="full-width"></app-time-separator>
+  }
+  <div class="user-message-container" [ngClass]="{'user-message-container-right': meUser}">
+    <app-reaction-bar class="reaction-bar" [editText]="currentMessage.text" [channelId]="currentMessage.chatId"
+      [messageId]="currentMessage.messageId" [createdById]="currentMessage.messageSendBy.uId"
+      [ngClass]="{'reaction-bar-right': meUser}" [index]="index" (emojiSelected)="onEmojiSelected($event)"
+      (editMessage)="onReactionBarChange($event)">
+    </app-reaction-bar>
+    <img class="avatar"
+      (click)="openDialogWithImage(currentMessage.messageSendBy.avatarUrl || './assets/media/icons/profile-icons/profile-icon.svg')"
+      src={{currentMessage.messageSendBy.avatarUrl}} alt="profil-image" />
 
-        <div class="message-content" [ngClass]="{'message-content-right': meUser}">
-          <div class="message-container">
+    <div class="message-content" [ngClass]="{'message-content-right': meUser}">
+      <div class="message-container">
 
-            <div class="user-time" [ngClass]="{'user-time-right': meUser}">
-              <button (click)="openProfileUserSingle(currentMessage.messageSendBy.uId)"> {{currentMessage.messageSendBy.displayName}}</button>
-              <span>{{ currentMessage.timestamp.toDate() | date: 'H:mm' }} Uhr</span>
-            </div>
+        <div class="user-time" [ngClass]="{'user-time-right': meUser}">
+          <button (click)="openProfileUserSingle(currentMessage.messageSendBy.uId)">
+            {{currentMessage.messageSendBy.displayName}}</button>
+          <span>{{ (currentMessage.timestamp.seconds * 1000) | date: 'H:mm' }} Uhr</span>
+        </div>
 
-            <div class="messages-main-chat" [ngClass]="{'messages-main-chat-right': meUser}">
-              @if(currentMessage.storageData) {
-                <img class="message-image"(click)="openDialogWithImage(currentMessage.storageData)" src={{currentMessage.storageData}} alt="message-image"/>
-              }
-              {{currentMessage.text}}
-              @if(currentMessage.editCount > 0) {
-                <span class="message-edited">Bearbeitet {{ currentMessage.lastEdit.toDate() | date: 'H:mm' }}</span>
-              }
-            </div>
+        <div class="messages-main-chat" [ngClass]="{'messages-main-chat-right': meUser}">
+          @if(currentMessage.storageData) {
+          <img class="message-image" (click)="openDialogWithImage(currentMessage.storageData)"
+            src={{currentMessage.storageData}} alt="message-image" />
+          }
+          {{currentMessage.text}}
+          @if(currentMessage.editCount > 0) {
+          <span class="message-edited">Bearbeitet {{ currentMessage.lastEdit.toDate() | date: 'H:mm' }}</span>
+          }
+        </div>
 
-            <div class="answer-container">
-              <div (click)="openThread(currentMessage)" class="answer">{{currentMessage.time}} <a class="answer">Antworten</a></div>
-              @if (!hideDetails) {
-                <div class="time-stamp">{{currentMessage.lastAnswer}}</div>
-              } @else {
-                <div class="line-separator"></div>
-              }
-            </div>
-          </div>
-
-          <div class="emoijReaction">
-            @for( emoji of currentMessage.reactions; track emojis[index]) {
-              <button (click)="increaseCounter(emoji.symbol)" class="single-emoij">{{emoji.symbol}} {{emoji.count}}
-                <app-reaction-cloud
-                [name]="getUsersForEmoji(emoji.symbol)"
-                [symbol]="emoji.symbol"
-                ></app-reaction-cloud>
-              </button>
-            }
-
-          </div>
+        <div class="answer-container">
+          <div (click)="openThread(currentMessage)" class="answer">{{currentMessage.time}} <a
+              class="answer">Antworten</a></div>
+          @if (!hideDetails) {
+          <div class="time-stamp">{{currentMessage.lastAnswer}}</div>
+          } @else {
+          <div class="line-separator"></div>
+          }
+        </div>
       </div>
 
+      <div class="emoijReaction">
+        @for( emoji of currentMessage.reactions; track emojis[index]) {
+        <button (click)="increaseCounter(emoji.symbol)" class="single-emoij">{{emoji.symbol}} {{emoji.count}}
+          <app-reaction-cloud [name]="getUsersForEmoji(emoji.symbol)" [symbol]="emoji.symbol"></app-reaction-cloud>
+        </button>
+        }
+
       </div>
+    </div>
+
+  </div>
   }
 
 </div>
