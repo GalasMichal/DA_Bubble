@@ -399,7 +399,7 @@ export class FirebaseService {
       'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
     this.stateControl.removeShowToast();
     setTimeout(() => {
-      this.router.navigate(['start']);
+      this.router.navigate(['confirmation']);
     }, 2200);
   }
 
@@ -439,6 +439,7 @@ export class FirebaseService {
   private handleAnonymousSignInError(error: any): void {
     console.error('Error during anonymous sign-in:', error.code, error.message);
   }
+
   // Methode zum Bestätigen der Konto-Löschung
   confirmDeleteAccount(user: any): void {
     const userId = user.uid;
@@ -474,7 +475,7 @@ export class FirebaseService {
       this.stateControl.showConfirmationText =
         'Dein Konto wurde erfolgreich gelöscht.';
       this.stateControl.isUserLoggedIn = false;
-      this.router.navigate(['start/confirmation']);
+      this.router.navigate(['confirmation']);
     } catch (error) {
       this.handleError(error);
     }
