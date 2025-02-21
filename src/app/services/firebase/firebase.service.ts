@@ -320,8 +320,7 @@ export class FirebaseService {
     this.stateControl.showArrow = true;
     this.stateControl.showToast = true;
     this.stateControl.showToastText.set(text);
-    this.stateControl.showConfirmationText =
-      'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
+    this.stateControl.showConfirmationText.set('Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.');
     this.stateControl.removeShowToast();
   }
 
@@ -387,19 +386,16 @@ export class FirebaseService {
     console.error('No oobCode provided.');
     this.stateControl.showToast = true;
     this.stateControl.showError = true;
-    this.stateControl.showToastText.set(
-      'Es gab ein Problem mit dem Link. Bitte versuchen Sie es erneut.'
-    );
+    this.stateControl.showToastText.set('Es gab ein Problem mit dem Link. Bitte versuchen Sie es erneut.');
   }
 
   private handlePasswordResetSuccess(text: string): void {
     this.stateControl.showToast = true;
     this.stateControl.showToastText.set(text);
-    this.stateControl.showConfirmationText =
-      'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
+    this.stateControl.showConfirmationText.set('Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.');
     this.stateControl.removeShowToast();
     setTimeout(() => {
-      this.router.navigate(['start']);
+      this.router.navigate(['confirmation']);
     }, 2200);
   }
 
@@ -439,6 +435,7 @@ export class FirebaseService {
   private handleAnonymousSignInError(error: any): void {
     console.error('Error during anonymous sign-in:', error.code, error.message);
   }
+
   // Methode zum Bestätigen der Konto-Löschung
   confirmDeleteAccount(user: any): void {
     const userId = user.uid;
@@ -471,10 +468,9 @@ export class FirebaseService {
     try {
       await deleteUser(user);
       await deleteDoc(doc(this.firestore, 'users', userId));
-      this.stateControl.showConfirmationText =
-        'Dein Konto wurde erfolgreich gelöscht.';
+      this.stateControl.showConfirmationText.set('Dein Konto wurde erfolgreich gelöscht.');
       this.stateControl.isUserLoggedIn = false;
-      this.router.navigate(['start/confirmation']);
+      this.router.navigate(['confirmation']);
     } catch (error) {
       this.handleError(error);
     }

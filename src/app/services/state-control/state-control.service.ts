@@ -11,7 +11,7 @@ export class StateControlService {
   showToast: boolean = false;
   showArrow: boolean = false;
   showToastText = signal('');
-  showConfirmationText: string = '';
+  showConfirmationText = signal('');
   choosenUser: User[] = [];
   isUserLoggedIn: boolean = false;
   showError: boolean = false;
