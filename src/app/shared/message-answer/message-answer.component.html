@@ -32,7 +32,7 @@
           }
           {{currentMessage.text}}
           @if(currentMessage.editCount > 0) {
-          <span class="message-edited">Bearbeitet {{ currentMessage.lastEdit.toDate() | date: 'H:mm' }}</span>
+          <span class="message-edited">Bearbeitet {{ (currentMessage.lastEdit.seconds * 1000 ) | date: 'H:mm' }}</span>
           }
         </div>
 
