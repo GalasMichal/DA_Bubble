@@ -141,28 +141,28 @@ export class ChatRoomService {
     );
   }
 
-  // Nachrichten aus der IndexedDB laden
-  // async loadMessagesFromIndexedDB(chanId: string) {
-  //   const db = await this.dbPromise;
+  //Nachrichten aus der IndexedDB laden
+  async loadMessagesFromIndexedDB(chanId: string): Promise<Message[]> {
+    const db = await this.dbPromise;
 
-  //   // Überprüfen, ob der Objektstore 'messages' existiert
-  //   if (!db.objectStoreNames.contains('messages')) {
-  //     console.error('Der Objektstore "messages" existiert nicht.');
-  //     return [];
-  //   }
+    // Überprüfen, ob der Objektstore 'messages' existiert
+    if (!db.objectStoreNames.contains('messages')) {
+      console.error('Der Objektstore "messages" existiert nicht.');
+      return [];
+    }
 
-  //   let cachedMessages: Message[] = await db.getAll('messages');
-  //   let filteredMessages: Message[] = cachedMessages.filter(
-  //     (message) => message.chatId === chanId
-  //   );
+    let cachedMessages: Message[] = await db.getAll('messages');
+    let filteredMessages: Message[] = cachedMessages.filter(
+      (message) => message.chatId === chanId
+    );
 
-  //   console.log(
-  //     'Nachrichten aus IndexedDB für den Channel geladen:',
-  //     cachedMessages
-  //   );
-  //   this.messages.set(filteredMessages);
-  //   return filteredMessages;
-  // }
+    console.log(
+      'Nachrichten aus IndexedDB für den Channel geladen:',
+      cachedMessages
+    );
+    this.messages.set(filteredMessages);
+    return filteredMessages;
+  }
 
   async subscribeToFirestoreMessages(chanId: string) {
     console.log('Abonniere Nachrichten für Channel:', chanId);
