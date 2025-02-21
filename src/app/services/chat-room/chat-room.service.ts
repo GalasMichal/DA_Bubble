@@ -151,17 +151,27 @@ export class ChatRoomService {
       return [];
     }
 
-    let cachedMessages: Message[] = await db.getAll('messages');
-    let filteredMessages: Message[] = cachedMessages.filter(
-      (message) => message.chatId === chanId
-    );
+    try {
+      // Nachrichten aus der IndexedDB abrufen
+      let cachedMessages: Message[] = await db.getAll('messages');
 
-    console.log(
-      'Nachrichten aus IndexedDB für den Channel geladen:',
-      cachedMessages
-    );
-    this.messages.set(filteredMessages);
-    return filteredMessages;
+      // Nachrichten filtern
+      let filteredMessages: Message[] = cachedMessages.filter(
+        (message) => message.chatId === chanId
+      );
+
+      console.log(
+        'Nachrichten aus IndexedDB für den Channel geladen:',
+        cachedMessages
+      );
+
+      // Gefilterte Nachrichten setzen und zurückgeben
+      this.messages.set(filteredMessages);
+      return filteredMessages;
+    } catch (error) {
+      console.error('Fehler beim Laden der Nachrichten:', error);
+      return [];
+    }
   }
 
   async subscribeToFirestoreMessages(chanId: string) {
