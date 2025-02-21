@@ -32,12 +32,18 @@ export class ChatRoomService {
   router = inject(Router);
   route = inject(ActivatedRoute);
 
+  // Datenbank-Initialisierung
   private dbPromise = openDB('ChatDB', 1, {
     upgrade(db) {
-      db.createObjectStore('channels', { keyPath: 'chanId' });
-      db.createObjectStore('messages', { keyPath: 'messageId' });
+      if (!db.objectStoreNames.contains('channels')) {
+        db.createObjectStore('channels', { keyPath: 'chanId' });
+      }
+      if (!db.objectStoreNames.contains('messages')) {
+        db.createObjectStore('messages', { keyPath: 'messageId' });
+      }
     },
   });
+
   public currentChannelSignal = signal<Channel | null>(null);
   channels = signal<Channel[]>([]);
   messages = signal<Message[]>([]);
@@ -135,15 +141,23 @@ export class ChatRoomService {
     );
   }
 
+  // Nachrichten aus der IndexedDB laden
   async loadMessagesFromIndexedDB(chanId: string) {
     const db = await this.dbPromise;
+
+    // Überprüfen, ob der Objektstore 'messages' existiert
+    if (!db.objectStoreNames.contains('messages')) {
+      console.error('Der Objektstore "messages" existiert nicht.');
+      return [];
+    }
+
     let cachedMessages: Message[] = await db.getAll('messages');
     let filteredMessages: Message[] = cachedMessages.filter(
       (message) => message.chatId === chanId
     );
 
     console.log(
-      'Nachrichten aus IndexedDB für dany channeö geladen:',
+      'Nachrichten aus IndexedDB für den Channel geladen:',
       cachedMessages
     );
     this.messages.set(filteredMessages);
@@ -151,9 +165,9 @@ export class ChatRoomService {
   }
 
   async subscribeToFirestoreMessages(chanId: string) {
-    await this.loadMessagesFromIndexedDB(chanId);
-
     console.log('Abonniere Nachrichten für Channel:', chanId);
+
+    await this.loadMessagesFromIndexedDB(chanId);
     const messagesRef = collection(
       this.fireService.firestore,
       `channels/${chanId}/messages`
@@ -172,6 +186,7 @@ export class ChatRoomService {
         }
 
         this.messages.set(messages);
+
         console.log(
           `Nachrichten für Channel ${chanId} aktualisiert:`,
           messages
