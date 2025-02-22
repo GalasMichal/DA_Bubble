@@ -84,7 +84,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   ngAfterViewChecked(): void {
     if (this.stateControl.scrollToBottomGlobal) {
       if (this.scrollToBottom?.nativeElement) {
-        this.scrollToBottom.nativeElement.scrollTwileop =
+        this.scrollToBottom.nativeElement.scrollTop  =
           this.scrollToBottom.nativeElement.scrollHeight;
       }
     }

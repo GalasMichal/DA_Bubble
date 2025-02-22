@@ -69,8 +69,10 @@
             <emoji-mart (emojiClick)="addEmoji($event)" [ngClass]="{'show-emoji': isEmojiPickerVisible}"></emoji-mart>
           </div>
           <div class="icons-container">
+
             <input hidden #uploader type="file" (change)="handleFileInput($event)" />
-            <button type="file" (click)="uploader.click()">
+            
+            <button type="file" (click)="uploader.click()" [ngClass]="{'d-none': stateControl.globalEdit}">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_75025_4540)">
                   <mask id="mask0_75025_4540" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
@@ -90,7 +92,7 @@
                 </defs>
               </svg>
             </button>
-            <div class="vector-container">
+            <div class="vector-container" [ngClass]="{'d-none': stateControl.globalEdit}">
             </div>
             <button (click)="showEmojiWindow()">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +108,7 @@
               </svg>
 
             </button>
-            <button (click)="showUserWindow()">
+            <button (click)="showUserWindow()" [ngClass]="{'d-none': stateControl.globalEdit}">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_75025_4549" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
                   height="24">

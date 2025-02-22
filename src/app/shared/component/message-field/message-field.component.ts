@@ -133,7 +133,7 @@ export class MessageFieldComponent {
       }
     }
   }
-
+  
   async sendDirectMessage() {
     this.stateControl.scrollToBottomGlobal = false;
     let collRef = await this.msg.newPrivateMessageChannel(
@@ -229,6 +229,7 @@ export class MessageFieldComponent {
     this.textArea = '';
     this.textAreaIsEdited = false;
   }
+  
   handleKeyUp(textArea: string) {
     if (/@\S*$/g.test(textArea)) {
       this.isUsersPickerVisible = true;
