@@ -165,13 +165,6 @@
 
 .user-time-right {
   flex-direction: row-reverse; // HIER
-  button {
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-break: unset;
-  }
 }
 
 .messages-main-chat-right {

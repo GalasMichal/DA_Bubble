@@ -133,8 +133,9 @@ export class MessageFieldComponent {
       }
     }
   }
-
+  
   async sendDirectMessage() {
+    debugger
     this.stateControl.scrollToBottomGlobal = false;
     let collRef = await this.msg.newPrivateMessageChannel(
       this.userService.messageReceiver!
