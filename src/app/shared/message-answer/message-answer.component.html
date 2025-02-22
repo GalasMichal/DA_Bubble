@@ -35,9 +35,10 @@
           <span class="message-edited">Bearbeitet {{ (currentMessage.lastEdit.seconds * 1000 ) | date: 'H:mm' }}</span>
           }
         </div>
-
-        <div class="answer-container">
-          <div (click)="openThread(currentMessage)" class="answer">{{currentMessage.time}} <a
+        
+        <div class="answer-container"(click)="openThread(currentMessage)">
+          <span class="answer-counter">{{currentMessage.answerCount}} </span>
+          <div  class="answer">{{currentMessage.time}} <a
               class="answer">Antworten</a></div>
           @if (!hideDetails) {
           <div class="time-stamp">{{currentMessage.lastAnswer}}</div>

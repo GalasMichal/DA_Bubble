@@ -55,7 +55,7 @@
         div {
           display: flex;
           align-items: center;
-          gap: 1.25rem;
+          gap: 0.25rem;
 
           button {
             background: none;
@@ -89,6 +89,7 @@
         .answer-container {
           display: flex;
           align-items: center;
+          color: $secondary;
         }
       }
     }
@@ -125,7 +126,6 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  color: $secondary;
   &:hover {
     cursor: pointer;
   }
