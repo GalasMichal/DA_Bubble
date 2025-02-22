@@ -229,6 +229,7 @@ export class MessageFieldComponent {
     this.textArea = '';
     this.textAreaIsEdited = false;
   }
+  
   handleKeyUp(textArea: string) {
     if (/@\S*$/g.test(textArea)) {
       this.isUsersPickerVisible = true;
