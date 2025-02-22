@@ -39,9 +39,8 @@
         Schaue dir das Profil der Person an, um mehr über sie zu erfahren.</p>
     </div> -->
 
-    @for (message of this.ms.messages; track this.ms.messages; let index = $index) {
-    <app-message-answer [userMessage]="message"
-    [index]="index">
+    @for (message of this.ms.messages(); track this.ms.messages; let index = $index) {
+    <app-message-answer [userMessage]="message" [index]="index">
 
     </app-message-answer>
 

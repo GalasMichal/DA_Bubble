@@ -85,7 +85,7 @@ export class MenuSideLeftComponent {
     const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
     if (existingChatId) {
       this.router.navigate(['main/messages', existingChatId]);
-      this.ms.loadMessagesFromChat(existingChatId);
+      await this.ms.loadMessagesFromChat(existingChatId);
     } else {
       this.router.navigate(['main/messages']);
     }
