@@ -44,14 +44,19 @@ export class MessageService {
         db.createObjectStore('messages', { keyPath: 'messageId' });
       }
       if (!db.objectStoreNames.contains('directMessages')) {
-        db.createObjectStore('directMessages', { keyPath: 'chanId' });
+        db.createObjectStore('directMessages', { keyPath: 'chatId' });
       }
     },
   });
 
-  async saveMessageLocally(message: Message) {
+  async saveMessageLocally() {
     const db = await this.dbPromise;
-    await db.put('directMessages', message);
+    const messages = this.messages();
+    console.log('Saving messages to local DB', messages);
+    messages.forEach(async (msg) => {
+      await db.put('directMessages', msg);
+      console.log('Saved message to local DB', msg);
+    });
   }
 
   async getMessagesLocally(chatId: string): Promise<Message[]> {
@@ -124,7 +129,6 @@ export class MessageService {
       `privateMessages/${chatId}/messages`
     );
     await addDoc(messagesCollectionRef, message);
-    await this.saveMessageLocally(message);
   }
 
   async loadCurrentMessageData() {
@@ -163,7 +167,7 @@ export class MessageService {
       messagesCollectionRef,
       orderBy('timestamp', 'asc')
     );
-
+    this.messages.set([]);
     this.unsubscribeMessages = onSnapshot(
       messagesQuery,
       async (querySnapshot) => {
@@ -173,10 +177,9 @@ export class MessageService {
         });
 
         this.messages.set(newMessages);
+        console.log('Mesage signal', this.messages());
+        this.saveMessageLocally();
         console.log('Received changes from DB', newMessages);
-        for (const message of newMessages) {
-          await this.saveMessageLocally(message);
-        }
       }
     );
   }

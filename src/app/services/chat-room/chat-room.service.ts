@@ -42,7 +42,7 @@ export class ChatRoomService {
         db.createObjectStore('messages', { keyPath: 'messageId' });
       }
       if (!db.objectStoreNames.contains('directMessages')) {
-        db.createObjectStore('directMessages', { keyPath: 'messageId' });
+        db.createObjectStore('directMessages', { keyPath: 'chatId' });
       }
     },
   });
