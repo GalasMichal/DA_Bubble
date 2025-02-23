@@ -1,6 +1,13 @@
 import { Timestamp } from 'firebase/firestore';
 import { User } from './user.model';
 
+enum MessageType {
+  Channel = 'channel',
+  ChannelThread = 'channelThread',
+  PrivateMessage = 'privateMessage',
+  PrivateThread = 'privateThread'
+}
+
 export interface Message {
   messageId?: string;
   text: string;
@@ -26,3 +33,4 @@ export interface Message {
   date?: string;
   time?: string;
 }
+
