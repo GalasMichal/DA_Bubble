@@ -15,12 +15,13 @@ import {
 import { Channel } from '../../models/interfaces/channel.model';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Message } from '../../models/interfaces/message.model';
+import { ChannelMessage, ChannelThreadMessage, Message, PrivateMessage, PrivateThreadMessage } from '../../models/interfaces/message.model';
 import { StateControlService } from '../state-control/state-control.service';
 import { FirebaseService } from '../firebase/firebase.service';
 import { openDB } from 'idb';
 import { getDoc } from 'firebase/firestore';
 import { channel } from 'diagnostics_channel';
+import { type } from 'os';
 
 @Injectable({
   providedIn: 'root',
@@ -47,10 +48,12 @@ export class ChatRoomService {
     },
   });
 
+    
+
   public currentChannelSignal = signal<Channel | null>(null);
   channels = signal<Channel[]>([]);
-  messages = signal<Message[]>([]);
-  filteredMessages = signal<Message[]>([]);
+  messages = signal<(ChannelMessage | ChannelThreadMessage | PrivateMessage | PrivateThreadMessage)[]>([]);
+  filteredMessages = signal<(ChannelMessage | ChannelThreadMessage | PrivateMessage | PrivateThreadMessage)[]>([]);
 
   async setCurrentChannel(channel: Channel) {
     if (this.currentChannelSignal()?.chanId === channel.chanId) {
@@ -156,10 +159,10 @@ export class ChatRoomService {
 
     try {
       // Nachrichten aus der IndexedDB abrufen
-      let cachedMessages: Message[] = await db.getAll('messages');
+      let cachedMessages: (ChannelMessage | ChannelThreadMessage | PrivateMessage | PrivateThreadMessage)[] = await db.getAll('messages');
 
       // Nachrichten filtern
-      let filteredMessages: Message[] = cachedMessages.filter(
+      let filteredMessages: (ChannelMessage | ChannelThreadMessage | PrivateMessage | PrivateThreadMessage)[] = cachedMessages.filter(
         (message) => message.chatId === chanId
       );
 
@@ -188,8 +191,8 @@ export class ChatRoomService {
       messagesRef,
       async (snapshot) => {
         const db = await this.dbPromise;
-        const messages: Message[] = snapshot.docs
-          .map((doc) => doc.data() as Message)
+        const messages: (ChannelMessage | ChannelThreadMessage | PrivateMessage | PrivateThreadMessage)[] = snapshot.docs
+          .map((doc) => doc.data() as ChannelMessage | ChannelThreadMessage | PrivateMessage | PrivateThreadMessage)
           .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
 
         // await db.clear('messages');
@@ -242,9 +245,9 @@ export class ChatRoomService {
       `channels/${chanId}/messages/${message.messageId}`
     );
     await setDoc(messageRef, message, { merge: true });
-    this.messages.update((messages) =>
-      messages.map((m) => (m.messageId === message.messageId ? message : m))
-    );
+    // this.messages.update((messages) =>
+      // messages.map((m) => (m.messageId === message.messageId ? message : m))
+    // );
   }
 
   async deleteMessage(chanId: string, messageId: string) {

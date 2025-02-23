@@ -1,7 +1,7 @@
 import { Timestamp } from 'firebase/firestore';
 import { User } from './user.model';
 
-enum MessageType {
+export enum MessageType {
   ChannelMessage = 'channelMessage',
   ChannelThreadMessage = 'channelThreadMessage',
   PrivateMessage = 'privateMessage',

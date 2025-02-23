@@ -13,7 +13,7 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
-import { Message } from '../../../models/interfaces/message.model';
+import { ChannelMessage, Message, MessageType, PrivateMessage } from '../../../models/interfaces/message.model';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { UserServiceService } from '../../../services/user-service/user-service.service';
 import { StateControlService } from '../../../services/state-control/state-control.service';
@@ -91,7 +91,7 @@ export class MessageFieldComponent {
         console.error('Kein Channel ausgewählt!');
         return;
       }
-      let newMessage: Message = {
+      let newMessage: ChannelMessage = {
         text: this.textArea,
         chatId: currentChannel.chanId,
         timestamp: Timestamp.now(),
@@ -105,6 +105,7 @@ export class MessageFieldComponent {
         storageData: '',
         taggedUser: [],
         answers: [],
+        type: MessageType.ChannelMessage,
       };
 
       if (this.textArea !== '' || this.selectedFile) {
@@ -135,12 +136,13 @@ export class MessageFieldComponent {
   }
   
   async sendDirectMessage() {
+    debugger
     this.stateControl.scrollToBottomGlobal = false;
     let collRef = await this.msg.newPrivateMessageChannel(
       this.userService.messageReceiver!
     );
     if (collRef) {
-      const newMessage: Message = {
+      const newMessage: PrivateMessage = {
         text: this.textArea,
         chatId: collRef,
         timestamp: Timestamp.now(),
@@ -154,6 +156,7 @@ export class MessageFieldComponent {
         storageData: '',
         taggedUser: [],
         answers: [],
+        type: MessageType.PrivateMessage
       };
 
       if (this.textArea.trim() !== '' || this.selectedFile) {

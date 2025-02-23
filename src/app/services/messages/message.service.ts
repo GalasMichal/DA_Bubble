@@ -17,7 +17,7 @@ import { PrivateChat } from '../../models/interfaces/privateChat.model';
 import { UserServiceService } from '../user-service/user-service.service';
 import { User } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
-import { Message } from '../../models/interfaces/message.model';
+import { ChannelMessage, ChannelThreadMessage, Message, PrivateMessage, PrivateThreadMessage } from '../../models/interfaces/message.model';
 import { IDBPDatabase, openDB } from 'idb';
 
 @Injectable({
@@ -59,7 +59,7 @@ export class MessageService {
     });
   }
 
-  async getMessagesLocally(chatId: string): Promise<Message[]> {
+  async getMessagesLocally(chatId: string): Promise<(ChannelMessage | ChannelThreadMessage | PrivateMessage | PrivateThreadMessage)[]> {
     const db = await this.dbPromise;
 
     try {
@@ -120,7 +120,7 @@ export class MessageService {
     return channelDocRef.id;
   }
 
-  async addMessageToSubcollection(chatId: string, message: Message) {
+  async addMessageToSubcollection(chatId: string, message: ChannelMessage | ChannelThreadMessage | PrivateMessage | PrivateThreadMessage) {
     if (!chatId) {
       throw new Error('chatId is required to add a message.');
     }
@@ -171,9 +171,9 @@ export class MessageService {
     this.unsubscribeMessages = onSnapshot(
       messagesQuery,
       async (querySnapshot) => {
-        const newMessages: Message[] = [];
+        const newMessages: (ChannelMessage | ChannelThreadMessage | PrivateMessage | PrivateThreadMessage)[] = [];
         querySnapshot.forEach((doc) => {
-          newMessages.push(doc.data() as Message);
+          newMessages.push(doc.data() as ChannelMessage | ChannelThreadMessage | PrivateMessage | PrivateThreadMessage);
         });
 
         this.messages.set(newMessages);
