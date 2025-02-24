@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, Inject, inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
-import { MessageEditComponent } from '../message-edit/message-edit.component';
 import { CommonModule } from '@angular/common';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { StateControlService } from '../../../services/state-control/state-control.service';
@@ -11,7 +10,7 @@ import { Firestore } from '@angular/fire/firestore';
 @Component({
   selector: 'app-reaction-bar',
   standalone: true,
-  imports: [MessageEditComponent, CommonModule, PickerComponent],
+  imports: [CommonModule, PickerComponent],
   templateUrl: './reaction-bar.component.html',
   styleUrl: './reaction-bar.component.scss'
 })
@@ -45,8 +44,8 @@ export class ReactionBarComponent {
       
   }
 
-  onEditMessage(event: { textToEdit: string, channelId:string, messageId: string }) {
-    this.editMessage.emit({ textToEdit: event.textToEdit, channelId: event.channelId, messageId: event.messageId });
+  editThisMessage(textToEdit: string, channelId:string, messageId: string = "" ) {
+    this.editMessage.emit({textToEdit, channelId, messageId });
       
   }
 
@@ -81,6 +80,7 @@ export class ReactionBarComponent {
   }
 
   showEditCloud() {
+      console.log('TEST')
       this.showCloud = !this.showCloud
   }
 }

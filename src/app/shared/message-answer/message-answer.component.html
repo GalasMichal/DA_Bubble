@@ -7,11 +7,31 @@
   <app-time-separator [userDate]="currentMessage" class="full-width"></app-time-separator>
   }
   <div class="user-message-container" [ngClass]="{'user-message-container-right': meUser}">
-    <app-reaction-bar class="reaction-bar" [editText]="currentMessage.text" [channelId]="currentMessage.chatId"
-      [messageId]="currentMessage.messageId" [createdById]="currentMessage.messageSendBy.uId"
+    
+    <!-- REACTION BAR -->
+    
+    
+    
+    
+    
+    <app-reaction-bar class="reaction-bar" 
+      [editText]="currentMessage.text" 
+      [channelId]="currentMessage.chatId"
+      [messageId]="currentMessage.messageId" 
+      [createdById]="currentMessage.messageSendBy.uId"
       [ngClass]="{'reaction-bar-right': meUser}" [index]="index" (emojiSelected)="onEmojiSelected($event)"
       (editMessage)="onReactionBarChange($event)">
     </app-reaction-bar>
+
+
+    
+
+
+    
+    
+    
+    
+    <!-- REACTION BAR ENDE-->
     <img class="avatar"
       (click)="openDialogWithImage(currentMessage.messageSendBy.avatarUrl || './assets/media/icons/profile-icons/profile-icon.svg')"
       src={{currentMessage.messageSendBy.avatarUrl}} alt="profil-image" />
