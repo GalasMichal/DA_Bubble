@@ -1,22 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+// import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-@Component({
-  selector: 'app-message-edit',
-  standalone: true,
-  imports: [],
-  templateUrl: './message-edit.component.html',
-  styleUrl: './message-edit.component.scss'
-})
-export class MessageEditComponent {
-  @Input() index: number = 0;
+// @Component({
+//   selector: 'app-message-edit',
+//   standalone: true,
+//   imports: [],
+//   templateUrl: './message-edit.component.html',
+//   styleUrl: './message-edit.component.scss'
+// })
+// export class MessageEditComponent {
+//   @Input() index: number = 0;
 
-  @Input() editText: string = "";
-  @Input() channelId: string = ""
-  @Input() messageId?: string = "";
-  @Output() editMessage = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
+//   @Input() editText: string = "";
+//   @Input() channelId: string = ""
+//   @Input() messageId?: string = "";
+//   @Output() editMessage = new EventEmitter<{ textToEdit: string; channelId:string; messageId: string }>();
 
   
-  editThisMessage(textToEdit: string, channelId:string, messageId: string = "") {
-    this.editMessage.emit({ textToEdit, channelId, messageId})
-  }
-}
+//   editThisMessage(textToEdit: string, channelId:string, messageId: string = "") {
+//     this.editMessage.emit({ textToEdit, channelId, messageId})
+//   }
+// }
