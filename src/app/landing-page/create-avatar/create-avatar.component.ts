@@ -27,9 +27,7 @@ interface ProfileAvatar {
     MatDialogModule,
   ],
   templateUrl: './create-avatar.component.html',
-  styleUrls: [
-    './create-avatar.component.scss',
-  ],
+  styleUrls: ['./create-avatar.component.scss'],
 })
 export class CreateAvatarComponent {
   dialog = inject(MatDialogRef<CreateAvatarComponent>, { optional: true });
@@ -75,17 +73,20 @@ export class CreateAvatarComponent {
 
   async closeCreateAvatar(text: string) {
     if (this.file) {
-      // Use the universal upload function from the StorageService
+      // Hochladen des Benutzer-Avatars
       const downloadUrl = await this.st.uploadFileToStorage(
-        'avatars', // The folder in Firebase Storage
-        this.db.currentUser()!.uId, // The user ID as the file name or path
-        this.file // The file to upload
+        'avatars',
+        this.db.currentUser()!.uId,
+        this.file
       );
       if (downloadUrl) {
-        this.selectedAvatar = downloadUrl; // Set the selected avatar to the uploaded URL
+        this.selectedAvatar = downloadUrl;
       }
+    } else if (this.isSelected) {
+      // Falls ein Avatar aus der Liste gewählt wurde, NICHT den Default setzen!
+      console.log('Behalte ausgewählten Avatar:', this.selectedAvatar);
     } else {
-      // If no file was selected, use the default avatar
+      // Falls nichts ausgewählt wurde, Standard-Avatar setzen
       this.selectedAvatar = 'assets/media/icons/profile-icons/profile-icon.svg';
     }
 
