@@ -179,7 +179,7 @@ export class ChatRoomService {
 
   async subscribeToFirestoreMessages(chanId: string) {
     console.log('Abonniere Nachrichten für Channel:', chanId);
-
+    await this.loadMessagesFromIndexedDB(chanId);
     const messagesRef = collection(
       this.fireService.firestore,
       `channels/${chanId}/messages`
