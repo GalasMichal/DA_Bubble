@@ -178,23 +178,6 @@ app-search {
   transition: all 175ms ease-in-out;
 }
 
-app-message-edit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-  background: $white;
-  position: absolute;
-  bottom: -45px;
-  right: -170px;
-  width: 240px;
-  height: 50px;
-
-  gap: 5px;
-  border-radius: 0px $b-radius-3 $b-radius-3 $b-radius-3;
-  box-shadow: $shadow;
-}
-
 app-footer {
   width: 100%;
 }
