@@ -68,19 +68,6 @@ export class MessageAnswerComponent {
 
   emojis: { symbol: string; count: number }[] = [];
 
-  // Edit of the message
-  onReactionBarChange(event: {
-    textToEdit: string;
-    channelId: string;
-    messageId: string;
-  }) {
-    this.editMessage.emit({
-      textToEdit: event.textToEdit,
-      channelId: event.channelId,
-      messageId: event.messageId,
-    }); // Weiterleitung an den Parent
-  }
-
   addEmoji(event: any) {
     this.state.scrollToBottomGlobal = false;
     // Das ausgewählte Emoji wird in der aktuellen Komponente in newEmoji gespeichert
@@ -89,10 +76,8 @@ export class MessageAnswerComponent {
     // Das ausgewählte Emoji wird an die Elternkomponente weitergeleitet
     const emoji = event.emoji.native; // Nimm an, dass das Emoji im "native"-Feld ist
     this.onEmojiSelected(emoji);  // Emitiere das Emoji an die Elternkomponente
- 
   }
  
-
   onEmojiSelected(emoji: string) {
     this.increaseCounter(emoji);
     this.updateReactionsInFirestore();
@@ -105,7 +90,13 @@ export class MessageAnswerComponent {
     }
   }
 
-  constructor() {}
+  editThisMessage(
+    textToEdit: string,
+    channelId: string,
+    messageId: string = ''
+  ) {
+    this.editMessage.emit({ textToEdit, channelId, messageId });
+  }
 
   async ngOnInit() {
     this.updateCurrentMessage();
@@ -237,13 +228,5 @@ export class MessageAnswerComponent {
 
   showEditCloud() {
     this.showCloud = !this.showCloud;
-  }
-
-  editThisMessage(
-    textToEdit: string,
-    channelId: string,
-    messageId: string = ''
-  ) {
-    this.editMessage.emit({ textToEdit, channelId, messageId });
   }
 }
