@@ -8,7 +8,6 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { ReactionBarComponent } from '../component/reaction-bar/reaction-bar.component';
 import { TimeSeparatorComponent } from './time-separator/time-separator.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
 
@@ -23,16 +22,17 @@ import { UserServiceService } from '../../services/user-service/user-service.ser
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileSingleUserComponent } from '../profile-single-user/profile-single-user.component';
 import { ShowImageComponent } from '../component/show-image/show-image.component';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 @Component({
   selector: 'app-message-answer',
   standalone: true,
   imports: [
     CommonModule,
-    ReactionBarComponent,
     TimeSeparatorComponent,
     DatePipe,
     ReactionCloudComponent,
+    PickerComponent,
   ],
   templateUrl: './message-answer.component.html',
   styleUrl: './message-answer.component.scss',
@@ -45,6 +45,10 @@ export class MessageAnswerComponent {
   state = inject(StateControlService);
   userService = inject(UserServiceService);
   dialog = inject(MatDialog);
+  showCloud: boolean = false;
+  isEmojiPickerVisibleMessage: boolean[] = [false];
+  newEmoji: string = "";
+
   currentChannel = computed(() => this.chat.currentChannelSignal());
 
   meUser: boolean = false;
@@ -76,6 +80,18 @@ export class MessageAnswerComponent {
       messageId: event.messageId,
     }); // Weiterleitung an den Parent
   }
+
+  addEmoji(event: any) {
+    this.state.scrollToBottomGlobal = false;
+    // Das ausgewählte Emoji wird in der aktuellen Komponente in newEmoji gespeichert
+    this.newEmoji = `${this.newEmoji}${event.emoji.native}`; 
+
+    // Das ausgewählte Emoji wird an die Elternkomponente weitergeleitet
+    const emoji = event.emoji.native; // Nimm an, dass das Emoji im "native"-Feld ist
+    this.onEmojiSelected(emoji);  // Emitiere das Emoji an die Elternkomponente
+ 
+  }
+ 
 
   onEmojiSelected(emoji: string) {
     this.increaseCounter(emoji);
@@ -211,5 +227,28 @@ export class MessageAnswerComponent {
     this.dialog.open(ShowImageComponent, {
       panelClass: 'image-container',
     });
+  }
+
+  showEmojiWindow(index: number) {
+    this.state.scrollToBottomGlobal = false;
+    this.isEmojiPickerVisibleMessage[index] =
+      !this.isEmojiPickerVisibleMessage[index];
+  }
+
+  sendPrivateMessage() {
+    console.log('sendPrivateMessage()', this.index);
+  }
+
+  showEditCloud() {
+    console.log('TEST');
+    this.showCloud = !this.showCloud;
+  }
+
+  editThisMessage(
+    textToEdit: string,
+    channelId: string,
+    messageId: string = ''
+  ) {
+    this.editMessage.emit({ textToEdit, channelId, messageId });
   }
 }
