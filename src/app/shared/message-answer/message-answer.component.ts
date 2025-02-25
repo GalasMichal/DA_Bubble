@@ -235,12 +235,7 @@ export class MessageAnswerComponent {
       !this.isEmojiPickerVisibleMessage[index];
   }
 
-  sendPrivateMessage() {
-    console.log('sendPrivateMessage()', this.index);
-  }
-
   showEditCloud() {
-    console.log('TEST');
     this.showCloud = !this.showCloud;
   }
 
