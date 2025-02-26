@@ -174,24 +174,45 @@ export class ChannelEditComponent {
     }
   }
 
+  /**
+   *  Update the channel
+   * new channel name and description
+   * @param text text to show in the toast
+   */
   updateChannel(text: string) {
     const newName = this.getNewChannelName();
     const newDescription = this.getNewChannelDescription();
     this.applyChannelUpdates(newName, newDescription, text);
   }
 
+  /**
+   *
+   * @returns new channel name
+   */
   getNewChannelName() {
     return this.newTitle === ''
       ? this.currentChannel()!.channelName
       : this.newTitle;
   }
 
+  /**
+   *
+   * @returns new channel description
+   */
   getNewChannelDescription() {
     return this.newDescription === ''
       ? this.currentChannel()!.channelDescription
       : this.newDescription;
   }
 
+  /**
+   * apply the channel updates to the current channel
+   * update the channel name and description in firebase
+   * show the toast
+   * @param newName
+   * @param newDescription
+   * @param text
+   */
   applyChannelUpdates(newName: string, newDescription: string, text: string) {
     const currentChannel = this.currentChannel();
     if (currentChannel) {
@@ -203,18 +224,27 @@ export class ChannelEditComponent {
     }
   }
 
+  /**
+   * @param text text to show in the toast
+   */
   showUpdateToast(text: string) {
     this.stateServer.showToast = true;
     this.stateServer.showToastText.set(text);
     this.stateServer.removeShowToast();
   }
 
+  /**
+   * Close the dialog after a delay
+   */
   closeDialogAfterDelay() {
     setTimeout(() => {
       this.dialog.close();
     }, 2200);
   }
 
+  /**
+   * Delete the channel
+   */
   onDeleteChannel(chanId: string) {
     this.counter++;
 
@@ -225,6 +255,10 @@ export class ChannelEditComponent {
     }
   }
 
+  /**
+   * confirm and delete the channel
+   * @param chanId channel id
+   */
   confirmAndDeleteChannel(chanId: string) {
     const confirmDialogRef = this.openConfirmDialog();
 
@@ -236,30 +270,44 @@ export class ChannelEditComponent {
       }
     });
   }
-
+  /**
+   *
+   * @returns confirm dialog reference
+   */
   openConfirmDialog() {
     return this.dialogConfirm.open(ConfirmDeleteChannelComponent, {
       panelClass: 'confirm-delete-channel',
     });
   }
 
+  /**
+   * Perform the channel deletion
+   * @param chanId channel id
+   */
   performChannelDeletion(chanId: string) {
     this.chat.deleteChannel(chanId);
     this.dialogConfirm.closeAll();
     this.router.navigate(['main']);
   }
 
-  // Show all users except this user which created this channel
+  /**
+   * Filter all users in the channel
+   */
   filterAllUsersInChannel() {
     this.stateServer.choosenUser = [];
     const currentChannel = this.currentChannel();
-    const showAllChoosenUsers = currentChannel?.specificPeople; // Array of user IDs
-    const allUsers = this.userService.userList; // Array of User objects
-
+    const showAllChoosenUsers = currentChannel?.specificPeople;
+    const allUsers = this.userService.userList;
     const filteredUsers = this.getFilteredUsers(allUsers, showAllChoosenUsers);
-    this.stateServer.choosenUser = filteredUsers; // Assign filtered users
+    this.stateServer.choosenUser = filteredUsers;
   }
 
+  /**
+   * filter the users from the all users list into the choosen users list
+   * @param allUsers all users
+   * @param showAllChoosenUsers show all choosen users
+   * @returns filtered users
+   */
   getFilteredUsers(
     allUsers: User[],
     showAllChoosenUsers: string[] | undefined
@@ -269,11 +317,18 @@ export class ChannelEditComponent {
     );
   }
 
+  /**
+   * Leave the channel
+   */
   leaveChannel() {
     const currentUser = this.fb.currentUser();
     this.confirmAndLeaveChannel(currentUser);
   }
 
+  /**
+   * confirm and leave the channel
+   * @param currentUser current user
+   */
   confirmAndLeaveChannel(currentUser: User | null) {
     const confirmLeaveDialog = this.openLeaveConfirmDialog();
 
@@ -286,12 +341,20 @@ export class ChannelEditComponent {
     });
   }
 
+  /**
+   *
+   * @returns confirm leave dialog reference
+   */
   openLeaveConfirmDialog() {
     return this.dialogConfirm.open(ConfirmLeaveChannelComponent, {
       panelClass: 'confirm-leave-channel',
     });
   }
 
+  /**
+   * Perform the channel leave
+   * @param currentUser current user
+   */
   performChannelLeave(currentUser: User | null) {
     this.stateServer.choosenUser = this.stateServer.choosenUser.filter(
       (user) => user.uId !== currentUser!.uId
