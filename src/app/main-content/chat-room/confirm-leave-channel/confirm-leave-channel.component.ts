@@ -18,14 +18,24 @@ export class ConfirmLeaveChannelComponent {
   stateControl = inject(StateControlService);
   fb = inject(FirebaseService);
 
+  /**
+   * inject the MatDialogRef service to close the dialog
+   * @param confirmLeaveDialog
+   */
   constructor(
     public confirmLeaveDialog: MatDialogRef<ConfirmLeaveChannelComponent>
   ) {}
 
+  /**
+   *  Close the dialog
+   */
   closeLeaveChannel() {
     this.dialog.close();
   }
 
+  /**
+   * Confirm leave channel
+   */
   confirmLeaveChannel() {
     const result = true;
     this.confirmLeaveDialog.close(result);
