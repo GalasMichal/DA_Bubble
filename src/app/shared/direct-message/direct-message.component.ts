@@ -29,6 +29,7 @@ import { User } from '../../models/interfaces/user.model';
 })
 export class DirectMessageComponent implements OnInit {
   ms = inject(MessageService);
+  chat = inject(ChatRoomService);
   router = inject(Router);
   route = inject(ActivatedRoute);
   user = inject(UserServiceService);
@@ -48,13 +49,16 @@ export class DirectMessageComponent implements OnInit {
       panelClass: 'profile-single-user-container',
     });
   }
+  ngOnDestroy(): void {
+    this.chat.messages.set([]);
+  }
 
   loadCurrentMessageAfterRefresh(): void {
     const messageId = this.route.snapshot.paramMap.get('id');
     if (messageId) {
       this.ms.loadMessagesFromChat(messageId);
-      
-      this.userService.messageReceiver
+
+      this.userService.messageReceiver;
     }
   }
 }

@@ -1,11 +1,8 @@
-import { Injectable, Signal, computed, inject, signal } from '@angular/core';
+import { Injectable, Signal, inject, signal } from '@angular/core';
 import {
-  addDoc,
   collection,
   deleteDoc,
   doc,
-  Firestore,
-  getDocs,
   onSnapshot,
   setDoc,
   Timestamp,
@@ -13,26 +10,36 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { Channel } from '../../models/interfaces/channel.model';
-import { User as AppUser } from '../../models/interfaces/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import { StateControlService } from '../state-control/state-control.service';
 import { FirebaseService } from '../firebase/firebase.service';
 import { openDB } from 'idb';
-import { getDoc } from 'firebase/firestore';
-import { channel } from 'diagnostics_channel';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatRoomService {
-  private fireService = inject(FirebaseService);
-  private subscriptions: { [key: string]: Unsubscribe } = {};
+  /**
+   * inject state, router, route, firebase service
+   */
   state = inject(StateControlService);
   router = inject(Router);
   route = inject(ActivatedRoute);
+  private fireService = inject(FirebaseService);
 
-  // Datenbank-Initialisierung
+  /**
+   * subscriptions array to manage unsubscribe
+   */
+  private subscriptions: { [key: string]: Unsubscribe } = {};
+
+  public currentChannelSignal = signal<Channel | null>(null);
+  channels = signal<Channel[]>([]);
+  messages = signal<Message[]>([]);
+
+  /**
+   * indexDB initialization
+   */
   private dbPromise = openDB('ChatDB', 1, {
     upgrade(db) {
       if (!db.objectStoreNames.contains('channels')) {
@@ -47,11 +54,12 @@ export class ChatRoomService {
     },
   });
 
-  public currentChannelSignal = signal<Channel | null>(null);
-  channels = signal<Channel[]>([]);
-  messages = signal<Message[]>([]);
-  filteredMessages = signal<Message[]>([]);
-
+  /**
+   * set current channel
+   * load messages from indexedDB
+   * @param channel interface channel
+   * @returns
+   */
   async setCurrentChannel(channel: Channel) {
     if (this.currentChannelSignal()?.chanId === channel.chanId) {
       return;
@@ -59,6 +67,10 @@ export class ChatRoomService {
     this.currentChannelSignal.set(channel);
     this.subscribeToFirestoreMessages(channel.chanId);
   }
+
+  /**
+   * clear messages cache
+   */
 
   async clearMessagesCache() {
     const db = await this.dbPromise;
