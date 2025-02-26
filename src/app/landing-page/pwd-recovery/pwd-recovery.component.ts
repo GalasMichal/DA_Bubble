@@ -10,11 +10,11 @@ import {
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { CommonModule, Location } from '@angular/common';
-import { FooterComponent } from '../footer/footer.component';
+
 import { BackComponent } from '../../shared/component/back/back.component';
-import { LogoComponent } from '../../shared/logo/logo.component';
+
 import { StateControlService } from '../../services/state-control/state-control.service';
-import { ToastComponent } from '../../shared/component/toast/toast.component';
+
 import { CloseComponent } from '../../shared/component/close/close.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CreateAvatarComponent } from '../create-avatar/create-avatar.component';
@@ -35,24 +35,36 @@ import { CreateAvatarComponent } from '../create-avatar/create-avatar.component'
   styleUrl: './pwd-recovery.component.scss',
 })
 export class PwdRecoveryComponent {
+  /**
+   * Inject the services needed for the component
+   */
   dialog = inject(MatDialogRef<CreateAvatarComponent>, { optional: true });
   dialogRef = inject(MatDialog);
-
+  router = inject(Router);
   readonly location = inject(Location);
   fb = inject(FirebaseService);
   formBuilder = inject(FormBuilder);
   stateControl = inject(StateControlService);
-  // FormGroup für die Anmeldeform
+  /**
+   * Create the form group for the password recovery form
+   */
   recoveryForm: FormGroup;
   isFormValid: boolean = false;
-  router = inject(Router);
 
+  /**
+   * Constructor initializes the form group
+   */
   constructor() {
     this.recoveryForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
     });
   }
 
+  /**
+   * Send an email to the user with the password recovery link
+   * @param event The event that triggered the function
+   * @param text The text to send in the email
+   */
   sendEmail(event: Event, text: string) {
     event.preventDefault();
     const email = this.recoveryForm.get('email')?.value;
@@ -63,6 +75,11 @@ export class PwdRecoveryComponent {
     this.router.navigate(['confirmation']);
   }
 
+  /**
+   *
+   * @param event The event that triggered the function
+   * Close the password recovery dialog
+   */
   closePwdRecovery(event: Event) {
     event.preventDefault();
     if (this.dialog) {

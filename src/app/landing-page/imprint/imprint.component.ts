@@ -9,12 +9,7 @@ import { FooterComponent } from '../footer/footer.component';
 @Component({
   selector: 'app-imprint',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterLink,
-    BackComponent,
-  ],
+  imports: [CommonModule, RouterModule, RouterLink, BackComponent],
   templateUrl: './imprint.component.html',
   styleUrls: ['./imprint.component.scss'],
 })
@@ -22,7 +17,9 @@ export class ImprintComponent {
   readonly location = inject(Location);
 
   constructor() {}
-
+  /**
+   * Navigates to the previous page.
+   */
   goBack(): void {
     this.location.back(); // Navigate to the previous page
   }

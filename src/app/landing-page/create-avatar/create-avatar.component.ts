@@ -1,10 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-import { LogoComponent } from '../../shared/logo/logo.component';
 import { CommonModule } from '@angular/common';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { BackComponent } from '../../shared/component/back/back.component';
-import { FooterComponent } from '../footer/footer.component';
 import { StorageService } from '../../services/storage/storage.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -49,20 +47,32 @@ export class CreateAvatarComponent {
     { name: 'assets/media/icons/profile-icons/user-6-noah.svg' },
   ];
 
+  /**
+   * Chooses an avatar from the list of profile avatars.
+   * @param {string} avatarName - The name of the selected avatar.
+   */
   chooseAvatar(avatarName: string) {
     this.selectedAvatar = avatarName;
     this.isSelected = true;
   }
 
+  /**
+   * Uploads the user's avatar and sets the selected file.
+   * @param {Event} event - The file input change event.
+   */
   uploadUserAvatar(event: any) {
     const file = event.target.files[0];
     this.readURL(file);
-    this.st.uploadMsg.set(file.name); // Set the file name to uploadMsg signal
+    this.st.uploadMsg.set(file.name);
     this.file = file;
     console.log('file', file);
     this.isSelected = true;
   }
 
+  /**
+   * Reads the URL of a selected image and sets it as the selected avatar.
+   * @param {File} file - The selected image file.
+   */
   readURL(file: any) {
     if (file) {
       const reader = new FileReader();
@@ -71,6 +81,10 @@ export class CreateAvatarComponent {
     }
   }
 
+  /**
+   * Closes the avatar creation process and updates the user's avatar.
+   * @param {string} text - The text to display in the toast message.
+   */
   async closeCreateAvatar(text: string) {
     if (this.file) {
       // Hochladen des Benutzer-Avatars
@@ -83,10 +97,8 @@ export class CreateAvatarComponent {
         this.selectedAvatar = downloadUrl;
       }
     } else if (this.isSelected) {
-      // Falls ein Avatar aus der Liste gewählt wurde, NICHT den Default setzen!
-      console.log('Behalte ausgewählten Avatar:', this.selectedAvatar);
+      // Avatar wurde ausgewählt
     } else {
-      // Falls nichts ausgewählt wurde, Standard-Avatar setzen
       this.selectedAvatar = 'assets/media/icons/profile-icons/profile-icon.svg';
     }
 
@@ -99,6 +111,10 @@ export class CreateAvatarComponent {
     this.closeEditAvatar();
   }
 
+  /**
+   * Displays a toast message.
+   * @param {string} text - The text to display in the toast message.
+   */
   showToast(text: string) {
     this.stateControl.showToast = true;
     this.stateControl.showToastText.set(text);
@@ -107,7 +123,9 @@ export class CreateAvatarComponent {
       this.router.navigate(['main']);
     }, 2200);
   }
-
+  /**
+   * Closes the edit avatar dialog.
+   */
   closeEditAvatar() {
     if (this.dialog) {
       this.dialog.close();
