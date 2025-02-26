@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,6 +24,10 @@ import { StorageService } from '../../../services/storage/storage.service';
 export class MenuSideLeftComponent {
   isFirstDropdownMenuOpen = true;
   isSecondDropdownMenuOpen = true;
+
+  /**
+   * inject dialog, firebase, chat, message, user, router, state, storage service
+   */
   dialog = inject(MatDialog);
   fb = inject(FirebaseService);
   chat = inject(ChatRoomService);
@@ -31,58 +35,72 @@ export class MenuSideLeftComponent {
   userService = inject(UserServiceService);
   router = inject(Router);
   state = inject(StateControlService);
-  storageService = inject(StorageService); // StorageService injizieren
+  storageService = inject(StorageService);
+
   channelUsers: Channel[] = [];
-  selectedChannelId: string | null = null; // Store selected channel ID
+  selectedChannelId: string | null = null;
+  sortAllChannels = computed(() => this.chat.channels());
 
   constructor() {}
 
+  /**
+   * subscribe user list and sort list of user
+   */
   ngOnInit(): void {
-    this.userService.subUserList(); // Load users from Friebase
+    this.userService.subUserList();
     this.sortListOfUser();
   }
 
-  toggleMenuSubscription() {
-    if (this.isFirstDropdownMenuOpen || this.state.isMenuOpen) {
-      // Starte das Abonnement, wenn das Menü sichtbar ist
-      // this.chat.subChannelList();
-      // this.chat.channelList;
-    } else {
-      // Beende das Abonnement, wenn das Menü nicht sichtbar ist
-      // this.chat.unsubscribe('channel');
-    }
-  }
-
-  ngOnDestroy(): void {
-    // // Ressourcen bereinigen
-    // this.chat.unsubscribe(this.chat.channelUnsubscribe);
-    // if (this.ms.unsubscribeMessages) {
-    //   this.ms.unsubscribe(this.ms.unsubscribeMessages);
-    // }
-  }
-
+  /**
+   * open selected channel
+   * set upload message to empty
+   * update state
+   * set current channel
+   * navigate to chat
+   * @param channel interface channel
+   */
   openChannel(channel: Channel): void {
-    this.storageService.uploadMsg.set(''); // remove image from text area
-    this.selectedChannelId = channel.chanId; // Highlight the selected channel
-    // this.chat.unsubscribe('channel');
-    this.state.responsiveChat = true;
-    this.state.responsiveArrow = true;
-    this.state.responsiveMenu = true;
-    this.state.isThreadOpen = false;
+    this.storageService.uploadMsg.set('');
+    this.selectedChannelId = channel.chanId;
+    this.updateState();
     this.chat.setCurrentChannel(channel);
     this.router.navigate(['main/chat', channel.chanId]);
   }
 
-  async openMessage(user: User): Promise<void> {
-    this.storageService.uploadMsg.set(''); // remove image from text area
-    this.selectedChannelId = user.uId; //Highlight the selected channel
-    this.state.isThreadOpen = false;
-    this.userService.messageReceiver = user;
+  /**
+   * update state
+   */
+  private updateState(): void {
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
     this.state.responsiveMenu = true;
+    this.state.isThreadOpen = false;
+  }
 
-    const existingChatId = await this.ms.checkPrivateChatExists(user.uId);
+  /**
+   * open selected message
+   * set upload message to empty
+   * update state
+   * navigate to message
+   * @param user interface user
+   */
+  async openMessage(user: User): Promise<void> {
+    this.storageService.uploadMsg.set('');
+    this.selectedChannelId = user.uId;
+    this.updateState();
+    this.userService.messageReceiver = user;
+    await this.navigateToMessage(user.uId);
+  }
+
+  /**
+   * navigate to message
+   * existing chat id check in database if exists navigate to specified message
+   * load messages from current chat
+   * if not navigate to message component
+   * @param uId string user id
+   */
+  private async navigateToMessage(uId: string): Promise<void> {
+    const existingChatId = await this.ms.checkPrivateChatExists(uId);
     if (existingChatId) {
       this.router.navigate(['main/messages', existingChatId]);
       await this.ms.loadMessagesFromChat(existingChatId);
@@ -91,14 +109,25 @@ export class MenuSideLeftComponent {
     }
   }
 
+  /**
+   * toogle dropdown menu
+   */
   toogleDropDown1(): void {
     this.isFirstDropdownMenuOpen = !this.isFirstDropdownMenuOpen;
   }
 
+  /**
+   * toogle dropdown menu
+   */
   toogleDropDown2(): void {
     this.isSecondDropdownMenuOpen = !this.isSecondDropdownMenuOpen;
   }
 
+  /**
+   * add channel
+   * set states
+   * open channel create component
+   */
   addChannel(): void {
     this.state.isThreadOpen = false;
     this.state.createChannelActiveInput = false;
@@ -106,7 +135,10 @@ export class MenuSideLeftComponent {
       panelClass: 'channel-create-container',
     });
   }
-
+  /**
+   * show users in the channel
+   * @returns number of users in the channel
+   */
   sortListOfUser(): User[] {
     const sortAllUser = [...this.userService.userList];
     sortAllUser.sort((a, b) => {
@@ -117,7 +149,10 @@ export class MenuSideLeftComponent {
     });
     return sortAllUser;
   }
-  sortAllChannels = computed(() => this.chat.channels());
+
+  /**
+   * @returns sorted list of all channels
+   */
   sortOfAllChannels() {
     this.sortAllChannels().sort((a, b) => {
       if (a.chanId === this.fb.mainChannel) return -1;
@@ -128,6 +163,9 @@ export class MenuSideLeftComponent {
     return this.sortAllChannels();
   }
 
+  /**
+   * open default component to write message
+   */
   writeMessage(): void {
     this.state.responsiveChat = true;
     this.state.responsiveArrow = true;
