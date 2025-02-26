@@ -33,7 +33,7 @@ export class ConfirmDeleteChannelComponent {
 
   /**
    * confirm delete channel
-   * check if the current channel is not null then delete the channel
+   * check if the current channel is not null then delete the channelgit
    */
   confirmDeleteChannel() {
     const result = true;
