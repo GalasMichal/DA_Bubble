@@ -69,19 +69,27 @@ export class ChatRoomService {
   }
 
   /**
-   * clear messages cache
+   * clear messages from indexDb
+   * set messages signal to empty
    */
-
   async clearMessagesCache() {
     const db = await this.dbPromise;
     await db.clear('messages');
     this.messages.set([]);
   }
 
+  /**
+   * get current channel
+   * @returns signal channel
+   */
   getCurrentChannel(): Signal<Channel | null> {
     return this.currentChannelSignal;
   }
 
+  /**
+   * get channels from indexedDB
+   * @returns  channels[]
+   */
   async getChannelsFromIndexedDB(): Promise<Channel[]> {
     const db = await this.dbPromise;
     const cachedChannels: Channel[] = await db.getAll('channels');
@@ -89,10 +97,15 @@ export class ChatRoomService {
     return cachedChannels;
   }
 
+  /**
+   * subscribe to firestore channels
+   * filter channels by specific people
+   * and update channels in indexedDB
+   * set updated channels to signal
+   */
   async subscribeToFirestoreChannels() {
     const userId = this.fireService.currentUser()?.uId;
     if (!userId) return;
-
     const channelsRef = collection(this.fireService.firestore, 'channels');
     this.subscriptions['channelUpdates'] = onSnapshot(
       channelsRef,
@@ -105,18 +118,26 @@ export class ChatRoomService {
         for (const channel of updatedChannels) {
           await this.saveOrUpdateChannelInIndexedDB(channel);
         }
-
         this.channels.set(updatedChannels);
-        console.log('Channels aus Firestore aktualisiert:', updatedChannels);
       }
     );
   }
 
+  /**
+   * save or update channel in indexedDB
+   * @param channel interface channel
+   */
   async saveOrUpdateChannelInIndexedDB(channel: Channel) {
     const db = await this.dbPromise;
     await db.put('channels', channel);
   }
 
+  /**
+   * Create new channel
+   * save channel in firestore
+   * save channel in indexedDB
+   * @param channel interface channel
+   */
   async createChannel(channel: Channel) {
     const db = await this.dbPromise;
     const channelRef = collection(this.fireService.firestore, 'channels');
@@ -126,6 +147,11 @@ export class ChatRoomService {
     await db.put('channels', channel);
   }
 
+  /**
+   * update channel in firestore
+   * update channel in indexedDB
+   * @param channel interface channel
+   */
   async updateChannel(channel: Channel) {
     const channelRef = doc(
       this.fireService.firestore,
@@ -139,13 +165,22 @@ export class ChatRoomService {
     await db.put('channels', channel);
   }
 
+  /**
+   * clear indexedDB
+   * clear channels signal
+   */
   async clearIndexedDB() {
     const db = await this.dbPromise;
-    await db.clear('channels'); // Löscht alle Channels aus IndexedDB
-    this.channels.set([]); // Leert das lokale Signal
-    console.log('IndexedDB wurde geleert.');
+    await db.clear('channels');
+    this.channels.set([]);
   }
 
+  /**
+   * delete channel from firestore
+   * delete channel from indexedDB
+   * update channels signal
+   * @param chanId string channel id
+   */
   async deleteChannel(chanId: string) {
     const channelRef = doc(this.fireService.firestore, `channels/${chanId}`);
     await deleteDoc(channelRef);
@@ -156,31 +191,26 @@ export class ChatRoomService {
     );
   }
 
-  //Nachrichten aus der IndexedDB laden
+  /**
+   * check if messages exists in indexedDB
+   * get all messages from indexedDB
+   * filter messages by chatId
+   * set messages signal
+   * catch error if any
+   * @param chanId from current channel
+   * @returns
+   */
   async loadMessagesFromIndexedDB(chanId: string): Promise<Message[]> {
     const db = await this.dbPromise;
-
-    // Überprüfen, ob der Objektstore 'messages' existiert
     if (!db.objectStoreNames.contains('messages')) {
       console.error('Der Objektstore "messages" existiert nicht.');
       return [];
     }
-
     try {
-      // Nachrichten aus der IndexedDB abrufen
       let cachedMessages: Message[] = await db.getAll('messages');
-
-      // Nachrichten filtern
       let filteredMessages: Message[] = cachedMessages.filter(
         (message) => message.chatId === chanId
       );
-
-      console.log(
-        'Nachrichten aus IndexedDB für den Channel geladen:',
-        cachedMessages
-      );
-
-      // Gefilterte Nachrichten setzen und zurückgeben
       this.messages.set(filteredMessages);
       return filteredMessages;
     } catch (error) {
@@ -189,8 +219,15 @@ export class ChatRoomService {
     }
   }
 
+  /**
+   * subscribe to firestore messages from specific channel
+   * get all messages from firestore
+   * sort messages by timestamp
+   * put messages in indexedDB
+   * set messages signal
+   * @param chanId
+   */
   async subscribeToFirestoreMessages(chanId: string) {
-    console.log('Abonniere Nachrichten für Channel:', chanId);
     await this.loadMessagesFromIndexedDB(chanId);
     const messagesRef = collection(
       this.fireService.firestore,
@@ -203,22 +240,21 @@ export class ChatRoomService {
         const messages: Message[] = snapshot.docs
           .map((doc) => doc.data() as Message)
           .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
-
-        // await db.clear('messages');
         for (const message of messages) {
           await db.put('messages', message);
         }
-
         this.messages.set(messages);
-
-        console.log(
-          `Nachrichten für Channel ${chanId} aktualisiert:`,
-          messages
-        );
       }
     );
   }
 
+  /**
+   * create new message
+   * add message to firestore
+   * add message to indexedDB
+   * @param chanId string channel id
+   * @param message interface message
+   */
   async createMessage(chanId: string, message: Message) {
     const db = await this.dbPromise;
     const messagesRef = collection(
@@ -228,26 +264,29 @@ export class ChatRoomService {
     const newMessageRef = doc(messagesRef);
     await setDoc(newMessageRef, { ...message, messageId: newMessageRef.id });
     message.messageId = newMessageRef.id;
-
-    await db.put('messages', message); // Speichert Nachricht in IndexedDB
-    console.log(
-      `Nachricht gespeichert in IndexedDB für Channel ${chanId}:`,
-      message
-    );
+    await db.put('messages', message);
   }
 
+  /**
+   * load current channel after refresh
+   * get channel from indexedDB
+   * set channel to signal
+   * @param currentChannelId string channel id
+   */
   async loadCurrentChannelAfterRefresh(currentChannelId: string) {
     const db = await this.dbPromise;
     const channel = await db.get('channels', currentChannelId);
-
     if (channel) {
       this.currentChannelSignal.set(channel);
-      console.log('Channel aus IndexedDB geladen:', channel);
-    } else {
-      console.warn('Kein Channel mit dieser ID gefunden.');
-    }
+    } else this.router.navigate(['main/chat']);
   }
 
+  /**
+   * update message
+   * update message in firestore
+   * @param chanId string channel id
+   * @param message interface message
+   */
   async updateMessage(chanId: string, message: Message) {
     const messageRef = doc(
       this.fireService.firestore,
@@ -259,6 +298,11 @@ export class ChatRoomService {
     );
   }
 
+  /**
+   * delete message from firestore
+   * @param chanId string channel id
+   * @param messageId string message id
+   */
   async deleteMessage(chanId: string, messageId: string) {
     await deleteDoc(
       doc(
@@ -271,6 +315,10 @@ export class ChatRoomService {
     );
   }
 
+  /**
+   *  unsubscribe subscription
+   * @param key string
+   */
   unsubscribe(key: string) {
     if (this.subscriptions[key]) {
       this.subscriptions[key]();
@@ -278,10 +326,20 @@ export class ChatRoomService {
     }
   }
 
+  /**
+   * unsubscribe all subscriptions
+   */
   unsubscribeAll() {
     Object.keys(this.subscriptions).forEach((key) => this.unsubscribe(key));
   }
 
+  /**
+   * update message parameters in firestore
+   * set reference to the message document
+   * @param textAreaEdited
+   * @param chanId
+   * @param textAreaEditId
+   */
   async updateMessageTextInFirestore(
     textAreaEdited: string,
     chanId: string,
