@@ -24,10 +24,17 @@ export class ConfirmDeleteChannelComponent {
     public confirmDialogRef: MatDialogRef<ConfirmDeleteChannelComponent>
   ) {}
 
+  /**
+   * Close the dialog
+   */
   closeDelete() {
     this.dialog.close();
   }
 
+  /**
+   * confirm delete channel
+   * check if the current channel is not null then delete the channel
+   */
   confirmDeleteChannel() {
     const result = true;
     if (this.chat.currentChannelSignal() !== null) {
