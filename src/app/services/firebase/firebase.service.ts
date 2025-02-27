@@ -418,6 +418,10 @@ export class FirebaseService {
     console.error('Error logging out:', error);
   }
 
+  /**
+   * handle email success information
+   * @param text
+   */
   private handleEmailSuccess(text: string): void {
     this.stateControl.showArrow = true;
     this.stateControl.showToast = true;
@@ -428,6 +432,10 @@ export class FirebaseService {
     this.stateControl.removeShowToast();
   }
 
+  /**
+   * handle email error information
+   * @param error
+   */
   private handleEmailError(error: any): void {
     this.stateControl.showToast = true;
     this.stateControl.showError = true;
@@ -450,14 +458,18 @@ export class FirebaseService {
     this.stateControl.removeShowToast();
   }
 
-  // Methode zum Bestätigen des Passworts
+  /**
+   * confirm password reset
+   * @param password
+   * @param text
+   * @returns
+   */
   confirmPassword(password: string, text: string): void {
     const oobCode = this.route.snapshot.queryParamMap.get('oobCode');
     if (!oobCode) {
       this.handleInvalidOobCode();
       return;
     }
-
     confirmPasswordReset(this.auth, oobCode, password)
       .then(() => {
         this.handlePasswordResetSuccess(text);
@@ -467,25 +479,31 @@ export class FirebaseService {
       });
   }
 
-  // Methode zum Anmelden als Gast
+  /**
+   * sign in as guest
+   * set toast text
+   * sing in anonymously
+   * create guest user in firestore
+   * @param text
+   */
   async signInAsGuest(text: string): Promise<void> {
     this.stateControl.showToast = true;
     this.stateControl.showToastText.set(text);
-
     try {
       const userCredential = await signInAnonymously(this.auth);
       const firebaseUser = userCredential.user;
       const user = this.createGuestUser(firebaseUser);
       this.stateControl.removeShowToast();
       this.router.navigate(['main']);
-      // await this.chat.addNewUserToChannel(this.mainChannel, user.uId);
       await this.addUserToFirestore(user);
     } catch (error) {
       this.handleAnonymousSignInError(error);
     }
   }
 
-  // Hilfsfunktionen
+  /**
+   * handle invalid oob code
+   */
   private handleInvalidOobCode(): void {
     console.error('No oobCode provided.');
     this.stateControl.showToast = true;
@@ -495,6 +513,10 @@ export class FirebaseService {
     );
   }
 
+  /**
+   * handle password reset success
+   * @param text
+   */
   private handlePasswordResetSuccess(text: string): void {
     this.stateControl.showToast = true;
     this.stateControl.showToastText.set(text);
@@ -507,6 +529,10 @@ export class FirebaseService {
     }, 2200);
   }
 
+  /**
+   * handle password reset error
+   * @param error
+   */
   private handlePasswordResetError(error: any): void {
     this.stateControl.showToast = true;
     this.stateControl.showError = true;
@@ -529,6 +555,11 @@ export class FirebaseService {
     this.stateControl.removeShowToast();
   }
 
+  /**
+   * create guest user object
+   * @param firebaseUser
+   * @returns
+   */
   private createGuestUser(firebaseUser: FirebaseUser): AppUser {
     return {
       avatarUrl: 'assets/media/icons/profile-icons/profile-icon.svg',
@@ -540,11 +571,18 @@ export class FirebaseService {
     };
   }
 
+  /**
+   * handle anonymous sign in error
+   * @param error
+   */
   private handleAnonymousSignInError(error: any): void {
     console.error('Error during anonymous sign-in:', error.code, error.message);
   }
 
-  // Methode zum Bestätigen der Konto-Löschung
+  /**
+   * confirm delete account and delete user account
+   * @param user
+   */
   confirmDeleteAccount(user: any): void {
     const userId = user.uid;
     const confirmDialogRef = this.dialog.open(ConfirmDeleteAccountComponent, {
@@ -559,7 +597,9 @@ export class FirebaseService {
     });
   }
 
-  // Methode zum Bestätigen der Konto-Löschung mit Passwort
+  /**
+   * confirm delete account with password and delete user account
+   */
   async confirmDeleteAccountWithPassword(): Promise<void> {
     const user = this.auth.currentUser;
 
@@ -570,8 +610,14 @@ export class FirebaseService {
       this.handleError(error);
     }
   }
-
-  // Hilfsfunktionen
+  /**
+   * delete user account with user and userId
+   * delete user and user document from firestore
+   * set confirmation text
+   * navigate to confirmation page
+   * @param user
+   * @param userId
+   */
   private async deleteUserAccount(user: any, userId: string): Promise<void> {
     try {
       await deleteUser(user);
@@ -586,6 +632,11 @@ export class FirebaseService {
     }
   }
 
+  /**
+   * error handling
+   * @param error
+   * @returns
+   */
   private handleError(error: any): void {
     if (!error) {
       alert('Ein unbekannter Fehler ist aufgetreten.');
@@ -611,6 +662,12 @@ export class FirebaseService {
     }
   }
 
+  /**
+   * prompt for credentials
+   * open delete account component and get password
+   * return emailAuthProvider credential
+   * @returns
+   */
   private async promptForCredentials(): Promise<any> {
     const dialogRef = this.dialog.open(DeleteAccountComponent, {
       panelClass: 'delete-container',
