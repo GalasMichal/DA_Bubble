@@ -221,9 +221,16 @@ app-toast {
   @include firstTranistion();
 }
 
+// Add this class if you edit the message
+.edit-field {
+  z-index: 3;
+  background: rgba(0, 0, 0, 0);
+}
+
 .show-error {
   background-color: $red;
 }
+
 .show-success {
   opacity: 1;
   transform: translateX(0);

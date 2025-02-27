@@ -23,7 +23,7 @@ export class StateControlService {
   scrollToBottomGlobal: boolean = true;
   isMenuOpen: boolean = true;
   isSendButtonActive: boolean = false;
-  isdirectMessage: boolean = false;
+  isdirectMessageGlobal: boolean = false;
 
   removeShowToast() {
     setTimeout(() => {

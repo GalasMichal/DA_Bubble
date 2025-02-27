@@ -37,6 +37,7 @@ export class DirectMessageComponent implements OnInit {
   user = inject(UserServiceService);
   fb = inject(FirebaseService);
   userService = inject(UserServiceService);
+  stateControl = inject(StateControlService);
   readonly userDialog = inject(MatDialog);
   messages: Message[] = [];
   currentChatId: string = ''; // ID des aktuellen Chats

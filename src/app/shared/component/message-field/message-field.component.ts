@@ -67,6 +67,10 @@ export class MessageFieldComponent {
     }
   }
 
+  constructor() {
+    this.stateControl.isdirectMessageGlobal = this.directMessage;
+  }
+  
   async sendMessage() {
     this.stateControl.scrollToBottomGlobal = true; //scroll to bottom
     const currentUser = this.fb.currentUser();

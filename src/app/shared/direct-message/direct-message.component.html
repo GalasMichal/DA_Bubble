@@ -14,7 +14,10 @@
     }
   </div>
 
-  <app-message-field [directMessage]="true"></app-message-field>
+  <app-message-field 
+  [directMessage]="true"
+  [ngClass]="{'edit-field': stateControl.globalEdit}"
+  ></app-message-field>
   }
   @else {
   <div class="pre-loader-container"></div>
