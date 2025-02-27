@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { User } from '../../models/interfaces/user.model';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
+import { LoaderComponent } from '../component/loader/loader.component';
 
 @Component({
   selector: 'app-direct-message',

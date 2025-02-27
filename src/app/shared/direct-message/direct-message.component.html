@@ -1,8 +1,9 @@
-<section>
+<section ngClass="pre-loader-container">
+  @if(user.privatMessageReceiver){
   <header>
-    <button class="header-left-container" (click)="openProfileUserSingle(user.privatMessageReceiver!.uId)">
-      <app-avatar [userMessageReceiver]="user.privatMessageReceiver!"></app-avatar>
-      <h1 class="channel-name"> {{ user.privatMessageReceiver?.displayName }}</h1>
+    <button class="header-left-container" (click)="openProfileUserSingle(user.privatMessageReceiver.uId)">
+      <app-avatar [userMessageReceiver]="user.privatMessageReceiver"></app-avatar>
+      <h1 class="channel-name"> {{ user.privatMessageReceiver.displayName }}</h1>
     </button>
   </header>
 
@@ -14,4 +15,10 @@
   </div>
 
   <app-message-field [directMessage]="true"></app-message-field>
+  }
+  @else {
+  <div class="pre-loader-container"></div>
+  }
+
+
 </section>
