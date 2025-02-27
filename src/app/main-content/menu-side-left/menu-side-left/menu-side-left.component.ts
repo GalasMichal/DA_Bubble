@@ -88,7 +88,8 @@ export class MenuSideLeftComponent {
     this.storageService.uploadMsg.set('');
     this.selectedChannelId = user.uId;
     this.updateState();
-    this.userService.messageReceiver = user;
+    this.userService.privatMessageReceiver = user;
+    await this.ms.saveMessageReceiverToIndexDB(user);
     await this.navigateToMessage(user.uId);
   }
 

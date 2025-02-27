@@ -15,6 +15,7 @@ import { Message } from '../../models/interfaces/message.model';
 import { StateControlService } from '../state-control/state-control.service';
 import { FirebaseService } from '../firebase/firebase.service';
 import { openDB } from 'idb';
+import { User } from '../../models/interfaces/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,9 @@ export class ChatRoomService {
       }
       if (!db.objectStoreNames.contains('directMessages')) {
         db.createObjectStore('directMessages', { keyPath: 'chatId' });
+      }
+      if (!db.objectStoreNames.contains('messageReceivers')) {
+        db.createObjectStore('messageReceivers', { keyPath: 'uId' });
       }
     },
   });
@@ -352,8 +356,6 @@ export class ChatRoomService {
       'messages',
       textAreaEditId
     );
-
-    // Aktualisiere die Reaktionen im Firestore-Dokument
     await updateDoc(messageDocRef, {
       text: textAreaEdited,
       lastEdit: Timestamp.now(),

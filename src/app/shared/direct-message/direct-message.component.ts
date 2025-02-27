@@ -14,6 +14,7 @@ import { MessageService } from '../../services/messages/message.service';
 import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { User } from '../../models/interfaces/user.model';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-direct-message',
@@ -38,9 +39,16 @@ export class DirectMessageComponent implements OnInit {
   readonly userDialog = inject(MatDialog);
   messages: Message[] = [];
   currentChatId: string = ''; // ID des aktuellen Chats
+  private auth = inject(Auth);
 
   ngOnInit(): void {
-    this.loadCurrentMessageAfterRefresh();
+    onAuthStateChanged(this.auth, async (user) => {
+      if (user) {
+        await this.fb.getUserByUid(user.uid);
+
+        this.loadCurrentMessageAfterRefresh();
+      }
+    });
   }
 
   async openProfileUserSingle(userId: string) {
@@ -53,12 +61,32 @@ export class DirectMessageComponent implements OnInit {
     this.chat.messages.set([]);
   }
 
-  loadCurrentMessageAfterRefresh(): void {
-    const messageId = this.route.snapshot.paramMap.get('id');
-    if (messageId) {
-      this.ms.loadMessagesFromChat(messageId);
+  async loadCurrentMessageAfterRefresh(): Promise<void> {
+    this.route.paramMap.subscribe((params) => {
+      this.currentChatId = params.get('id') || '';
+      console.log('Aktuelle Chat-ID:', this.currentChatId);
+    });
 
-      this.userService.messageReceiver;
+    // Falls keine Message-ID vorhanden ist, nichts tun
+
+    try {
+      const existingChatId = await this.ms.checkPrivateChatExists(
+        this.currentChatId
+      );
+      console.log('Existing Chat ID:', this.currentChatId);
+
+      if (existingChatId) {
+        this.router.navigate(['main/messages', this.currentChatId]);
+
+        await this.ms.loadMessagesFromChat(this.currentChatId);
+        await this.ms.loadMessageReceiverFromIndexDB();
+      } else {
+        console.warn(
+          'Chat-ID existiert nicht, Nachrichten werden nicht geladen.'
+        );
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden der Nachricht:', error);
     }
   }
 }

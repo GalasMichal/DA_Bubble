@@ -133,11 +133,11 @@ export class MessageFieldComponent {
       }
     }
   }
-  
+
   async sendDirectMessage() {
     this.stateControl.scrollToBottomGlobal = false;
     let collRef = await this.msg.newPrivateMessageChannel(
-      this.userService.messageReceiver!
+      this.userService.privatMessageReceiver!
     );
     if (collRef) {
       const newMessage: Message = {
@@ -197,7 +197,7 @@ export class MessageFieldComponent {
   }
 
   deleteFileInput() {
-    this.storageService.uploadMsg.set('')
+    this.storageService.uploadMsg.set('');
   }
 
   addEmoji(event: any) {
@@ -229,7 +229,7 @@ export class MessageFieldComponent {
     this.textArea = '';
     this.textAreaIsEdited = false;
   }
-  
+
   handleKeyUp(textArea: string) {
     if (/@\S*$/g.test(textArea)) {
       this.isUsersPickerVisible = true;

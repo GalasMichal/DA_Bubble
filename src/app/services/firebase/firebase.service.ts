@@ -8,7 +8,6 @@ import {
   signInWithPopup,
   updateProfile,
   User as FirebaseUser,
-  fetchSignInMethodsForEmail,
   signOut,
 } from '@angular/fire/auth';
 import {
@@ -23,7 +22,6 @@ import {
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
 import {
   confirmPasswordReset,
@@ -31,42 +29,60 @@ import {
   EmailAuthProvider,
   sendPasswordResetEmail,
   signInAnonymously,
-  User,
 } from 'firebase/auth';
 import { StateControlService } from '../state-control/state-control.service';
 import { DeleteAccountComponent } from '../../shared/component/delete-account/delete-account.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteAccountComponent } from '../../shared/component/confirm-delete-account/confirm-delete-account.component';
 import { deleteDoc } from 'firebase/firestore';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
+  /**
+   * inject firestore auth, router, user, stateControl, dialog
+   *
+   */
   firestore: Firestore = inject(Firestore);
   private auth: Auth = inject(Auth);
-  provider = new GoogleAuthProvider();
   router = inject(Router);
-
   user = inject(UserServiceService);
-  userService = inject(UserServiceService);
   stateControl = inject(StateControlService);
+  dialog = inject(MatDialog);
+  provider = new GoogleAuthProvider();
+
+  /**
+   * define currentUser, errorMessageLogin
+   */
   public currentUser = signal<AppUser | null>(null);
   public errorMessageLogin = signal('');
-  dialog = inject(MatDialog);
 
+  /**
+   * default mainChannel start path
+   */
   mainChannel: string = 'xLke9Ff8JAT8AoorWXya'; //Willkommen
 
   constructor(private route: ActivatedRoute) {}
 
+  /**
+   * load user data
+   */
   async loadAllBackendData() {
-    // this.chat.channelList;
-    this.userService.subUserList();
+    this.user.subUserList();
   }
 
-
-  // Methode zum Erstellen eines neuen Benutzers
+  /**
+   * create user with email, password, displayName
+   * @param email
+   * @param password
+   * @param displayName
+   * @returns
+   * get user credential from createUserWithEmailAndPassword
+   * set user credential to firebaseUser
+   * update user profile with firebaseUser, displayName
+   * add user to firestore
+   */
   async createUser(
     email: string,
     password: string,
@@ -81,15 +97,18 @@ export class FirebaseService {
       const firebaseUser = userCredential.user;
       await this.updateUserProfile(firebaseUser, displayName);
       const user = this.createAppUser(firebaseUser);
-      console.log('Registrierter User ist', user);
       await this.addUserToFirestore(user);
-      // await this.chat.addNewUserToChannel(this.mainChannel, user.uId);
       return user;
     } catch (error) {
       this.handleCreateUserError(error);
     }
   }
 
+  /**
+   * update user profile with firebaseUser, displayName
+   * @param firebaseUser
+   * @param displayName
+   */
   private async updateUserProfile(
     firebaseUser: FirebaseUser,
     displayName: string
@@ -97,6 +116,11 @@ export class FirebaseService {
     await updateProfile(firebaseUser, { displayName: displayName });
   }
 
+  /**
+   * create app user with firebaseUser data
+   * @param firebaseUser
+   * @returns object with user data
+   */
   private createAppUser(firebaseUser: FirebaseUser): AppUser {
     return {
       status: true,
@@ -107,6 +131,10 @@ export class FirebaseService {
     };
   }
 
+  /**
+   * handle create user error
+   * @param error
+   */
   private handleCreateUserError(error: any): void {
     this.stateControl.showError = true;
     this.stateControl.showToast = true;
@@ -131,12 +159,18 @@ export class FirebaseService {
         );
         break;
       default:
-        this.errorMessageLogin.set('Ein unbekannter Fehler ist aufgetreten.'); // Standardfehlermeldung
+        this.errorMessageLogin.set('Ein unbekannter Fehler ist aufgetreten.');
     }
     this.stateControl.removeShowToast();
   }
 
-  // Methode zum Einloggen mit E-Mail und Passwort
+  /**
+   * login with email, password
+   * using text for success message
+   * @param email
+   * @param password
+   * @param text
+   */
   async loginWithEmailAndPassword(
     email: string,
     password: string,
@@ -152,19 +186,25 @@ export class FirebaseService {
       if (user) {
         await this.handleSuccessfulLogin(user, text);
       }
-      this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
+      this.errorMessageLogin.set('');
     } catch (error) {
       this.handleLoginError(error);
     }
   }
 
+  /**
+   * handle successful login
+   * set showToast to true and show toast text
+   * get user by uid from firestore and update user status
+   * after 2200ms navigate to main page
+   * @param user
+   * @param text
+   */
   private async handleSuccessfulLogin(
     user: FirebaseUser,
     text: string
   ): Promise<void> {
     this.stateControl.showToast = true;
-    console.log(text);
-
     this.stateControl.showToastText.set(text);
     this.stateControl.removeShowToast();
     await this.getUserByUid(user.uid);
@@ -174,6 +214,10 @@ export class FirebaseService {
     }, 2200);
   }
 
+  /**
+   * handle login error and set toast text and error message
+   * @param error
+   */
   private handleLoginError(error: any): void {
     this.stateControl.showError = true;
     this.stateControl.showToast = true;
@@ -186,7 +230,14 @@ export class FirebaseService {
     this.stateControl.removeShowToast();
   }
 
-  // Methode zum Abrufen eines Benutzers nach UID
+  /**
+   * get user by uid from firestore
+   * set refence to user document
+   * get user document snapshot
+   * set user data to currentUser signal
+   * @param uid string user id
+   * @returns user data or null
+   */
   async getUserByUid(uid: string): Promise<AppUser | null> {
     try {
       const userDocRef = doc(this.firestore, `users/${uid}`);
@@ -207,7 +258,13 @@ export class FirebaseService {
     }
   }
 
-  // Methode zum Erstellen eines Google-Benutzers
+  /**
+   * create google user with google sign in
+   * get google user data
+   * check if user exist in firestore
+   * add user data to firestore and set user to currentUser signal
+   * navigate to avatar page
+   */
   async createGoogleUser(): Promise<any> {
     try {
       const result = await signInWithPopup(this.auth, this.provider);
@@ -218,7 +275,6 @@ export class FirebaseService {
         await this.addUserToFirestore(user);
         this.currentUser.set(user);
         this.router.navigate(['avatar']);
-        // this.chat.addNewUserToChannel(this.mainChannel, user.uId);
       } else {
         await this.handleExistingGoogleUser(googleUser);
       }
@@ -227,19 +283,32 @@ export class FirebaseService {
     }
   }
 
-
-  // Methode zum Überprüfen, ob ein Benutzer in Firestore existiert
+  /**
+   * check if user exist in firestore
+   * @param uId user id
+   * @returns
+   */
   async userExistFirestore(uId: string): Promise<boolean> {
     return getDocs(
       query(collection(this.firestore, 'users'), where('uId', '==', uId))
     ).then((querySnapshot) => querySnapshot.size > 0);
   }
 
-  // Hilfsfunktionen
+  /**
+   *  handle firestore error
+   * @param error the error
+   * @param message the message from the error
+   */
   private handleFirestoreError(error: any, message: string): void {
     console.error(message, error);
   }
 
+  /**
+   * get google user display name
+   * @param result
+   * @param googleUser
+   * @returns
+   */
   private getGoogleUserDisplayName(
     result: any,
     googleUser: FirebaseUser
@@ -250,6 +319,12 @@ export class FirebaseService {
       : googleUser.displayName ?? '';
   }
 
+  /**
+   * set google user data to app user and return app user object
+   * @param googleUser data from google user
+   * @param displayName display name from google user
+   * @returns
+   */
   private createGoogleAppUser(
     googleUser: FirebaseUser,
     displayName: string
@@ -264,6 +339,11 @@ export class FirebaseService {
     };
   }
 
+  /**
+   * handle existing google user and update user status
+   * navigate to main page
+   * @param googleUser
+   */
   private async handleExistingGoogleUser(
     googleUser: FirebaseUser
   ): Promise<void> {
@@ -272,15 +352,27 @@ export class FirebaseService {
     this.router.navigate(['main']);
   }
 
+  /**
+   * handle google sign in error
+   * @param error
+   */
   private handleGoogleSignInError(error: any): void {
     console.error('Fehler bei der Google-Anmeldung:', error);
   }
-
+  /**
+   * handle user exist error
+   * @param error
+   */
   private handleUserExistError(error: any): void {
     this.errorMessageLogin.set('Fehler beim Überprüfen des Benutzers.');
   }
 
-  // Methode zum Hinzufügen eines Benutzers zu Firestore
+  /**
+   * add user to firestore
+   * set reference to user collection
+   * @param user as interface User
+   * @returns user object
+   */
   async addUserToFirestore(user: AppUser): Promise<AppUser> {
     const userCollectionRef = collection(this.firestore, 'users');
     const userDocRef = doc(userCollectionRef, user.uId);
@@ -288,19 +380,26 @@ export class FirebaseService {
     return user;
   }
 
-  // Methode zum Ausloggen des Benutzers
+  /**
+   * logout user by user id
+   * update user online status to false
+   * @param userId
+   */
   async logoutUser(userId: string): Promise<void> {
     await this.user.updateUserStatus(userId, false);
     try {
       await signOut(this.auth);
-      console.log('User logged out successfully');
     } catch (error) {
       this.handleLogoutError(error);
     }
     this.stateControl.responsiveArrow = false;
   }
 
-  // Methode zum Senden einer E-Mail an den Benutzer
+  /**
+   * send email to user with password reset link
+   * @param email user email
+   * @param text
+   */
   sendEmailToUser(email: string, text: string): void {
     sendPasswordResetEmail(this.auth, email)
       .then(() => {
@@ -311,7 +410,10 @@ export class FirebaseService {
       });
   }
 
-  // Hilfsfunktionen
+  /**
+   * handle logout error
+   * @param error
+   */
   private handleLogoutError(error: any): void {
     console.error('Error logging out:', error);
   }
@@ -320,7 +422,9 @@ export class FirebaseService {
     this.stateControl.showArrow = true;
     this.stateControl.showToast = true;
     this.stateControl.showToastText.set(text);
-    this.stateControl.showConfirmationText.set('Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.');
+    this.stateControl.showConfirmationText.set(
+      'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.'
+    );
     this.stateControl.removeShowToast();
   }
 
@@ -386,13 +490,17 @@ export class FirebaseService {
     console.error('No oobCode provided.');
     this.stateControl.showToast = true;
     this.stateControl.showError = true;
-    this.stateControl.showToastText.set('Es gab ein Problem mit dem Link. Bitte versuchen Sie es erneut.');
+    this.stateControl.showToastText.set(
+      'Es gab ein Problem mit dem Link. Bitte versuchen Sie es erneut.'
+    );
   }
 
   private handlePasswordResetSuccess(text: string): void {
     this.stateControl.showToast = true;
     this.stateControl.showToastText.set(text);
-    this.stateControl.showConfirmationText.set('Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.');
+    this.stateControl.showConfirmationText.set(
+      'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.'
+    );
     this.stateControl.removeShowToast();
     setTimeout(() => {
       this.router.navigate(['confirmation']);
@@ -468,14 +576,16 @@ export class FirebaseService {
     try {
       await deleteUser(user);
       await deleteDoc(doc(this.firestore, 'users', userId));
-      this.stateControl.showConfirmationText.set('Dein Konto wurde erfolgreich gelöscht.');
+      this.stateControl.showConfirmationText.set(
+        'Dein Konto wurde erfolgreich gelöscht.'
+      );
       this.stateControl.isUserLoggedIn = false;
       this.router.navigate(['confirmation']);
     } catch (error) {
       this.handleError(error);
     }
   }
-  
+
   private handleError(error: any): void {
     if (!error) {
       alert('Ein unbekannter Fehler ist aufgetreten.');
@@ -512,6 +622,4 @@ export class FirebaseService {
     const user = this.auth.currentUser!;
     return EmailAuthProvider.credential(user.email!, password);
   }
-
 }
-

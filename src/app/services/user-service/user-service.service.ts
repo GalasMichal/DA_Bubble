@@ -2,7 +2,13 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Firestore, getDoc, updateDoc } from '@angular/fire/firestore';
 import { User as AppUser, User } from '../../models/interfaces/user.model';
 import { collection, doc, onSnapshot } from 'firebase/firestore';
-import { authState, getAuth, updateEmail, updateProfile, User as FirebaseUser } from '@angular/fire/auth';
+import {
+  authState,
+  getAuth,
+  updateEmail,
+  updateProfile,
+  User as FirebaseUser,
+} from '@angular/fire/auth';
 import { Message } from '../../models/interfaces/message.model';
 import { Observable } from 'rxjs';
 import { StateControlService } from '../state-control/state-control.service';
@@ -18,9 +24,10 @@ export class UserServiceService {
   public userList: AppUser[] = [];
   // public userListUid: string[] = [];
   stateControl = inject(StateControlService);
-   userDialog = inject(MatDialog);
+  userDialog = inject(MatDialog);
 
   messageReceiver: User | null = null;
+  privatMessageReceiver: User | null = null;
   auth = getAuth();
   answerChatMessage: Message | null = null;
   selectedUserMessage = signal<Message | null>(null);
@@ -97,17 +104,17 @@ export class UserServiceService {
     await updateDoc(userDocRef, { status: statusType });
   }
 
-    /**
- * Returns an observable of the currently authenticated user.
- * The observable emits:
- * - A `FirebaseUser` object when a user is logged in.
- * - `null` when the user is logged out.
- *
- * @returns {Observable<FirebaseUser | null>} An observable that tracks the authentication state.
- */
-    getCurrentUser(): Observable<FirebaseUser | null> {
-      return authState(this.auth); // Returns an observable of the current user
-    }
+  /**
+   * Returns an observable of the currently authenticated user.
+   * The observable emits:
+   * - A `FirebaseUser` object when a user is logged in.
+   * - `null` when the user is logged out.
+   *
+   * @returns {Observable<FirebaseUser | null>} An observable that tracks the authentication state.
+   */
+  getCurrentUser(): Observable<FirebaseUser | null> {
+    return authState(this.auth); // Returns an observable of the current user
+  }
 
   async openProfileUserSingle(userId: string) {
     this.stateControl.scrollToBottomGlobal = false;
