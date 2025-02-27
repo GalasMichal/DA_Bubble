@@ -90,6 +90,7 @@ export class MenuSideLeftComponent {
     this.updateState();
     this.userService.privatMessageReceiver = user;
     this.ms.messages.set([]);
+    this.state.isdirectMessage = true
     await this.ms.saveMessageReceiverToIndexDB(user);
     await this.navigateToMessage(user.uId);
   }

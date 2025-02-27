@@ -96,6 +96,8 @@ export class MessageAnswerComponent {
     messageId: string = ''
   ) {
     this.editMessage.emit({ textToEdit, channelId, messageId });
+    console.log(textToEdit);
+    
   }
 
   async ngOnInit() {
