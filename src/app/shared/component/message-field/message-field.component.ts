@@ -58,6 +58,7 @@ export class MessageFieldComponent {
   @Output() editStatusChange = new EventEmitter<boolean>();
   @Input() directMessage: boolean = false;
   selectedMessage = computed(() => this.userService.selectedUserMessage());
+  
   ngOnChanges(changes: SimpleChanges): void {
     if (
       changes['textAreaEdit'] &&
@@ -67,10 +68,6 @@ export class MessageFieldComponent {
     }
   }
 
-  constructor() {
-    this.stateControl.isdirectMessageGlobal = this.directMessage;
-  }
-  
   async sendMessage() {
     this.stateControl.scrollToBottomGlobal = true; //scroll to bottom
     const currentUser = this.fb.currentUser();
@@ -228,6 +225,8 @@ export class MessageFieldComponent {
 
   closeEdit() {
     this.stateControl.globalEdit = false;
+    this.stateControl.globalEditModul = false;
+    this.stateControl.editDirectMessage = false;
     this.textArea = '';
     this.textAreaIsEdited = false;
   }

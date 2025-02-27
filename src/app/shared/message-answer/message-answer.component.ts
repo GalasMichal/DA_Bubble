@@ -96,8 +96,14 @@ export class MessageAnswerComponent {
     messageId: string = ''
   ) {
     this.editMessage.emit({ textToEdit, channelId, messageId });
-    console.log(this.state.isdirectMessageGlobal);
-    this.state.globalEdit = true;
+    
+    if(this.state.isDirectMessage) {
+      this.state.editDirectMessage = true;
+      this.state.globalEditModul = true;
+    } else {
+      this.state.globalEdit = true;
+      this.state.globalEditModul = true;
+    }
   }
 
   async ngOnInit() {

@@ -1,6 +1,6 @@
 
 
-<div class="message-field-container" [ngClass]="{'edit-field': stateControl.globalEdit}" tabindex="0">
+<div class="message-field-container" [ngClass]="{'edit-field': stateControl.globalEdit || stateControl.editDirectMessage}" tabindex="0">
   <div class="users-container">
     <ul [ngClass]="{'show-users': isUsersPickerVisible}">
       @for(user of this.sortListOfUser(); track $index) {
@@ -27,8 +27,8 @@
 
   
   <!-- Image from the message -->
-  <div class="text-area-with-image-and-icons" [ngClass]="{'show-edit-filed-direction': stateControl.globalEdit}">
-     <div class="edit-field-info" [ngClass]="{'show-edit-filed': stateControl.globalEdit}">
+  <div class="text-area-with-image-and-icons" [ngClass]="{'show-edit-filed-direction': stateControl.globalEdit || stateControl.editDirectMessage}">
+     <div class="edit-field-info" [ngClass]="{'show-edit-filed': stateControl.globalEdit || stateControl.editDirectMessage}">
        <span>Nachricht bearbeiten</span>
        <button class="close-btn" (click)="closeEdit()">
          <app-close></app-close>

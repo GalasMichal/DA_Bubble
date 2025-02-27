@@ -60,6 +60,7 @@ export class MenuSideLeftComponent {
    * @param channel interface channel
    */
   openChannel(channel: Channel): void {
+    this.state.isDirectMessage = false;
     this.storageService.uploadMsg.set('');
     this.selectedChannelId = channel.chanId;
     this.updateState();
@@ -89,7 +90,7 @@ export class MenuSideLeftComponent {
     this.selectedChannelId = user.uId;
     this.updateState();
     this.ms.messages.set([]);
-    this.state.isdirectMessageGlobal = true
+    this.state.isDirectMessage = true;
     await this.ms.saveMessageReceiverToIndexDB(user);
     await this.navigateToMessage(user.uId);
   }

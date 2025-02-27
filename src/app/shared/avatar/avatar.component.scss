@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 1;
     img {
       height: 3.125rem;
       width: 3.125rem;
@@ -21,12 +21,12 @@
       right: 0;
       width: 1.25rem;
       height: 1.25rem;
-      z-index: 3;
+      z-index: 2;
     }
   }
 }
 
-// avatar in profile when you can adit this one.
+// avatar in profile when you can edit this one.
 ::ng-deep {
   .profile-content app-avatar {
     position: relative;

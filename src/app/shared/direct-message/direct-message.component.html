@@ -16,7 +16,11 @@
 
   <app-message-field 
   [directMessage]="true"
-  [ngClass]="{'edit-field': stateControl.globalEdit}"
+  [ngClass]="{'edit-field': stateControl.editDirectMessage}"
+  [textAreaEdit]="textArea"
+  [channelIdEdit]="channelId" 
+  [textAreaEditId]="textAreaId" 
+  [textAreaIsEdited]="textAreaEdited"
   ></app-message-field>
   }
   @else {

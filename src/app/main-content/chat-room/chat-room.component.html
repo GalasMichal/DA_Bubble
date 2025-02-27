@@ -195,7 +195,12 @@
     [ngClass]="{'c-scroll-bottom--visible': isVisible}">
     <img class="c-icon c-scroll-bottom__icon" src="assets/media/icons/arrow-bottom.svg" alt="arrow">
   </button>
-  <app-message-field [ngClass]="{'edit-field': stateControl.globalEdit}" [textAreaEdit]="textArea"
-    [channelIdEdit]="channelId" [textAreaEditId]="textAreaId" [textAreaIsEdited]="textAreaEdited"></app-message-field>
+  <app-message-field 
+    [ngClass]="{'edit-field': stateControl.globalEdit}"
+    [textAreaEdit]="textArea"
+    [channelIdEdit]="channelId" 
+    [textAreaEditId]="textAreaId" 
+    [textAreaIsEdited]="textAreaEdited">
+  </app-message-field>
   }
 </section>

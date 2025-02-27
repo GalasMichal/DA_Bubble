@@ -43,6 +43,13 @@ export class DirectMessageComponent implements OnInit {
   currentChatId: string = ''; // ID des aktuellen Chats
   private auth = inject(Auth);
 
+  // Variable to edit a message
+  textArea: string = ''; // Verbunden mit dem textarea
+  channelId: string = '';
+  textAreaId: string = '';
+  textAreaEdited: boolean = false;
+  
+
   ngOnInit(): void {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {

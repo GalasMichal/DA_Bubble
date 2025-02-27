@@ -43,7 +43,10 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   channelData: Channel | null = null;
   sumRestOfUser: number = 0;
   counter: number = 0;
+
+    // Variable to edit a message
   textArea: string = ''; // Verbunden mit dem textarea
+  channelId: string = '';
   textAreaId: string = '';
   textAreaEdited: boolean = false;
 
@@ -73,7 +76,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   currentChannel = computed(() => this.chat.currentChannelSignal());
   currentMessage = computed(() => this.chat.messages());
 
-  channelId: string = '';
 
   /**
    * receives the channel ID from the URL and loads the current channel and messages after a refresh
@@ -150,7 +152,6 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.textAreaEdited = true;
     });
-    this.stateControl.globalEdit = true;
   }
 
   /**
