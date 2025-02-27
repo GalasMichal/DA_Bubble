@@ -89,6 +89,7 @@ export class MenuSideLeftComponent {
     this.selectedChannelId = user.uId;
     this.updateState();
     this.userService.privatMessageReceiver = user;
+    this.ms.messages.set([]);
     await this.ms.saveMessageReceiverToIndexDB(user);
     await this.navigateToMessage(user.uId);
   }

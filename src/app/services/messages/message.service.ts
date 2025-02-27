@@ -5,6 +5,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  DocumentReference,
   getDoc,
   getDocs,
   onSnapshot,
@@ -49,33 +50,42 @@ export class MessageService {
     },
   });
 
+  /**
+   * saveMessageLocally in IndexDB
+   * for offline usage
+   */
   async saveMessageLocally() {
     const db = await this.dbPromise;
     const messages = this.messages();
-    console.log('Saving messages to local DB', messages);
     messages.forEach(async (msg) => {
       await db.put('directMessages', msg);
-      console.log('Saved message to local DB', msg);
     });
   }
 
+  /**
+   * getMessagesLocally from IndexDB
+   * filter by chatId and return messages for current chat
+   * @param chatId
+   * @returns
+   */
   async getMessagesLocally(chatId: string): Promise<Message[]> {
     const db = await this.dbPromise;
-
     try {
       let cachedMessages = await db.getAll('directMessages');
       cachedMessages = cachedMessages.filter(
         (message: Message) => message.chatId === chatId
       );
       this.messages.set(cachedMessages);
-      console.log('Loaded messages from local DB', cachedMessages);
       return cachedMessages;
     } catch (error) {
       console.error('Fehler beim Laden der Nachrichten:', error);
       return [];
     }
   }
-  // tu zreba poprawic lepiej
+  /**
+   * Remove all messages from IndexDB
+   * @param chatId
+   */
   async deleteMessages(chatId: string) {
     const db = await this.dbPromise;
     const tx = db.transaction('directMessages', 'readwrite');
@@ -85,7 +95,6 @@ export class MessageService {
       await store.delete(key);
     }
     await tx.done;
-
     const messagesCollectionRef = collection(
       this.db.firestore,
       `privateMessages/${chatId}/messages`
@@ -96,23 +105,42 @@ export class MessageService {
     });
   }
 
+  /**
+   * Create a new private message channel after the message sending process
+   * check if the chat already exists
+   * @param user
+   * @returns
+   */
   async newPrivateMessageChannel(user: User): Promise<string> {
     const existingChatId = await this.checkPrivateChatExists(user.uId);
     if (existingChatId) {
-      this.currentMessageId = existingChatId;
-      await this.loadCurrentMessageData();
-      this.router.navigate(['main/messages/', existingChatId]);
-      return existingChatId;
+      return this.handleExistingChat(existingChatId);
     }
+    return this.createNewPrivateChat(user.uId);
+  }
 
-    const channelCollectionRef = collection(
-      this.db.firestore,
-      'privateMessages'
-    );
-    const channelDocRef = doc(channelCollectionRef);
-    const privateChat = this.setPrivateObject(channelDocRef, user.uId);
-    await setDoc(channelDocRef, privateChat);
+  /**
+   * Handle the existing chat
+   * load the current message data from this chat
+   * navigate to the chat
+   * @param chatId
+   * @returns
+   */
+  private async handleExistingChat(chatId: string): Promise<string> {
+    this.currentMessageId = chatId;
+    await this.loadCurrentMessageData();
+    this.router.navigate(['main/messages/', chatId]);
+    return chatId;
+  }
 
+  /**
+   *  Create a new private chat
+   *  load the current message data from this chat and navigate to the chat
+   * @param userId
+   * @returns
+   */
+  private async createNewPrivateChat(userId: string): Promise<string> {
+    const channelDocRef = await this.createPrivateChatDocument(userId);
     this.currentMessageId = channelDocRef.id;
     await this.loadCurrentMessageData();
     this.router.navigate(['main/messages/', channelDocRef.id]);
@@ -120,10 +148,30 @@ export class MessageService {
     return channelDocRef.id;
   }
 
+  /**
+   * Create a new private chat document
+   * @param userId
+   * @returns
+   */
+  private async createPrivateChatDocument(
+    userId: string
+  ): Promise<DocumentReference> {
+    const channelCollectionRef = collection(
+      this.db.firestore,
+      'privateMessages'
+    );
+    const channelDocRef = doc(channelCollectionRef);
+    const privateChat = this.setPrivateObject(channelDocRef, userId);
+    await setDoc(channelDocRef, privateChat);
+    return channelDocRef;
+  }
+
+  /**
+   *  Add a message to the subcollection of the private chat
+   * @param chatId
+   * @param message
+   */
   async addMessageToSubcollection(chatId: string, message: Message) {
-    if (!chatId) {
-      throw new Error('chatId is required to add a message.');
-    }
     const messagesCollectionRef = collection(
       this.db.firestore,
       `privateMessages/${chatId}/messages`
@@ -131,6 +179,9 @@ export class MessageService {
     await addDoc(messagesCollectionRef, message);
   }
 
+  /**
+   * Load the current message data from firestore
+   */
   async loadCurrentMessageData() {
     const docRef = doc(
       this.db.firestore,
@@ -140,25 +191,39 @@ export class MessageService {
     this.unsubscribe = onSnapshot(docRef, (doc) => {
       if (doc.exists()) {
         this.currentMessageData = doc.data() as PrivateChat;
-      } else {
-        console.log('No such document!');
       }
     });
   }
-
+  /**
+   * Unsubscribe from the current message data
+   */
   unsubscribeMessages: (() => void) | null = null;
 
+  /**
+   * load messages from the chat
+   * load messages from the local DB
+   * @param chatId
+   */
   async loadMessagesFromChat(chatId: string) {
-    if (this.unsubscribeMessages) {
-      this.unsubscribeMessages();
-    }
+    this.unsubscribeMessages?.();
+    await this.loadLocalMessages(chatId);
+    this.setupSnapshotListener(chatId);
+  }
 
-    // Lade zuerst lokale Nachrichten
+  /**
+   * load messages from the local DB by chatId
+   * @param chatId
+   */
+  private async loadLocalMessages(chatId: string) {
     const localMessages = await this.getMessagesLocally(chatId);
     this.messages.set(localMessages);
-    console.log('Loaded messages from local DB', localMessages);
+  }
 
-    // Setze den Snapshot-Listener
+  /**
+   * setup the snapshot listener for the chat
+   * @param chatId
+   */
+  private setupSnapshotListener(chatId: string) {
     const messagesCollectionRef = collection(
       this.db.firestore,
       `privateMessages/${chatId}/messages`
@@ -171,15 +236,11 @@ export class MessageService {
     this.unsubscribeMessages = onSnapshot(
       messagesQuery,
       async (querySnapshot) => {
-        const newMessages: Message[] = [];
-        querySnapshot.forEach((doc) => {
-          newMessages.push(doc.data() as Message);
-        });
-
+        const newMessages = querySnapshot.docs.map(
+          (doc) => doc.data() as Message
+        );
         this.messages.set(newMessages);
-        console.log('Mesage signal', this.messages());
-        this.saveMessageLocally();
-        console.log('Received changes from DB', newMessages);
+        await this.saveMessageLocally();
       }
     );
   }
