@@ -60,12 +60,12 @@ export class DirectMessageComponent implements OnInit {
   }
   ngOnDestroy(): void {
     this.chat.messages.set([]);
+    this.ms.unsubscribeMessages?.();
   }
 
   async loadCurrentMessageAfterRefresh(): Promise<void> {
     this.route.paramMap.subscribe((params) => {
       this.currentChatId = params.get('id') || '';
-      console.log('Aktuelle Chat-ID:', this.currentChatId);
     });
 
     // Falls keine Message-ID vorhanden ist, nichts tun

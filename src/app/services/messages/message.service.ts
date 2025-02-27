@@ -232,7 +232,6 @@ export class MessageService {
       messagesCollectionRef,
       orderBy('timestamp', 'asc')
     );
-    this.messages.set([]);
     this.unsubscribeMessages = onSnapshot(
       messagesQuery,
       async (querySnapshot) => {
@@ -245,33 +244,33 @@ export class MessageService {
     );
   }
 
+  /**
+   * save the message to the chat
+   * clear the message db
+   * put the message to the local db
+   * @param message
+   */
   async saveMessageReceiverToIndexDB(user: User): Promise<void> {
     const db = await this.dbPromise;
-
-    // Wir löschen vorher alle vorhandenen Empfänger
     await db.clear('messageReceivers');
-
-    // Wir speichern den Nachrichtenempfänger in der IndexDB
-    await db.put('messageReceivers', user); // Nutzt uId als Schlüssel (keyPath)
-
-    console.log('Nachrichtenempfänger gespeichert:', user);
+    await db.put('messageReceivers', user);
   }
 
+  /**
+   * load the message receiver from the index db
+   */
   async loadMessageReceiverFromIndexDB(): Promise<void> {
     const db = await this.dbPromise;
-
-    // Wir holen den Nachrichtenempfänger basierend auf der uId
-    const user = await db.getAll('messageReceivers'); // Lade den Empfänger mit der uId des aktuellen Benutzers
-
-    // Wenn ein Empfänger geladen wurde, setzen wir diesen als "messageReceiver"
-    if (user) {
-      this.user.privatMessageReceiver = user[0];
-      console.log('Nachrichtenempfänger geladen:', user);
-    } else {
-      console.log('Kein Nachrichtenempfänger gefunden.');
-    }
+    const user = await db.getAll('messageReceivers');
+    if (user) this.user.privatMessageReceiver = user[0];
   }
 
+  /**
+   * set the private object for the chat
+   * @param obj
+   * @param uId
+   * @returns
+   */
   setPrivateObject(obj: any, uId: string) {
     return {
       privatChatId: obj.id,
@@ -280,6 +279,11 @@ export class MessageService {
     } as PrivateChat;
   }
 
+  /**
+   * check if the private chat exists in the database
+   * @param uId
+   * @returns
+   */
   async checkPrivateChatExists(uId: string): Promise<string | null> {
     const chatCreator = this.db.currentUser()!.uId;
     const privateChatCollection = collection(
@@ -287,38 +291,29 @@ export class MessageService {
       'privateMessages'
     );
 
-    // Abfrage 1: Chat als Ersteller
     const q1 = query(
       privateChatCollection,
       where('chatCreator', '==', chatCreator),
       where('chatReciver', '==', uId)
     );
 
-    // Abfrage 2: Chat als Empfänger
     const q2 = query(
       privateChatCollection,
       where('chatCreator', '==', uId),
       where('chatReciver', '==', chatCreator)
     );
 
-    // Abfrage 3: Suche nach privatChatId (falls gespeichert)
-    const q3 = query(
-      privateChatCollection,
-      where('privatChatId', '==', uId) // Annahme: uId ist hier die Chat-ID
-    );
+    const q3 = query(privateChatCollection, where('privatChatId', '==', uId));
 
-    // Alle Abfragen parallel ausführen
     const [querySnapshot1, querySnapshot2, querySnapshot3] = await Promise.all([
       getDocs(q1),
       getDocs(q2),
-      getDocs(q3), // Dritte Abfrage hinzufügen
+      getDocs(q3),
     ]);
 
-    // Prüfe Ergebnisse der Abfragen
     if (!querySnapshot1.empty) return querySnapshot1.docs[0].id;
     if (!querySnapshot2.empty) return querySnapshot2.docs[0].id;
-    if (!querySnapshot3.empty) return querySnapshot3.docs[0].id; // Rückgabe der Chat-ID aus der dritten Abfrage
-
+    if (!querySnapshot3.empty) return querySnapshot3.docs[0].id;
     return null;
   }
 }

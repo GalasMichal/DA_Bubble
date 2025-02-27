@@ -165,9 +165,7 @@ export class MessageFieldComponent {
           newMessage.storageData = imageUrl;
           this.storageService.uploadMsg.set('');
         }
-
         await this.msg.addMessageToSubcollection(collRef, newMessage);
-        await this.msg.loadMessagesFromChat(collRef);
         this.textArea = ''; // Leere das Eingabefeld nach dem Senden
       }
     }
