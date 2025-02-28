@@ -9,9 +9,9 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [HeaderDialogComponent, LogoComponent, SearchComponent, AvatarComponent],
+  imports: [LogoComponent, SearchComponent, AvatarComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   dialog = inject(MatDialog);
