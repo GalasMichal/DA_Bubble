@@ -1,6 +1,7 @@
 import {
   Component,
   computed,
+  effect,
   EventEmitter,
   inject,
   Input,
@@ -58,14 +59,15 @@ export class MessageFieldComponent {
   @Output() editStatusChange = new EventEmitter<boolean>();
   @Input() directMessage: boolean = false;
   selectedMessage = computed(() => this.userService.selectedUserMessage());
-  
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes['textAreaEdit'] &&
-      changes['textAreaEdit'].currentValue !== undefined
-    ) {
-      this.textArea = changes['textAreaEdit'].currentValue || ''; // Sicherstellen, dass textArea nie null ist
-    }
+
+  constructor() {
+    effect(() => {
+      const message = this.msg.currentMessageToEdit();
+      if (message) {
+        this.textArea = message.text;
+        console.log('wkleilem wiadomosc do', this.textArea);
+      }
+    });
   }
 
   async sendMessage() {

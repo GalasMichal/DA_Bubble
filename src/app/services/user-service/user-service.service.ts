@@ -20,25 +20,31 @@ import { ProfileSingleUserComponent } from '../../shared/profile-single-user/pro
 })
 export class UserServiceService {
   firestore = inject(Firestore);
-  unsubscribe: any;
-  public userList: AppUser[] = [];
-  // public userListUid: string[] = [];
   stateControl = inject(StateControlService);
   userDialog = inject(MatDialog);
+  auth = getAuth();
+  unsubscribe: any;
+  public userList: AppUser[] = [];
 
   messageReceiver: User | null = null;
   privatMessageReceiver: User | null = null;
-  auth = getAuth();
   answerChatMessage: Message | null = null;
   selectedUserMessage = signal<Message | null>(null);
   profileSingleUser!: User;
 
   constructor() {}
 
+  /**
+   * set the thread message
+   * @param message
+   */
   setThreadMessage(message: Message) {
-    this.selectedUserMessage.set(message); // Nachricht setzen
+    this.selectedUserMessage.set(message);
   }
-  // Load users from firabse
+
+  /**
+   * sub user list from firebase as snapshot
+   */
   subUserList() {
     this.unsubscribe = onSnapshot(this.getUsers(), (list) => {
       this.userList = [];
@@ -49,34 +55,40 @@ export class UserServiceService {
     });
   }
 
+  /**
+   * get user list from firebase
+   * @returns
+   */
   getUsers() {
     return collection(this.firestore, 'users');
   }
 
+  /**
+   * update user avatar in firebase
+   * @param userId
+   * @param selectedAvatar
+   */
   async updateUserAvatar(userId: string, selectedAvatar: string) {
     const userDocRef = doc(this.getUsers(), userId);
     try {
       await updateDoc(userDocRef, { avatarUrl: selectedAvatar });
-      console.log(
-        `Avatar URL für Benutzer ${userId} erfolgreich aktualisiert.`
-      );
-    } catch (error) {
-      console.error('Fehler beim Aktualisieren des Avatars:', error);
-    }
+    } catch (error) {}
   }
 
+  /**
+   *check if user is online
+   update user Profile in firebase
+   updated user name and email
+   * @param userName
+   * @param userEmail
+   */
   async updateCurrentUserToFirebase(userName: string, userEmail: string) {
     if (this.auth.currentUser) {
       try {
-        // Aktualisiere den displayName und das Avatar-Bild (photoURL)
         await updateProfile(this.auth.currentUser, {
           displayName: userName,
         });
-        console.log('Profile updated successfully!');
-
-        // Aktualisiere die E-Mail separat
         await updateEmail(this.auth.currentUser, userEmail);
-        console.log('Email updated successfully!');
       } catch (error) {
         console.error(
           'An error occurred while updating the user information:',
@@ -88,6 +100,10 @@ export class UserServiceService {
     }
   }
 
+  /**
+   * get the user data from firebase
+   * @param userId
+   */
   async showProfileUserSingle(userId: string) {
     this.profileSingleUser = null as unknown as User;
     const userDocRef = doc(this.getUsers(), userId);
@@ -97,9 +113,12 @@ export class UserServiceService {
     }
   }
 
+  /**
+   * updated user online status
+   * @param currentUserId
+   * @param statusType
+   */
   async updateUserStatus(currentUserId: string, statusType: boolean) {
-    console.log('currentUserId ist status geändert', currentUserId);
-
     const userDocRef = doc(this.firestore, 'users', currentUserId);
     await updateDoc(userDocRef, { status: statusType });
   }
@@ -116,6 +135,10 @@ export class UserServiceService {
     return authState(this.auth); // Returns an observable of the current user
   }
 
+  /**
+   * open Single user profil view box with data about user
+   * @param userId
+   */
   async openProfileUserSingle(userId: string) {
     this.stateControl.scrollToBottomGlobal = false;
     await this.showProfileUserSingle(userId);

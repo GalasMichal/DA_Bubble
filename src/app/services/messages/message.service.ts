@@ -6,7 +6,6 @@ import {
   deleteDoc,
   doc,
   DocumentReference,
-  getDoc,
   getDocs,
   onSnapshot,
   orderBy,
@@ -19,7 +18,7 @@ import { UserServiceService } from '../user-service/user-service.service';
 import { User } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
-import { IDBPDatabase, openDB } from 'idb';
+import { openDB } from 'idb';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +32,7 @@ export class MessageService {
   currentMessageData!: PrivateChat;
   unsubscribe: any;
   messages = signal<Message[]>([]);
+  currentMessageToEdit = signal<Message | null>(null);
 
   constructor() {}
 

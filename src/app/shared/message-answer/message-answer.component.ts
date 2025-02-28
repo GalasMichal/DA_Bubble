@@ -23,6 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProfileSingleUserComponent } from '../profile-single-user/profile-single-user.component';
 import { ShowImageComponent } from '../component/show-image/show-image.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { MessageService } from '../../services/messages/message.service';
 
 @Component({
   selector: 'app-message-answer',
@@ -45,9 +46,10 @@ export class MessageAnswerComponent {
   state = inject(StateControlService);
   userService = inject(UserServiceService);
   dialog = inject(MatDialog);
+  ms = inject(MessageService);
   showCloud: boolean = false;
   isEmojiPickerVisibleMessage: boolean[] = [false];
-  newEmoji: string = "";
+  newEmoji: string = '';
 
   currentChannel = computed(() => this.chat.currentChannelSignal());
 
@@ -71,13 +73,13 @@ export class MessageAnswerComponent {
   addEmoji(event: any) {
     this.state.scrollToBottomGlobal = false;
     // Das ausgewählte Emoji wird in der aktuellen Komponente in newEmoji gespeichert
-    this.newEmoji = `${this.newEmoji}${event.emoji.native}`; 
+    this.newEmoji = `${this.newEmoji}${event.emoji.native}`;
 
     // Das ausgewählte Emoji wird an die Elternkomponente weitergeleitet
     const emoji = event.emoji.native; // Nimm an, dass das Emoji im "native"-Feld ist
-    this.onEmojiSelected(emoji);  // Emitiere das Emoji an die Elternkomponente
+    this.onEmojiSelected(emoji); // Emitiere das Emoji an die Elternkomponente
   }
- 
+
   onEmojiSelected(emoji: string) {
     this.increaseCounter(emoji);
     this.updateReactionsInFirestore();
@@ -90,21 +92,29 @@ export class MessageAnswerComponent {
     }
   }
 
-  editThisMessage(
-    textToEdit: string,
-    channelId: string,
-    messageId: string = ''
-  ) {
-    this.editMessage.emit({ textToEdit, channelId, messageId });
-    
-    if(this.state.isDirectMessage) {
-      this.state.editDirectMessage = true;
-      this.state.globalEditModul = true;
-    } else {
-      this.state.globalEdit = true;
-      this.state.globalEditModul = true;
-    }
+  editThisMessage(message: Message) {
+    this.ms.currentMessageToEdit.set(message);
+    console.log(
+      'wyslalem wiadomosc do servisu',
+      this.ms.currentMessageToEdit()
+    );
   }
+
+  // editThisMessage(
+  //   textToEdit: string,
+  //   channelId: string,
+  //   messageId: string = ''
+  // ) {
+  //   this.editMessage.emit({ textToEdit, channelId, messageId });
+
+  //   if(this.state.isDirectMessage) {
+  //     this.state.editDirectMessage = true;
+  //     this.state.globalEditModul = true;
+  //   } else {
+  //     this.state.globalEdit = true;
+  //     this.state.globalEditModul = true;
+  //   }
+  // }
 
   async ngOnInit() {
     this.updateCurrentMessage();
