@@ -58,46 +58,69 @@ export class MessageFieldComponent {
   @Output() editStatusChange = new EventEmitter<boolean>();
   @Input() directMessage: boolean = false;
   selectedMessage = computed(() => this.userService.selectedUserMessage());
-
+  editMessage = false;
+  editedMessageObject: Message | null = null;
+  /**
+   * Constructor initializes the MessageFieldComponent.
+   * Sets up a reactive effect to update the textArea with the text
+   * of the current message being edited, if available.
+   */
   constructor() {
     effect(() => {
       const message = this.msg.currentMessageToEdit();
       if (message) {
         this.textArea = message.text;
+        this.editedMessageObject = message;
+        this.editMessage = true;
       }
     });
   }
 
+  /**
+   * Resets the message input to its initial state.
+   * Clears the textArea and sets textAreaIsEdited to false.
+   * Also sets stateControl.globalEdit to false.
+   */
   resetMessageInput() {
     this.textArea = '';
     this.textAreaIsEdited = false;
     this.stateControl.globalEdit = false;
   }
 
+  /**
+   * Sends a message based on the current state of the text area.
+   * If the message is being edited and the text is not empty, updates the existing message.
+   * Otherwise, processes the message as a new message.
+   * Also ensures the chat view scrolls to the bottom.
+   */
+
   async sendMessage() {
     this.stateControl.scrollToBottomGlobal = true;
-    if (this.textAreaIsEdited && this.textArea !== '') {
-      this.updateEditedMessage();
+    if (this.editMessage && this.textArea !== '' && this.editedMessageObject) {
+      await this.chat.updateMessageTextInFirestore(
+        this.textArea,
+        this.editedMessageObject.chatId,
+        this.editedMessageObject.messageId! // Stelle sicher, dass messageId existiert
+      );
+      this.resetMessageInput();
       return;
     }
     this.processNewMessage();
   }
 
-  private updateEditedMessage() {
-    this.chat.updateMessageTextInFirestore(
-      this.textArea,
-      this.channelIdEdit,
-      this.textAreaEditId
-    );
-    this.resetMessageInput();
-  }
+  // private updateEditedMessage() {
+  //   this.chat.updateMessageTextInFirestore(
+  //     this.textArea,
+  //     this.channelIdEdit,
+  //     this.textAreaEditId
+  //   );
+  //   this.resetMessageInput();
+  // }
 
   private async processNewMessage() {
     const currentUser = this.fb.currentUser();
     if (!currentUser || !this.currentChannel()) return;
-
     let newMessage = this.createMessage(this.currentChannel()!.chanId);
-
     if (this.selectedFile) {
       newMessage.storageData = await this.uploadChatImage(
         this.currentChannel()!.chanId,
@@ -105,7 +128,6 @@ export class MessageFieldComponent {
       );
       this.storageService.uploadMsg.set('');
     }
-
     if (this.isThreadAnswerOpen) {
       this.addMessageToThread(newMessage);
     } else {
@@ -141,116 +163,23 @@ export class MessageFieldComponent {
     }
   }
 
-  // async sendMessage() {
-  //   this.stateControl.scrollToBottomGlobal = true; //scroll to bottom
-  //   const currentUser = this.fb.currentUser();
-
-  //   if (this.textAreaIsEdited && this.textArea !== '') {
-  //     this.chat.updateMessageTextInFirestore(
-  //       this.textArea,
-  //       this.channelIdEdit,
-  //       this.textAreaEditId
-  //     );
-  //     this.textArea = '';
-  //     this.textAreaIsEdited = false;
-  //     this.stateControl.globalEdit = false;
-  //     return;
-  //   }
-
-  //   this.textArea = this.textArea || ''; // Falls textArea null ist, wird sie auf einen leeren String gesetzt
-
-  //   if (currentUser) {
-  //     const currentChannel = this.currentChannel();
-  //     if (!currentChannel) {
-  //       console.error('Kein Channel ausgewählt!');
-  //       return;
-  //     }
-  //     let newMessage: Message = {
-  //       text: this.textArea,
-  //       chatId: currentChannel.chanId,
-  //       timestamp: Timestamp.now(),
-  //       messageSendBy: currentUser,
-  //       reactions: [],
-  //       threadId: '',
-  //       answerCount: 0,
-  //       lastAnswer: '',
-  //       editCount: 0,
-  //       lastEdit: Timestamp.now(),
-  //       storageData: '',
-  //       taggedUser: [],
-  //       answers: [],
-  //     };
-
-  //     if (this.textArea !== '' || this.selectedFile) {
-  //       if (this.selectedFile) {
-  //         const imageUrl = await this.uploadChatImage(
-  //           this.currentChannel()!.chanId,
-  //           this.selectedFile
-  //         );
-  //         newMessage.storageData = imageUrl; // URL des Bildes speichern
-  //         this.storageService.uploadMsg.set(''); // Signal zurücksetzen
-  //       }
-
-  //       if (this.isThreadAnswerOpen) {
-  //         const selectedMessage = this.selectedMessage();
-  //         if (selectedMessage) {
-  //           selectedMessage.answers.push(newMessage);
-  //           this.textArea = '';
-  //           this.chat.updateMessage(selectedMessage.chatId, selectedMessage);
-  //         }
-  //       } else {
-  //         this.textArea = '';
-  //         const messageDocRef = this.currentChannel()!.chanId;
-  //         // Die Methode updateMessageThreadId wird jetzt aufgerufen
-  //         await this.chat.createMessage(messageDocRef, newMessage);
-  //       }
-  //     }
-  //   }
-  // }
-
-  // async sendDirectMessage() {
-  //   this.stateControl.scrollToBottomGlobal = false;
-  //   let collRef = await this.msg.newPrivateMessageChannel(
-  //     this.userService.privatMessageReceiver!
-  //   );
-  //   if (collRef) {
-  //     const newMessage: Message = {
-  //       text: this.textArea,
-  //       chatId: collRef,
-  //       timestamp: Timestamp.now(),
-  //       messageSendBy: this.fb.currentUser()!,
-  //       reactions: [],
-  //       threadId: '',
-  //       answerCount: 0,
-  //       lastAnswer: '',
-  //       editCount: 0,
-  //       lastEdit: Timestamp.now(),
-  //       storageData: '',
-  //       taggedUser: [],
-  //       answers: [],
-  //     };
-
-  //     if (this.textArea.trim() !== '' || this.selectedFile) {
-  //       if (this.selectedFile) {
-  //         const imageUrl = await this.uploadDirectMessageImage(
-  //           collRef,
-  //           this.selectedFile
-  //         );
-  //         newMessage.storageData = imageUrl;
-  //         this.storageService.uploadMsg.set('');
-  //       }
-  //       await this.msg.addMessageToSubcollection(collRef, newMessage);
-  //       this.textArea = ''; // Leere das Eingabefeld nach dem Senden
-  //     }
-  //   }
-  // }
   async sendDirectMessage() {
     this.stateControl.scrollToBottomGlobal = false;
+
     const collRef = await this.msg.newPrivateMessageChannel(
       this.userService.privatMessageReceiver!
     );
     if (!collRef) return;
-    console.log('collRef', collRef);
+    console.log(this.textArea, 'this.textArea');
+    if (this.editMessage && this.textArea !== '' && this.editedMessageObject) {
+      await this.msg.updateMessageInSubcollection(
+        this.editedMessageObject.chatId,
+        this.editedMessageObject.messageId!,
+        this.textArea
+      );
+      this.resetMessageInput();
+      return;
+    }
     let newMessage = this.createMessage(collRef);
 
     if (this.selectedFile) {

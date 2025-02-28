@@ -48,7 +48,6 @@ export class DirectMessageComponent implements OnInit {
   channelId: string = '';
   textAreaId: string = '';
   textAreaEdited: boolean = false;
-  
 
   ngOnInit(): void {
     onAuthStateChanged(this.auth, async (user) => {
@@ -76,8 +75,6 @@ export class DirectMessageComponent implements OnInit {
       this.currentChatId = params.get('id') || '';
     });
 
-    // Falls keine Message-ID vorhanden ist, nichts tun
-
     try {
       const existingChatId = await this.ms.checkPrivateChatExists(
         this.currentChatId
@@ -90,6 +87,7 @@ export class DirectMessageComponent implements OnInit {
         await this.ms.loadMessagesFromChat(this.currentChatId);
         await this.ms.loadMessageReceiverFromIndexDB();
       } else {
+        this.router.navigate(['main/messages']);
         console.warn(
           'Chat-ID existiert nicht, Nachrichten werden nicht geladen.'
         );

@@ -7,10 +7,13 @@ import {
   doc,
   DocumentReference,
   getDocs,
+  increment,
   onSnapshot,
   orderBy,
   query,
   setDoc,
+  Timestamp,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 import { PrivateChat } from '../../models/interfaces/privateChat.model';
@@ -19,6 +22,7 @@ import { User } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import { openDB } from 'idb';
+import { text } from 'stream/consumers';
 
 @Injectable({
   providedIn: 'root',
@@ -176,7 +180,11 @@ export class MessageService {
       this.db.firestore,
       `privateMessages/${chatId}/messages`
     );
-    await addDoc(messagesCollectionRef, message);
+
+    const messageDocRef = doc(messagesCollectionRef); // Erstellt eine neue Dokument-Referenz mit ID
+    message.messageId = messageDocRef.id; // Weise die generierte ID der Nachricht zu
+
+    await setDoc(messageDocRef, message); // Speichert das Dokument mit der ID
   }
 
   /**
@@ -217,6 +225,35 @@ export class MessageService {
   private async loadLocalMessages(chatId: string) {
     const localMessages = await this.getMessagesLocally(chatId);
     this.messages.set(localMessages);
+  }
+
+  async updateMessageInSubcollection(
+    chatId: string,
+    messageId: string,
+    updatedText: string // Direkt den Text übergeben
+  ) {
+    if (!updatedText) {
+      console.error('Fehler: Der übergebene Text ist leer oder undefined.');
+      return;
+    }
+
+    const messageDocRef = doc(
+      this.db.firestore,
+      'privateMessages',
+      chatId,
+      'messages',
+      messageId
+    );
+
+    try {
+      await updateDoc(messageDocRef, {
+        text: updatedText,
+        lastEdit: Timestamp.now(),
+        editCount: increment(1),
+      });
+    } catch (error) {
+      console.error('Fehler beim Aktualisieren der Nachricht:', error);
+    }
   }
 
   /**

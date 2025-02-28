@@ -3,6 +3,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  increment,
   onSnapshot,
   setDoc,
   Timestamp,
@@ -338,28 +339,29 @@ export class ChatRoomService {
   }
 
   /**
-   * update message parameters in firestore
-   * set reference to the message document
-   * @param textAreaEdited
-   * @param chanId
-   * @param textAreaEditId
+   * update message text in firestore
+   * @param messageText string new message text
+   * @param chanId string channel id
+   * @param messageId string message id
    */
+
   async updateMessageTextInFirestore(
-    textAreaEdited: string,
+    messageText: string,
     chanId: string,
-    textAreaEditId: string
+    messageId: string
   ) {
     const messageDocRef = doc(
       this.fireService.firestore,
       'channels',
       chanId,
       'messages',
-      textAreaEditId
+      messageId
     );
+
     await updateDoc(messageDocRef, {
-      text: textAreaEdited,
+      text: messageText,
       lastEdit: Timestamp.now(),
-      editCount: 1,
+      editCount: increment(1), // Falls du den Edit-Count hochzählen möchtest
     });
   }
 }
