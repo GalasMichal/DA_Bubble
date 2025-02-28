@@ -17,7 +17,7 @@ import { LoaderComponent } from './shared/component/loader/loader.component';
     RouterModule,
     RouterOutlet,
     ReactiveFormsModule,
-    LoaderComponent
+    LoaderComponent,
   ],
 
   templateUrl: './app.component.html',
@@ -25,17 +25,32 @@ import { LoaderComponent } from './shared/component/loader/loader.component';
 })
 export class AppComponent implements OnInit {
   title = 'dabubble';
-  stateControl = inject(StateControlService)
+  stateControl = inject(StateControlService);
   loading = signal(true);
-  userService = inject(UserServiceService)
+  userService = inject(UserServiceService);
 
+  /**
+   * Listens for changes in the user's authentication state.
+   * When the user is logged in, the method will get the user by their uid and load the current message.
+   * If the user is not logged out, the method will navigate to the home page.
+   *
+   * @returns {Observable<FirebaseUser | null>} An observable that tracks the authentication state.
+   */
   ngOnInit() {
-    this.getCurrentUser().subscribe(user => {
+    this.getCurrentUser().subscribe((user) => {
       this.loading.set(false);
     });
   }
 
+  /**
+   * Returns an observable of the currently authenticated user.
+   * The observable emits:
+   * - A `FirebaseUser` object when a user is logged in.
+   * - `null` when the user is logged out.
+   *
+   * @returns {Observable<FirebaseUser | null>} An observable that tracks the authentication state.
+   */
   getCurrentUser(): Observable<FirebaseUser | null> {
-    return this.userService.getCurrentUser(); // Use the method from FirebaseService
+    return this.userService.getCurrentUser();
   }
 }
