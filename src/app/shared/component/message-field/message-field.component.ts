@@ -162,6 +162,15 @@ export class MessageFieldComponent {
     };
   }
 
+  /**
+   * Adds a new message to the thread of the currently selected message.
+   * If a message is selected, the new message is appended to the answers array
+   * of the selected message, and the message field is cleared. The updated
+   * message with the new answer is then sent to the chat service for updating
+   * in the database.
+   *
+   * @param {Message} newMessage - The new message to be added to the thread.
+   */
   private addMessageToThread(newMessage: Message) {
     const selectedMessage = this.selectedMessage();
     if (selectedMessage) {
@@ -171,6 +180,16 @@ export class MessageFieldComponent {
     }
   }
 
+  /**
+   * Sends a direct message to the currently selected user.
+   * If a message is being edited and the text is not empty, updates the existing message.
+   * Otherwise, processes the message as a new message.
+   * Also ensures the chat view scrolls to the bottom.
+   * If a file has been selected, uploads the file to the firestore storage and adds the download URL to the message.
+   * If the thread answer menu is open, adds the message to the thread.
+   * Otherwise, creates a new message in the current channel.
+   * Also clears the message input field.
+   */
   async sendDirectMessage() {
     this.stateControl.scrollToBottomGlobal = false;
 
@@ -189,7 +208,6 @@ export class MessageFieldComponent {
       return;
     }
     let newMessage = this.createMessage(collRef);
-
     if (this.selectedFile) {
       newMessage.storageData = await this.uploadDirectMessageImage(
         collRef,
@@ -197,15 +215,26 @@ export class MessageFieldComponent {
       );
       this.storageService.uploadMsg.set('');
     }
-
     await this.msg.addMessageToSubcollection(collRef, newMessage);
     this.resetMessageInput();
   }
 
+  /**
+   * Uploads a file to the Firestore storage as a chat image.
+   * @param {string} chatId - The ID of the chat to associate with the image.
+   * @param {File} file - The file to be uploaded.
+   * @returns {Promise<string>} - A promise that resolves with the download URL of the uploaded image.
+   */
   async uploadChatImage(chatId: string, file: File): Promise<string> {
     return this.storageService.uploadFileToStorage('chats', chatId, file);
   }
 
+  /**
+   * Uploads a file to the Firestore storage as a direct message image.
+   * @param {string} directMessageId - The ID of the direct message to associate with the image.
+   * @param {File} file - The file to be uploaded.
+   * @returns {Promise<string>} - A promise that resolves with the download URL of the uploaded image.
+   */
   async uploadDirectMessageImage(
     directMessageId: string,
     file: File
@@ -217,6 +246,13 @@ export class MessageFieldComponent {
     );
   }
 
+  /**
+   * Handles the file input event for uploading a file.
+   * Extracts the selected file from the event, sets it as the selected file,
+   * and generates a preview of the file using the storage service.
+   *
+   * @param {Event} event - The file input event containing the selected file.
+   */
   handleFileInput(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -225,34 +261,76 @@ export class MessageFieldComponent {
     }
   }
 
+  /**
+   * Resets the upload message to an empty string when the delete button
+   * on the file input is clicked.
+   */
   deleteFileInput() {
     this.storageService.uploadMsg.set('');
   }
 
+  /**
+   * Adds the selected emoji to the text area of the message input.
+   * Sets the global scroll to bottom flag to false, so the chat content
+   * does not scroll to the bottom when the emoji is inserted.
+   * Additionally, hides the emoji picker window.
+   * @param event - The event object containing the selected emoji.
+   */
   addEmoji(event: any) {
     this.stateControl.scrollToBottomGlobal = false;
     this.textArea = `${this.textArea}${event.emoji.native}`;
     this.isEmojiPickerVisible = false;
   }
 
+  /**
+   * Toggles the visibility of the emoji picker window.
+   * Sets the global scroll-to-bottom flag to false to prevent
+   * automatic scrolling when the emoji picker visibility changes.
+   */
   showEmojiWindow() {
     this.stateControl.scrollToBottomGlobal = false;
     this.isEmojiPickerVisible = !this.isEmojiPickerVisible;
   }
 
+  /**
+   * Closes the emoji picker window.
+   *
+   * @remarks
+   * This function sets the {@link isEmojiPickerVisible} flag to false, which
+   * hides the emoji picker window.
+   */
   closeEmojiWindow() {
     this.isEmojiPickerVisible = false;
   }
 
+  /**
+   * Closes the user picker window.
+   * Sets the {@link isUsersPickerVisible} flag to false, which
+   * hides the user picker window.
+   */
   closeUserWindow() {
     this.isUsersPickerVisible = false;
   }
 
+  /**
+   * Shows or hides the user picker window.
+   * Toggles the visibility of the user picker window by setting the
+   * {@link isUsersPickerVisible} flag to the opposite of its current value.
+   * Additionally, appends the '@' character to the text area.
+   */
   showUserWindow() {
     this.textArea += `@`;
     this.isUsersPickerVisible = !this.isUsersPickerVisible;
   }
 
+  /**
+   * Closes the edit mode for the message field.
+   *
+   * @remarks
+   * This function resets various state controls related to editing,
+   * including setting the global edit flags to false, clearing the
+   * text area, and marking the text area as not edited.
+   */
   closeEdit() {
     this.stateControl.globalEdit = false;
     this.stateControl.globalEditModul = false;
@@ -261,6 +339,12 @@ export class MessageFieldComponent {
     this.textAreaIsEdited = false;
   }
 
+  /**
+   * Handles the key up event for the message field.
+   * Checks if the last character of the text area is '@' and
+   * sets the isUsersPickerVisible flag accordingly.
+   * @param textArea the text area string to check
+   */
   handleKeyUp(textArea: string) {
     if (/@\S*$/g.test(textArea)) {
       this.isUsersPickerVisible = true;
@@ -269,11 +353,24 @@ export class MessageFieldComponent {
     }
   }
 
+  /**
+   * Adds a user's display name to the message text area.
+   * @param displayName - The display name of the user to be added to the message.
+   * @remarks
+   * The display name is appended to the text area, followed by a space.
+   * The user picker window is then hidden by setting the isUsersPickerVisible flag to false.
+   */
   addUserToMessage(displayName: string) {
     this.textArea += `${displayName.trim()} `;
     this.isUsersPickerVisible = false;
   }
 
+  /**
+   * Sorts the list of users with the current user at the top.
+   *
+   * @returns {User[]} A sorted array of users where the current user appears first,
+   * followed by other users sorted alphabetically by their display names.
+   */
   sortListOfUser(): User[] {
     const sortAllUser = [...this.userService.userList];
     sortAllUser.sort((a, b) => {
