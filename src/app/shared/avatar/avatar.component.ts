@@ -8,7 +8,7 @@ import { UserServiceService } from '../../services/user-service/user-service.ser
   standalone: true,
   imports: [],
   templateUrl: './avatar.component.html',
-  styleUrl: './avatar.component.scss'
+  styleUrl: './avatar.component.scss',
 })
 export class AvatarComponent {
   db = inject(FirebaseService);

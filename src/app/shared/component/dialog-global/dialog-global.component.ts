@@ -10,11 +10,14 @@ import { ConfirmDeleteChannelComponent } from '../../../main-content/chat-room/c
   standalone: true,
   imports: [CommonModule, RouterModule, CloseComponent],
   templateUrl: './dialog-global.component.html',
-  styleUrl: './dialog-global.component.scss'
+  styleUrl: './dialog-global.component.scss',
 })
 export class DialogGlobalComponent {
   readonly dialog = inject(MatDialogRef<ConfirmDeleteChannelComponent>);
-  
+
+  /**
+   * Closes the dialog.
+   */
   closeDialog() {
     this.dialog.close();
   }
