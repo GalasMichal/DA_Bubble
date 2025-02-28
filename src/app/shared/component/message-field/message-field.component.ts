@@ -108,14 +108,14 @@ export class MessageFieldComponent {
     this.processNewMessage();
   }
 
-  // private updateEditedMessage() {
-  //   this.chat.updateMessageTextInFirestore(
-  //     this.textArea,
-  //     this.channelIdEdit,
-  //     this.textAreaEditId
-  //   );
-  //   this.resetMessageInput();
-  // }
+  /**
+   * Processes a new message based on the current state of the message field.
+   * Creates a new message with the current channel ID and the current user's ID.
+   * If a file has been selected, uploads the file to the firestore storage and adds the download URL to the message.
+   * If the thread answer menu is open, adds the message to the thread.
+   * Otherwise, creates a new message in the current channel.
+   * Also clears the message input field.
+   */
 
   private async processNewMessage() {
     const currentUser = this.fb.currentUser();
@@ -136,6 +136,14 @@ export class MessageFieldComponent {
     }
   }
 
+  /**
+   * Creates a new message object with the provided chat ID and the current state of the message field.
+   * Initializes the message with default values for reactions, thread information, and metadata.
+   * The message includes the current text in the text area, the current timestamp, and the current user as the sender.
+   *
+   * @param {string} [chatId] - The ID of the chat to associate with the message.
+   * @returns {Message} - A new message object with initialized fields.
+   */
   private createMessage(chatId?: string): Message {
     return {
       text: this.textArea,
@@ -191,7 +199,7 @@ export class MessageFieldComponent {
     }
 
     await this.msg.addMessageToSubcollection(collRef, newMessage);
-    this.textArea = '';
+    this.resetMessageInput();
   }
 
   async uploadChatImage(chatId: string, file: File): Promise<string> {

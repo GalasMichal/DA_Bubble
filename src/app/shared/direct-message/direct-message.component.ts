@@ -53,7 +53,6 @@ export class DirectMessageComponent implements OnInit {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
         await this.fb.getUserByUid(user.uid);
-
         this.loadCurrentMessageAfterRefresh();
       }
     });
@@ -75,23 +74,28 @@ export class DirectMessageComponent implements OnInit {
       this.currentChatId = params.get('id') || '';
     });
 
+    if (!this.currentChatId) {
+      console.warn('Keine gültige Chat-ID vorhanden.');
+      return;
+    }
+
     try {
       const existingChatId = await this.ms.checkPrivateChatExists(
         this.currentChatId
       );
-      console.log('Existing Chat ID:', this.currentChatId);
-
-      if (existingChatId) {
-        this.router.navigate(['main/messages', this.currentChatId]);
-
-        await this.ms.loadMessagesFromChat(this.currentChatId);
+      if (!existingChatId) {
         await this.ms.loadMessageReceiverFromIndexDB();
-      } else {
         this.router.navigate(['main/messages']);
         console.warn(
           'Chat-ID existiert nicht, Nachrichten werden nicht geladen.'
         );
+        return;
       }
+
+      console.log('Existing Chat ID:', this.currentChatId);
+      await this.ms.loadMessageReceiverFromIndexDB();
+      this.router.navigate(['main/messages', this.currentChatId]);
+      await this.ms.loadMessagesFromChat(this.currentChatId);
     } catch (error) {
       console.error('Fehler beim Laden der Nachricht:', error);
     }
