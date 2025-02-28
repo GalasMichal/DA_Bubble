@@ -119,6 +119,17 @@ export class MessageAnswerComponent {
       'wyslalem wiadomosc do servisu',
       this.ms.currentMessageToEdit()
     );
+    this.editstatus();
+  }
+
+  editstatus() {
+    if(this.state.isDirectMessage) {
+      this.state.editDirectMessage = true;
+      this.state.globalEditModul = true;
+    } else {
+      this.state.globalEdit = true;
+      this.state.globalEditModul = true;
+    }
   }
 
   /**

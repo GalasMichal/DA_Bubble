@@ -103,11 +103,12 @@ export class MessageFieldComponent {
         this.editedMessageObject.messageId! // Stelle sicher, dass messageId existiert
       );
       this.resetMessageInput();
+      this.closeEdit()
       return;
     }
     this.processNewMessage();
   }
-
+  
   /**
    * Processes a new message based on the current state of the message field.
    * Creates a new message with the current channel ID and the current user's ID.
@@ -205,6 +206,7 @@ export class MessageFieldComponent {
         this.textArea
       );
       this.resetMessageInput();
+      this.closeEdit();
       return;
     }
     let newMessage = this.createMessage(collRef);
@@ -332,6 +334,7 @@ export class MessageFieldComponent {
    * text area, and marking the text area as not edited.
    */
   closeEdit() {
+    debugger;
     this.stateControl.globalEdit = false;
     this.stateControl.globalEditModul = false;
     this.stateControl.editDirectMessage = false;

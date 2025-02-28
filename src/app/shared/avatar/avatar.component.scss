@@ -124,6 +124,8 @@
   }
 }
 
+
+// chat-room header avatar
 ::ng-deep {
   .header-right-container {
     app-avatar {
@@ -131,7 +133,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        z-index: 2;
+        z-index: 1;
 
         .avatar {
           width: 2.25rem;
