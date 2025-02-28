@@ -1,11 +1,4 @@
-import {
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  Input,
-  viewChild,
-} from '@angular/core';
+import { Component, computed, inject, Input } from '@angular/core';
 import { SearchService } from '../../services/search/search.service';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -19,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { Channel } from '../../models/interfaces/channel.model';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { CloseComponent } from '../component/close/close.component';
-import { log } from 'console';
 
 @Component({
   selector: 'app-search',
