@@ -11,10 +11,10 @@
     height: 1.25rem;
   }
   .content-description {
-    height: 3.0625rem;
+    height: fit-content;
     font-size: 1.5rem;
     font-weight: 700;
-    line-height: 3.0688rem;
+    line-height: 1.5;
     color: $white;
   }
 }
@@ -22,8 +22,7 @@
 @media (max-width: 800px) {
   .content-container {
     .content-description {
-      height: 2rem;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
   }
 }
