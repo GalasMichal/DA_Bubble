@@ -22,6 +22,7 @@ import { ProfileSingleUserComponent } from '../profile-single-user/profile-singl
 import { ShowImageComponent } from '../component/show-image/show-image.component';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { MessageService } from '../../services/messages/message.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-message-answer',
@@ -48,8 +49,11 @@ export class MessageAnswerComponent {
   showCloud: boolean = false;
   isEmojiPickerVisibleMessage: boolean[] = [false];
   newEmoji: string = '';
+  route= inject(ActivatedRoute)
 
   currentChannel = computed(() => this.chat.currentChannelSignal());
+  directChannel = computed(() => this.ms.messages());
+
 
   meUser: boolean = false;
 
@@ -174,18 +178,28 @@ export class MessageAnswerComponent {
    * @returns none
    */
   async updateReactionsInFirestore() {
-    const channelId = this.currentChannel()!.chanId;
-    const messageId = this.userMessage!.messageId!;
-    const messageDocRef = doc(
-      this.firestore,
-      'channels',
-      channelId,
-      'messages',
-      messageId
-    );
-    await updateDoc(messageDocRef, { reactions: this.userMessage?.reactions });
-  }
+    const urlSegments = this.route.snapshot.url.map(segment => segment.path);
+    let privateMessagesId: string | null = null;
+    let channelId: string | null = null;
 
+    const messageId = this.userMessage!.messageId!;
+
+    if (urlSegments.includes('messages')) {
+      privateMessagesId = this.route.snapshot.paramMap.get('id');
+    } else {
+      channelId = this.currentChannel()?.chanId || null;
+    }
+
+    if (privateMessagesId) {
+      const directMessageDocRef = doc(this.firestore, 'privateMessages', privateMessagesId, 'messages', messageId);
+      await updateDoc(directMessageDocRef, { reactions: this.userMessage?.reactions });
+    }
+
+    if (channelId) {
+      const messageDocRef = doc(this.firestore, 'channels', channelId, 'messages', messageId);
+      await updateDoc(messageDocRef, { reactions: this.userMessage?.reactions });
+    }
+  }
   /**
    * Opens a dialog displaying the full profile of a user.
    * Retrieves user data from the UserService and then displays the profile

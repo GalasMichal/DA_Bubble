@@ -334,7 +334,6 @@ export class MessageFieldComponent {
    * text area, and marking the text area as not edited.
    */
   closeEdit() {
-    debugger;
     this.stateControl.globalEdit = false;
     this.stateControl.globalEditModul = false;
     this.stateControl.editDirectMessage = false;
