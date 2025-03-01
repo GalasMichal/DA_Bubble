@@ -121,7 +121,9 @@
       fill: $secondary;
     }
   }
-  .edit-message {
+  .edit-message-img, 
+  .edit-message
+  {
     width: 210px;
     height: 35px;
     background: none;
@@ -144,11 +146,23 @@
     transition-duration: 175ms;
     transform: translateX(5%);
     &:hover {
-      border-radius: $b-radius-3;
+      // border-radius: $b-radius-3;
       transform: scale(1.01);
       background: $bg-color;
       color: $primary;
     }
+    &:focus-visible {
+      background: $bg-color;
+      outline: none;
+    }
+    &:hover svg path {
+      fill: $primary-hover;
+    } 
+  }
+  .edit-message-img {
+    display: none;
+    bottom: -1.5625rem;
+    right: -1.5625rem;
   }
   .show-cloud {
     visibility: visible;
@@ -232,7 +246,7 @@ emoji-mart {
 .reaction-bar {
   display: flex;
   position: absolute;
-  opacity: 0;
+  opacity: 0;  //TU
   top: 0;
   right: 11.5625rem;
   background: $white;
@@ -281,10 +295,18 @@ emoji-mart {
   }
 }
 
-
-
-
-
+@media (max-width: 500px) {
+  .reaction-bar {
+      .edit-message {
+        display: none;
+      }
+      .edit-message-img {
+        display: flex;
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+}
 
 
 

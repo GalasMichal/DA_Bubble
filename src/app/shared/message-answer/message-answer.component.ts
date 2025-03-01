@@ -200,7 +200,7 @@ export class MessageAnswerComponent {
       await updateDoc(messageDocRef, { reactions: this.userMessage?.reactions });
     }
   }
-  
+
   /**
    * Opens a dialog displaying the full profile of a user.
    * Retrieves user data from the UserService and then displays the profile
