@@ -18,3 +18,12 @@
     color: $white;
   }
 }
+
+@media (max-width: 800px) {
+  .content-container {
+    .content-description {
+      height: 2rem;
+      font-size: 1.3rem;
+    }
+  }
+}
