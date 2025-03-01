@@ -215,9 +215,9 @@ app-toast {
   gap: .625rem;
   border-radius: 1.875rem 1.875rem 0 1.875rem;
   box-shadow: 0px .375rem .625rem 0 #00000033;
-  opacity: 1;
+  opacity: 0;
   z-index: 1;
-  transform: translateX(0);
+  transform: translateX(100%);
   @include firstTranistion();
 }
 
@@ -347,5 +347,6 @@ app-toast {
   
   app-toast {
     padding: .625rem;
+    bottom: 13.25rem;
 }
 }
