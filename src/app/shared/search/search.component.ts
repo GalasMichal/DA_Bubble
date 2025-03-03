@@ -263,7 +263,6 @@ export class SearchComponent {
    * @param user - The user to open a message with, their displayName is set as the searchTerm.
    */
   async openMessage(user: User) {
-    debugger
     this.stateControl.isThreadOpen = false;
     this.stateControl.responsiveChat = true;
     this.stateControl.responsiveArrow = true;
