@@ -13,7 +13,7 @@
         </button>
       </div>
         
-        <p class="description">Mit deinem Namen und deiner eMail-Addresse hast Du dein neues DABubble-Konto:</p>
+        <p class="description">Mit deinem Namen und deiner E-Mail-Addresse hast Du dein neues DABubble-Konto:</p>
       
       
       <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
@@ -115,7 +115,7 @@
           </div>
 
           <div class="checkbox-description">
-            <label for="checkbox">Ich stimme der <a class="privacy" routerLink="/start/legal">Datenschutzerklärung</a> zu.</label>
+            <label for="checkbox">Ich stimme der <a class="privacy" routerLink="/legal">Datenschutzerklärung</a> zu.</label>
             <div class="checkbox-description warn-txt">
               @if (myForm.controls['term'].invalid && (isFormSubmitted || myForm.controls['term'].touched ||
               myForm.controls['term'].dirty)) {

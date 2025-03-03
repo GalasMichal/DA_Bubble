@@ -16,11 +16,11 @@
     justify-content: center;
     position: relative;
     width: 100%;
-    height: 40px;
+    height: 2.5rem;
     margin-bottom: 1.875rem;
     .form-title-name {
       color: $primary;
-      font-size: 1.875rem;
+      font-size: 1.8rem;
       font-weight: 700;
     }
   }
@@ -29,14 +29,14 @@
     flex-direction: column;
     text-align: left;
     margin-bottom: 1.875rem;
-    gap: 16px;
+    gap: 1rem;
     h2 {
       color: $primary;
-      font-size: 32px;
+      font-size: 2rem;
       font-weight: 700;
     }
     p {
-      font-size: 20px;
+      font-size: 1.25rem;
       font-weight: 500;
     }
   }
@@ -47,11 +47,11 @@
     margin-bottom: 1.875rem;
     h2 {
       color: $primary;
-      font-size: 32px;
+      font-size: 1.3rem;
       font-weight: 700;
     }
     p {
-      font-size: 20px;
+      font-size: 1.1rem;
       font-weight: 500;
     }
   }

@@ -1,15 +1,19 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { FirebaseService } from '../firebase/firebase.service';
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
-  getDoc,
+  DocumentReference,
   getDocs,
+  increment,
   onSnapshot,
   orderBy,
   query,
   setDoc,
+  Timestamp,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 import { PrivateChat } from '../../models/interfaces/privateChat.model';
@@ -17,7 +21,8 @@ import { UserServiceService } from '../user-service/user-service.service';
 import { User } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
-
+import { openDB } from 'idb';
+import { text } from 'stream/consumers';
 
 @Injectable({
   providedIn: 'root',
@@ -30,136 +35,322 @@ export class MessageService {
   currentMessageId: string = '';
   currentMessageData!: PrivateChat;
   unsubscribe: any;
-  messages: Message[] = [];
+  messages = signal<Message[]>([]);
+  currentMessageToEdit = signal<Message | null>(null);
 
-  async newPrivateMessageChannel(user: User) {
+  constructor() {}
+
+  private dbPromise = openDB('ChatDB', 1, {
+    upgrade(db) {
+      if (!db.objectStoreNames.contains('channels')) {
+        db.createObjectStore('channels', { keyPath: 'chanId' });
+      }
+      if (!db.objectStoreNames.contains('messages')) {
+        db.createObjectStore('messages', { keyPath: 'messageId' });
+      }
+      if (!db.objectStoreNames.contains('directMessages')) {
+        db.createObjectStore('directMessages', { keyPath: 'chatId' });
+      }
+    },
+  });
+
+  /**
+   * saveMessageLocally in IndexDB
+   * for offline usage
+   */
+  async saveMessageLocally() {
+    const db = await this.dbPromise;
+    const messages = this.messages();
+    messages.forEach(async (msg) => {
+      await db.put('directMessages', msg);
+    });
+  }
+
+  /**
+   * getMessagesLocally from IndexDB
+   * filter by chatId and return messages for current chat
+   * @param chatId
+   * @returns
+   */
+  async getMessagesLocally(chatId: string): Promise<Message[]> {
+    const db = await this.dbPromise;
+    try {
+      let cachedMessages = await db.getAll('directMessages');
+      cachedMessages = cachedMessages.filter(
+        (message: Message) => message.chatId === chatId
+      );
+      this.messages.set(cachedMessages);
+      return cachedMessages;
+    } catch (error) {
+      console.error('Fehler beim Laden der Nachrichten:', error);
+      return [];
+    }
+  }
+  /**
+   * Remove all messages from IndexDB
+   * @param chatId
+   */
+  async deleteMessages(chatId: string) {
+    const db = await this.dbPromise;
+    const tx = db.transaction('directMessages', 'readwrite');
+    const store = tx.objectStore('directMessages');
+    const messages = await store.getAllKeys();
+    for (const key of messages) {
+      await store.delete(key);
+    }
+    await tx.done;
+    const messagesCollectionRef = collection(
+      this.db.firestore,
+      `privateMessages/${chatId}/messages`
+    );
+    const querySnapshot = await getDocs(messagesCollectionRef);
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
+  }
+
+  /**
+   * Create a new private message channel after the message sending process
+   * check if the chat already exists
+   * @param user
+   * @returns
+   */
+  async newPrivateMessageChannel(user: User): Promise<string> {
     const existingChatId = await this.checkPrivateChatExists(user.uId);
     if (existingChatId) {
-      this.currentMessageId = existingChatId;
-      await this.loadCurrentMessageData();
-      this.router.navigate(['start/main/messages/', existingChatId]);
-      return existingChatId;
+      return this.handleExistingChat(existingChatId);
     }
+    return this.createNewPrivateChat(user.uId);
+  }
 
-    // Neuen Chat erstellen, wenn keiner existiert
+  /**
+   * Handle the existing chat
+   * load the current message data from this chat
+   * navigate to the chat
+   * @param chatId
+   * @returns
+   */
+  private async handleExistingChat(chatId: string): Promise<string> {
+    this.currentMessageId = chatId;
+    await this.loadCurrentMessageData();
+    this.router.navigate(['main/messages/', chatId]);
+    return chatId;
+  }
+
+  /**
+   *  Create a new private chat
+   *  load the current message data from this chat and navigate to the chat
+   * @param userId
+   * @returns
+   */
+  private async createNewPrivateChat(userId: string): Promise<string> {
+    const channelDocRef = await this.createPrivateChatDocument(userId);
+    this.currentMessageId = channelDocRef.id;
+    await this.loadCurrentMessageData();
+    this.router.navigate(['main/messages/', channelDocRef.id]);
+    this.currentMessageChannelId = channelDocRef.id;
+    return channelDocRef.id;
+  }
+
+  /**
+   * Create a new private chat document
+   * @param userId
+   * @returns
+   */
+  private async createPrivateChatDocument(
+    userId: string
+  ): Promise<DocumentReference> {
     const channelCollectionRef = collection(
       this.db.firestore,
       'privateMessages'
     );
     const channelDocRef = doc(channelCollectionRef);
-    const privateChat = this.setPrivateObject(channelDocRef, user.uId);
+    const privateChat = this.setPrivateObject(channelDocRef, userId);
     await setDoc(channelDocRef, privateChat);
-
-    this.currentMessageId = channelDocRef.id;
-    await this.loadCurrentMessageData();
-    this.router.navigate(['start/main/messages/', channelDocRef.id]);
-    this.currentMessageChannelId = channelDocRef.id;
-    return channelDocRef.id;
+    return channelDocRef;
   }
-
-  async addMessageToSubcollection(chatId: string, message: Message) {
-    if (!chatId) {
-      throw new Error('chatId is required to add a message.');
-    } else {
-      const messagesCollectionRef = collection(
-        this.db.firestore,
-        `privateMessages/${chatId}/messages`
-      );
-
-      await addDoc(messagesCollectionRef, message);
-    }
-  }
-  async loadCurrentMessageData() {
-
-    const docRef = doc(this.db.firestore, 'privateMessages', this.currentMessageId);
-    this.unsubscribe = onSnapshot(docRef, (doc) => {
-      if (doc.exists()) {
-        const messageData = doc.data() as PrivateChat;
-        this.currentMessageData = messageData;
-      } else {
-        console.log('No such document!');
-      }
-    });
-  }
-
 
   /**
-   * Lädt alle Nachrichten einer bestimmten Chat-Subcollection.
-   * @param chatId Die ID des privaten Chats.
-   * @returns Ein Promise mit einer Liste von Nachrichten.
+   *  Add a message to the subcollection of the private chat
+   * @param chatId
+   * @param message
    */
-   unsubscribeMessages: (() => void) | null = null;
-
-  async loadMessagesFromChat(chatId: string) {
-    if (this.unsubscribeMessages) {
-      this.unsubscribeMessages(); // Vorherigen Listener entfernen
-    }
-
+  async addMessageToSubcollection(chatId: string, message: Message) {
     const messagesCollectionRef = collection(
       this.db.firestore,
       `privateMessages/${chatId}/messages`
     );
 
+    const messageDocRef = doc(messagesCollectionRef); // Erstellt eine neue Dokument-Referenz mit ID
+    message.messageId = messageDocRef.id; // Weise die generierte ID der Nachricht zu
+
+    await setDoc(messageDocRef, message); // Speichert das Dokument mit der ID
+  }
+
+  /**
+   * Load the current message data from firestore
+   */
+  async loadCurrentMessageData() {
+    const docRef = doc(
+      this.db.firestore,
+      'privateMessages',
+      this.currentMessageId
+    );
+    this.unsubscribe = onSnapshot(docRef, (doc) => {
+      if (doc.exists()) {
+        this.currentMessageData = doc.data() as PrivateChat;
+      }
+    });
+  }
+  /**
+   * Unsubscribe from the current message data
+   */
+  unsubscribeMessages: (() => void) | null = null;
+
+  /**
+   * load messages from the chat
+   * load messages from the local DB
+   * @param chatId
+   */
+  async loadMessagesFromChat(chatId: string) {
+    this.unsubscribeMessages?.();
+    await this.loadLocalMessages(chatId);
+    this.setupSnapshotListener(chatId);
+  }
+
+  /**
+   * load messages from the local DB by chatId
+   * @param chatId
+   */
+  private async loadLocalMessages(chatId: string) {
+    const localMessages = await this.getMessagesLocally(chatId);
+    this.messages.set(localMessages);
+  }
+
+  async updateMessageInSubcollection(
+    chatId: string,
+    messageId: string,
+    updatedText: string // Direkt den Text übergeben
+  ) {
+    if (!updatedText) {
+      console.error('Fehler: Der übergebene Text ist leer oder undefined.');
+      return;
+    }
+
+    const messageDocRef = doc(
+      this.db.firestore,
+      'privateMessages',
+      chatId,
+      'messages',
+      messageId
+    );
+
+    try {
+      await updateDoc(messageDocRef, {
+        text: updatedText,
+        lastEdit: Timestamp.now(),
+        editCount: increment(1),
+      });
+    } catch (error) {
+      console.error('Fehler beim Aktualisieren der Nachricht:', error);
+    }
+  }
+
+  /**
+   * setup the snapshot listener for the chat
+   * @param chatId
+   */
+  private setupSnapshotListener(chatId: string) {
+    const messagesCollectionRef = collection(
+      this.db.firestore,
+      `privateMessages/${chatId}/messages`
+    );
     const messagesQuery = query(
       messagesCollectionRef,
       orderBy('timestamp', 'asc')
     );
-
-    this.unsubscribeMessages = onSnapshot(messagesQuery, (querySnapshot) => {
-      this.messages = []; // Nachrichtenliste zurücksetzen
-      querySnapshot.forEach((doc) => {
-        const message = doc.data() as Message;
-        this.messages.push(message);
-      });
-      console.log('Received changes from DB', this.messages);
-    });
+    this.unsubscribeMessages = onSnapshot(
+      messagesQuery,
+      async (querySnapshot) => {
+        const newMessages = querySnapshot.docs.map(
+          (doc) => doc.data() as Message
+        );
+        this.messages.set(newMessages);
+        await this.saveMessageLocally();
+      }
+    );
   }
 
+  /**
+   * save the message to the chat
+   * clear the message db
+   * put the message to the local db
+   * @param message
+   */
+  async saveMessageReceiverToIndexDB(user: User): Promise<void> {
+    const db = await this.dbPromise;
+    await db.clear('messageReceivers');
+    await db.put('messageReceivers', user);
+  }
+
+  /**
+   * load the message receiver from the index db
+   */
+  async loadMessageReceiverFromIndexDB(): Promise<void> {
+    const db = await this.dbPromise;
+    const user = await db.getAll('messageReceivers');
+    if (user) this.user.privatMessageReceiver = user[0];
+  }
+
+  /**
+   * set the private object for the chat
+   * @param obj
+   * @param uId
+   * @returns
+   */
   setPrivateObject(obj: any, uId: string) {
-    const privateChat: PrivateChat = {
+    return {
       privatChatId: obj.id,
       chatCreator: this.db.currentUser()!.uId,
       chatReciver: uId,
-    };
-    return privateChat;
+    } as PrivateChat;
   }
 
+  /**
+   * check if the private chat exists in the database
+   * @param uId
+   * @returns
+   */
   async checkPrivateChatExists(uId: string): Promise<string | null> {
-    const chatCreator = this.db.currentUser()!.uId; // Aktueller Benutzer
+    const chatCreator = this.db.currentUser()!.uId;
     const privateChatCollection = collection(
       this.db.firestore,
       'privateMessages'
-    ); // Collection-Name
+    );
 
-    // Query 1: chatCreator ist der aktuelle Benutzer und chatReciver ist der andere Benutzer
     const q1 = query(
       privateChatCollection,
       where('chatCreator', '==', chatCreator),
       where('chatReciver', '==', uId)
     );
 
-    // Query 2: chatCreator ist der andere Benutzer und chatReciver ist der aktuelle Benutzer
     const q2 = query(
       privateChatCollection,
       where('chatCreator', '==', uId),
       where('chatReciver', '==', chatCreator)
     );
 
-    // Beide Queries ausführen
-    const [querySnapshot1, querySnapshot2] = await Promise.all([
+    const q3 = query(privateChatCollection, where('privatChatId', '==', uId));
+
+    const [querySnapshot1, querySnapshot2, querySnapshot3] = await Promise.all([
       getDocs(q1),
       getDocs(q2),
+      getDocs(q3),
     ]);
 
-    // Prüfen, ob ein Dokument in einer der beiden Queries gefunden wurde
-    if (!querySnapshot1.empty) {
-      return querySnapshot1.docs[0].id; // ID des ersten Dokuments aus Query 1
-    }
-    if (!querySnapshot2.empty) {
-      return querySnapshot2.docs[0].id; // ID des ersten Dokuments aus Query 2
-    }
-
-    // Wenn kein Dokument gefunden wurde, gib `null` zurück
+    if (!querySnapshot1.empty) return querySnapshot1.docs[0].id;
+    if (!querySnapshot2.empty) return querySnapshot2.docs[0].id;
+    if (!querySnapshot3.empty) return querySnapshot3.docs[0].id;
     return null;
   }
 }

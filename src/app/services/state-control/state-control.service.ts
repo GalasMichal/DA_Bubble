@@ -11,9 +11,8 @@ export class StateControlService {
   showToast: boolean = false;
   showArrow: boolean = false;
   showToastText = signal('');
-  showConfirmationText: string = '';
+  showConfirmationText = signal('');
   choosenUser: User[] = [];
-  choosenUserFirebase: string[] = [];
   isUserLoggedIn: boolean = false;
   showError: boolean = false;
   globalEdit: boolean = false;
@@ -22,6 +21,11 @@ export class StateControlService {
   responsiveMenu: boolean = false;
   messageImage: string | undefined = "";
   scrollToBottomGlobal: boolean = true;
+  isMenuOpen: boolean = true;
+  isSendButtonActive: boolean = false;
+  isDirectMessage: boolean = false;
+  editDirectMessage: boolean = false;
+  globalEditModul: boolean = false;
 
   removeShowToast() {
     setTimeout(() => {

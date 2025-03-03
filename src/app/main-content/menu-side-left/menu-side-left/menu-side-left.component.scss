@@ -46,6 +46,10 @@
   }
 }
 
+.selected {
+  background: $bg-color !important;
+}
+
 .channels {
   display: flex;
   flex-direction: column;
@@ -107,6 +111,19 @@
     flex-direction: column;
     margin-bottom: 1.5625rem;
     li {
+      position: relative;
+      .badge {
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: inline-block;
+        background-color: $secondary;
+        color: white;
+        padding: 0.0625rem 0.25rem;
+        border-radius: 12px;
+        font-size: 0.625rem;
+        font-weight: bold;
+      }
       button {
         display: flex;
         flex-direction: row;
@@ -215,6 +232,7 @@
       box-shadow: $shadow;
       background: $secondary;
       border-radius: 50%;
+      z-index: 1;
       button {
         &:hover {
           background: none;

@@ -1,7 +1,7 @@
 <section>
-  <header class="fontNunito">
+  <header>
     <div class="header-left-container">
-      <h1 class="font-nunito">{{ currentChat?.channelName }}</h1>
+      <h1>Thread</h1>
 
     </div>
     <button (click)="closeThread()" class="close-btn">
@@ -14,12 +14,10 @@
     <app-message-answer [userMessage]="this.user.selectedUserMessage()" [hideDetails]="true"></app-message-answer>
 
     }
-    @for ( answer of answers(); track $index) {
-      <app-message-answer [threadAnswerOpen]="true" [answer]="answer" [hideDetails]="true"></app-message-answer>
+    @for ( answer of this.user.selectedUserMessage()?.answers; track $index) {
+    <app-message-answer [userMessage]="answer" [threadAnswerOpen]="true" [hideDetails]="true"></app-message-answer>
     }
-        </div>
-      <app-message-field [isThreadAnswerOpen]="true" class="padding-25"></app-message-field>
+  </div>
+
+  <app-message-field [isThreadAnswerOpen]="true"></app-message-field>
 </section>
-
-
-

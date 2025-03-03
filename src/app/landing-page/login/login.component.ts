@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,43 +7,34 @@ import {
   Validators,
 } from '@angular/forms';
 import { FirebaseService } from '../../services/firebase/firebase.service';
-import { LogoComponent } from '../../shared/logo/logo.component';
-import {
-  Router,
-  RouterLink,
-  RouterModule,
-  RouterOutlet,
-} from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FooterComponent } from '../footer/footer.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
-import { User } from '../../models/interfaces/user.model';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss', './login.component.media.scss'],
-  imports: [
-     CommonModule,
-    //  LogoComponent,
-     ReactiveFormsModule,
-     FormsModule,
-     RouterModule,
-     RouterLink,
-    // FooterComponent,
-  ],
+  styleUrls: ['./login.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
 })
 export class LoginComponent {
+  /**
+   * Injects the FirebaseService and StateControlService.
+   */
   fb = inject(FirebaseService);
-  private router = inject(Router);
   stateControl = inject(StateControlService);
 
-  // FormGroup für die Anmeldeform
+  /**
+   * The login form.
+   */
   loginForm: FormGroup;
   isFormSubmitted: boolean = false;
   isPasswordVisible = false;
 
+  /**
+   * Initializes the login form.
+   */
   constructor() {
     this.loginForm = new FormGroup({
       userEmail: new FormControl('', [Validators.required, Validators.email]),
@@ -57,30 +48,47 @@ export class LoginComponent {
     });
   }
 
+  /**
+   * Creates a new user with Google.
+   */
   async createNewUserWithGoogle() {
     await this.fb.createGoogleUser();
     this.fb.loadAllBackendData();
   }
 
+  /**
+   * Creates a new user with Email and Password. After the user is created, the backend data is loaded.
+   */
   async loginWithEmailAndPassword(text: string) {
-      this.isFormSubmitted = true;
-      const email = this.loginForm.get('userEmail')?.value;
-      const password = this.loginForm.get('password')?.value;
+    this.isFormSubmitted = true;
+    const email = this.loginForm.get('userEmail')?.value;
+    const password = this.loginForm.get('password')?.value;
 
     if (this.loginForm.valid) {
-      await this.fb.loginWithEmailAndPassword(email, password, text).then(() => {
-        this.fb.loadAllBackendData();
-      });
+      await this.fb
+        .loginWithEmailAndPassword(email, password, text)
+        .then(() => {
+          this.fb.loadAllBackendData();
+        });
     } else {
       console.log('Formular ist ungültig');
     }
   }
 
+  /**
+   *
+   * @param event means the event that is triggered
+   * @param text text to display in the toast message
+   */
   navigateToMainContentAsGuest(event: Event, text: string) {
-    event.preventDefault()
-    this.fb.signInAsGuest(text)
+    event.preventDefault();
+    this.fb.signInAsGuest(text);
   }
 
+  /**
+   * Toggles the password visibility.
+   * If the password is visible, it is hidden and vice versa.
+   */
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }

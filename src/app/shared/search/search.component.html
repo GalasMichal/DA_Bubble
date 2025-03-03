@@ -6,15 +6,17 @@
       <img src="/assets/media/icons/search.svg" alt="Search" />
     </button>
 
-    <input
+    <input class="gray"
       type="search"
       id="search"
       name="search"
       #searchInput
+      [placeholder]="placeholderText"
       [value]="searchTerm"
       (keyup)="onKeyUp(searchInput.value)"
       (focus)="showResults()"
       (blur)="hideResults()"
+      (keydown)="onKeyDown($event)"
       required
       autocomplete="off"
     />
@@ -36,37 +38,37 @@
       <span>Versuche mit &commat; oder #</span>
       } @for(result of userResults; track $index) {
 
-      <li>
-        <button (click)="openMessage(result)">
+      <li [id]="'result-' + $index" >
+        <button (click)="openMessage(result)" [class.selected-result]="$index === currentIndex">
           <app-avatar [user]="result" [userList]="true"></app-avatar>
           <span>{{ result.displayName }}</span>
         </button>
       </li>
       } @for(result of channelResults; track $index) {
-      <li>
-        <button (click)="openChannel(result.chanId, result.channelName)">
+      <li [id]="'result-' + $index" >
+        <button (click)="openChannel(result, result.channelName)" [class.selected-result]="$index === currentIndex">
           #
           <span>{{ result.channelName }}</span>
         </button>
       </li>
-      } 
-      @for(result of allResults; track $index) {   
-      
+      }
+      @for(result of allResults; track $index) {
+
         @if(result.displayName !== undefined) {
-      <li>
-        <button (click)="openMessage(result)">
+      <li [id]="'result-' + $index">
+        <button (click)="openMessage(result)" [class.selected-result]="$index === currentIndex">
           <app-avatar [user]="result" [userList]="true"></app-avatar>
           <span>{{ result.displayName }}</span>
         </button>
       </li>
       } @else if(result.channelName !== undefined) {
-      <li>
-        <button (click)="openChannel(result.chanId, result.channelName)">
+      <li [id]="'result-' + $index">
+        <button (click)="openChannel(result, result.channelName)" [class.selected-result]="$index === currentIndex">
           #
           <span>{{ result.channelName }}</span>
         </button>
       </li>
-      } 
+      }
     }
     </ul>
   </div>

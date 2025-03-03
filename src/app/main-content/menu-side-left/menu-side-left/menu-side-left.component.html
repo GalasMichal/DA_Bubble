@@ -1,11 +1,11 @@
 <div class="side-nav-wrapper">
-  
+
   <app-search></app-search>
   <div class="devspace">
     <img src="assets/media/icons/workspace-logo.svg" alt="logo navbar">
-    
+
     <h2 class="responsive">Devspace</h2>
-    
+
     <button (click)="writeMessage()">
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="mask0_757_12516" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="24">
@@ -16,7 +16,7 @@
         </g>
       </svg>
     </button>
-    
+
   </div>
 
   <div class="content-wrapper">
@@ -44,7 +44,7 @@
         <ul>
           @for (channel of this.sortOfAllChannels(); track $index) {
             <li class="channels-inner-position">
-              <button (click)="openChannel(channel.chanId)">
+              <button (click)="openChannel(channel)" [class.selected]="channel.chanId === selectedChannelId">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <mask id="mask0_75694_10674" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="25">
                   <rect y="0.5" width="24" height="24" fill="#D9D9D9"/>
@@ -88,16 +88,19 @@
             @for(user of this.sortListOfUser(); track $index) {
               @if(user.uId === this.fb.currentUser()?.uId) {
                 <li>
-                  <button (click)="openMessage(user)" class="single-user">
+                  <button (click)="openMessage(user)" class="single-user"[class.selected]="user.uId === selectedChannelId">
                     <div class="user-img">
                       <app-avatar [user]="user" [userList]="true"></app-avatar>
                     </div>
-                    <span>{{user.displayName}} (Du)</span> 
+                    <span>{{user.displayName}} (Du)</span>
                   </button>
                 </li>
               } @else () {
                 <li>
-                  <button (click)="openMessage(user)" class="single-user">
+                  <!-- badge -->
+                    <span class="badge">NEW</span>
+                  <!-- End badge -->
+                  <button (click)="openMessage(user)" class="single-user" [class.selected]="user.uId === selectedChannelId">
                     <div class="user-img">
                       <app-avatar [user]="user" [userList]="true"></app-avatar>
                     </div>

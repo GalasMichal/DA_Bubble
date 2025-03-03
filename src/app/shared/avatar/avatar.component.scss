@@ -1,6 +1,14 @@
+@import "./../../../colors.scss";
+@import "./../../../styles.scss";
+@import "./../../../animations.scss";
+
 ::ng-deep {
   .user-avatar {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
     img {
       height: 3.125rem;
       width: 3.125rem;
@@ -13,16 +21,19 @@
       right: 0;
       width: 1.25rem;
       height: 1.25rem;
+      z-index: 2;
     }
   }
 }
 
+// avatar in profile when you can edit this one.
 ::ng-deep {
   .profile-content app-avatar {
     position: relative;
     .user-avatar {
       display: flex;
       justify-content: center;
+      align-items: center;
       img {
         width: 12.5rem;
         height: 12.5rem;
@@ -43,6 +54,9 @@
     .user-avatar {
       display: flex;
       justify-content: center;
+      align-items: center;
+      z-index: 2;
+
       img {
         width: 12.5rem;
         height: 12.5rem;
@@ -54,11 +68,13 @@
         bottom: 1.25rem;
         height: 1.5rem;
         width: 1.5rem;
+        z-index: 3;
       }
     }
   }
 }
 
+// avatars menu-side-left
 ::ng-deep {
   .single-user {
     display: flex;
@@ -68,6 +84,9 @@
       .user-avatar {
         display: flex;
         justify-content: center;
+        align-items: center;
+        z-index: 1;
+
         img {
           height: 3.125rem;
           object-fit: cover;
@@ -75,6 +94,7 @@
         .online {
           height: 1.0625rem;
           width: 1.0625rem;
+          z-index: 2;
         }
       }
     }
@@ -87,6 +107,9 @@
       .user-avatar {
         display: flex;
         justify-content: center;
+        align-items: center;
+        z-index: 2;
+
         img {
           height: 3.125rem;
           object-fit: cover;
@@ -94,18 +117,24 @@
         .online {
           height: 1.0625rem;
           width: 1.0625rem;
+          z-index: 3;
         }
       }
     }
   }
 }
 
+
+// chat-room header avatar
 ::ng-deep {
   .header-right-container {
     app-avatar {
       .user-avatar {
         display: flex;
         justify-content: center;
+        align-items: center;
+        z-index: 1;
+
         .avatar {
           width: 2.25rem;
           height: 2.25rem;
@@ -125,6 +154,9 @@
       .user-avatar {
         display: flex;
         justify-content: center;
+        align-items: center;
+        z-index: 2;
+
         .avatar {
           width: 1.875rem;
           height: 1.875rem;

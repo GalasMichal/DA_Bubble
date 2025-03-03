@@ -16,8 +16,27 @@
   height: 1.25rem;
 }
 
+::ng-deep .profile-content app-avatar {
+  position: relative;
+}
+::ng-deep .profile-content app-avatar .user-avatar {
+  display: flex;
+  justify-content: center;
+}
+::ng-deep .profile-content app-avatar .user-avatar img {
+  width: 12.5rem;
+  height: 12.5rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+::ng-deep .profile-content app-avatar .user-avatar .online {
+  display: none;
+}
+
 ::ng-deep .profile-card app-avatar {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 ::ng-deep .profile-card app-avatar .user-avatar {
   display: flex;
@@ -30,7 +49,11 @@
      object-fit: cover;
 }
 ::ng-deep .profile-card app-avatar .user-avatar .online {
-  display: none;
+  display: flex;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 ::ng-deep .single-user {
@@ -48,8 +71,8 @@
      object-fit: cover;
 }
 ::ng-deep .single-user app-avatar .user-avatar .online {
-  height: 17px;
-  width: 17px;
+  height: 1.0625rem;
+  width: 1.0625rem;
 }
 
 ::ng-deep .add-user-card app-avatar .user-avatar {
@@ -62,8 +85,8 @@
      object-fit: cover;
 }
 ::ng-deep .add-user-card app-avatar .user-avatar .online {
-  height: 17px;
-  width: 17px;
+  height: 1.0625rem;
+  width: 1.0625rem;
 }
 
 ::ng-deep .header-right-container app-avatar .user-avatar {
@@ -71,11 +94,25 @@
   justify-content: center;
 }
 ::ng-deep .header-right-container app-avatar .user-avatar .avatar {
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
   -o-object-fit: cover;
      object-fit: cover;
 }
 ::ng-deep .header-right-container app-avatar .user-avatar .online {
+  display: none;
+}
+
+::ng-deep .search-container app-avatar .user-avatar {
+  display: flex;
+  justify-content: center;
+}
+::ng-deep .search-container app-avatar .user-avatar .avatar {
+  width: 1.875rem;
+  height: 1.875rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+::ng-deep .search-container app-avatar .user-avatar .online {
   display: none;
 }/*# sourceMappingURL=avatar.component.css.map */

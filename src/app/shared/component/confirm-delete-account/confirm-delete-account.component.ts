@@ -16,26 +16,37 @@ import { CloseComponent } from '../close/close.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    CloseComponent
+    CloseComponent,
   ],
   templateUrl: './confirm-delete-account.component.html',
-  styleUrl: './confirm-delete-account.component.scss'
+  styleUrl: './confirm-delete-account.component.scss',
 })
 export class ConfirmDeleteAccountComponent {
   readonly dialog = inject(MatDialogRef<ConfirmDeleteAccountComponent>);
-  stateControl = inject(StateControlService)
+  stateControl = inject(StateControlService);
   fb = inject(FirebaseService);
 
- constructor(public confirmDialogRef: MatDialogRef<ConfirmDeleteAccountComponent>){
+  /**
+   * Constructor
+   * @param confirmDialogRef dialog reference
+   */
+  constructor(
+    public confirmDialogRef: MatDialogRef<ConfirmDeleteAccountComponent>
+  ) {}
 
- }
+  /**
+   * Close the dialog
+   */
   closeDelete() {
-      this.dialog.close()
+    this.dialog.close();
   }
 
+  /**
+   * Confirm delete account
+   * Close the dialog and return true to the calling component
+   */
   confirmDeleteAccount() {
-    const result = true
-    this.confirmDialogRef.close(result)
+    const result = true;
+    this.confirmDialogRef.close(result);
   }
-
 }

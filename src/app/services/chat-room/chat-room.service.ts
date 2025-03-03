@@ -1,311 +1,367 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { Injectable, Signal, inject, signal } from '@angular/core';
 import {
   collection,
+  deleteDoc,
   doc,
-  Firestore,
-  getDoc,
-  getDocs,
+  increment,
   onSnapshot,
-  query,
   setDoc,
+  Timestamp,
+  Unsubscribe,
   updateDoc,
 } from '@angular/fire/firestore';
 import { Channel } from '../../models/interfaces/channel.model';
-import { User as AppUser } from '../../models/interfaces/user.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
-import {
-  addDoc,
-  arrayUnion,
-  DocumentData,
-  QuerySnapshot,
-  Timestamp,
-  Unsubscribe,
-  where,
-} from 'firebase/firestore';
 import { StateControlService } from '../state-control/state-control.service';
+import { FirebaseService } from '../firebase/firebase.service';
+import { openDB } from 'idb';
+import { User } from '../../models/interfaces/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class ChatRoomService {
-  private firestore = inject(Firestore);
+  /**
+   * inject state, router, route, firebase service
+   */
   state = inject(StateControlService);
-  private router = inject(Router);
-  public currentChannel: string = '';
-  channelUnsubscribe: Unsubscribe | null = null;
-  messageUnsubscribe: Unsubscribe | null = null;
-  channelDataUnsubscribe: Unsubscribe | null = null;
-  public userList: AppUser[] = [];
-  // Wszystkie kanaly
-  public channelList: Channel[] = [];
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+  private fireService = inject(FirebaseService);
 
-  // Kanaly tylko zalogowangeo uzytkownika
-  public currentUserChannels: Channel[] = [];
-  public currentUserChannelsSpecificPeopleUid: string[] = [];
-  public currentUserChannelsSpecificPeopleObject: AppUser[] = [];
+  /**
+   * subscriptions array to manage unsubscribe
+   */
+  private subscriptions: { [key: string]: Unsubscribe } = {};
 
-  public currentChannelData!: Channel;
-  public answers: Message[] = [];
+  public currentChannelSignal = signal<Channel | null>(null);
+  channels = signal<Channel[]>([]);
+  messages = signal<Message[]>([]);
 
-  public messageAnswerList = signal<Message[]>([]);
-  unsub: any;
-  public currentMessageId: string | null = null;
+  /**
+   * indexDB initialization
+   */
+  private dbPromise = openDB('ChatDB', 1, {
+    upgrade(db) {
+      if (!db.objectStoreNames.contains('channels')) {
+        db.createObjectStore('channels', { keyPath: 'chanId' });
+      }
+      if (!db.objectStoreNames.contains('messages')) {
+        db.createObjectStore('messages', { keyPath: 'messageId' });
+      }
+      if (!db.objectStoreNames.contains('directMessages')) {
+        db.createObjectStore('directMessages', { keyPath: 'chatId' });
+      }
+      if (!db.objectStoreNames.contains('messageReceivers')) {
+        db.createObjectStore('messageReceivers', { keyPath: 'uId' });
+      }
+    },
+  });
 
-  constructor() {
+  /**
+   * set current channel
+   * load messages from indexedDB
+   * @param channel interface channel
+   * @returns
+   */
+  async setCurrentChannel(channel: Channel) {
+    if (this.currentChannelSignal()?.chanId === channel.chanId) {
+      return;
+    }
+    this.currentChannelSignal.set(channel);
+    this.subscribeToFirestoreMessages(channel.chanId);
   }
 
-  unsubscribe(subscription: Unsubscribe | null) {
-    if (subscription) {
-      subscription();
-      subscription = null;
+  /**
+   * clear messages from indexDb
+   * set messages signal to empty
+   */
+  async clearMessagesCache() {
+    const db = await this.dbPromise;
+    await db.clear('messages');
+    this.messages.set([]);
+  }
+
+  /**
+   * get current channel
+   * @returns signal channel
+   */
+  getCurrentChannel(): Signal<Channel | null> {
+    return this.currentChannelSignal;
+  }
+
+  /**
+   * get channels from indexedDB
+   * @returns  channels[]
+   */
+  async getChannelsFromIndexedDB(): Promise<Channel[]> {
+    const db = await this.dbPromise;
+    const cachedChannels: Channel[] = await db.getAll('channels');
+    this.channels.set(cachedChannels);
+    return cachedChannels;
+  }
+
+  /**
+   * subscribe to firestore channels
+   * filter channels by specific people
+   * and update channels in indexedDB
+   * set updated channels to signal
+   */
+  async subscribeToFirestoreChannels() {
+    const userId = this.fireService.currentUser()?.uId;
+    if (!userId) return;
+    const channelsRef = collection(this.fireService.firestore, 'channels');
+    this.subscriptions['channelUpdates'] = onSnapshot(
+      channelsRef,
+      async (snapshot) => {
+        const db = await this.dbPromise;
+        const updatedChannels: Channel[] = snapshot.docs
+          .map((doc) => doc.data() as Channel)
+          .filter((channel) => channel.specificPeople.includes(userId));
+
+        for (const channel of updatedChannels) {
+          await this.saveOrUpdateChannelInIndexedDB(channel);
+        }
+        this.channels.set(updatedChannels);
+      }
+    );
+  }
+
+  /**
+   * save or update channel in indexedDB
+   * @param channel interface channel
+   */
+  async saveOrUpdateChannelInIndexedDB(channel: Channel) {
+    const db = await this.dbPromise;
+    await db.put('channels', channel);
+  }
+
+  /**
+   * Create new channel
+   * save channel in firestore
+   * save channel in indexedDB
+   * @param channel interface channel
+   */
+  async createChannel(channel: Channel) {
+    const db = await this.dbPromise;
+    const channelRef = collection(this.fireService.firestore, 'channels');
+    const newChannelRef = doc(channelRef);
+    await setDoc(newChannelRef, { ...channel, chanId: newChannelRef.id });
+    channel.chanId = newChannelRef.id;
+    await db.put('channels', channel);
+  }
+
+  /**
+   * update channel in firestore
+   * update channel in indexedDB
+   * @param channel interface channel
+   */
+  async updateChannel(channel: Channel) {
+    const channelRef = doc(
+      this.fireService.firestore,
+      `channels/${channel.chanId}`
+    );
+    await setDoc(channelRef, channel, { merge: true });
+    this.channels.update((channels) =>
+      channels.map((c) => (c.chanId === channel.chanId ? channel : c))
+    );
+    const db = await this.dbPromise;
+    await db.put('channels', channel);
+  }
+
+  /**
+   * clear indexedDB
+   * clear channels signal
+   */
+  async clearIndexedDB() {
+    const db = await this.dbPromise;
+    await db.clear('channels');
+    this.channels.set([]);
+  }
+
+  /**
+   * delete channel from firestore
+   * delete channel from indexedDB
+   * update channels signal
+   * @param chanId string channel id
+   */
+  async deleteChannel(chanId: string) {
+    const channelRef = doc(this.fireService.firestore, `channels/${chanId}`);
+    await deleteDoc(channelRef);
+    const db = await this.dbPromise;
+    await db.delete('channels', chanId);
+    this.channels.update((channels) =>
+      channels.filter((c) => c.chanId !== chanId)
+    );
+  }
+
+  /**
+   * check if messages exists in indexedDB
+   * get all messages from indexedDB
+   * filter messages by chatId
+   * set messages signal
+   * catch error if any
+   * @param chanId from current channel
+   * @returns
+   */
+  async loadMessagesFromIndexedDB(chanId: string): Promise<Message[]> {
+    const db = await this.dbPromise;
+    if (!db.objectStoreNames.contains('messages')) {
+      console.error('Der Objektstore "messages" existiert nicht.');
+      return [];
+    }
+    try {
+      let cachedMessages: Message[] = await db.getAll('messages');
+      let filteredMessages: Message[] = cachedMessages.filter(
+        (message) => message.chatId === chanId
+      );
+      this.messages.set(filteredMessages);
+      return filteredMessages;
+    } catch (error) {
+      console.error('Fehler beim Laden der Nachrichten:', error);
+      return [];
     }
   }
 
-  // Eine Methode zum Beenden aller Subscriptions
-  unsubscribeAll() {
-    this.unsubscribe(this.channelUnsubscribe);
-    this.unsubscribe(this.messageUnsubscribe);
-    // Weitere Subscriptions hier bei Bedarf hinzufügen
-  }
-
-  async addMessageToChannel(message: Message) {
-    const channelId = this.currentChannelData.chanId;
-    const channelCollectionRef = collection(
-      this.firestore,
-      'channels',
-      channelId,
-      'messages'
+  /**
+   * subscribe to firestore messages from specific channel
+   * get all messages from firestore
+   * sort messages by timestamp
+   * put messages in indexedDB
+   * set messages signal
+   * @param chanId
+   */
+  async subscribeToFirestoreMessages(chanId: string) {
+    await this.loadMessagesFromIndexedDB(chanId);
+    const messagesRef = collection(
+      this.fireService.firestore,
+      `channels/${chanId}/messages`
     );
-    const messageDocRef = await addDoc(channelCollectionRef, message);
-    console.log('Message verschickt', message);
-    this.currentMessageId = messageDocRef.id;
-    return messageDocRef.id; // Rückgabe der generierten Message-ID
+    this.subscriptions[`messages_${chanId}`] = onSnapshot(
+      messagesRef,
+      async (snapshot) => {
+        const db = await this.dbPromise;
+        const messages: Message[] = snapshot.docs
+          .map((doc) => doc.data() as Message)
+          .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
+        for (const message of messages) {
+          await db.put('messages', message);
+        }
+        this.messages.set(messages);
+      }
+    );
   }
 
-  async updateMessageThreadId(messageId: string) {
-    console.log('updateMessageThreadId:', messageId);
+  /**
+   * create new message
+   * add message to firestore
+   * add message to indexedDB
+   * @param chanId string channel id
+   * @param message interface message
+   */
+  async createMessage(chanId: string, message: Message) {
+    const db = await this.dbPromise;
+    const messagesRef = collection(
+      this.fireService.firestore,
+      `channels/${chanId}/messages`
+    );
+    const newMessageRef = doc(messagesRef);
+    await setDoc(newMessageRef, { ...message, messageId: newMessageRef.id });
+    message.messageId = newMessageRef.id;
+    await db.put('messages', message);
+  }
 
-    const channelId = this.currentChannelData.chanId;
+  /**
+   * load current channel after refresh
+   * get channel from indexedDB
+   * set channel to signal
+   * @param currentChannelId string channel id
+   */
+  async loadCurrentChannelAfterRefresh(currentChannelId: string) {
+    const db = await this.dbPromise;
+    const channel = await db.get('channels', currentChannelId);
+    if (channel) {
+      this.currentChannelSignal.set(channel);
+    } else this.router.navigate(['main/chat']);
+  }
+
+  /**
+   * update message
+   * update message in firestore
+   * @param chanId string channel id
+   * @param message interface message
+   */
+  async updateMessage(chanId: string, message: Message) {
+    const messageRef = doc(
+      this.fireService.firestore,
+      `channels/${chanId}/messages/${message.messageId}`
+    );
+    await setDoc(messageRef, message, { merge: true });
+    this.messages.update((messages) =>
+      messages.map((m) => (m.messageId === message.messageId ? message : m))
+    );
+  }
+
+  /**
+   * delete message from firestore
+   * @param chanId string channel id
+   * @param messageId string message id
+   */
+  async deleteMessage(chanId: string, messageId: string) {
+    await deleteDoc(
+      doc(
+        this.fireService.firestore,
+        `channels/${chanId}/messages/${messageId}`
+      )
+    );
+    this.messages.update((messages) =>
+      messages.filter((m) => m.messageId !== messageId)
+    );
+  }
+
+  /**
+   *  unsubscribe subscription
+   * @param key string
+   */
+  unsubscribe(key: string) {
+    if (this.subscriptions[key]) {
+      this.subscriptions[key]();
+      delete this.subscriptions[key];
+    }
+  }
+
+  /**
+   * unsubscribe all subscriptions
+   */
+  unsubscribeAll() {
+    Object.keys(this.subscriptions).forEach((key) => this.unsubscribe(key));
+  }
+
+  /**
+   * update message text in firestore
+   * @param messageText string new message text
+   * @param chanId string channel id
+   * @param messageId string message id
+   */
+
+  async updateMessageTextInFirestore(
+    messageText: string,
+    chanId: string,
+    messageId: string
+  ) {
     const messageDocRef = doc(
-      this.firestore,
+      this.fireService.firestore,
       'channels',
-      channelId,
+      chanId,
       'messages',
       messageId
     );
 
-    // Aktualisiere das Dokument mit der Firestore-generierten ID als threadId
-    await updateDoc(messageDocRef, { threadId: messageId });
-  }
-
-  addAnswerToMessage(messageId: string, answer: Message) {
-    const channelId = this.currentChannelData.chanId;
-    const messageCollectionRef = collection(
-      this.firestore,
-      'channels',
-      channelId,
-      'messages',
-      messageId,
-      'answers'
-    );
-    addDoc(messageCollectionRef, answer);
-    this.currentMessageId = messageId;
-    this.getAnswersFromMessage();
-    console.log('Answer verschickt', answer);
-  }
-
-  async updateMessageTextInFirestore(
-    textAreaEdited: string,
-    chanId: string,
-    textAreaEditId: string
-  ) {
-    const messageDocRef = doc(
-      this.firestore,
-      'channels',
-      chanId,
-      'messages',
-      textAreaEditId
-    );
-
-    // Aktualisiere die Reaktionen im Firestore-Dokument
     await updateDoc(messageDocRef, {
-      text: textAreaEdited,
+      text: messageText,
       lastEdit: Timestamp.now(),
-      editCount: 1
+      editCount: increment(1), // Falls du den Edit-Count hochzählen möchtest
     });
-  }
-
-  async getAnswersFromMessage() {
-    if (this.currentMessageId) {
-      const messageId = this.currentMessageId;
-      const channelId = this.currentChannelData.chanId;
-      const messageCollectionRef = collection(
-        this.firestore,
-        'channels',
-        channelId,
-        'messages',
-        messageId,
-        'answers'
-      );
-
-      try {
-        const querySnapshot = await getDocs(messageCollectionRef);
-        const newAnswers: Message[] = [];
-
-        querySnapshot.forEach((doc) => {
-          newAnswers.push(doc.data() as Message);
-        });
-
-        // Signal mit neuen Daten aktualisieren
-        this.messageAnswerList.set(newAnswers);
-
-        console.log('Antworten aktualisiert:', this.messageAnswerList());
-      } catch (error) {
-        console.error('Fehler beim Abrufen der Antworten:', error);
-      }
-    }
-  }
-
-  subChannelList() {
-    this.unsubscribe(this.channelUnsubscribe);
-    this.unsubscribe = onSnapshot(this.getChannels(), (list) => {
-      this.channelList = [];
-      list.forEach((element) => {
-        const channelData = element.data() as Channel;
-        this.channelList.push(channelData);
-      });
-    });
-  }
-
-
-  addChannelToFirestore(channel: Channel) {
-    const channelCollectionRef = collection(this.firestore, 'channels');
-    const channelDocRef = doc(channelCollectionRef);
-    channel.chanId = channelDocRef.id;
-    setDoc(channelDocRef, channel);
-  }
-
-  getChannels() {
-    return collection(this.firestore, 'channels');
-  }
-
-  async openChatById(currentChannel: string) {
-    this.currentChannel = currentChannel;
-    const channelRef = doc(this.firestore, 'channels', currentChannel);
-    this.unsubscribe(this.channelDataUnsubscribe);
-    this.channelDataUnsubscribe = onSnapshot(channelRef, (doc) => {
-      if (doc.exists()) {
-        const channelData = doc.data() as Channel;
-        this.currentChannelData = channelData;
-        this.currentUserChannelsSpecificPeopleUid =
-          this.currentChannelData.specificPeople || [];
-      } else {
-        console.log('No such document!');
-      }
-    });
-    this.loadCurrentChatData(currentChannel);
-    this.router.navigate(['start/main/chat/', currentChannel]);
-    await this.loadSpecificPeopleFromChannel();
-  }
-
-  loadCurrentChatData(currentChannel: string) {
-    const channelDocRef = doc(this.firestore, 'channels', currentChannel);
-    const messageRef = collection(channelDocRef, 'messages');
-    this.unsubscribe(this.messageUnsubscribe);
-    this.messageUnsubscribe = onSnapshot(
-      messageRef,
-      (snapshot: QuerySnapshot<DocumentData>) => {
-        this.answers = [];
-
-        snapshot.forEach((doc) => {
-          const messageData = doc.data() as Message;
-
-          // Füge den timestamp von Firebase hinzu
-          this.answers.push(messageData); // messageData enthält bereits den Timestamp
-
-          // console.log('Received changes from DB', this.answers);
-        });
-
-        // Sortiere die Nachrichten nach dem Timestamp von Firebase
-        this.answers.sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
-      }
-    );
-  }
-
-  async updateSpecificPeopleInChannelFromState() {
-    if (!this.currentChannelData.chanId) {
-      console.error('Kein Channel-Daten verfügbar!');
-      return;
-    }
-
-    const channelId = this.currentChannelData.chanId;
-    const channelRef = doc(this.firestore, 'channels', channelId); // Referenz zum Channel
-
-    try {
-      // Hole die aktuellen Daten des Channels mit getDoc()
-      const docSnap = await getDoc(channelRef);
-      if (docSnap.exists()) {
-        // Setze den specificPeople-Array mit dem aktuellen User-Array aus dem StateControlService
-        const updatedSpecificPeople = this.state.choosenUserFirebase; // Array aus dem Service
-        // Aktualisiere den Channel mit dem neuen specificPeople-Array
-        await updateDoc(channelRef, { specificPeople: updatedSpecificPeople });
-        console.log('specificPeople erfolgreich überschrieben');
-      } else {
-        console.error('Channel nicht gefunden');
-      }
-    } catch (error) {
-      console.error('Fehler beim Überschreiben der specificPeople:', error);
-    }
-  }
-
-  async addNewUserToChannel(channelName: string, newUserId: string) {
-    try {
-      // Reference the document for the "Willkommen" channel
-      const channelRef = doc(this.firestore, "channels", channelName); // Assuming 'channels' is the collection name and 'channelName' is the document ID
-
-      // Update the 'allMembers' array
-      await updateDoc(channelRef, {
-        specificPeople: arrayUnion(newUserId),
-      });
-
-      console.log(`User ${newUserId} added to the channel ${channelName}`);
-    } catch (error) {
-      console.error("Error adding user to the channel:", error);
-    }
-  }
-
-
-
-  async getUserChannels(currentUserId: string): Promise<Channel[]> {
-    const channelsRef = collection(this.firestore, 'channels');
-    const q = query(channelsRef, where('specificPeople', 'array-contains', currentUserId));
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map((doc) => doc.data() as Channel);
-}
-
-  async loadSpecificPeopleFromChannel() {
-    this.currentUserChannelsSpecificPeopleObject = [];
-
-    if (this.currentUserChannelsSpecificPeopleUid.length === 0) {
-      return;
-    }
-
-    try {
-      const usersRef = collection(this.firestore, 'users');
-      const q = query(
-        usersRef,
-        where('uId', 'in', this.currentUserChannelsSpecificPeopleUid)
-      );
-      const querySnapshot = await getDocs(q);
-
-      await querySnapshot.forEach((doc) => {
-        const userData = doc.data() as AppUser;
-        this.currentUserChannelsSpecificPeopleObject.push(userData);
-      });
-    } catch (error) {
-      console.error('Fehler beim Laden der Benutzer:', error);
-    }
   }
 }

@@ -11,10 +11,20 @@
     height: 1.25rem;
   }
   .content-description {
-    height: 3.0625rem;
+    height: fit-content;
     font-size: 1.5rem;
     font-weight: 700;
-    line-height: 3.0688rem;
+    line-height: 1.5;
+    text-align: center;
     color: $white;
+  }
+}
+
+@media (max-width: 800px) {
+  .content-container {
+    .content-description {
+      font-size: 1.2rem;
+      padding-inline: 0.5rem;
+    }
   }
 }

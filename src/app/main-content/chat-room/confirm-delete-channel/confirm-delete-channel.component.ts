@@ -5,6 +5,7 @@ import { CloseComponent } from '../../../shared/component/close/close.component'
 import { MatDialogRef } from '@angular/material/dialog';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
+import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 
 @Component({
   selector: 'app-confirm-delete-channel',
@@ -17,17 +18,31 @@ export class ConfirmDeleteChannelComponent {
   readonly dialog = inject(MatDialogRef<ConfirmDeleteChannelComponent>);
   stateControl = inject(StateControlService);
   fb = inject(FirebaseService);
+  chat = inject(ChatRoomService);
 
   constructor(
     public confirmDialogRef: MatDialogRef<ConfirmDeleteChannelComponent>
   ) {}
 
+  /**
+   * Close the dialog
+   */
   closeDelete() {
     this.dialog.close();
   }
 
+  /**
+   * confirm delete channel
+   * check if the current channel is not null then delete the channelgit
+   */
   confirmDeleteChannel() {
     const result = true;
+    if (this.chat.currentChannelSignal() !== null) {
+      const currentChannel = this.chat.currentChannelSignal();
+      if (currentChannel !== null) {
+        this.chat.deleteChannel(currentChannel.chanId);
+      }
+    }
     this.confirmDialogRef.close(result);
   }
 }

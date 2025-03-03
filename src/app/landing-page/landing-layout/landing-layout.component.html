@@ -1,0 +1,19 @@
+<div class="wrapper">
+  <div class="router-outlet">
+    <app-header-landing></app-header-landing>
+    <div class="landing-page">
+      <div class="main-container">
+        <router-outlet></router-outlet>
+        <!-- Public routes go here -->
+      </div>
+      <app-toast
+        [ngClass]="{'show-success': stateControl.showToast,'show-error': stateControl.showError}">
+      </app-toast>
+      <div class="new-user-link-responsive">
+        <p>Neu bei DABubble?</p>
+        <button routerLink="register">Konto erstellen</button>
+      </div>
+    </div>
+    <app-footer></app-footer>
+  </div>
+</div>

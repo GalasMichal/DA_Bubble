@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MessageEditComponent } from './message-edit.component';
+import { LandingLayoutComponent } from './landing-layout.component';
 
-describe('MessageEditComponent', () => {
-  let component: MessageEditComponent;
-  let fixture: ComponentFixture<MessageEditComponent>;
+describe('LandingLayoutComponent', () => {
+  let component: LandingLayoutComponent;
+  let fixture: ComponentFixture<LandingLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MessageEditComponent]
+      imports: [LandingLayoutComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(MessageEditComponent);
+    fixture = TestBed.createComponent(LandingLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

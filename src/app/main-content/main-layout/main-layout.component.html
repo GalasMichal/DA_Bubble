@@ -1,0 +1,6 @@
+<div [ngClass]="{'edit-container': stateControl.globalEditModul}"></div>
+<div class="wrapper">
+  <div class="router-outlet" [ngClass]="{'overflow-y': isUserLoggedIn}">
+    <router-outlet></router-outlet>
+  </div>
+</div>

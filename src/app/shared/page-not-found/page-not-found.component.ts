@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule } from '@angular/router';
-import { LoginComponent } from '../../landing-page/login/login.component';
 import { LogoComponent } from '../logo/logo.component';
 import { Location } from '@angular/common';
 
@@ -13,7 +12,6 @@ import { Location } from '@angular/common';
     RouterModule,
     RouterLink,
     LogoComponent,
-    LoginComponent,
     LogoComponent,
   ],
   templateUrl: './page-not-found.component.html',
@@ -25,6 +23,6 @@ export class PageNotFoundComponent {
   constructor() {}
 
   goBack(): void {
-    this.location.back(); // Navigate to the previous page
+    this.location.back();
   }
 }

@@ -8,8 +8,8 @@
     </div>
 
     <ul class="added-user">
-      @for (user of this.stateServer.choosenUser; track $index) {
-      <button>
+      @for (user of filterAllUsersInChannel(); track $index) {
+      <button (click)="openDialogProfile(user.uId)">
         <li>
           <div class="user-img">
             <app-avatar [user]="user" [userList]="true"></app-avatar>
@@ -20,8 +20,8 @@
       }
     </ul>
   </div>
-
-  <button class="add" (click)="onOpenAddUsers()" [class.disabled]="chat.currentChannelData.createdBy[0].uId !== fb.currentUser()?.uId">
+<!-- trzeba dodac logike do dodawania useru z current idchannel // [class.disabled]="chat.channels?.createdBy[0].uId !== fb.currentUser()?.uId" -->
+  <button class="add" (click)="onOpenAddUsers()" >
       <span class="add-user">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="20" fill="#ECEEFE"/>
@@ -34,7 +34,7 @@
           </svg>
       </span>
       <span>
-        Mitglieder hinzugefügen
+        Mitglieder hinzufügen
       </span>
   </button>
 </mat-dialog-content>

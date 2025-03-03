@@ -8,7 +8,6 @@ import {
   signInWithPopup,
   updateProfile,
   User as FirebaseUser,
-  fetchSignInMethodsForEmail,
   signOut,
 } from '@angular/fire/auth';
 import {
@@ -23,7 +22,6 @@ import {
 } from '@angular/fire/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChatRoomService } from '../chat-room/chat-room.service';
 import { UserServiceService } from '../user-service/user-service.service';
 import {
   confirmPasswordReset,
@@ -42,387 +40,642 @@ import { deleteDoc } from 'firebase/firestore';
   providedIn: 'root',
 })
 export class FirebaseService {
+  /**
+   * inject firestore auth, router, user, stateControl, dialog
+   *
+   */
   firestore: Firestore = inject(Firestore);
   private auth: Auth = inject(Auth);
-  provider = new GoogleAuthProvider();
   router = inject(Router);
-  chat = inject(ChatRoomService);
-  user = inject(UserServiceService)
-  userService = inject(UserServiceService);
+  user = inject(UserServiceService);
   stateControl = inject(StateControlService);
+  dialog = inject(MatDialog);
+  provider = new GoogleAuthProvider();
+
+  /**
+   * define currentUser, errorMessageLogin
+   */
   public currentUser = signal<AppUser | null>(null);
   public errorMessageLogin = signal('');
-  dialog = inject(MatDialog);
 
+  /**
+   * default mainChannel start path
+   */
   mainChannel: string = 'xLke9Ff8JAT8AoorWXya'; //Willkommen
 
   constructor(private route: ActivatedRoute) {}
 
+  /**
+   * load user data
+   */
   async loadAllBackendData() {
-    this.chat.subChannelList();
-    this.userService.subUserList();
+    this.user.subUserList();
   }
 
-  // Methode zum Erstellen eines neuen Benutzers
+  /**
+   * create user with email, password, displayName
+   * @param email
+   * @param password
+   * @param displayName
+   * @returns
+   * get user credential from createUserWithEmailAndPassword
+   * set user credential to firebaseUser
+   * update user profile with firebaseUser, displayName
+   * add user to firestore
+   */
   async createUser(
     email: string,
     password: string,
     displayName: string
   ): Promise<any> {
-    return createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        const firebaseUser = userCredential.user;
-        return updateProfile(firebaseUser, { displayName: displayName }).then(
-          () => {
-            const user: AppUser = {
-              status: true,
-              channels: [],
-              uId: firebaseUser.uid,
-              email: firebaseUser.email || '',
-              displayName: firebaseUser.displayName || '',
-            };
-            console.log('Registrierter User ist', user);
-            this.addUserToFirestore(user);
-            this.chat.addNewUserToChannel(this.mainChannel, user.uId )
-            return user;
-          }
-        );
-      })
-      .catch((error) => {
-        this.stateControl.showError = true;
-        this.stateControl.showToast = true;
-        this.stateControl.showToastText.set('Versuche bitte noch einmal');
-        switch (error.code) {
-          case 'auth/email-already-in-use':
-            this.errorMessageLogin.set(
-              'Diese E-Mail-Adresse wird bereits verwendet.'
-            );
-            break;
-          case 'auth/invalid-email':
-            this.errorMessageLogin.set('Die E-Mail-Adresse ist ungültig.');
-            break;
-          case 'auth/operation-not-allowed':
-            this.errorMessageLogin.set(
-              'Die Anmeldung mit E-Mail und Passwort ist nicht erlaubt.'
-            );
-            break;
-          case 'auth/weak-password':
-            this.errorMessageLogin.set(
-              'Das Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.'
-            );
-            break;
-          default:
-            this.errorMessageLogin.set(
-              'Ein unbekannter Fehler ist aufgetreten.'
-            ); // Standardfehlermeldung
-        }
-        this.stateControl.removeShowToast();
-      });
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
+      const firebaseUser = userCredential.user;
+      await this.updateUserProfile(firebaseUser, displayName);
+      const user = this.createAppUser(firebaseUser);
+      await this.addUserToFirestore(user);
+      return user;
+    } catch (error) {
+      this.handleCreateUserError(error);
+    }
   }
+
+  /**
+   * update user profile with firebaseUser, displayName
+   * @param firebaseUser
+   * @param displayName
+   */
+  private async updateUserProfile(
+    firebaseUser: FirebaseUser,
+    displayName: string
+  ): Promise<void> {
+    await updateProfile(firebaseUser, { displayName: displayName });
+  }
+
+  /**
+   * create app user with firebaseUser data
+   * @param firebaseUser
+   * @returns object with user data
+   */
+  private createAppUser(firebaseUser: FirebaseUser): AppUser {
+    return {
+      status: true,
+      channels: [],
+      uId: firebaseUser.uid,
+      email: firebaseUser.email || '',
+      displayName: firebaseUser.displayName || '',
+    };
+  }
+
+  /**
+   * handle create user error
+   * @param error
+   */
+  private handleCreateUserError(error: any): void {
+    this.stateControl.showError = true;
+    this.stateControl.showToast = true;
+    this.stateControl.showToastText.set('Versuche bitte noch einmal');
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        this.errorMessageLogin.set(
+          'Diese E-Mail-Adresse wird bereits verwendet.'
+        );
+        break;
+      case 'auth/invalid-email':
+        this.errorMessageLogin.set('Die E-Mail-Adresse ist ungültig.');
+        break;
+      case 'auth/operation-not-allowed':
+        this.errorMessageLogin.set(
+          'Die Anmeldung mit E-Mail und Passwort ist nicht erlaubt.'
+        );
+        break;
+      case 'auth/weak-password':
+        this.errorMessageLogin.set(
+          'Das Passwort ist zu schwach. Bitte wähle ein stärkeres Passwort.'
+        );
+        break;
+      default:
+        this.errorMessageLogin.set('Ein unbekannter Fehler ist aufgetreten.');
+    }
+    this.stateControl.removeShowToast();
+  }
+
+  /**
+   * login with email, password
+   * using text for success message
+   * @param email
+   * @param password
+   * @param text
+   */
   async loginWithEmailAndPassword(
     email: string,
     password: string,
     text: string
   ): Promise<any> {
     try {
-      const exists = await this.userExists(email); // Überprüfen, ob der Benutzer existiert
-      if (exists) {
-        this.errorMessageLogin.set(
-          'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
-        );
-      }
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
         email,
         password
       );
-      let user = userCredential.user as FirebaseUser;
+      const user = userCredential.user as FirebaseUser;
       if (user) {
-        this.stateControl.showToast = true;
-        this.stateControl.showToastText.set(text)
-        this.stateControl.removeShowToast();
-        await this.getUserByUid(user.uid);
-        await this.user.updateUserStatus(user.uid, true);
-        setTimeout(() => {
-          this.router.navigate(['/start/main']);
-        }, 2200);
+        await this.handleSuccessfulLogin(user, text);
       }
-      this.errorMessageLogin.set(''); // Fehlernachricht zurücksetzen bei erfolgreicher Anmeldung
+      this.errorMessageLogin.set('');
     } catch (error) {
-      this.stateControl.showError = true;
-      this.stateControl.showToast = true;
-      if (error === 'auth/wrong-password') {
-        this.errorMessageLogin.set('Falsches Passwort.');
-      } else {
-        this.stateControl.showToastText.set('Versuche bitte noch einmal');
-        this.errorMessageLogin.set('E-Mail oder Passwort falsch');
-      }
-      this.stateControl.removeShowToast();
+      this.handleLoginError(error);
     }
   }
 
+  /**
+   * handle successful login
+   * set showToast to true and show toast text
+   * get user by uid from firestore and update user status
+   * after 2200ms navigate to main page
+   * @param user
+   * @param text
+   */
+  private async handleSuccessfulLogin(
+    user: FirebaseUser,
+    text: string
+  ): Promise<void> {
+    this.stateControl.showToast = true;
+    this.stateControl.showToastText.set(text);
+    this.stateControl.removeShowToast();
+    await this.getUserByUid(user.uid);
+    await this.user.updateUserStatus(user.uid, true);
+    setTimeout(() => {
+      this.router.navigate(['main']);
+    }, 2200);
+  }
+
+  /**
+   * handle login error and set toast text and error message
+   * @param error
+   */
+  private handleLoginError(error: any): void {
+    this.stateControl.showError = true;
+    this.stateControl.showToast = true;
+    if (error === 'auth/wrong-password') {
+      this.errorMessageLogin.set('Falsches Passwort.');
+    } else {
+      this.stateControl.showToastText.set('Versuche bitte noch einmal');
+      this.errorMessageLogin.set('E-Mail oder Passwort falsch');
+    }
+    this.stateControl.removeShowToast();
+  }
+
+  /**
+   * get user by uid from firestore
+   * set refence to user document
+   * get user document snapshot
+   * set user data to currentUser signal
+   * @param uid string user id
+   * @returns user data or null
+   */
   async getUserByUid(uid: string): Promise<AppUser | null> {
     try {
-      const userDocRef = doc(this.firestore, `users/${uid}`); // Referenz zum Dokument
-      const userDocSnapshot = await getDoc(userDocRef); // Abrufen des Dokuments
-
+      const userDocRef = doc(this.firestore, `users/${uid}`);
+      const userDocSnapshot = await getDoc(userDocRef);
       if (userDocSnapshot.exists()) {
-        const userData = userDocSnapshot.data() as AppUser; // Cast zu deinem AppUser-Interface
+        const userData = userDocSnapshot.data() as AppUser;
         this.currentUser.set(userData);
-        return userData; // Benutzer-Daten zurückgeben
+        return userData;
       } else {
-        return null; // Falls kein Benutzer gefunden wird
+        return null;
       }
     } catch (error) {
-      console.error('Fehler beim Abrufen des Benutzers aus Firestore:', error);
-      return null; // Bei Fehler null zurückgeben
+      this.handleFirestoreError(
+        error,
+        'Fehler beim Abrufen des Benutzers aus Firestore'
+      );
+      return null;
     }
   }
+
+  /**
+   * create google user with google sign in
+   * get google user data
+   * check if user exist in firestore
+   * add user data to firestore and set user to currentUser signal
+   * navigate to avatar page
+   */
   async createGoogleUser(): Promise<any> {
     try {
       const result = await signInWithPopup(this.auth, this.provider);
-      // Zugriff auf Google Access Token
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential?.accessToken;
-      // Der angemeldete Benutzer
       const googleUser = result.user as FirebaseUser;
-      const additionalUserInfo = getAdditionalUserInfo(result);
-      // Fallback für den displayName, falls er nicht verfügbar ist
-      const displayName =
-        typeof additionalUserInfo?.profile?.['name'] === 'string'
-          ? additionalUserInfo.profile['name']
-          : googleUser.displayName ?? '';
-
-      // Benutzerobjekt erstellen
-      const user: AppUser = {
-        avatarUrl: googleUser.photoURL ?? '',
-        status: true,
-        channels: [],
-        uId: googleUser.uid,
-        email: googleUser.email ?? '',
-        displayName: displayName,
-      };
+      const displayName = this.getGoogleUserDisplayName(result, googleUser);
+      const user = this.createGoogleAppUser(googleUser, displayName);
       if (!(await this.userExistFirestore(user.uId))) {
-        // Benutzer existiert nicht, also Avatar-Seite anzeigen
         await this.addUserToFirestore(user);
         this.currentUser.set(user);
-        this.router.navigate(['/start/avatar']);
-        this.chat.addNewUserToChannel(this.mainChannel, user.uId )
+        this.router.navigate(['avatar']);
       } else {
-        // Benutzer existiert, also zum Main-Content
-        await this.getUserByUid(googleUser.uid);
-        await this.user.updateUserStatus(googleUser.uid, true);
-        this.router.navigate(['/start/main']);
+        await this.handleExistingGoogleUser(googleUser);
       }
     } catch (error) {
-      console.error('Fehler bei der Google-Anmeldung:', error);
+      this.handleGoogleSignInError(error);
     }
   }
 
-  userExists(email: string): Promise<boolean> {
-    return fetchSignInMethodsForEmail(this.auth, email)
-      .then((methods) => {
-        return methods.length > 0;
-      })
-      .catch((error) => {
-        this.errorMessageLogin.set('Fehler beim Überprüfen des Benutzers.');
-        return false;
-      });
-  }
-
+  /**
+   * check if user exist in firestore
+   * @param uId user id
+   * @returns
+   */
   async userExistFirestore(uId: string): Promise<boolean> {
     return getDocs(
       query(collection(this.firestore, 'users'), where('uId', '==', uId))
-    ).then((querySnapshot) => {
-      return querySnapshot.size > 0;
-    });
+    ).then((querySnapshot) => querySnapshot.size > 0);
   }
 
-  async addUserToFirestore(user: AppUser) {
+  /**
+   *  handle firestore error
+   * @param error the error
+   * @param message the message from the error
+   */
+  private handleFirestoreError(error: any, message: string): void {
+    console.error(message, error);
+  }
+
+  /**
+   * get google user display name
+   * @param result
+   * @param googleUser
+   * @returns
+   */
+  private getGoogleUserDisplayName(
+    result: any,
+    googleUser: FirebaseUser
+  ): string {
+    const additionalUserInfo = getAdditionalUserInfo(result);
+    return typeof additionalUserInfo?.profile?.['name'] === 'string'
+      ? additionalUserInfo.profile['name']
+      : googleUser.displayName ?? '';
+  }
+
+  /**
+   * set google user data to app user and return app user object
+   * @param googleUser data from google user
+   * @param displayName display name from google user
+   * @returns
+   */
+  private createGoogleAppUser(
+    googleUser: FirebaseUser,
+    displayName: string
+  ): AppUser {
+    return {
+      avatarUrl: googleUser.photoURL ?? '',
+      status: true,
+      channels: [],
+      uId: googleUser.uid,
+      email: googleUser.email ?? '',
+      displayName: displayName,
+    };
+  }
+
+  /**
+   * handle existing google user and update user status
+   * navigate to main page
+   * @param googleUser
+   */
+  private async handleExistingGoogleUser(
+    googleUser: FirebaseUser
+  ): Promise<void> {
+    await this.getUserByUid(googleUser.uid);
+    await this.user.updateUserStatus(googleUser.uid, true);
+    this.router.navigate(['main']);
+  }
+
+  /**
+   * handle google sign in error
+   * @param error
+   */
+  private handleGoogleSignInError(error: any): void {
+    console.error('Fehler bei der Google-Anmeldung:', error);
+  }
+  /**
+   * handle user exist error
+   * @param error
+   */
+  private handleUserExistError(error: any): void {
+    this.errorMessageLogin.set('Fehler beim Überprüfen des Benutzers.');
+  }
+
+  /**
+   * add user to firestore
+   * set reference to user collection
+   * @param user as interface User
+   * @returns user object
+   */
+  async addUserToFirestore(user: AppUser): Promise<AppUser> {
     const userCollectionRef = collection(this.firestore, 'users');
     const userDocRef = doc(userCollectionRef, user.uId);
-    setDoc(userDocRef, user).then(() => {
-      return user;
-    });
+    await setDoc(userDocRef, user);
+    return user;
   }
 
- async logoutUser(userId: string) {
-
-   await this.user.updateUserStatus(userId, false)
-
-    // Methode zum Ausloggen des Benutzers
-    signOut(this.auth)
-      .then(() => {
-        console.log('User logged out successfully');
-      })
-      .catch((error) => {
-        console.error('Error logging out:', error);
-      });
+  /**
+   * logout user by user id
+   * update user online status to false
+   * @param userId
+   */
+  async logoutUser(userId: string): Promise<void> {
+    await this.user.updateUserStatus(userId, false);
+    try {
+      await signOut(this.auth);
+    } catch (error) {
+      this.handleLogoutError(error);
+    }
+    this.stateControl.responsiveArrow = false;
   }
 
-  sendEmailToUser(email: string, text: string) {
+  /**
+   * send email to user with password reset link
+   * @param email user email
+   * @param text
+   */
+  sendEmailToUser(email: string, text: string): void {
     sendPasswordResetEmail(this.auth, email)
       .then(() => {
-        this.stateControl.showArrow = true;
-        this.stateControl.showToast = true;
-        this.stateControl.showToastText.set(text);
-        this.stateControl.showConfirmationText =
-          'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
-        this.stateControl.removeShowToast();
+        this.handleEmailSuccess(text);
       })
       .catch((error) => {
-        this.stateControl.showToast = true;
-        this.stateControl.showError = true;
-        switch (error.code) {
-          case 'auth/invalid-email':
-            this.stateControl.showToastText.set('Ungültige E-Mail-Adresse. Bitte überprüfen Sie die Eingabe.');
-            break;
-          case 'auth/user-not-found':
-            this.stateControl.showToastText.set('Kein Benutzer mit dieser E-Mail-Adresse gefunden.');
-            break;
-          default:
-            this.stateControl.showToastText.set('Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.');
-        }
-        this.stateControl.removeShowToast();
+        this.handleEmailError(error);
       });
   }
 
-  confirmPassword(password: string, text: string) {
-    // Hole den oobCode aus der URL
-    const oobCode = this.route.snapshot.queryParamMap.get('oobCode');
-
-    if (!oobCode) {
-      console.error('No oobCode provided.');
-      this.stateControl.showToast = true;
-      this.stateControl.showError = true;
-      this.stateControl.showToastText.set('Es gab ein Problem mit dem Link. Bitte versuchen Sie es erneut.');
-      return;
-    }
-
-    confirmPasswordReset(this.auth, oobCode, password)
-      .then(() => {
-        this.stateControl.showToast = true;
-        this.stateControl.showToastText.set(text);
-        this.stateControl.showConfirmationText =
-          'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.';
-        this.stateControl.removeShowToast();
-        setTimeout(() => {
-          this.router.navigate(['start']);
-        }, 2200);
-      })
-      .catch((error) => {
-        this.stateControl.showToast = true;
-        this.stateControl.showError = true;
-        switch (error.code) {
-          case 'auth/invalid-action-code':
-            this.stateControl.showToastText.set('Der Link ist ungültig oder abgelaufen.') 
-            break;
-          case 'auth/weak-password':
-            this.stateControl.showToastText.set('Das Passwort ist zu schwach. Bitte verwenden Sie ein stärkeres Passwort.');
-            break;
-          default:
-            this.stateControl.showToastText.set('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
-        }
-        this.stateControl.removeShowToast();
-      });
+  /**
+   * handle logout error
+   * @param error
+   */
+  private handleLogoutError(error: any): void {
+    console.error('Error logging out:', error);
   }
 
-  signInAsGuest(text: string): Promise<void> {
+  /**
+   * handle email success information
+   * @param text
+   */
+  private handleEmailSuccess(text: string): void {
+    this.stateControl.showArrow = true;
     this.stateControl.showToast = true;
     this.stateControl.showToastText.set(text);
+    this.stateControl.showConfirmationText.set(
+      'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.'
+    );
+    this.stateControl.removeShowToast();
+  }
 
-    return signInAnonymously(this.auth)
-      .then((userCredential) => {
-        const firebaseUser = userCredential.user;
+  /**
+   * handle email error information
+   * @param error
+   */
+  private handleEmailError(error: any): void {
+    this.stateControl.showToast = true;
+    this.stateControl.showError = true;
+    switch (error.code) {
+      case 'auth/invalid-email':
+        this.stateControl.showToastText.set(
+          'Ungültige E-Mail-Adresse. Bitte überprüfen Sie die Eingabe.'
+        );
+        break;
+      case 'auth/user-not-found':
+        this.stateControl.showToastText.set(
+          'Kein Benutzer mit dieser E-Mail-Adresse gefunden.'
+        );
+        break;
+      default:
+        this.stateControl.showToastText.set(
+          'Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.'
+        );
+    }
+    this.stateControl.removeShowToast();
+  }
 
-        const user: AppUser = {
-          avatarUrl: 'assets/media/icons/profile-icons/profile-icon.svg',
-          status: true,
-          channels: [],
-          uId: firebaseUser.uid,
-          email: 'guest@gast.com',
-          displayName: 'Gast',
-        };
-        this.stateControl.removeShowToast();
-        this.router.navigate(['/start/main']);
-        // Add new User to channel "Willkommen"
-        this.chat.addNewUserToChannel(this.mainChannel, user.uId )
-        return this.addUserToFirestore(user);
+  /**
+   * confirm password reset
+   * @param password
+   * @param text
+   * @returns
+   */
+  confirmPassword(password: string, text: string): void {
+    const oobCode = this.route.snapshot.queryParamMap.get('oobCode');
+    if (!oobCode) {
+      this.handleInvalidOobCode();
+      return;
+    }
+    confirmPasswordReset(this.auth, oobCode, password)
+      .then(() => {
+        this.handlePasswordResetSuccess(text);
       })
       .catch((error) => {
-        console.error(
-          'Error during anonymous sign-in:',
-          error.code,
-          error.message
-        );
-        throw error;
+        this.handlePasswordResetError(error);
       });
   }
 
-  confirmDeleteAccount(user: any) {
-    const userId = user.uid
+  /**
+   * sign in as guest
+   * set toast text
+   * sing in anonymously
+   * create guest user in firestore
+   * @param text
+   */
+  async signInAsGuest(text: string): Promise<void> {
+    this.stateControl.showToast = true;
+    this.stateControl.showToastText.set(text);
+    try {
+      const userCredential = await signInAnonymously(this.auth);
+      const firebaseUser = userCredential.user;
+      const user = this.createGuestUser(firebaseUser);
+      this.stateControl.removeShowToast();
+      this.router.navigate(['main']);
+      await this.addUserToFirestore(user);
+    } catch (error) {
+      this.handleAnonymousSignInError(error);
+    }
+  }
+
+  /**
+   * handle invalid oob code
+   */
+  private handleInvalidOobCode(): void {
+    console.error('No oobCode provided.');
+    this.stateControl.showToast = true;
+    this.stateControl.showError = true;
+    this.stateControl.showToastText.set(
+      'Es gab ein Problem mit dem Link. Bitte versuchen Sie es erneut.'
+    );
+  }
+
+  /**
+   * handle password reset success
+   * @param text
+   */
+  private handlePasswordResetSuccess(text: string): void {
+    this.stateControl.showToast = true;
+    this.stateControl.showToastText.set(text);
+    this.stateControl.showConfirmationText.set(
+      'Deine E-Mail wurde erfolgreich gesendet. Prüfe deinen Posteingang.'
+    );
+    this.stateControl.removeShowToast();
+    setTimeout(() => {
+      this.router.navigate(['confirmation']);
+    }, 2200);
+  }
+
+  /**
+   * handle password reset error
+   * @param error
+   */
+  private handlePasswordResetError(error: any): void {
+    this.stateControl.showToast = true;
+    this.stateControl.showError = true;
+    switch (error.code) {
+      case 'auth/invalid-action-code':
+        this.stateControl.showToastText.set(
+          'Der Link ist ungültig oder abgelaufen.'
+        );
+        break;
+      case 'auth/weak-password':
+        this.stateControl.showToastText.set(
+          'Das Passwort ist zu schwach. Bitte verwenden Sie ein stärkeres Passwort.'
+        );
+        break;
+      default:
+        this.stateControl.showToastText.set(
+          'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.'
+        );
+    }
+    this.stateControl.removeShowToast();
+  }
+
+  /**
+   * create guest user object
+   * @param firebaseUser
+   * @returns
+   */
+  private createGuestUser(firebaseUser: FirebaseUser): AppUser {
+    return {
+      avatarUrl: 'assets/media/icons/profile-icons/profile-icon.svg',
+      status: true,
+      channels: [],
+      uId: firebaseUser.uid,
+      email: 'guest@gast.com',
+      displayName: 'Gast',
+    };
+  }
+
+  /**
+   * handle anonymous sign in error
+   * @param error
+   */
+  private handleAnonymousSignInError(error: any): void {
+    console.error('Error during anonymous sign-in:', error.code, error.message);
+  }
+
+  /**
+   * confirm delete account and delete user account
+   * @param user
+   */
+  confirmDeleteAccount(user: any): void {
+    const userId = user.uid;
     const confirmDialogRef = this.dialog.open(ConfirmDeleteAccountComponent, {
       panelClass: 'confirm-delete-container',
     });
 
     confirmDialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        deleteUser(user)
-          .then(() => {
-            deleteDoc(doc(this.firestore, "users", userId));
-            this.stateControl.showConfirmationText = 'Dein Konto wurde erfolgreich gelöscht.';
-            this.stateControl.isUserLoggedIn = false;
-            this.router.navigate(['start/confirmation']);
-          })
-          .catch((error) => {
-            this.handleError(error)
-          });
+        this.deleteUserAccount(user, userId);
       }
-        this.dialog.closeAll();
+      this.dialog.closeAll();
     });
   }
 
-  async confirmDeleteAccountWithPassword() {
+  /**
+   * confirm delete account with password and delete user account
+   */
+  async confirmDeleteAccountWithPassword(): Promise<void> {
     const user = this.auth.currentUser;
 
     try {
       await this.promptForCredentials();
-      return this.confirmDeleteAccount(user)
+      this.confirmDeleteAccount(user);
     } catch (error) {
-      this.handleError(error)
+      this.handleError(error);
     }
-
+  }
+  /**
+   * delete user account with user and userId
+   * delete user and user document from firestore
+   * set confirmation text
+   * navigate to confirmation page
+   * @param user
+   * @param userId
+   */
+  private async deleteUserAccount(user: any, userId: string): Promise<void> {
+    try {
+      await deleteUser(user);
+      await deleteDoc(doc(this.firestore, 'users', userId));
+      this.stateControl.showConfirmationText.set(
+        'Dein Konto wurde erfolgreich gelöscht.'
+      );
+      this.stateControl.isUserLoggedIn = false;
+      this.router.navigate(['confirmation']);
+    } catch (error) {
+      this.handleError(error);
+    }
   }
 
-  handleError(error: any) {
+  /**
+   * error handling
+   * @param error
+   * @returns
+   */
+  private handleError(error: any): void {
     if (!error) {
       alert('Ein unbekannter Fehler ist aufgetreten.');
       return;
     }
-    if (error.code === 'Passwortabfrage abgebrochen.') {
-      alert('Die Passwortabfrage wurde abgebrochen.');
-    } else if (error.code === 'auth/wrong-password') {
-      alert('Das eingegebene Passwort ist falsch.');
-    } else if (error.code === 'auth/user-not-found') {
-      alert('Der Benutzer konnte nicht gefunden werden.');
-    } else if (error.code === 'auth/requires-recent-login') {
-      alert('Ihre Anmeldung ist zu lange her. Bitte melden Sie sich erneut an, um fortzufahren.');
-    } else {
-      alert('Ein unerwarteter Fehler ist aufgetreten.');
+    switch (error.code) {
+      case 'Passwortabfrage abgebrochen.':
+        alert('Die Passwortabfrage wurde abgebrochen.');
+        break;
+      case 'auth/wrong-password':
+        alert('Das eingegebene Passwort ist falsch.');
+        break;
+      case 'auth/user-not-found':
+        alert('Der Benutzer konnte nicht gefunden werden.');
+        break;
+      case 'auth/requires-recent-login':
+        alert(
+          'Ihre Anmeldung ist zu lange her. Bitte melden Sie sich erneut an, um fortzufahren.'
+        );
+        break;
+      default:
+        alert('Ein unerwarteter Fehler ist aufgetreten.');
     }
   }
 
-
-  async promptForCredentials() {
+  /**
+   * prompt for credentials
+   * open delete account component and get password
+   * return emailAuthProvider credential
+   * @returns
+   */
+  private async promptForCredentials(): Promise<any> {
     const dialogRef = this.dialog.open(DeleteAccountComponent, {
       panelClass: 'delete-container',
     });
-
     const password = await dialogRef.afterClosed().toPromise();
     if (!password) {
       throw new Error('Passwortabfrage abgebrochen.');
     }
-
     const user = this.auth.currentUser!;
     return EmailAuthProvider.credential(user.email!, password);
   }

@@ -1,5 +1,6 @@
 @if(this.userList){
   <div class="user-avatar">
+    <div class="pre-loader-small"></div>
     <img class="avatar" [src]="user.avatarUrl" alt="avatar">
     @if(user.status) {
       <img class="online" src="/assets/media/icons/online.svg" alt="online">
@@ -9,6 +10,7 @@
 
 }@else if (userMessageReceiver) {
   <div class="user-avatar">
+    <div class="pre-loader-small"></div>
     <img [src]="userMessageReceiver.avatarUrl" alt="avatar">
     <img class="online" src="/assets/media/icons/online.svg" alt="online">
 </div>
@@ -17,6 +19,7 @@
 @else {
 
   <div class="user-avatar">
+    <div class="pre-loader-small"></div>
     <img [src]="this.db.currentUser()?.avatarUrl" alt="avatar">
     <img class="online" src="/assets/media/icons/online.svg" alt="online">
 </div>

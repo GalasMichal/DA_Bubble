@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReactionBarComponent } from './reaction-bar.component';
+import { MainLayoutComponent } from './main-layout.component';
 
-describe('ReactionBarComponent', () => {
-  let component: ReactionBarComponent;
-  let fixture: ComponentFixture<ReactionBarComponent>;
+describe('MainLayoutComponent', () => {
+  let component: MainLayoutComponent;
+  let fixture: ComponentFixture<MainLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactionBarComponent]
+      imports: [MainLayoutComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ReactionBarComponent);
+    fixture = TestBed.createComponent(MainLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

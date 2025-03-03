@@ -37,6 +37,7 @@
         background: none;
         border: solid .0625rem transparent;
         border-radius: $b-radius-2;
+        z-index: 2;
         @include firstTranistion();
         &:hover,
         &:focus-visible {

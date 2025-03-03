@@ -2,21 +2,21 @@
   <app-header></app-header>
 
   <div class="main-content-container">
-    <div class="sidenav" [ngClass]="{'show-responsive-sidenav': stateServer.responsiveMenu}" [class.animate]="isMenuOpen">
+    <div class="sidenav" [ngClass]="{'show-responsive-sidenav': stateServer.responsiveMenu}" [class.animate]="this.stateServer.isMenuOpen">
       <app-menu-side-left></app-menu-side-left>
     </div>
 
     <div class="main-content" [ngClass]="{'show-responsive-main-content': stateServer.responsiveChat}">
       <router-outlet></router-outlet>
     </div>
-    @if (stateServer.isThreadOpen && this.user.selectedUserMessage() && this.chat.currentChannelData) {
+    @if (stateServer.isThreadOpen && this.user.selectedUserMessage() && this.currentChannel()) {
       <div [ngClass]="stateServer.isThreadOpen ? 'thread-container' : 'd-none'" [class.animate]="stateServer.isThreadOpen">
-        <app-thread-answer  [currentChat]="this.chat.currentChannelData"></app-thread-answer>
+        <app-thread-answer></app-thread-answer>
       </div>
     }
 
 
-    <button class="side-menu-btn" (click)="isMenuOpen = !isMenuOpen">Side Menu <img
+    <button class="side-menu-btn" (click)="this.stateServer.isMenuOpen= !this.stateServer.isMenuOpen">Side Menu <img
         src="assets/media/icons/show-menu.svg" alt="" srcset=""></button>
   </div>
 

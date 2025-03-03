@@ -2,32 +2,33 @@
 @import './styles.scss';
 
 .landing-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  background-color: $bg-color;
+  width: 100%;
+
+  .main-container {
     position: relative;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
-    flex: 1;
-    background-color: $bg-color;
+    overflow: hidden;
+    max-width: 37.875rem;
     width: 100%;
-    .main-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-      overflow: hidden;
-      max-width: 37.875rem;
-      width: 100%;
-      max-height: 46rem;
-      background-color: $white;
-      border-radius: $b-radius-3;
-      padding: 40px;
-      margin: 10px;
-    }
-    .new-user-link-responsive {
-      display: none
-    }
+    background-color: $white;
+    border-radius: $b-radius-3;
+    padding: 40px;
+    margin: 10px;
+  }
+
+  .new-user-link-responsive {
+    display: none
+  }
 }
 
 @media (max-width: 500px) {
@@ -36,6 +37,7 @@
       padding: 0.50rem;
       margin: 0;
     }
+
     .new-user-link-responsive {
       display: flex;
       flex-direction: column;
@@ -43,6 +45,7 @@
       width: 11.25rem;
       margin-block: auto;
       padding-block: 20px;
+
       p {
         font-weight: 400;
         font-size: 1.125rem;
@@ -50,6 +53,7 @@
         text-align: center;
         color: $black;
       }
+
       button {
         background-color: $bg-color;
         text-align: center;
@@ -62,11 +66,13 @@
         border-radius: $b-radius-2;
         text-decoration: none;
         @include firstTranistion();
+
         &:hover {
           border: $primary-hover 1px solid;
           border-radius: $b-radius-2;
           color: $primary;
         }
+
         &:focus {
           border: solid 0.0625rem $secondary;
           outline: $secondary;
