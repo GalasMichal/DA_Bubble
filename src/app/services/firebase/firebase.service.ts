@@ -61,7 +61,7 @@ export class FirebaseService {
   /**
    * default mainChannel start path
    */
-  mainChannel: string = 'xLke9Ff8JAT8AoorWXya'; //Willkommen
+  mainChannel: string = '55dO4OXETme2oZEiCPZH'; //Willkommen
 
   constructor(private route: ActivatedRoute) {}
 
