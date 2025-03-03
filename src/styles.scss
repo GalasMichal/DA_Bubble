@@ -73,12 +73,15 @@ app-pwd-reset,
 app-pwd-recovery,
 app-create-avatar,
 app-imprint,
-app-legal,
 app-page-not-found,
 app-link-footer {
   flex: 1;
   width: 100%;
   height: 100%;
+}
+
+app-legal{
+  max-height: 65vh;
 }
 
 body {
