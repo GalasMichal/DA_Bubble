@@ -83,7 +83,6 @@
         <div>
 
           @if(isSecondDropdownMenuOpen){
-
             <ul>
             @for(user of this.sortListOfUser(); track $index) {
               @if(user.uId === this.fb.currentUser()?.uId) {
