@@ -127,11 +127,13 @@ export class MessageAnswerComponent {
   }
 
   editstatus() {
-    if(this.state.isDirectMessage) {
+    const urlSegments = this.route.snapshot.url.map(segment => segment.path);
+
+    if(urlSegments.includes('messages')) {
       this.state.editDirectMessage = true;
       this.state.globalEditModul = true;
     } else {
-      this.state.globalEdit = true;
+      this.state.editChannelMessage = true;
       this.state.globalEditModul = true;
     }
   }

@@ -1,6 +1,6 @@
 
 
-<div class="message-field-container" [ngClass]="{'edit-field': stateControl.globalEdit || stateControl.editDirectMessage}" tabindex="0">
+<div class="message-field-container" [ngClass]="{'edit-field': stateControl.globalEditModul }" tabindex="0">
   <div class="users-container">
     <ul [ngClass]="{'show-users': isUsersPickerVisible}">
       @for(user of this.sortListOfUser(); track $index) {
@@ -27,8 +27,8 @@
 
   
   <!-- Image from the message -->
-  <div class="text-area-with-image-and-icons" [ngClass]="{'show-edit-filed-direction': stateControl.globalEdit || stateControl.editDirectMessage}">
-     <div class="edit-field-info" [ngClass]="{'show-edit-filed': stateControl.globalEdit || stateControl.editDirectMessage}">
+  <div class="text-area-with-image-and-icons" [ngClass]="{'show-edit-filed-direction': stateControl.globalEditModul }">
+     <div class="edit-field-info" [ngClass]="{'show-edit-filed': stateControl.globalEditModul }">
        <span>Nachricht bearbeiten</span>
        <button class="close-btn" (click)="closeEdit()">
          <app-close></app-close>
@@ -49,7 +49,7 @@
 
         <div class="message-field-content">
           <textarea 
-          [ngClass]="{'textarea-edit': stateControl.globalEdit}" 
+          [ngClass]="{'textarea-edit': stateControl.globalEditModul}" 
           (click)="closeEmojiWindow()"
           (click)="closeUserWindow()" 
           (keyup)="handleKeyUp(textArea)"
@@ -72,7 +72,7 @@
 
             <input hidden #uploader type="file" (change)="handleFileInput($event)" />
             
-            <button type="file" (click)="uploader.click()" [ngClass]="{'d-none': stateControl.globalEdit}">
+            <button type="file" (click)="uploader.click()" [ngClass]="{'d-none': stateControl.globalEditModul}">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_75025_4540)">
                   <mask id="mask0_75025_4540" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
@@ -92,7 +92,7 @@
                 </defs>
               </svg>
             </button>
-            <div class="vector-container" [ngClass]="{'d-none': stateControl.globalEdit}">
+            <div class="vector-container" [ngClass]="{'d-none': stateControl.globalEditModul}">
             </div>
             <button (click)="showEmojiWindow()">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -108,7 +108,7 @@
               </svg>
 
             </button>
-            <button (click)="showUserWindow()" [ngClass]="{'d-none': stateControl.globalEdit}">
+            <button (click)="showUserWindow()" [ngClass]="{'d-none': stateControl.globalEditModul}">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_75025_4549" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
                   height="24">

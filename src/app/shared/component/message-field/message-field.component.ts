@@ -84,7 +84,7 @@ export class MessageFieldComponent {
   resetMessageInput() {
     this.textArea = '';
     this.textAreaIsEdited = false;
-    this.stateControl.globalEdit = false;
+    this.editMessage = false;
   }
 
   /**
@@ -95,6 +95,8 @@ export class MessageFieldComponent {
    */
 
   async sendMessage() {
+    console.log('CHANNEL');
+    
     this.stateControl.scrollToBottomGlobal = true;
     if (this.editMessage && this.textArea !== '' && this.editedMessageObject) {
       await this.chat.updateMessageTextInFirestore(
@@ -192,6 +194,7 @@ export class MessageFieldComponent {
    * Also clears the message input field.
    */
   async sendDirectMessage() {
+    console.log('DIRECT');
     this.stateControl.scrollToBottomGlobal = false;
 
     const collRef = await this.msg.newPrivateMessageChannel(
@@ -334,7 +337,6 @@ export class MessageFieldComponent {
    * text area, and marking the text area as not edited.
    */
   closeEdit() {
-    this.stateControl.globalEdit = false;
     this.stateControl.globalEditModul = false;
     this.stateControl.editDirectMessage = false;
     this.textArea = '';

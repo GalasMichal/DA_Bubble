@@ -15,7 +15,6 @@ export class StateControlService {
   choosenUser: User[] = [];
   isUserLoggedIn: boolean = false;
   showError: boolean = false;
-  globalEdit: boolean = false;
   responsiveChat: boolean = false;
   responsiveArrow: boolean = false;
   responsiveMenu: boolean = false;
@@ -25,6 +24,7 @@ export class StateControlService {
   isSendButtonActive: boolean = true;
   isDirectMessage: boolean = false;
   editDirectMessage: boolean = false;
+  editChannelMessage: boolean = false;
   globalEditModul: boolean = false;
 
   removeShowToast() {
