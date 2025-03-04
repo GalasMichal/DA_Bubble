@@ -136,7 +136,11 @@
               </svg>
             </button>
             }@else {
+
             <button [disabled]="stateControl.isSendButtonActive" (click)="sendMessage()">
+              @if(stateControl.isSendButtonActive) {
+                <div class="disable-info">Wähle einen Channel oder einen Benutzer.</div>
+              }
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_75025_4553" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="30"
                   height="30">

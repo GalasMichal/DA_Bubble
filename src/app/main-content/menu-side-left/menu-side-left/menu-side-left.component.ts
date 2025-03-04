@@ -60,7 +60,8 @@ export class MenuSideLeftComponent {
    * @param channel interface channel
    */
   openChannel(channel: Channel): void {
-    this.state.isDirectMessage = false;
+    this.state.isDirectMessage = false; //feature for future
+    this.state.isSendButtonActive = false; //make the button to send active
     this.storageService.uploadMsg.set('');
     this.selectedChannelId = channel.chanId;
     this.updateState();

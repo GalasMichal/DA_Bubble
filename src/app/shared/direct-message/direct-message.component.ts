@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { MessageFieldComponent } from '../component/message-field/message-field.component';
 import { MessageAnswerComponent } from '../message-answer/message-answer.component';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
@@ -40,10 +40,24 @@ export class DirectMessageComponent implements OnInit {
   currentChatId: string = '';
   private auth = inject(Auth);
 
+  @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
+
   textArea: string = '';
   channelId: string = '';
   textAreaId: string = '';
   textAreaEdited: boolean = false;
+
+    /**
+   * Scrolls to the bottom of the chat window when the view is checked
+   */
+    ngAfterViewChecked(): void {  
+      if (this.stateControl.scrollToBottomGlobal) {
+        if (this.scrollToBottom?.nativeElement) {
+          this.scrollToBottom.nativeElement.scrollTop =
+            this.scrollToBottom.nativeElement.scrollHeight;
+        }
+      }
+    }
 
   /**
    * Loads the current message after a refresh of the page.

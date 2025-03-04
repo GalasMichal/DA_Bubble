@@ -1,5 +1,4 @@
 import { Component, computed, inject, Input } from '@angular/core';
-import { SearchService } from '../../services/search/search.service';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { CommonModule } from '@angular/common';
@@ -21,8 +20,6 @@ import { CloseComponent } from '../component/close/close.component';
   styleUrl: './search.component.scss',
 })
 export class SearchComponent {
-  searchService = inject(SearchService);
-
   stateControl = inject(StateControlService);
   chat = inject(ChatRoomService);
   userService = inject(UserServiceService);
@@ -73,7 +70,6 @@ export class SearchComponent {
    */
   onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'ArrowDown') {
-      console.log(event.view);
       this.navigateDown();
     } else if (event.key === 'ArrowUp') {
       this.navigateUp();
@@ -267,9 +263,7 @@ export class SearchComponent {
    * @param user - The user to open a message with, their displayName is set as the searchTerm.
    */
   async openMessage(user: User) {
-    this.searchTerm = user.displayName;
     this.stateControl.isThreadOpen = false;
-    this.userService.messageReceiver = user;
     this.stateControl.responsiveChat = true;
     this.stateControl.responsiveArrow = true;
     this.stateControl.responsiveMenu = true;
@@ -278,7 +272,7 @@ export class SearchComponent {
 
     if (existingChatId) {
       this.router.navigate(['main/messages', existingChatId]);
-      this.ms.loadMessagesFromChat(existingChatId);
+      await this.ms.loadMessagesFromChat(existingChatId);
     } else {
       this.router.navigate(['main/messages']);
       this.ms.newPrivateMessageChannel(user);

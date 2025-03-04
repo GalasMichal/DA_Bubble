@@ -22,7 +22,7 @@ export class StateControlService {
   messageImage: string | undefined = "";
   scrollToBottomGlobal: boolean = true;
   isMenuOpen: boolean = true;
-  isSendButtonActive: boolean = false;
+  isSendButtonActive: boolean = true;
   isDirectMessage: boolean = false;
   editDirectMessage: boolean = false;
   globalEditModul: boolean = false;
@@ -38,4 +38,5 @@ export class StateControlService {
 
   constructor() {
    }
+   
 }

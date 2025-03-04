@@ -7,7 +7,7 @@
     </button>
   </header>
 
-  <div class="chat-main-container">
+  <div class="chat-main-container" #scrollToBottom>
     @for (message of this.ms.messages(); track this.ms.messages; let index = $index) {
     <app-message-answer [userMessage]="message" [index]="index">
     </app-message-answer>
