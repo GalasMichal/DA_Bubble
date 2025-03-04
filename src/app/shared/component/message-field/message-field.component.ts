@@ -204,7 +204,6 @@ export class MessageFieldComponent {
     if (!collRef) return;
     console.log(this.textArea, 'this.textArea');
     if (this.editMessage && this.textArea !== '' && this.editedMessageObject) {
-      debugger
       await this.msg.updateMessageInSubcollection(
         this.editedMessageObject.chatId,
         this.editedMessageObject.messageId!,
