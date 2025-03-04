@@ -64,9 +64,10 @@ export class MessageFieldComponent {
    * Constructor initializes the MessageFieldComponent.
    * Sets up a reactive effect to update the textArea with the text
    * of the current message being edited, if available.
-   */
-  constructor() {
-    effect(() => {
+  */
+ 
+ constructor() {
+   effect(() => {
       const message = this.msg.currentMessageToEdit();
       if (message) {
         this.textArea = message.text;
@@ -203,6 +204,7 @@ export class MessageFieldComponent {
     if (!collRef) return;
     console.log(this.textArea, 'this.textArea');
     if (this.editMessage && this.textArea !== '' && this.editedMessageObject) {
+      debugger
       await this.msg.updateMessageInSubcollection(
         this.editedMessageObject.chatId,
         this.editedMessageObject.messageId!,
