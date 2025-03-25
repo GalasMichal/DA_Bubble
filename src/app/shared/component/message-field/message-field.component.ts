@@ -64,10 +64,10 @@ export class MessageFieldComponent {
    * Constructor initializes the MessageFieldComponent.
    * Sets up a reactive effect to update the textArea with the text
    * of the current message being edited, if available.
-  */
- 
- constructor() {
-   effect(() => {
+   */
+
+  constructor() {
+    effect(() => {
       const message = this.msg.currentMessageToEdit();
       if (message) {
         this.textArea = message.text;
@@ -97,7 +97,7 @@ export class MessageFieldComponent {
 
   async sendMessage() {
     console.log('CHANNEL');
-    
+
     this.stateControl.scrollToBottomGlobal = true;
     if (this.editMessage && this.textArea !== '' && this.editedMessageObject) {
       await this.chat.updateMessageTextInFirestore(
@@ -106,12 +106,12 @@ export class MessageFieldComponent {
         this.editedMessageObject.messageId! // Stelle sicher, dass messageId existiert
       );
       this.resetMessageInput();
-      this.closeEdit()
+      this.closeEdit();
       return;
     }
     this.processNewMessage();
   }
-  
+
   /**
    * Processes a new message based on the current state of the message field.
    * Creates a new message with the current channel ID and the current user's ID.
@@ -195,14 +195,12 @@ export class MessageFieldComponent {
    * Also clears the message input field.
    */
   async sendDirectMessage() {
-    console.log('DIRECT');
     this.stateControl.scrollToBottomGlobal = false;
 
     const collRef = await this.msg.newPrivateMessageChannel(
       this.userService.privatMessageReceiver!
     );
     if (!collRef) return;
-    console.log(this.textArea, 'this.textArea');
     if (this.editMessage && this.textArea !== '' && this.editedMessageObject) {
       await this.msg.updateMessageInSubcollection(
         this.editedMessageObject.chatId,
