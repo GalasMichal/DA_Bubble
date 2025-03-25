@@ -150,6 +150,7 @@ export class ChatRoomService {
     await setDoc(newChannelRef, { ...channel, chanId: newChannelRef.id });
     channel.chanId = newChannelRef.id;
     await db.put('channels', channel);
+    this.getChannelsFromIndexedDB();
   }
 
   /**
