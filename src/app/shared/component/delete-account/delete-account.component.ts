@@ -60,8 +60,7 @@ export class DeleteAccountComponent {
   /**
    * Closes the delete account dialog without deleting the account.
    */
-  closeDeleteAccount(event: Event) {
-    event.preventDefault();
+  closeDeleteAccount() {
     this.dialogRef.close();
   }
 
