@@ -51,14 +51,14 @@ section {
       background-color: rgba(252, 240, 214, 255);
       margin-top: auto;
       border-radius: $b-radius-3;
+      gap: 1rem;
       h1 {
-        font-size: 1.3rem;
         text-align: center;
         padding-block: 1rem;
       }
       .avatar-container {
         display: flex;
-        align-items: flex-start;
+        align-items: end;
         height: fit-content;
         gap: 0.5rem;
         .avatar {
