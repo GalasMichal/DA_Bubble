@@ -80,6 +80,7 @@ export class DirectMessageComponent implements OnInit {
    * @param userId - The unique identifier of the user whose profile will be displayed.
    */
   async openProfileUserSingle(userId: string) {
+    this.stateControl.scrollToBottomGlobal = false;
     await this.userService.showProfileUserSingle(userId);
     this.userDialog.open(ProfileSingleUserComponent, {
       panelClass: 'profile-single-user-container',

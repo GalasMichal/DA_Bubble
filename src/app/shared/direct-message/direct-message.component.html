@@ -7,9 +7,33 @@
     </button>
   </header>
 
+
   <div class="chat-main-container" #scrollToBottom>
+
+
+    <div class="welcome-container">
+      <h1>Willkommen in eurem privaten Channel!</h1>
+      <div class="avatar-container ">
+        <button class="avatar" (click)="openProfileUserSingle(user.privatMessageReceiver.uId)">
+          <app-avatar [userMessageReceiver]="user.privatMessageReceiver"></app-avatar>
+        </button>
+        <h1 class="channel-name"> {{ user.privatMessageReceiver.displayName }}</h1>
+      </div>
+
+      <div class="welcome-content">
+        <p>
+          Diese Unterhaltung findet nur zwischen
+          <button class="user" (click)="openProfileUserSingle(user.privatMessageReceiver.uId)"><span>&commat;</span>{{user.privatMessageReceiver.displayName}}</button>
+          und dir statt.
+        </p>
+
+      </div>
+    </div>
+
+
+
     @for (message of this.ms.messages(); track this.ms.messages; let index = $index) {
-    <app-message-answer [userMessage]="message" [index]="index">
+      <app-message-answer [userMessage]="message" [index]="index">
     </app-message-answer>
     }
   </div>
