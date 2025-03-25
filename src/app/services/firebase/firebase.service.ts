@@ -190,6 +190,8 @@ export class FirebaseService {
     } catch (error) {
       this.handleLoginError(error);
     }
+    this.stateControl.removeShowToast();
+
   }
 
   /**
@@ -638,28 +640,31 @@ export class FirebaseService {
    * @returns
    */
   private handleError(error: any): void {
+    this.stateControl.showError = true;
+    this.stateControl.showToast = true;
     if (!error) {
-      alert('Ein unbekannter Fehler ist aufgetreten.');
+      this.stateControl.showConfirmationText.set('Ein unbekannter Fehler ist aufgetreten.');
       return;
     }
     switch (error.code) {
       case 'Passwortabfrage abgebrochen.':
-        alert('Die Passwortabfrage wurde abgebrochen.');
+        this.stateControl.showConfirmationText.set('Die Passwortabfrage wurde abgebrochen.');
         break;
       case 'auth/wrong-password':
-        alert('Das eingegebene Passwort ist falsch.');
+        this.stateControl.showConfirmationText.set('Das eingegebene Passwort ist falsch.');
         break;
       case 'auth/user-not-found':
-        alert('Der Benutzer konnte nicht gefunden werden.');
+        this.stateControl.showConfirmationText.set('Der Benutzer konnte nicht gefunden werden.');
         break;
       case 'auth/requires-recent-login':
-        alert(
+        this.stateControl.showConfirmationText.set(
           'Ihre Anmeldung ist zu lange her. Bitte melden Sie sich erneut an, um fortzufahren.'
         );
         break;
       default:
-        alert('Ein unerwarteter Fehler ist aufgetreten.');
+        this.stateControl.showConfirmationText.set('Ein unerwarteter Fehler ist aufgetreten.');
     }
+    this.stateControl.removeShowToast();
   }
 
   /**

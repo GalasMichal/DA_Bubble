@@ -9,10 +9,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
-import { BackComponent } from '../back/back.component';
+import { RouterModule } from '@angular/router';
 import { CloseComponent } from '../close/close.component';
 
 @Component({
@@ -33,7 +32,7 @@ export class DeleteAccountComponent {
   stateControl = inject(StateControlService);
   formBuilder = inject(FormBuilder);
   isPasswordTopVisible: boolean = false;
-
+  dialogRef = inject (MatDialogRef<DeleteAccountComponent>)
   deleteForm: FormGroup;
 
   isFormValid: boolean = false;
@@ -42,7 +41,7 @@ export class DeleteAccountComponent {
    * Creates a new instance of the DeleteAccountComponent.
    * @param dialogRef Reference to the MatDialogRef of type DeleteAccountComponent
    */
-  constructor(public dialogRef: MatDialogRef<DeleteAccountComponent>) {
+  constructor() {
     this.deleteForm = new FormGroup({
       password: new FormControl('', [Validators.required]),
     });
@@ -61,7 +60,8 @@ export class DeleteAccountComponent {
   /**
    * Closes the delete account dialog without deleting the account.
    */
-  closeDeleteAccount() {
+  closeDeleteAccount(event: Event) {
+    event.preventDefault();
     this.dialogRef.close();
   }
 
