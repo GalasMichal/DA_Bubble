@@ -30,11 +30,14 @@
     </div>
     
     <div class="input-container">
+
         <label class="visually-hidden" for="password">Passwort</label>
         <input autocomplete="current-password" id="password" class="input-field input-field-eye-icon" [type]="isPasswordVisible ? 'text' : 'password'" formControlName="password"
           placeholder="Passwort"/>
 
-          <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" (click)="togglePasswordVisibility()" ></i>
+          <button class="eye-button" (click)="togglePasswordVisibility($event)">
+            <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordVisible, 'eye-open': isPasswordVisible}" ></i>
+          </button>
 
           <div class="input-icon">
           <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">

@@ -67,15 +67,19 @@
       height: 3.4375rem;
     }
 
-    .eye-pos {
+
+    .eye-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: none;
       position: absolute;
       top: .625rem;
       right: 0;
       padding: 0 1.5625rem;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
     }
+
+
 
     .btn-password {
       display: flex;
