@@ -155,14 +155,16 @@ export class RegisterUserComponent {
   /**
    * Method to toggle the visibility of the password in the password input field
    */
-  togglePasswordVisibilityTop() {
+  togglePasswordVisibilityTop(event: Event) {
+    event.preventDefault();
     this.isPasswordTopVisible = !this.isPasswordTopVisible;
   }
 
   /**
    * Method to toggle the visibility of the password in the password input field
    */
-  togglePasswordVisibilityBottom() {
+  togglePasswordVisibilityBottom(event: Event) {
+    event.preventDefault();
     this.isPasswordBottomVisible = !this.isPasswordBottomVisible;
   }
 }

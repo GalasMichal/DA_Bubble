@@ -68,9 +68,13 @@
 
         <div class="input-container">
           <label class="visually-hidden" for="name">Passwort</label>
-          <input #name id="password1" name="password1" [type]="isPasswordTopVisible ? 'text' : 'password'" formControlName="password1"
+          <input #name id="password1" autocomplete="on" name="password1" [type]="isPasswordTopVisible ? 'text' : 'password'" formControlName="password1"
             class="input-field input-field-pwd-icon" placeholder="Passwort"/>
-            <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordTopVisible, 'eye-open': isPasswordTopVisible}" (click)="togglePasswordVisibilityTop()" ></i>
+            
+            <button class="eye-button" (click)="togglePasswordVisibilityTop($event)">
+              <i class="pwd-eye" [ngClass]="{'eye-closed': !isPasswordTopVisible, 'eye-open': isPasswordTopVisible}"></i>
+            </button>
+            
             <div class="input-icon">
               <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="e-mail">
             </div>
@@ -95,8 +99,13 @@
         </div>
         <div class="input-container">
           <label class="visually-hidden" for="password2">Passwort</label>
-          <input name="password2" id="password2" class="input-field" [type]="isPasswordBottomVisible ? 'text' : 'password'" placeholder="Passwort wiederholen" formControlName="password2" autocomplete="on"/>
-          <i class="pwd-eye eye-pos" [ngClass]="{'eye-closed': !isPasswordBottomVisible, 'eye-open': isPasswordBottomVisible}" (click)="togglePasswordVisibilityBottom()"></i>
+          <input name="password2" id="password2" autocomplete="on" class="input-field" [type]="isPasswordBottomVisible ? 'text' : 'password'" placeholder="Passwort wiederholen" formControlName="password2" autocomplete="on"/>
+          
+          <button class="eye-button"  (click)="togglePasswordVisibilityBottom($event)">
+            <i class="pwd-eye" [ngClass]="{'eye-closed': !isPasswordBottomVisible, 'eye-open': isPasswordBottomVisible}"></i>
+          </button>
+          
+          
           <div class="input-icon">
             <img src="./assets/media/icons/pwd-lock-icon-input-field.svg" alt="passwort">
           </div>

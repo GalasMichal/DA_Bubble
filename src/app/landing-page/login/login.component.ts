@@ -90,7 +90,7 @@ export class LoginComponent {
    * If the password is visible, it is hidden and vice versa.
    */
   togglePasswordVisibility(event: Event) {
-    event.preventDefault()
+    event.preventDefault();
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 }
