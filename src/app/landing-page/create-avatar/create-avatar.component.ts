@@ -65,7 +65,6 @@ export class CreateAvatarComponent {
     this.readURL(file);
     this.st.uploadMsg.set(file.name);
     this.file = file;
-    console.log('file', file);
     this.isSelected = true;
   }
 

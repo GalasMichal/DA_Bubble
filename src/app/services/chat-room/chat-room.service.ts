@@ -17,6 +17,7 @@ import { StateControlService } from '../state-control/state-control.service';
 import { FirebaseService } from '../firebase/firebase.service';
 import { openDB } from 'idb';
 import { User } from '../../models/interfaces/user.model';
+import { arrayUnion } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',

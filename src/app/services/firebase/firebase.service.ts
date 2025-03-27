@@ -34,7 +34,8 @@ import { StateControlService } from '../state-control/state-control.service';
 import { DeleteAccountComponent } from '../../shared/component/delete-account/delete-account.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteAccountComponent } from '../../shared/component/confirm-delete-account/confirm-delete-account.component';
-import { deleteDoc } from 'firebase/firestore';
+import { arrayUnion, deleteDoc, updateDoc } from 'firebase/firestore';
+import { ChatRoomService } from '../chat-room/chat-room.service';
 
 @Injectable({
   providedIn: 'root',
@@ -379,6 +380,7 @@ export class FirebaseService {
     const userCollectionRef = collection(this.firestore, 'users');
     const userDocRef = doc(userCollectionRef, user.uId);
     await setDoc(userDocRef, user);
+    this.addNewUserToMainChannel(this.mainChannel, user.uId )
     return user;
   }
 
@@ -684,4 +686,35 @@ export class FirebaseService {
     const user = this.auth.currentUser!;
     return EmailAuthProvider.credential(user.email!, password);
   }
+
+  /**
+ * Adds a new user to a specified channel by updating the 'specificPeople' array in Firestore.
+ * 
+ * @param channelName - The name of the channel (used as the document ID in Firestore).
+ * @param newUserId - The ID of the user to be added to the channel.
+ * 
+ * This function retrieves the Firestore document corresponding to the given channel name
+ * and updates the 'specificPeople' array to include the new user. If the operation is 
+ * successful, it logs a confirmation message; otherwise, it logs an error.
+ */
+   private async addNewUserToMainChannel(channelName: string, newUserId: string) {
+    try {
+      // Reference the document for the "Willkommen" channel
+      const channelRef = doc(
+        this.firestore,
+        'channels',
+        channelName
+      ); // Assuming 'channels' is the collection name and 'channelName' is the document ID
+
+      // Update the 'allMembers' array
+      await updateDoc(channelRef, {
+        specificPeople: arrayUnion(newUserId),
+      });
+
+    } catch (error) {
+      this.stateControl.showConfirmationText.set(`Error adding user to the channel: ${error}`);
+    }
+    this.stateControl.removeShowToast();
+  }
+
 }
