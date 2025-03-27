@@ -219,7 +219,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
    *  shows the number of users in the channel
    * @returns
    */
-  restOfUser(): number {
+  restOfUser() :number {
     return this.currentChannel()!.specificPeople.length - 3;
   }
 
