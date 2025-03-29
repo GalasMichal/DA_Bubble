@@ -20,11 +20,11 @@ export class LandingLayoutComponent {
   showIntro: boolean = false;
 
   constructor() {
-    const showIntro = JSON.parse(localStorage.getItem("showIntro") || "null");
-    if(!showIntro) {
-      localStorage.setItem("showIntro", "true");
-    } else {
-      this.showIntro = showIntro
-    }
+    // const showIntro = JSON.parse(localStorage.getItem("showIntro") || "null");
+    // if(!showIntro) {
+    //   localStorage.setItem("showIntro", "true");
+    // } else {
+    //   this.showIntro = showIntro
+    // }
   }
 }
