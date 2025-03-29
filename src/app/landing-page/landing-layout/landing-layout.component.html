@@ -1,4 +1,17 @@
 <div class="wrapper">
+
+  <div class="intro" [ngClass]="{'show-intro': showIntro}">
+    
+    <div class="logo-container">
+      <img class="logo" src="./../../../assets/media/icons/logo.svg" alt="logo">
+      <div class="dabubble-container">
+        <img class="dabubble" src="./../../../assets/media/icons/dabubble.svg" alt="dabubble">
+      </div>
+    </div>
+    
+  </div>
+
+    
   <div class="router-outlet">
     <app-header-landing></app-header-landing>
     <div class="landing-page">
