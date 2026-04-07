@@ -16,23 +16,21 @@ import { BackComponent } from '../../shared/component/back/back.component';
 import { User } from '../../models/interfaces/user.model';
 
 @Component({
-  selector: 'app-register-user',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    RouterLink,
-    ReactiveFormsModule,
-    MatDialogModule,
-    BackComponent,
-  ],
-
-  templateUrl: './register-user.component.html',
-  styleUrls: [
-    './register-user.component.scss',
-    './register-user.component.media.scss',
-  ],
+    selector: 'app-register-user',
+    imports: [
+        CommonModule,
+        FormsModule,
+        RouterModule,
+        RouterLink,
+        ReactiveFormsModule,
+        MatDialogModule,
+        BackComponent,
+    ],
+    templateUrl: './register-user.component.html',
+    styleUrls: [
+        './register-user.component.scss',
+        './register-user.component.media.scss',
+    ]
 })
 export class RegisterUserComponent {
   /**
@@ -48,9 +46,9 @@ export class RegisterUserComponent {
    * Create a new FormGroup with the following form controls:
    */
   myForm: FormGroup; // name - just for now
-  isFormSubmitted: boolean = false;
-  isPasswordTopVisible: boolean = false;
-  isPasswordBottomVisible: boolean = false;
+  isFormSubmitted = false;
+  isPasswordTopVisible = false;
+  isPasswordBottomVisible = false;
 
   /**
    * Constructor to initialize the form group with the following form controls:
@@ -115,7 +113,6 @@ export class RegisterUserComponent {
         );
 
         if (user) {
-          console.log('User successfully registered:', user);
           this.fb.currentUser.update(() => user);
           this.router.navigate(['avatar']); // Navigation nach der Registrierung
         }
@@ -123,8 +120,6 @@ export class RegisterUserComponent {
         // Hier kannst du eine spezifische Fehlerbehandlung vornehmen
         console.error('Error during user registration:', error);
       }
-    } else {
-      console.log('Form is invalid, go home! .. or else ..');
     }
   }
 
@@ -145,7 +140,7 @@ export class RegisterUserComponent {
    */
   passwordMatchValidator(
     control: AbstractControl
-  ): { [key: string]: boolean } | null {
+  ): Record<string, boolean> | null {
     const formGroup = control as FormGroup;
     const password1 = formGroup.get('password1')?.value;
     const password2 = formGroup.get('password2')?.value;

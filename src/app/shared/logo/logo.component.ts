@@ -4,11 +4,10 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
-  selector: 'app-logo',
-  standalone: true,
-  imports: [RouterModule, CommonModule],
-  templateUrl: './logo.component.html',
-  styleUrl: './logo.component.scss',
+    selector: 'app-logo',
+    imports: [RouterModule, CommonModule],
+    templateUrl: './logo.component.html',
+    styleUrl: './logo.component.scss'
 })
 export class LogoComponent {
   stateControl = inject(StateControlService);

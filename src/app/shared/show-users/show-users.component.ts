@@ -14,11 +14,10 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 
 @Component({
-  selector: 'app-show-users',
-  standalone: true,
-  imports: [CloseComponent, AvatarComponent, MatDialogContent],
-  templateUrl: './show-users.component.html',
-  styleUrl: './show-users.component.scss',
+    selector: 'app-show-users',
+    imports: [CloseComponent, AvatarComponent, MatDialogContent],
+    templateUrl: './show-users.component.html',
+    styleUrl: './show-users.component.scss'
 })
 export class ShowUsersComponent {
   readonly dialog = inject(MatDialogRef<AddUsersComponent>);
@@ -30,9 +29,9 @@ export class ShowUsersComponent {
   dialogConfirm = inject(MatDialog);
   fb = inject(FirebaseService);
 
-  counter: number = 0;
+  counter = 0;
   currentChannel = computed(() => this.chat.currentChannelSignal());
-  activeButton: boolean = false;
+  activeButton = false;
 
   /**
    * Closes the add users dialog.

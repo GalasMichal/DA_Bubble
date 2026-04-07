@@ -5,17 +5,16 @@ import { LogoComponent } from '../logo/logo.component';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-page-not-found',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterLink,
-    LogoComponent,
-    LogoComponent,
-  ],
-  templateUrl: './page-not-found.component.html',
-  styleUrl: './page-not-found.component.scss',
+    selector: 'app-page-not-found',
+    imports: [
+        CommonModule,
+        RouterModule,
+        RouterLink,
+        LogoComponent,
+        LogoComponent,
+    ],
+    templateUrl: './page-not-found.component.html',
+    styleUrl: './page-not-found.component.scss'
 })
 export class PageNotFoundComponent {
   readonly location = inject(Location);

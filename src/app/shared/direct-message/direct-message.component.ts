@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnInit, ViewChild, AfterViewChecked, OnDestroy } from '@angular/core';
 import { MessageFieldComponent } from '../component/message-field/message-field.component';
 import { MessageAnswerComponent } from '../message-answer/message-answer.component';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
@@ -15,18 +15,17 @@ import { StateControlService } from '../../services/state-control/state-control.
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 
 @Component({
-  selector: 'app-direct-message',
-  standalone: true,
-  imports: [
-    MessageFieldComponent,
-    MessageAnswerComponent,
-    AvatarComponent,
-    CommonModule,
-  ],
-  templateUrl: './direct-message.component.html',
-  styleUrl: './direct-message.component.scss',
+    selector: 'app-direct-message',
+    imports: [
+        MessageFieldComponent,
+        MessageAnswerComponent,
+        AvatarComponent,
+        CommonModule,
+    ],
+    templateUrl: './direct-message.component.html',
+    styleUrl: './direct-message.component.scss'
 })
-export class DirectMessageComponent implements OnInit {
+export class DirectMessageComponent implements OnInit, AfterViewChecked, OnDestroy {
   ms = inject(MessageService);
   chat = inject(ChatRoomService);
   router = inject(Router);
@@ -37,15 +36,15 @@ export class DirectMessageComponent implements OnInit {
   stateControl = inject(StateControlService);
   readonly userDialog = inject(MatDialog);
   messages: Message[] = [];
-  currentChatId: string = '';
+  currentChatId = '';
   private auth = inject(Auth);
 
   @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
 
-  textArea: string = '';
-  channelId: string = '';
-  textAreaId: string = '';
-  textAreaEdited: boolean = false;
+  textArea = '';
+  channelId = '';
+  textAreaId = '';
+  textAreaEdited = false;
 
     /**
    * Scrolls to the bottom of the chat window when the view is checked
@@ -119,6 +118,8 @@ export class DirectMessageComponent implements OnInit {
       await this.ms.loadMessageReceiverFromIndexDB();
       this.router.navigate(['main/messages', this.currentChatId]);
       await this.ms.loadMessagesFromChat(this.currentChatId);
-    } catch (error) {}
+    } catch (error: unknown) {
+      console.error('Direct message navigation failed:', error);
+    }
   }
 }

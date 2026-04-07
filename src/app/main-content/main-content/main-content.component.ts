@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-side-left.component';
@@ -12,19 +12,18 @@ import { UserServiceService } from '../../services/user-service/user-service.ser
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
 
 @Component({
-  selector: 'app-main-content',
-  standalone: true,
-  imports: [
-    CommonModule,
-    HeaderComponent,
-    MenuSideLeftComponent,
-    ThreadAnswerComponent,
-    RouterModule,
-  ],
-  templateUrl: './main-content.component.html',
-  styleUrl: './main-content.component.scss',
+    selector: 'app-main-content',
+    imports: [
+        CommonModule,
+        HeaderComponent,
+        MenuSideLeftComponent,
+        ThreadAnswerComponent,
+        RouterModule,
+    ],
+    templateUrl: './main-content.component.html',
+    styleUrl: './main-content.component.scss'
 })
-export class MainContentComponent implements OnInit {
+export class MainContentComponent implements OnInit, OnDestroy {
   /**
    * inject the StateControlService to access the global state
    * inject the UserServiceService to access the user list

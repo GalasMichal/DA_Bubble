@@ -11,11 +11,10 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 
 @Component({
-  selector: 'app-header-dialog',
-  standalone: true,
-  imports: [MatDialogContent],
-  templateUrl: './header-dialog.component.html',
-  styleUrl: './header-dialog.component.scss',
+    selector: 'app-header-dialog',
+    imports: [MatDialogContent],
+    templateUrl: './header-dialog.component.html',
+    styleUrl: './header-dialog.component.scss'
 })
 export class HeaderDialogComponent {
   readonly dialog = inject(MatDialog);

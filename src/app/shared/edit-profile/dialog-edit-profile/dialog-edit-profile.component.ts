@@ -7,11 +7,10 @@ import { StateControlService } from '../../../services/state-control/state-contr
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 @Component({
-  selector: 'app-dialog-edit-profile',
-  standalone: true,
-  imports: [CloseComponent],
-  templateUrl: './dialog-edit-profile.component.html',
-  styleUrl: './dialog-edit-profile.component.scss'
+    selector: 'app-dialog-edit-profile',
+    imports: [CloseComponent],
+    templateUrl: './dialog-edit-profile.component.html',
+    styleUrl: './dialog-edit-profile.component.scss'
 })
 export class DialogEditProfileComponent {
 

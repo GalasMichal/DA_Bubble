@@ -13,11 +13,10 @@ import { AvatarComponent } from '../avatar/avatar.component';
 import { CloseComponent } from '../component/close/close.component';
 
 @Component({
-  selector: 'app-search',
-  standalone: true,
-  imports: [CommonModule, FormsModule, AvatarComponent, CloseComponent],
-  templateUrl: './search.component.html',
-  styleUrl: './search.component.scss',
+    selector: 'app-search',
+    imports: [CommonModule, FormsModule, AvatarComponent, CloseComponent],
+    templateUrl: './search.component.html',
+    styleUrl: './search.component.scss'
 })
 export class SearchComponent {
   stateControl = inject(StateControlService);
@@ -30,10 +29,10 @@ export class SearchComponent {
   searchTerm = '';
   userResults: User[] = [];
   channelResults: Channel[] = [];
-  allResults: Array<any> = [];
-  currentIndex: number = -1;
+  allResults: any[] = [];
+  currentIndex = -1;
   isResultsVisible = false;
-  @Input() placeholderText: string = '';
+  @Input() placeholderText = '';
   currentUserChannels = computed(() => this.chat.channels());
 
   /**

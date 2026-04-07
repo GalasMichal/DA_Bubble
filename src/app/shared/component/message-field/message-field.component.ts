@@ -24,17 +24,16 @@ import { User } from '../../../models/interfaces/user.model';
 import { Timestamp } from 'firebase/firestore';
 
 @Component({
-  selector: 'app-message-field',
-  standalone: true,
-  imports: [
-    FormsModule,
-    PickerComponent,
-    CommonModule,
-    CloseComponent,
-    AvatarComponent,
-  ],
-  templateUrl: './message-field.component.html',
-  styleUrl: './message-field.component.scss',
+    selector: 'app-message-field',
+    imports: [
+        FormsModule,
+        PickerComponent,
+        CommonModule,
+        CloseComponent,
+        AvatarComponent,
+    ],
+    templateUrl: './message-field.component.html',
+    styleUrl: './message-field.component.scss'
 })
 export class MessageFieldComponent {
   chat = inject(ChatRoomService);
@@ -44,19 +43,19 @@ export class MessageFieldComponent {
   msg = inject(MessageService);
   storageService = inject(StorageService);
 
-  textArea: string = '';
-  isEmojiPickerVisible: boolean = false;
+  textArea = '';
+  isEmojiPickerVisible = false;
   selectedFile: File | null = null;
   currentChannel = computed(() => this.chat.currentChannelSignal());
-  isUsersPickerVisible: boolean = false;
+  isUsersPickerVisible = false;
 
   @Input() isThreadAnswerOpen = false;
-  @Input() textAreaEdit: string = '';
-  @Input() channelIdEdit: string = '';
-  @Input() textAreaEditId: string = '';
-  @Input() textAreaIsEdited: boolean = false;
+  @Input() textAreaEdit = '';
+  @Input() channelIdEdit = '';
+  @Input() textAreaEditId = '';
+  @Input() textAreaIsEdited = false;
   @Output() editStatusChange = new EventEmitter<boolean>();
-  @Input() directMessage: boolean = false;
+  @Input() directMessage = false;
   selectedMessage = computed(() => this.userService.selectedUserMessage());
   editMessage = false;
   editedMessageObject: Message | null = null;
@@ -96,8 +95,6 @@ export class MessageFieldComponent {
    */
 
   async sendMessage() {
-    console.log('CHANNEL');
-
     this.stateControl.scrollToBottomGlobal = true;
     if (this.editMessage && this.textArea !== '' && this.editedMessageObject) {
       await this.chat.updateMessageTextInFirestore(
@@ -124,7 +121,7 @@ export class MessageFieldComponent {
   private async processNewMessage() {
     const currentUser = this.fb.currentUser();
     if (!currentUser || !this.currentChannel()) return;
-    let newMessage = this.createMessage(this.currentChannel()!.chanId);
+    const newMessage = this.createMessage(this.currentChannel()!.chanId);
     if (this.selectedFile) {
       newMessage.storageData = await this.uploadChatImage(
         this.currentChannel()!.chanId,
@@ -211,7 +208,7 @@ export class MessageFieldComponent {
       this.closeEdit();
       return;
     }
-    let newMessage = this.createMessage(collRef);
+    const newMessage = this.createMessage(collRef);
     if (this.selectedFile) {
       newMessage.storageData = await this.uploadDirectMessageImage(
         collRef,

@@ -15,11 +15,10 @@ import { UserServiceService } from '../../../services/user-service/user-service.
 import { User } from '../../../models/interfaces/user.model';
 
 @Component({
-  selector: 'app-channel-edit',
-  standalone: true,
-  imports: [CloseComponent, CommonModule, FormsModule, ToastComponent],
-  templateUrl: './channel-edit.component.html',
-  styleUrl: './channel-edit.component.scss',
+    selector: 'app-channel-edit',
+    imports: [CloseComponent, CommonModule, FormsModule, ToastComponent],
+    templateUrl: './channel-edit.component.html',
+    styleUrl: './channel-edit.component.scss'
 })
 export class ChannelEditComponent {
   /**
@@ -39,8 +38,8 @@ export class ChannelEditComponent {
   fb = inject(FirebaseService);
   router = inject(Router);
 
-  channelEditTitel: boolean = false;
-  channelEditDescription: boolean = false;
+  channelEditTitel = false;
+  channelEditDescription = false;
 
   /**
    * Get the current channel from the chat room service signal
@@ -49,9 +48,9 @@ export class ChannelEditComponent {
 
   channelName = this.currentChannel()?.channelName;
   channelDescription = this.currentChannel()?.channelDescription;
-  newTitle: string = '';
-  newDescription: string = '';
-  counter: number = 0;
+  newTitle = '';
+  newDescription = '';
+  counter = 0;
   /**
    * Check if the user is the creator of the channel
    */

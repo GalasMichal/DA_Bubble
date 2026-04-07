@@ -16,27 +16,26 @@ import { BackComponent } from '../back/back.component';
 import { CloseComponent } from '../close/close.component';
 
 @Component({
-  selector: 'app-delete-account',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CloseComponent,
-  ],
-  templateUrl: './delete-account.component.html',
-  styleUrl: './delete-account.component.scss',
+    selector: 'app-delete-account',
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CloseComponent,
+    ],
+    templateUrl: './delete-account.component.html',
+    styleUrl: './delete-account.component.scss'
 })
 export class DeleteAccountComponent {
   fb = inject(FirebaseService);
   stateControl = inject(StateControlService);
   formBuilder = inject(FormBuilder);
-  isPasswordTopVisible: boolean = false;
+  isPasswordTopVisible = false;
 
   deleteForm: FormGroup;
 
-  isFormValid: boolean = false;
+  isFormValid = false;
 
   /**
    * Creates a new instance of the DeleteAccountComponent.

@@ -7,11 +7,10 @@ import { StateControlService } from '../../services/state-control/state-control.
 import { ToastComponent } from '../../shared/component/toast/toast.component';
 
 @Component({
-  selector: 'app-landing-layout',
-  standalone: true,
-  imports: [CommonModule, ToastComponent, RouterOutlet, HeaderLandingComponent, FooterComponent, RouterLink],
-  templateUrl: './landing-layout.component.html',
-  styleUrl: './landing-layout.component.scss'
+    selector: 'app-landing-layout',
+    imports: [CommonModule, ToastComponent, RouterOutlet, HeaderLandingComponent, FooterComponent, RouterLink],
+    templateUrl: './landing-layout.component.html',
+    styleUrl: './landing-layout.component.scss'
 })
 export class LandingLayoutComponent {
   stateControl = inject(StateControlService)

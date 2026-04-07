@@ -7,11 +7,10 @@ import { StateControlService } from '../../../services/state-control/state-contr
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 @Component({
-  selector: 'app-confirm-delete-channel',
-  standalone: true,
-  imports: [CommonModule, RouterModule, CloseComponent],
-  templateUrl: './confirm-leave-channel.component.html',
-  styleUrl: './confirm-leave-channel.component.scss',
+    selector: 'app-confirm-delete-channel',
+    imports: [CommonModule, RouterModule, CloseComponent],
+    templateUrl: './confirm-leave-channel.component.html',
+    styleUrl: './confirm-leave-channel.component.scss'
 })
 export class ConfirmLeaveChannelComponent {
   readonly dialog = inject(MatDialogRef<ConfirmLeaveChannelComponent>);

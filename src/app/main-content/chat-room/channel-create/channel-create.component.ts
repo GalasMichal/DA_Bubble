@@ -18,26 +18,25 @@ import { StateControlService } from '../../../services/state-control/state-contr
 import { UserServiceService } from '../../../services/user-service/user-service.service';
 
 @Component({
-  selector: 'app-channel-create',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    InputAddUsersComponent,
-    CloseComponent,
-  ],
-  templateUrl: './channel-create.component.html',
-  styleUrl: './channel-create.component.scss',
+    selector: 'app-channel-create',
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        ReactiveFormsModule,
+        InputAddUsersComponent,
+        CloseComponent,
+    ],
+    templateUrl: './channel-create.component.html',
+    styleUrl: './channel-create.component.scss'
 })
 export class ChannelCreateComponent {
-  hiddenChannel: boolean = true;
+  hiddenChannel = true;
   channelForm: FormGroup;
-  selectedOption: string = '';
-  isSpecificPeople: boolean = false;
+  selectedOption = '';
+  isSpecificPeople = false;
   choosenSpecificPeople: string[] = [];
-  allMembers: boolean = false;
+  allMembers = false;
   allMembersInChannel: string[] = [];
 
   /**

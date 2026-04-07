@@ -14,11 +14,10 @@ import { User } from '../../models/interfaces/user.model';
 import { ShowImageComponent } from '../component/show-image/show-image.component';
 
 @Component({
-  selector: 'app-profile-single-user',
-  standalone: true,
-  imports: [],
-  templateUrl: './profile-single-user.component.html',
-  styleUrl: './profile-single-user.component.scss',
+    selector: 'app-profile-single-user',
+    imports: [],
+    templateUrl: './profile-single-user.component.html',
+    styleUrl: './profile-single-user.component.scss'
 })
 export class ProfileSingleUserComponent {
   readonly dialog = inject(MatDialogRef<ProfileSingleUserComponent>);

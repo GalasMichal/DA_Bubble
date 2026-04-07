@@ -5,11 +5,10 @@ import { Location } from '@angular/common';
 import { BackComponent } from '../../shared/component/back/back.component';
 
 @Component({
-  selector: 'app-legal',
-  standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, BackComponent],
-  templateUrl: './legal.component.html',
-  styleUrls: ['./legal.component.scss', './legal.component.media.scss'],
+    selector: 'app-legal',
+    imports: [CommonModule, RouterModule, RouterLink, BackComponent],
+    templateUrl: './legal.component.html',
+    styleUrls: ['./legal.component.scss', './legal.component.media.scss']
 })
 export class LegalComponent {
   readonly location = inject(Location);

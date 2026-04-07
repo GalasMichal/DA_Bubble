@@ -9,17 +9,16 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { CloseComponent } from '../close/close.component';
 
 @Component({
-  selector: 'app-confirm-delete-account',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CloseComponent,
-  ],
-  templateUrl: './confirm-delete-account.component.html',
-  styleUrl: './confirm-delete-account.component.scss',
+    selector: 'app-confirm-delete-account',
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CloseComponent,
+    ],
+    templateUrl: './confirm-delete-account.component.html',
+    styleUrl: './confirm-delete-account.component.scss'
 })
 export class ConfirmDeleteAccountComponent {
   readonly dialog = inject(MatDialogRef<ConfirmDeleteAccountComponent>);

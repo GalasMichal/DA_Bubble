@@ -8,11 +8,10 @@ import { CreateAvatarComponent } from '../../landing-page/create-avatar/create-a
 import { PwdRecoveryComponent } from '../../landing-page/pwd-recovery/pwd-recovery.component';
 
 @Component({
-  selector: 'app-profil',
-  standalone: true,
-  imports: [AvatarComponent, CloseComponent],
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss',
+    selector: 'app-profil',
+    imports: [AvatarComponent, CloseComponent],
+    templateUrl: './profile.component.html',
+    styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
   readonly dialog = inject(MatDialogRef<ProfileComponent>);

@@ -7,11 +7,10 @@ import { AvatarComponent } from '../avatar/avatar.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [LogoComponent, SearchComponent, AvatarComponent],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+    selector: 'app-header',
+    imports: [LogoComponent, SearchComponent, AvatarComponent],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   dialog = inject(MatDialog);

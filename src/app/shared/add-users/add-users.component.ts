@@ -6,11 +6,10 @@ import { CloseComponent } from '../component/close/close.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
-  selector: 'app-add-users',
-  standalone: true,
-  imports: [MatDialogContent, InputAddUsersComponent, CloseComponent],
-  templateUrl: './add-users.component.html',
-  styleUrl: './add-users.component.scss',
+    selector: 'app-add-users',
+    imports: [MatDialogContent, InputAddUsersComponent, CloseComponent],
+    templateUrl: './add-users.component.html',
+    styleUrl: './add-users.component.scss'
 })
 export class AddUsersComponent {
   /**
@@ -24,7 +23,7 @@ export class AddUsersComponent {
    * It returns the current channel signal from the chat service
    */
   currentChannel = computed(() => this.chat.currentChannelSignal());
-  activeButton: boolean = false;
+  activeButton = false;
 
   /**
    * Closes the add users dialog.

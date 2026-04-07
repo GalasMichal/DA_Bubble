@@ -20,19 +20,18 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CreateAvatarComponent } from '../create-avatar/create-avatar.component';
 
 @Component({
-  selector: 'app-pwd-recovery',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterLink,
-    FormsModule,
-    ReactiveFormsModule,
-    BackComponent,
-    CloseComponent,
-  ],
-  templateUrl: './pwd-recovery.component.html',
-  styleUrl: './pwd-recovery.component.scss',
+    selector: 'app-pwd-recovery',
+    imports: [
+        CommonModule,
+        RouterModule,
+        RouterLink,
+        FormsModule,
+        ReactiveFormsModule,
+        BackComponent,
+        CloseComponent,
+    ],
+    templateUrl: './pwd-recovery.component.html',
+    styleUrl: './pwd-recovery.component.scss'
 })
 export class PwdRecoveryComponent {
   /**
@@ -49,7 +48,7 @@ export class PwdRecoveryComponent {
    * Create the form group for the password recovery form
    */
   recoveryForm: FormGroup;
-  isFormValid: boolean = false;
+  isFormValid = false;
 
   /**
    * Constructor initializes the form group

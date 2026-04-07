@@ -12,11 +12,10 @@ import { CommonModule } from '@angular/common';
 import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink]
 })
 export class LoginComponent {
   /**
@@ -29,7 +28,7 @@ export class LoginComponent {
    * The login form.
    */
   loginForm: FormGroup;
-  isFormSubmitted: boolean = false;
+  isFormSubmitted = false;
   isPasswordVisible = false;
 
   /**
@@ -70,8 +69,6 @@ export class LoginComponent {
         .then(() => {
           this.fb.loadAllBackendData();
         });
-    } else {
-      console.log('Formular ist ungültig');
     }
   }
 

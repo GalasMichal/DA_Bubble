@@ -32,7 +32,7 @@ export class MessageService {
   user = inject(UserServiceService);
   router = inject(Router);
   currentMessageChannelId = '';
-  currentMessageId: string = '';
+  currentMessageId = '';
   currentMessageData!: PrivateChat;
   unsubscribe: any;
   messages = signal<Message[]>([]);

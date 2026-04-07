@@ -18,16 +18,15 @@ import { UserServiceService } from '../../services/user-service/user-service.ser
 import { DialogEditProfileComponent } from './dialog-edit-profile/dialog-edit-profile.component';
 
 @Component({
-  selector: 'app-edit-profile',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatDialogContent,
-    AvatarComponent,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './edit-profile.component.html',
-  styleUrl: './edit-profile.component.scss',
+    selector: 'app-edit-profile',
+    imports: [
+        CommonModule,
+        MatDialogContent,
+        AvatarComponent,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './edit-profile.component.html',
+    styleUrl: './edit-profile.component.scss'
 })
 export class EditProfileComponent {
   readonly dialog = inject(MatDialogRef<EditProfileComponent>);
@@ -72,8 +71,8 @@ export class EditProfileComponent {
   saveDialogEdit() {
     const uId = this.fb.currentUser()?.uId;
     let newNameNewEmail;
-    let inputNameValue = this.userForm.get('userName')?.value;
-    let inputEmailValue = this.userForm.get('userEmail')?.value;
+    const inputNameValue = this.userForm.get('userName')?.value;
+    const inputEmailValue = this.userForm.get('userEmail')?.value;
     if (uId) {
       newNameNewEmail = doc(this.fb.firestore, 'users', uId);
     }

@@ -14,18 +14,17 @@ interface ProfileAvatar {
 }
 
 @Component({
-  selector: 'app-create-avatar',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    RouterModule,
-    BackComponent,
-    CloseComponent,
-    MatDialogModule,
-  ],
-  templateUrl: './create-avatar.component.html',
-  styleUrls: ['./create-avatar.component.scss'],
+    selector: 'app-create-avatar',
+    imports: [
+        CommonModule,
+        RouterLink,
+        RouterModule,
+        BackComponent,
+        CloseComponent,
+        MatDialogModule,
+    ],
+    templateUrl: './create-avatar.component.html',
+    styleUrls: ['./create-avatar.component.scss']
 })
 export class CreateAvatarComponent {
   dialog = inject(MatDialogRef<CreateAvatarComponent>, { optional: true });
@@ -34,9 +33,9 @@ export class CreateAvatarComponent {
   user = inject(UserServiceService);
   router = inject(Router);
   stateControl = inject(StateControlService);
-  selectedAvatar: string = 'assets/media/icons/profile-icons/profile-icon.svg';
+  selectedAvatar = 'assets/media/icons/profile-icons/profile-icon.svg';
   file: any;
-  isSelected: boolean = false;
+  isSelected = false;
 
   profileAvatars: ProfileAvatar[] = [
     { name: 'assets/media/icons/profile-icons/user-1-elise.svg' },
@@ -65,7 +64,6 @@ export class CreateAvatarComponent {
     this.readURL(file);
     this.st.uploadMsg.set(file.name);
     this.file = file;
-    console.log('file', file);
     this.isSelected = true;
   }
 

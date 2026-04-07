@@ -8,11 +8,10 @@ import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 
 @Component({
-  selector: 'app-confirm-delete-channel',
-  standalone: true,
-  imports: [CommonModule, RouterModule, CloseComponent],
-  templateUrl: './confirm-delete-channel.component.html',
-  styleUrl: './confirm-delete-channel.component.scss',
+    selector: 'app-confirm-delete-channel',
+    imports: [CommonModule, RouterModule, CloseComponent],
+    templateUrl: './confirm-delete-channel.component.html',
+    styleUrl: './confirm-delete-channel.component.scss'
 })
 export class ConfirmDeleteChannelComponent {
   readonly dialog = inject(MatDialogRef<ConfirmDeleteChannelComponent>);

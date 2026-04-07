@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FirebaseService } from './services/firebase/firebase.service';
 import { StateControlService } from './services/state-control/state-control.service';
 import { Observable } from 'rxjs';
 import { User as FirebaseUser } from '@angular/fire/auth';
@@ -9,24 +8,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserServiceService } from './services/user-service/user-service.service';
 import { LoaderComponent } from './shared/component/loader/loader.component';
 @Component({
-  selector: 'app-root',
-  standalone: true,
-
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterOutlet,
-    ReactiveFormsModule,
-    LoaderComponent,
-  ],
-
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+    selector: 'app-root',
+    imports: [
+        CommonModule,
+        RouterModule,
+        RouterOutlet,
+        ReactiveFormsModule,
+        LoaderComponent,
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   title = 'dabubble';
   stateControl = inject(StateControlService);
-  loading = signal(true);
+  loading = signal(false);
   userService = inject(UserServiceService);
 
   /**
@@ -37,9 +33,9 @@ export class AppComponent implements OnInit {
    * @returns {Observable<FirebaseUser | null>} An observable that tracks the authentication state.
    */
   ngOnInit() {
-    this.getCurrentUser().subscribe((user) => {
-      this.loading.set(false);
-    });
+    // this.getCurrentUser().subscribe((user) => {
+    //   this.loading.set(false);
+    // });
   }
 
   /**

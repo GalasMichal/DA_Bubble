@@ -5,7 +5,7 @@ import {
   inject,
   OnDestroy,
   OnInit,
-  ViewChild,
+  ViewChild, AfterViewChecked,
 } from '@angular/core';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,28 +27,27 @@ import { Channel } from '../../models/interfaces/channel.model';
 import { LoaderComponent } from '../../shared/component/loader/loader.component';
 
 @Component({
-  selector: 'app-chat-room',
-  standalone: true,
-  imports: [
-    MessageFieldComponent,
-    MessageAnswerComponent,
-    CommonModule,
-    AvatarComponent,
-  ],
-  templateUrl: './chat-room.component.html',
-  styleUrls: ['./chat-room.component.scss'],
+    selector: 'app-chat-room',
+    imports: [
+        MessageFieldComponent,
+        MessageAnswerComponent,
+        CommonModule,
+        AvatarComponent,
+    ],
+    templateUrl: './chat-room.component.html',
+    styleUrls: ['./chat-room.component.scss']
 })
-export class ChatRoomComponent implements OnInit, OnDestroy {
+export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   allUserMessages: Message[] = [];
   channelData: Channel | null = null;
-  sumRestOfUser: number = 0;
-  counter: number = 0;
+  sumRestOfUser = 0;
+  counter = 0;
 
     // Variable to edit a message
-  textArea: string = ''; // Verbunden mit dem textarea
-  channelId: string = '';
-  textAreaId: string = '';
-  textAreaEdited: boolean = false;
+  textArea = ''; // Verbunden mit dem textarea
+  channelId = '';
+  textAreaId = '';
+  textAreaEdited = false;
 
   @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
   /**
@@ -98,7 +97,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.chat.unsubscribeAll();
   }
 
-  isVisible: boolean = false;
+  isVisible = false;
 
   /**
    * Scrolls to the bottom of the chat window when the view is checked
@@ -227,7 +226,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
    *  Opens the dialog to edit the channel
    * @param chat - The chat object that contains the channel ID
    */
-  openTeam(chat: Object) {
+  openTeam(chat: object) {
     this.dialog.open(ChannelEditComponent, {
       panelClass: 'team-container',
     });

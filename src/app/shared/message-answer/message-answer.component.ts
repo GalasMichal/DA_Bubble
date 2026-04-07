@@ -5,7 +5,7 @@ import {
   inject,
   Input,
   Output,
-  SimpleChanges,
+  SimpleChanges, OnChanges, OnInit,
 } from '@angular/core';
 import { TimeSeparatorComponent } from './time-separator/time-separator.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
@@ -25,19 +25,18 @@ import { MessageService } from '../../services/messages/message.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-message-answer',
-  standalone: true,
-  imports: [
-    CommonModule,
-    TimeSeparatorComponent,
-    DatePipe,
-    ReactionCloudComponent,
-    PickerComponent,
-  ],
-  templateUrl: './message-answer.component.html',
-  styleUrl: './message-answer.component.scss',
+    selector: 'app-message-answer',
+    imports: [
+        CommonModule,
+        TimeSeparatorComponent,
+        DatePipe,
+        ReactionCloudComponent,
+        PickerComponent,
+    ],
+    templateUrl: './message-answer.component.html',
+    styleUrl: './message-answer.component.scss'
 })
-export class MessageAnswerComponent {
+export class MessageAnswerComponent implements OnChanges, OnInit {
   chat = inject(ChatRoomService);
   firestore = inject(Firestore);
   fb = inject(FirebaseService);
@@ -46,20 +45,20 @@ export class MessageAnswerComponent {
   userService = inject(UserServiceService);
   dialog = inject(MatDialog);
   ms = inject(MessageService);
-  showCloud: boolean = false;
+  showCloud = false;
   isEmojiPickerVisibleMessage: boolean[] = [false];
-  newEmoji: string = '';
+  newEmoji = '';
   route= inject(ActivatedRoute)
 
   currentChannel = computed(() => this.chat.currentChannelSignal());
   directChannel = computed(() => this.ms.messages());
 
 
-  meUser: boolean = false;
+  meUser = false;
 
-  @Input() hideDetails: boolean = false;
-  @Input() index: number = 0;
-  @Input() threadAnswerOpen: boolean = false;
+  @Input() hideDetails = false;
+  @Input() index = 0;
+  @Input() threadAnswerOpen = false;
   @Input() userMessage: Message | null = null;
   @Input() answer: Message | null = null;
   @Output() editMessage = new EventEmitter<{
@@ -113,16 +112,11 @@ export class MessageAnswerComponent {
 
   /**
    * Sets the provided message as the current message to be edited in the MessageService.
-   * Logs the current message to the console for debugging purposes.
    *
    * @param message - The message object to be set for editing.
    */
   editThisMessage(message: Message) {
     this.ms.currentMessageToEdit.set(message);
-    console.log(
-      'wyslalem wiadomosc do servisu',
-      this.ms.currentMessageToEdit()
-    );
     this.editstatus();
   }
 

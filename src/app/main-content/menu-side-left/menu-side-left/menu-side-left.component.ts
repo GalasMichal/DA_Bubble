@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,13 +15,12 @@ import { Channel } from '../../../models/interfaces/channel.model';
 import { StorageService } from '../../../services/storage/storage.service';
 
 @Component({
-  selector: 'app-menu-side-left',
-  standalone: true,
-  imports: [CommonModule, AvatarComponent, SearchComponent],
-  templateUrl: './menu-side-left.component.html',
-  styleUrls: ['./menu-side-left.component.scss'],
+    selector: 'app-menu-side-left',
+    imports: [CommonModule, AvatarComponent, SearchComponent],
+    templateUrl: './menu-side-left.component.html',
+    styleUrls: ['./menu-side-left.component.scss']
 })
-export class MenuSideLeftComponent {
+export class MenuSideLeftComponent implements OnInit {
   isFirstDropdownMenuOpen = true;
   isSecondDropdownMenuOpen = true;
 

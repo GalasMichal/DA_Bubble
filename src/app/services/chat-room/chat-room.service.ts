@@ -33,7 +33,7 @@ export class ChatRoomService {
   /**
    * subscriptions array to manage unsubscribe
    */
-  private subscriptions: { [key: string]: Unsubscribe } = {};
+  private subscriptions: Record<string, Unsubscribe> = {};
 
   public currentChannelSignal = signal<Channel | null>(null);
   channels = signal<Channel[]>([]);
@@ -213,8 +213,8 @@ export class ChatRoomService {
       return [];
     }
     try {
-      let cachedMessages: Message[] = await db.getAll('messages');
-      let filteredMessages: Message[] = cachedMessages.filter(
+      const cachedMessages: Message[] = await db.getAll('messages');
+      const filteredMessages: Message[] = cachedMessages.filter(
         (message) => message.chatId === chanId
       );
       this.messages.set(filteredMessages);

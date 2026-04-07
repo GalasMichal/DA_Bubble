@@ -17,18 +17,17 @@ import { BackComponent } from '../../shared/component/back/back.component';
 import { StateControlService } from '../../services/state-control/state-control.service';
 
 @Component({
-  selector: 'app-pwd-reset',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterLink,
-    FormsModule,
-    ReactiveFormsModule,
-    BackComponent,
-  ],
-  templateUrl: './pwd-reset.component.html',
-  styleUrl: './pwd-reset.component.scss',
+    selector: 'app-pwd-reset',
+    imports: [
+        CommonModule,
+        RouterModule,
+        RouterLink,
+        FormsModule,
+        ReactiveFormsModule,
+        BackComponent,
+    ],
+    templateUrl: './pwd-reset.component.html',
+    styleUrl: './pwd-reset.component.scss'
 })
 export class PwdResetComponent {
   /**
@@ -43,12 +42,12 @@ export class PwdResetComponent {
   /**
    * Create the form group for the password reset form
    */
-  isPasswordTopVisible: boolean = false;
-  isPasswordBottomVisible: boolean = false;
+  isPasswordTopVisible = false;
+  isPasswordBottomVisible = false;
 
   resetForm: FormGroup;
 
-  isFormValid: boolean = false;
+  isFormValid = false;
 
   /**
    * Constructor initializes the form group
@@ -80,7 +79,7 @@ export class PwdResetComponent {
    */
   passwordMatchValidator(
     control: AbstractControl
-  ): { [key: string]: boolean } | null {
+  ): Record<string, boolean> | null {
     const formGroup = control as FormGroup;
     const password1 = formGroup.get('password1')?.value;
     const password2 = formGroup.get('password2')?.value;
