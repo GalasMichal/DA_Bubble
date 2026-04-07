@@ -1,6 +1,6 @@
-@import "./../../../../colors.scss";
-@import "./../../../../styles.scss";
-@import "./../../../../fonts.scss";
+@use 'colors' as *;
+@use 'mixins' as *;
+@use 'fonts' as *;
 
 .selected {
   background: $bg-color !important;
@@ -172,8 +172,32 @@
         }
       }
     }
-    li:nth-of-type(1) button {
-      border-bottom: solid 0.0625rem $primary;
+  }
+}
+
+/*
+ * Trenner vor „Channel hinzufügen“: ::before statt border-top auf der <li>,
+ * damit keine Kollision mit abgerundeten Kanten (keine „U“-Ränder mehr).
+ */
+.channels-wrapper .channels-content ul li.add-channel-row {
+  margin-top: 0.35rem;
+  padding-top: 0.5rem;
+  border-radius: 0;
+
+  &::before {
+    content: '';
+    display: block;
+    height: 1px;
+    margin-bottom: 0.5rem;
+    background: rgba(173, 176, 217, 0.45);
+  }
+
+  button {
+    justify-content: center;
+    text-align: center;
+
+    span {
+      text-align: center;
     }
   }
 }

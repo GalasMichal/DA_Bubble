@@ -1,6 +1,6 @@
-@import '../../../colors.scss';
-@import '../../../styles.scss';
-@import '../../../landing-page.scss';
+@use 'colors' as *;
+@use 'mixins' as *;
+@use 'landing-page' as *;
 
 .wrapper{
   height: 100vh;

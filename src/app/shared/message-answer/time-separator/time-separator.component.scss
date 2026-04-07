@@ -1,6 +1,6 @@
 // @import "./../../../../fonts.scss";
-@import "./../../../../colors.scss";
-@import "./../../../../styles.scss";
+@use 'colors' as *;
+@use 'mixins' as *;
 
 .time-separator {
   display: flex;

@@ -1,6 +1,6 @@
-@import "../../../../colors.scss";
-@import "../../../../styles.scss";
-@import "../../../../fonts.scss";
+@use 'colors' as *;
+@use 'mixins' as *;
+@use 'fonts' as *;
 
 /* CONTAINER */
 .container {

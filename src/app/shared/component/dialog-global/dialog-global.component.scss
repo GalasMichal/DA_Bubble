@@ -1,6 +1,6 @@
-@import "./../../../../colors.scss";
-@import "./../../../../fonts.scss";
-@import "./../../../../styles.scss";
+@use 'colors' as *;
+@use 'fonts' as *;
+@use 'mixins' as *;
 
 .main-content {
     display: flex;

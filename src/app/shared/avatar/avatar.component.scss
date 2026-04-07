@@ -1,6 +1,6 @@
-@import "./../../../colors.scss";
-@import "./../../../styles.scss";
-@import "./../../../animations.scss";
+@use 'colors' as *;
+@use 'mixins' as *;
+@use 'animations' as *;
 
 ::ng-deep {
   .user-avatar {

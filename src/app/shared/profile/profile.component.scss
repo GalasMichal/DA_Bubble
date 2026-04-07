@@ -1,5 +1,5 @@
-@import "./../../../colors.scss";
-@import "./../../../styles.scss";
+@use 'colors' as *;
+@use 'mixins' as *;
 
 .profile-content {
   display: flex;
