@@ -1,4 +1,12 @@
-import { Component, computed, inject, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  Injector,
+  OnDestroy,
+  OnInit,
+  runInInjectionContext,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { MenuSideLeftComponent } from '../menu-side-left/menu-side-left/menu-side-left.component';
@@ -40,6 +48,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
   public db = inject(FirebaseService);
   router = inject(Router);
   private auth = inject(Auth);
+  private readonly injector = inject(Injector);
 
   /**
    * currentChannel is a computed property that returns the current channel from the chat service
@@ -53,18 +62,20 @@ export class MainContentComponent implements OnInit, OnDestroy {
    * onAuthStateChanged: Profil laden, lokale ChatDB mit Firestore abgleichen (Fehler loggen, UI bleibt nutzbar), Listener.
    */
   ngOnInit(): void {
-    onAuthStateChanged(this.auth, async (user) => {
-      if (user) {
-        try {
-          await this.db.getUserByUid(user.uid);
-          await this.localDbSync.runLocalChatStorageSyncAfterLogin();
-        } catch (e) {
-          console.error('MainContent: Profil oder Chat-DB-Sync fehlgeschlagen', e);
+    runInInjectionContext(this.injector, () => {
+      onAuthStateChanged(this.auth, async (user) => {
+        if (user) {
+          try {
+            await this.db.getUserByUid(user.uid);
+            await this.localDbSync.runLocalChatStorageSyncAfterLogin();
+          } catch (e) {
+            console.error('MainContent: Profil oder Chat-DB-Sync fehlgeschlagen', e);
+          }
+          this.chat.subscribeToFirestoreChannels();
+        } else {
+          this.router.navigate(['']);
         }
-        this.chat.subscribeToFirestoreChannels();
-      } else {
-        this.router.navigate(['']);
-      }
+      });
     });
   }
 
