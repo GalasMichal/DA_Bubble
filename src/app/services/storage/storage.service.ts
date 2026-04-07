@@ -1,6 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { Storage } from '@angular/fire/storage';
 import {
-  getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
@@ -10,6 +10,7 @@ import {
   providedIn: 'root',
 })
 export class StorageService {
+  private storage = inject(Storage);
   /**
    * signal for preview status
    */
@@ -18,11 +19,6 @@ export class StorageService {
    * signal for upload status
    */
   uploadMsg2 = signal('');
-
-  /**
-   * firebase storage initialisation
-   */
-  private storage = getStorage();
 
   /**
    * function to upload file to firebase storage
@@ -39,7 +35,9 @@ export class StorageService {
   ): Promise<string> {
     const filePath = `${folder}/${fileName}/${file.name}`;
     const fileRef = ref(this.storage, filePath);
-    const task = uploadBytesResumable(fileRef, file);
+    const task = uploadBytesResumable(fileRef, file, {
+      contentType: file.type || 'application/octet-stream',
+    });
 
     return new Promise((resolve, reject) => {
       task.on(

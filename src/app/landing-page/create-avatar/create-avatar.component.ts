@@ -84,29 +84,39 @@ export class CreateAvatarComponent {
    * @param {string} text - The text to display in the toast message.
    */
   async closeCreateAvatar(text: string) {
-    if (this.file) {
-      // Hochladen des Benutzer-Avatars
-      const downloadUrl = await this.st.uploadFileToStorage(
-        'avatars',
-        this.db.currentUser()!.uId,
-        this.file
-      );
-      if (downloadUrl) {
-        this.selectedAvatar = downloadUrl;
+    try {
+      if (this.file) {
+        const downloadUrl = await this.st.uploadFileToStorage(
+          'avatars',
+          this.db.currentUser()!.uId,
+          this.file
+        );
+        if (downloadUrl) {
+          this.selectedAvatar = downloadUrl;
+        }
+      } else if (this.isSelected) {
+        // Avatar wurde aus der Liste gewählt
+      } else {
+        this.selectedAvatar =
+          'assets/media/icons/profile-icons/profile-icon.svg';
       }
-    } else if (this.isSelected) {
-      // Avatar wurde ausgewählt
-    } else {
-      this.selectedAvatar = 'assets/media/icons/profile-icons/profile-icon.svg';
+
+      await this.user.updateUserAvatar(
+        this.db.currentUser()!.uId,
+        this.selectedAvatar
+      );
+      await this.db.getUserByUid(this.db.currentUser()!.uId);
+
+      this.showToast(text);
+      this.closeEditAvatar();
+    } catch (e) {
+      console.error('Avatar konnte nicht gespeichert werden:', e);
+      this.stateControl.showToast = true;
+      this.stateControl.showToastText.set(
+        'Avatar-Upload fehlgeschlagen. Bitte erneut versuchen.'
+      );
+      this.stateControl.removeShowToast();
     }
-
-    // Update the user's avatar in Firestore
-    this.user.updateUserAvatar(this.db.currentUser()!.uId, this.selectedAvatar);
-    await this.db.getUserByUid(this.db.currentUser()!.uId); // Refresh user data
-
-    // Show a toast message and navigate
-    this.showToast(text);
-    this.closeEditAvatar();
   }
 
   /**
