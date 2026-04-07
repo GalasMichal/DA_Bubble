@@ -1,6 +1,15 @@
-@import "./colors.scss";
-@import "@angular/cdk/overlay-prebuilt.css";
-@import "@ctrl/ngx-emoji-mart/picker";
+@use 'colors' as *;
+@use 'mixins' as *;
+@use 'sass:meta';
+
+@include meta.load-css('@angular/cdk/overlay-prebuilt.css');
+@include meta.load-css('@ctrl/ngx-emoji-mart/picker');
+
+.name {
+  color: $primary;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
 
 /*
   1. Use a more-intuitive box-sizing model.
@@ -158,12 +167,6 @@ button {
   word-break: break-all;
 }
 
-$b-radius-1: 1.875rem;
-$b-radius-2: 3.125rem;
-$b-radius-3: 1.25rem;
-$padding-dialog: 2.1875rem;
-$padding-global: 0.625rem;
-
 app-search {
   display: contents;
 }
@@ -174,10 +177,6 @@ app-search {
 
 .d-none {
   display: none;
-}
-
-@mixin firstTranistion() {
-  transition: all 175ms ease-in-out;
 }
 
 app-footer {

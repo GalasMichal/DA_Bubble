@@ -1,3 +1,5 @@
+@use 'colors' as *;
+
 @keyframes pulse-effect {
   0% {
     transform: scale(0.9);
