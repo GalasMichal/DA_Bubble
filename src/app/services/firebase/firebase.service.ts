@@ -31,7 +31,7 @@ import {
   signInAnonymously,
 } from 'firebase/auth';
 import { StateControlService } from '../state-control/state-control.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.firebase';
 import { DeleteAccountComponent } from '../../shared/component/delete-account/delete-account.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteAccountComponent } from '../../shared/component/confirm-delete-account/confirm-delete-account.component';

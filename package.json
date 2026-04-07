@@ -3,12 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "postinstall": "node scripts/use-local-env.cjs postinstall",
+    "prestart": "node scripts/use-local-env.cjs serve",
     "start": "ng serve",
-    "build": "ng build",
+    "prewatch": "node scripts/use-local-env.cjs serve",
+    "build": "node scripts/use-local-env.cjs build && ng build",
+    "postbuild": "node scripts/use-local-env.cjs serve",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "node scripts/use-local-env.cjs serve && ng test",
     "serve:ssr:dabubble": "node dist/da-bubble/server/server.mjs",
-    "lint": "ng lint"
+    "lint": "node scripts/use-local-env.cjs serve && ng lint",
+    "env:local": "node scripts/use-local-env.cjs serve"
   },
   "private": true,
   "dependencies": {

@@ -1,9 +1,5 @@
 import { AppEnvironment } from './environment.types';
 
-/**
- * Production build — replace placeholders with your Firebase web app config
- * (Firebase Console → Project settings → Your apps).
- */
 export const environment: AppEnvironment = {
   production: true,
   firebase: {

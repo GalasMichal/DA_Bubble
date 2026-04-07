@@ -54,3 +54,5 @@ Thumbs.db
 
 # Local Firebase config (real keys — never commit)
 src/environments/environment.local.ts
+# Generated for Firebase init (copy of local or placeholders; never commit)
+src/environments/environment.firebase.ts

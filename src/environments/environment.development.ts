@@ -1,6 +1,6 @@
 import { AppEnvironment } from './environment.types';
 
-/** Dev build (`ng serve`) — same shape as production; fill with your dev/staging app. */
+/** Local / dev build — same Firebase project as production unless you add a staging app. */
 export const environment: AppEnvironment = {
   production: false,
   firebase: {
