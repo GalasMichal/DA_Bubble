@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector, runInInjectionContext } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { doc, getDoc } from '@angular/fire/firestore';
 import { openDB } from 'idb';
@@ -23,6 +23,11 @@ export class LocalDbSyncService {
   private readonly firebase = inject(FirebaseService);
   private readonly chat = inject(ChatRoomService);
   private readonly auth = inject(Auth);
+  private readonly injector = inject(Injector);
+
+  private fbCtx<T>(fn: () => T): T {
+    return runInInjectionContext(this.injector, fn);
+  }
   private lastSyncForUid: { uid: string; at: number } | null = null;
 
   /** Wie ChatRoomService: Profil-UID oder Auth-UID (Profil kann kurz fehlen). */
@@ -88,7 +93,7 @@ export class LocalDbSyncService {
         continue;
       }
       const mref = doc(fs, 'channels', cid, 'messages', mid);
-      const msnap = await getDoc(mref);
+      const msnap = await this.fbCtx(() => getDoc(mref));
       if (!msnap.exists()) {
         await db.delete('messages', mid);
       }
@@ -100,7 +105,7 @@ export class LocalDbSyncService {
         const chatId = row.chatId;
         if (!chatId) continue;
         const pref = doc(fs, 'privateMessages', chatId);
-        const psnap = await getDoc(pref);
+        const psnap = await this.fbCtx(() => getDoc(pref));
         if (!psnap.exists()) {
           await db.delete('directMessages', chatId);
         }
@@ -112,7 +117,7 @@ export class LocalDbSyncService {
       for (const u of receivers as User[]) {
         if (!u.uId) continue;
         const uref = doc(fs, 'users', u.uId);
-        const usnap = await getDoc(uref);
+        const usnap = await this.fbCtx(() => getDoc(uref));
         if (!usnap.exists()) {
           await db.delete('messageReceivers', u.uId);
         }
