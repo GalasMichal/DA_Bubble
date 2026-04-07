@@ -1,0 +1,16 @@
+rules_version = '2';
+
+// Avatars: jeder darf lesen (öffentliche URLs), nur der Besitzer darf in seinen Ordner schreiben.
+// Chats: authentifizierte Nutzer dürfen Dateien in Chat-Ordnern hochladen und lesen.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /avatars/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /chats/{chatId}/{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
