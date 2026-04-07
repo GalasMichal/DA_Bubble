@@ -7,6 +7,7 @@ import {
   OnInit,
   ViewChild, AfterViewChecked,
 } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { AddUsersComponent } from '../../shared/add-users/add-users.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageFieldComponent } from '../../shared/component/message-field/message-field.component';
@@ -75,25 +76,32 @@ export class ChatRoomComponent implements OnInit, OnDestroy, AfterViewChecked {
   currentChannel = computed(() => this.chat.currentChannelSignal());
   currentMessage = computed(() => this.chat.messages());
 
+  private readonly destroy$ = new Subject<void>();
 
   /**
-   * receives the channel ID from the URL and loads the current channel and messages after a refresh
-   * @returns {void}
+   * Kanal aus der URL — bei jedem Wechsel ( dieselbe Komponente ) neu laden, Listener tauschen.
    */
   ngOnInit(): void {
-    this.channelId = this.route.snapshot.paramMap.get('id') || '';
-    if (!this.channelId) return;
-    if (!this.chat.currentChannelSignal()?.chanId) {
-      this.chat.loadCurrentChannelAfterRefresh(this.channelId);
-      this.chat.subscribeToFirestoreMessages(this.channelId);
-    }
-    this.currentChannel = this.chat.getCurrentChannel();
+    this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(async (params) => {
+      const id = params.get('id') || '';
+      if (!id) return;
+      this.channelId = id;
+      const channel = this.chat.channels().find((c) => c.chanId === id);
+      if (channel) {
+        await this.chat.setCurrentChannel(channel);
+      } else {
+        await this.chat.loadCurrentChannelAfterRefresh(id);
+        await this.chat.subscribeToFirestoreMessages(id);
+      }
+    });
   }
 
   /**
    * Unsubscribes from all subscriptions when the component is destroyed
    */
   ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     this.chat.unsubscribeAll();
   }
 

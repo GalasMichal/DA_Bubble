@@ -184,7 +184,7 @@
 
     </div>
 
-    @for (singleMessage of this.currentMessage(); track this.currentMessage; let index = $index, let first = $first,
+    @for (singleMessage of currentMessage(); track singleMessage.messageId ?? $index; let index = $index, let first = $first,
     last = $last) {
     <app-message-answer [userMessage]="singleMessage" [index]="index" (editMessage)="onTextUpdate($event)">
     </app-message-answer>
