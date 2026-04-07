@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { doc, getDoc } from '@angular/fire/firestore';
 import { openDB } from 'idb';
 import { FirebaseService } from '../firebase/firebase.service';
@@ -21,7 +22,15 @@ const SYNC_DEDUP_MS = 4000;
 export class LocalDbSyncService {
   private readonly firebase = inject(FirebaseService);
   private readonly chat = inject(ChatRoomService);
+  private readonly auth = inject(Auth);
   private lastSyncForUid: { uid: string; at: number } | null = null;
+
+  /** Wie ChatRoomService: Profil-UID oder Auth-UID (Profil kann kurz fehlen). */
+  private effectiveUid(): string | null {
+    return (
+      this.firebase.currentUser()?.uId ?? this.auth.currentUser?.uid ?? null
+    );
+  }
 
   private readonly dbPromise = openDB(CHAT_DB, CHAT_DB_VERSION, {
     upgrade(db) {
@@ -45,12 +54,12 @@ export class LocalDbSyncService {
    * Läuft bei jedem Login / jedem Aufruf von `/main` (authGuard + Main-Component; kurze Deduplizierung).
    */
   async runLocalChatStorageSyncAfterLogin(): Promise<void> {
-    const me = this.firebase.currentUser();
-    if (!me?.uId) return;
+    const uid = this.effectiveUid();
+    if (!uid) return;
 
     const now = Date.now();
     if (
-      this.lastSyncForUid?.uid === me.uId &&
+      this.lastSyncForUid?.uid === uid &&
       now - this.lastSyncForUid.at < SYNC_DEDUP_MS
     ) {
       return;
@@ -58,15 +67,14 @@ export class LocalDbSyncService {
 
     await this.chat.reconcileChannelsWithFirestore();
     await this.pruneStaleIndexedDbAgainstFirestore();
-    this.lastSyncForUid = { uid: me.uId, at: now };
+    this.lastSyncForUid = { uid, at: now };
   }
 
   /**
    * Entfernt lokale Einträge ohne passendes Firestore-Dokument (Nachrichten, DMs, Empfänger).
    */
   async pruneStaleIndexedDbAgainstFirestore(): Promise<void> {
-    const me = this.firebase.currentUser();
-    if (!me?.uId) return;
+    if (!this.effectiveUid()) return;
 
     const fs = this.firebase.firestore;
     const db = await this.dbPromise;
