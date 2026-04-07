@@ -31,6 +31,7 @@ import {
   signInAnonymously,
 } from 'firebase/auth';
 import { StateControlService } from '../state-control/state-control.service';
+import { environment } from '../../../environments/environment';
 import { DeleteAccountComponent } from '../../shared/component/delete-account/delete-account.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteAccountComponent } from '../../shared/component/confirm-delete-account/confirm-delete-account.component';
@@ -59,9 +60,9 @@ export class FirebaseService {
   public errorMessageLogin = signal('');
 
   /**
-   * default mainChannel start path
+   * default mainChannel start path (Willkommen)
    */
-  mainChannel: string = '55dO4OXETme2oZEiCPZH'; //Willkommen
+  mainChannel: string = environment.mainChannelId;
 
   constructor(private route: ActivatedRoute) {}
 

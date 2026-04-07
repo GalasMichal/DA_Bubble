@@ -1,11 +1,13 @@
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
 import { provideServerRendering } from '@angular/platform-server';
 import { appConfig } from './app.config';
+import { firebaseAppConfig } from './firebase-app.config';
 
-const serverConfig: ApplicationConfig = {
-  providers: [
-    provideServerRendering()
-  ]
+const serverOnlyConfig: ApplicationConfig = {
+  providers: [provideServerRendering()],
 };
 
-export const config = mergeApplicationConfig(appConfig, serverConfig);
+/** SSR: same Firebase providers as browser (Auth, Firestore, Storage). */
+export const config = mergeApplicationConfig(
+  mergeApplicationConfig(mergeApplicationConfig(appConfig, firebaseAppConfig), serverOnlyConfig)
+);
