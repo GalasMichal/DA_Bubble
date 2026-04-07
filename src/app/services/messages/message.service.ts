@@ -6,6 +6,7 @@ import {
   deleteDoc,
   doc,
   DocumentReference,
+  getDoc,
   getDocs,
   increment,
   onSnapshot,
@@ -22,7 +23,6 @@ import { User } from '../../models/interfaces/user.model';
 import { Router } from '@angular/router';
 import { Message } from '../../models/interfaces/message.model';
 import { openDB } from 'idb';
-import { text } from 'stream/consumers';
 
 @Injectable({
   providedIn: 'root',
@@ -196,9 +196,14 @@ export class MessageService {
       'privateMessages',
       this.currentMessageId
     );
-    this.unsubscribe = onSnapshot(docRef, (doc) => {
-      if (doc.exists()) {
-        this.currentMessageData = doc.data() as PrivateChat;
+    this.unsubscribe = onSnapshot(docRef, async (snap) => {
+      if (snap.exists()) {
+        this.currentMessageData = snap.data() as PrivateChat;
+      } else {
+        const idb = await this.dbPromise;
+        if (idb.objectStoreNames.contains('directMessages')) {
+          await idb.delete('directMessages', this.currentMessageId);
+        }
       }
     });
   }
@@ -214,6 +219,16 @@ export class MessageService {
    */
   async loadMessagesFromChat(chatId: string) {
     this.unsubscribeMessages?.();
+    const chatRef = doc(this.db.firestore, 'privateMessages', chatId);
+    const chatSnap = await getDoc(chatRef);
+    if (!chatSnap.exists()) {
+      const idb = await this.dbPromise;
+      if (idb.objectStoreNames.contains('directMessages')) {
+        await idb.delete('directMessages', chatId);
+      }
+      this.messages.set([]);
+      return;
+    }
     await this.loadLocalMessages(chatId);
     this.setupSnapshotListener(chatId);
   }

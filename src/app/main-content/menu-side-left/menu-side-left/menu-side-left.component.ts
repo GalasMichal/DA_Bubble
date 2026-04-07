@@ -48,7 +48,6 @@ export class MenuSideLeftComponent implements OnInit {
   ngOnInit(): void {
     this.userService.subUserList();
     this.sortListOfUser();
-    this.chat.getChannelsFromIndexedDB();
     this.sortOfAllChannels();
   }
 
