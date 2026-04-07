@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, Injector, runInInjectionContext, signal } from '@angular/core';
 import { FirebaseService } from '../firebase/firebase.service';
 import {
   addDoc,
@@ -31,6 +31,11 @@ export class MessageService {
   db = inject(FirebaseService);
   user = inject(UserServiceService);
   router = inject(Router);
+  private readonly injector = inject(Injector);
+
+  private fbCtx<T>(fn: () => T): T {
+    return runInInjectionContext(this.injector, fn);
+  }
   currentMessageChannelId = '';
   currentMessageId = '';
   currentMessageData!: PrivateChat;
@@ -103,10 +108,12 @@ export class MessageService {
       this.db.firestore,
       `privateMessages/${chatId}/messages`
     );
-    const querySnapshot = await getDocs(messagesCollectionRef);
-    querySnapshot.forEach(async (doc) => {
-      await deleteDoc(doc.ref);
-    });
+    const querySnapshot = await this.fbCtx(() =>
+      getDocs(messagesCollectionRef)
+    );
+    for (const d of querySnapshot.docs) {
+      await this.fbCtx(() => deleteDoc(d.ref));
+    }
   }
 
   /**
@@ -166,7 +173,7 @@ export class MessageService {
     );
     const channelDocRef = doc(channelCollectionRef);
     const privateChat = this.setPrivateObject(channelDocRef, userId);
-    await setDoc(channelDocRef, privateChat);
+    await this.fbCtx(() => setDoc(channelDocRef, privateChat));
     return channelDocRef;
   }
 
@@ -184,7 +191,7 @@ export class MessageService {
     const messageDocRef = doc(messagesCollectionRef); // Erstellt eine neue Dokument-Referenz mit ID
     message.messageId = messageDocRef.id; // Weise die generierte ID der Nachricht zu
 
-    await setDoc(messageDocRef, message); // Speichert das Dokument mit der ID
+    await this.fbCtx(() => setDoc(messageDocRef, message)); // Speichert das Dokument mit der ID
   }
 
   /**
@@ -196,16 +203,18 @@ export class MessageService {
       'privateMessages',
       this.currentMessageId
     );
-    this.unsubscribe = onSnapshot(docRef, async (snap) => {
-      if (snap.exists()) {
-        this.currentMessageData = snap.data() as PrivateChat;
-      } else {
-        const idb = await this.dbPromise;
-        if (idb.objectStoreNames.contains('directMessages')) {
-          await idb.delete('directMessages', this.currentMessageId);
+    this.unsubscribe = this.fbCtx(() =>
+      onSnapshot(docRef, async (snap) => {
+        if (snap.exists()) {
+          this.currentMessageData = snap.data() as PrivateChat;
+        } else {
+          const idb = await this.dbPromise;
+          if (idb.objectStoreNames.contains('directMessages')) {
+            await idb.delete('directMessages', this.currentMessageId);
+          }
         }
-      }
-    });
+      })
+    );
   }
   /**
    * Unsubscribe from the current message data
@@ -220,7 +229,7 @@ export class MessageService {
   async loadMessagesFromChat(chatId: string) {
     this.unsubscribeMessages?.();
     const chatRef = doc(this.db.firestore, 'privateMessages', chatId);
-    const chatSnap = await getDoc(chatRef);
+    const chatSnap = await this.fbCtx(() => getDoc(chatRef));
     if (!chatSnap.exists()) {
       const idb = await this.dbPromise;
       if (idb.objectStoreNames.contains('directMessages')) {
@@ -261,11 +270,13 @@ export class MessageService {
     );
 
     try {
-      await updateDoc(messageDocRef, {
-        text: updatedText,
-        lastEdit: Timestamp.now(),
-        editCount: increment(1),
-      });
+      await this.fbCtx(() =>
+        updateDoc(messageDocRef, {
+          text: updatedText,
+          lastEdit: Timestamp.now(),
+          editCount: increment(1),
+        })
+      );
     } catch (error) {
       console.error('Fehler beim Aktualisieren der Nachricht:', error);
     }
@@ -284,15 +295,17 @@ export class MessageService {
       messagesCollectionRef,
       orderBy('timestamp', 'asc')
     );
-    this.unsubscribeMessages = onSnapshot(
-      messagesQuery,
-      async (querySnapshot) => {
-        const newMessages = querySnapshot.docs.map(
-          (doc) => doc.data() as Message
-        );
-        this.messages.set(newMessages);
-        await this.saveMessageLocally();
-      }
+    this.unsubscribeMessages = this.fbCtx(() =>
+      onSnapshot(
+        messagesQuery,
+        async (querySnapshot) => {
+          const newMessages = querySnapshot.docs.map(
+            (doc) => doc.data() as Message
+          );
+          this.messages.set(newMessages);
+          await this.saveMessageLocally();
+        }
+      )
     );
   }
 
@@ -358,9 +371,9 @@ export class MessageService {
     const q3 = query(privateChatCollection, where('privatChatId', '==', uId));
 
     const [querySnapshot1, querySnapshot2, querySnapshot3] = await Promise.all([
-      getDocs(q1),
-      getDocs(q2),
-      getDocs(q3),
+      this.fbCtx(() => getDocs(q1)),
+      this.fbCtx(() => getDocs(q2)),
+      this.fbCtx(() => getDocs(q3)),
     ]);
 
     if (!querySnapshot1.empty) return querySnapshot1.docs[0].id;
