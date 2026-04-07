@@ -10,6 +10,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
 import { UserServiceService } from '../../services/user-service/user-service.service';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
+import { LocalDbSyncService } from '../../services/local-db-sync/local-db-sync.service';
 
 @Component({
     selector: 'app-main-content',
@@ -35,6 +36,7 @@ export class MainContentComponent implements OnInit, OnDestroy {
   stateServer: StateControlService = inject(StateControlService);
   user = inject(UserServiceService);
   chat = inject(ChatRoomService);
+  private localDbSync = inject(LocalDbSyncService);
   public db = inject(FirebaseService);
   router = inject(Router);
   private auth = inject(Auth);
@@ -48,15 +50,17 @@ export class MainContentComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * onAuthStateChanged is a function that listens for changes in the user's authentication state.
-   * If the user is authenticated, the function will get the user by their uid and get the channels from indexedDB.
-   * If the user is not authenticated, the function will navigate to the home page.
+   * onAuthStateChanged: Profil laden, lokale ChatDB mit Firestore abgleichen (Fehler loggen, UI bleibt nutzbar), Listener.
    */
   ngOnInit(): void {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
-        await this.db.getUserByUid(user.uid);
-        this.chat.getChannelsFromIndexedDB();
+        try {
+          await this.db.getUserByUid(user.uid);
+          await this.localDbSync.runLocalChatStorageSyncAfterLogin();
+        } catch (e) {
+          console.error('MainContent: Profil oder Chat-DB-Sync fehlgeschlagen', e);
+        }
         this.chat.subscribeToFirestoreChannels();
       } else {
         this.router.navigate(['']);
