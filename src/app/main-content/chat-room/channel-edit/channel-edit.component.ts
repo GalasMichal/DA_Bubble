@@ -46,6 +46,11 @@ export class ChannelEditComponent {
    */
   currentChannel = computed(() => this.chat.currentChannelSignal());
 
+  /** System-Kanal „Willkommen“ — keine Bearbeitung/Löschen aus der UI */
+  readonly isWillkommenChannel = computed(() =>
+    this.chat.isMainChannel(this.chat.currentChannelSignal()?.chanId)
+  );
+
   channelName = this.currentChannel()?.channelName;
   channelDescription = this.currentChannel()?.channelDescription;
   newTitle = '';
@@ -90,6 +95,9 @@ export class ChannelEditComponent {
    * Edit the channel tittle
    */
   onEditTittle() {
+    if (this.isWillkommenChannel()) {
+      return;
+    }
     this.counter++;
 
     if (this.isDisabled) {
@@ -103,6 +111,9 @@ export class ChannelEditComponent {
    * Edit the channel description
    */
   onEditDescription() {
+    if (this.isWillkommenChannel()) {
+      return;
+    }
     this.counter++;
 
     if (this.isDisabled) {
@@ -164,6 +175,9 @@ export class ChannelEditComponent {
    * @param text text to show in the toast
    */
   onUpdateChannel(text: string) {
+    if (this.isWillkommenChannel()) {
+      return;
+    }
     this.counter++;
 
     if (this.isDisabled) {
@@ -214,6 +228,9 @@ export class ChannelEditComponent {
    */
   applyChannelUpdates(newName: string, newDescription: string, text: string) {
     const currentChannel = this.currentChannel();
+    if (this.chat.isMainChannel(currentChannel?.chanId)) {
+      return;
+    }
     if (currentChannel) {
       currentChannel.channelName = newName;
       currentChannel.channelDescription = newDescription;
@@ -245,6 +262,9 @@ export class ChannelEditComponent {
    * Delete the channel
    */
   onDeleteChannel(chanId: string) {
+    if (this.chat.isMainChannel(chanId)) {
+      return;
+    }
     this.counter++;
 
     if (this.isDisabled) {
@@ -320,6 +340,9 @@ export class ChannelEditComponent {
    * Leave the channel
    */
   leaveChannel() {
+    if (this.chat.isMainChannel(this.currentChannel()?.chanId)) {
+      return;
+    }
     const currentUser = this.fb.currentUser();
     this.confirmAndLeaveChannel(currentUser);
   }

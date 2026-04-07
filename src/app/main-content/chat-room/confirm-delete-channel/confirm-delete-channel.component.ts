@@ -39,6 +39,10 @@ export class ConfirmDeleteChannelComponent {
     if (this.chat.currentChannelSignal() !== null) {
       const currentChannel = this.chat.currentChannelSignal();
       if (currentChannel !== null) {
+        if (this.chat.isMainChannel(currentChannel.chanId)) {
+          this.confirmDialogRef.close(false);
+          return;
+        }
         this.chat.deleteChannel(currentChannel.chanId);
       }
     }

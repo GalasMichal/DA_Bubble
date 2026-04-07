@@ -11,8 +11,8 @@
       <div class="channel-name-container" [ngClass]="{'d-none': channelEditTitel}">
         <div class="edit-name-container">
           <h3>Channel-Name</h3>
-          <button (click)="onEditTittle()" class="edit" [class.disabled]="isDisabled">Bearbeiten</button>
-          <button (click)="onEditTittle()" class="edit-img" [class.disabled]="isDisabled">
+          <button (click)="onEditTittle()" class="edit" [class.disabled]="isDisabled || isWillkommenChannel()">Bearbeiten</button>
+          <button (click)="onEditTittle()" class="edit-img" [class.disabled]="isDisabled || isWillkommenChannel()">
             <svg
         width="19"
         height="19"
@@ -52,8 +52,8 @@
       <div class="channel-info-container" [ngClass]="{'d-none': channelEditDescription}">
         <div class="edit-name-container">
           <h3>Beschreibung</h3>
-          <button (click)="onEditDescription()" class="edit" [class.disabled]="isDisabled">Bearbeiten</button>
-          <button (click)="onEditDescription()" class="edit-img" [class.disabled]="isDisabled">
+          <button (click)="onEditDescription()" class="edit" [class.disabled]="isDisabled || isWillkommenChannel()">Bearbeiten</button>
+          <button (click)="onEditDescription()" class="edit-img" [class.disabled]="isDisabled || isWillkommenChannel()">
             <svg
         width="19"
         height="19"
@@ -111,10 +111,10 @@
 
     <div class="btn-container">
 
-      <button class="channel-btn" [disabled]="isDisabled" (click)="onDeleteChannel(currentChannel()!.chanId)">Channel löschen</button>
+      <button class="channel-btn" [disabled]="isDisabled || isWillkommenChannel()" (click)="onDeleteChannel(currentChannel()!.chanId)">Channel löschen</button>
 
-      <button class="channel-btn" [disabled]="isDisabledCreatedBy" (click)="leaveChannel()" >Channel verlassen</button>
-      <button class="change-btn" [class.disabled]="isDisabled" (click)="onUpdateChannel('Änderungen wurden gespeichert')">Änderungen speichern</button>
+      <button class="channel-btn" [disabled]="isDisabledCreatedBy || isWillkommenChannel()" (click)="leaveChannel()" >Channel verlassen</button>
+      <button class="change-btn" [class.disabled]="isDisabled || isWillkommenChannel()" (click)="onUpdateChannel('Änderungen wurden gespeichert')">Änderungen speichern</button>
     </div>
     <app-toast [ngClass]="{ 'show-success': stateServer.showToast }"></app-toast>
 
