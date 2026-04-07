@@ -15,18 +15,16 @@ import { ChatRoomService } from '../../../services/chat-room/chat-room.service';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 
 @Component({
-  selector: 'app-input-add-users',
-  standalone: true,
-  imports: [AvatarComponent, CloseComponent, CommonModule],
-  templateUrl: './input-add-users.component.html',
-  styleUrl: './input-add-users.component.scss',
+    selector: 'app-input-add-users',
+    imports: [AvatarComponent, CloseComponent, CommonModule],
+    templateUrl: './input-add-users.component.html',
+    styleUrl: './input-add-users.component.scss'
 })
 export class InputAddUsersComponent {
   userService = inject(UserServiceService);
   stateServer = inject(StateControlService);
   chat = inject(ChatRoomService);
   fb = inject(FirebaseService);
-  fireService = inject(FirebaseService);
   currentChannel = computed(() => this.chat.currentChannelSignal());
 
   listOfAllUsers: User[] = [...this.userService.userList];
@@ -37,7 +35,7 @@ export class InputAddUsersComponent {
    * Emits an event to active or deactivate the add users button
    * @param para default true, if true the button will be activated
    */
-  activeReactiveButton(para: boolean = true) {
+  activeReactiveButton(para = true) {
     this.activeButton.emit(para);
   }
 
@@ -66,7 +64,7 @@ export class InputAddUsersComponent {
     return this.listOfAllUsers.filter(
       (user) =>
         !choosenUsers.has(user.uId) &&
-        user.uId !== this.fireService.currentUser()?.uId
+        user.uId !== this.fb.currentUser()?.uId
     );
   }
 
@@ -76,7 +74,7 @@ export class InputAddUsersComponent {
    */
   filterAdmin() {
     const admin = this.listOfAllUsers.find(
-      (user) => user.uId === this.fireService.currentUser()?.uId
+      (user) => user.uId === this.fb.currentUser()?.uId
     );
     if (admin) {
       this.stateServer.choosenUser.push(admin);

@@ -3,8 +3,8 @@ import { Firestore, getDoc, updateDoc } from '@angular/fire/firestore';
 import { User as AppUser, User } from '../../models/interfaces/user.model';
 import { collection, doc, onSnapshot } from 'firebase/firestore';
 import {
+  Auth,
   authState,
-  getAuth,
   updateEmail,
   updateProfile,
   User as FirebaseUser,
@@ -22,7 +22,7 @@ export class UserServiceService {
   firestore = inject(Firestore);
   stateControl = inject(StateControlService);
   userDialog = inject(MatDialog);
-  auth = getAuth();
+  auth = inject(Auth);
   unsubscribe: any;
   public userList: AppUser[] = [];
 
@@ -72,7 +72,9 @@ export class UserServiceService {
     const userDocRef = doc(this.getUsers(), userId);
     try {
       await updateDoc(userDocRef, { avatarUrl: selectedAvatar });
-    } catch (error) {}
+    } catch (error) {
+      console.error('Avatar update failed:', error);
+    }
   }
 
   /**
