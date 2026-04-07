@@ -5,6 +5,7 @@ import {
   inject,
   Input,
   Output,
+  signal,
   SimpleChanges, OnChanges, OnInit,
 } from '@angular/core';
 import { TimeSeparatorComponent } from './time-separator/time-separator.component';
@@ -53,6 +54,34 @@ export class MessageAnswerComponent implements OnChanges, OnInit {
   currentChannel = computed(() => this.chat.currentChannelSignal());
   directChannel = computed(() => this.ms.messages());
 
+  /** Sync mit @Input, damit ein computed das aktuelle Profilbild mitlesen kann */
+  private readonly currentMessageSignal = signal<Message | null>(null);
+
+  /**
+   * Pro Nachricht liegt in Firestore ein Snapshot von messageSendBy — eigenes Profilbild
+   * wäre dort veraltet. Für die eigene UID immer das aktuelle Profil verwenden.
+   */
+  readonly senderAvatarUrl = computed(() => {
+    const msg = this.currentMessageSignal();
+    const me = this.fb.currentUser();
+    const fallback = './assets/media/icons/profile-icons/profile-icon.svg';
+    if (!msg?.messageSendBy) return fallback;
+    if (me?.uId === msg.messageSendBy.uId && me.avatarUrl) {
+      return me.avatarUrl;
+    }
+    return msg.messageSendBy.avatarUrl || fallback;
+  });
+
+  /** Wie Avatar: bei eigenen Nachrichten aktuellen Anzeigenamen aus dem Profil. */
+  readonly senderDisplayName = computed(() => {
+    const msg = this.currentMessageSignal();
+    const me = this.fb.currentUser();
+    if (!msg?.messageSendBy) return '';
+    if (me?.uId === msg.messageSendBy.uId) {
+      return me.displayName?.trim() || msg.messageSendBy.displayName || '';
+    }
+    return msg.messageSendBy.displayName ?? '';
+  });
 
   meUser = false;
 
@@ -107,6 +136,8 @@ export class MessageAnswerComponent implements OnChanges, OnInit {
     // Prüfen, ob answer oder userMessage aktualisiert wurde
     if (changes['answer'] || changes['userMessage']) {
       this.updateCurrentMessage();
+      this.meUser =
+        this.currentMessage?.messageSendBy.uId === this.fb.currentUser()?.uId;
     }
   }
 
@@ -140,9 +171,8 @@ export class MessageAnswerComponent implements OnChanges, OnInit {
    */
   async ngOnInit() {
     this.updateCurrentMessage();
-    if (this.currentMessage?.messageSendBy.uId === this.fb.currentUser()?.uId) {
-      this.meUser = true;
-    }
+    this.meUser =
+      this.currentMessage?.messageSendBy.uId === this.fb.currentUser()?.uId;
   }
 
   /**
@@ -151,6 +181,7 @@ export class MessageAnswerComponent implements OnChanges, OnInit {
    */
   updateCurrentMessage() {
     this.currentMessage = this.answer || this.userMessage;
+    this.currentMessageSignal.set(this.currentMessage);
   }
 
   /**

@@ -93,15 +93,15 @@
     <!-- REACTION BAR ENDE-->
 
     <img class="avatar"
-      (click)="openDialogWithImage(currentMessage.messageSendBy.avatarUrl || './assets/media/icons/profile-icons/profile-icon.svg')"
-      src={{currentMessage.messageSendBy.avatarUrl}} alt="profil-image" />
+      (click)="openDialogWithImage(senderAvatarUrl())"
+      [src]="senderAvatarUrl()" alt="profil-image" />
 
     <div class="message-content" [ngClass]="{'message-content-right': meUser}">
       <div class="message-container">
 
         <div class="user-time" [ngClass]="{'user-time-right': meUser}">
           <button (click)="openProfileUserSingle(currentMessage.messageSendBy.uId)">
-            {{currentMessage.messageSendBy.displayName}}</button>
+            {{ senderDisplayName() }}</button>
           <span>{{ (currentMessage.timestamp.seconds * 1000) | date: 'H:mm' }} Uhr</span>
         </div>
 
@@ -133,7 +133,7 @@
       </div>
 
       <div class="emoijReaction">
-        @for( emoji of currentMessage.reactions; track emojis[index]) {
+        @for( emoji of currentMessage.reactions; track emoji.symbol + $index) {
         <button (click)="increaseCounter(emoji.symbol)" class="single-emoij">{{emoji.symbol}} {{emoji.count}}
           <app-reaction-cloud [name]="getUsersForEmoji(emoji.symbol)" [symbol]="emoji.symbol"></app-reaction-cloud>
         </button>
