@@ -13,7 +13,8 @@
     "test": "node scripts/use-local-env.cjs serve && ng test",
     "serve:ssr:dabubble": "node dist/da-bubble/server/server.mjs",
     "lint": "node scripts/use-local-env.cjs serve && ng lint",
-    "env:local": "node scripts/use-local-env.cjs serve"
+    "env:local": "node scripts/use-local-env.cjs serve",
+    "purge:guests": "node scripts/purge-guest-accounts-once.cjs"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +39,12 @@
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"
   },
+  "overrides": {
+    "vite": "6.4.2",
+    "serialize-javascript": "7.0.5",
+    "tar": "7.5.13",
+    "@tootallnate/once": "3.0.1"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.23",
     "@angular/cli": "^19.2.23",
@@ -54,6 +61,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.5.4",
-    "typescript-eslint": "8.33.1"
+    "typescript-eslint": "8.33.1",
+    "firebase-admin": "^13.7.0"
   }
 }
