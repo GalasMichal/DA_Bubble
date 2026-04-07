@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnInit, ViewChild, AfterViewChecked, OnDestroy } from '@angular/core';
+import { Component, ElementRef, inject, Injector, Input, OnInit, runInInjectionContext, ViewChild, AfterViewChecked, OnDestroy } from '@angular/core';
 import { MessageFieldComponent } from '../component/message-field/message-field.component';
 import { MessageAnswerComponent } from '../message-answer/message-answer.component';
 import { ChatRoomService } from '../../services/chat-room/chat-room.service';
@@ -38,6 +38,7 @@ export class DirectMessageComponent implements OnInit, AfterViewChecked, OnDestr
   messages: Message[] = [];
   currentChatId = '';
   private auth = inject(Auth);
+  private readonly injector = inject(Injector);
 
   @ViewChild('scrollToBottom') scrollToBottom?: ElementRef;
 
@@ -65,11 +66,13 @@ export class DirectMessageComponent implements OnInit, AfterViewChecked, OnDestr
    * If the user is not authenticated, the method will navigate to the home page.
    */
   ngOnInit(): void {
-    onAuthStateChanged(this.auth, async (user) => {
-      if (user) {
-        await this.fb.getUserByUid(user.uid);
-        this.loadCurrentMessageAfterRefresh();
-      }
+    runInInjectionContext(this.injector, () => {
+      onAuthStateChanged(this.auth, async (user) => {
+        if (user) {
+          await this.fb.getUserByUid(user.uid);
+          this.loadCurrentMessageAfterRefresh();
+        }
+      });
     });
   }
 
