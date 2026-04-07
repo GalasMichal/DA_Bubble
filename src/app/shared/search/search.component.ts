@@ -190,15 +190,15 @@ export class SearchComponent {
    * @param channel The selected channel.
    * @param name The name of the selected channel.
    */
-  openChannel(channel: Channel, name: string) {
+  async openChannel(channel: Channel, name: string): Promise<void> {
     this.searchTerm = name;
     this.stateControl.responsiveChat = true;
     this.stateControl.responsiveArrow = true;
     this.stateControl.responsiveMenu = true;
     this.stateControl.isThreadOpen = false;
     this.stateControl.isSendButtonActive = false;
-    this.chat.setCurrentChannel(channel);
-    this.router.navigate(['main/chat', channel.chanId]);
+    await this.chat.setCurrentChannel(channel);
+    await this.router.navigate(['main/chat', channel.chanId]);
   }
 
   /**
