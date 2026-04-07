@@ -59,14 +59,14 @@ export class MenuSideLeftComponent implements OnInit {
    * navigate to chat
    * @param channel interface channel
    */
-  openChannel(channel: Channel): void {
+  async openChannel(channel: Channel): Promise<void> {
     this.state.isDirectMessage = false; //feature for future
     this.state.isSendButtonActive = false; //make the button to send active
     this.storageService.uploadMsg.set('');
     this.selectedChannelId = channel.chanId;
     this.updateState();
-    this.chat.setCurrentChannel(channel);
-    this.router.navigate(['main/chat', channel.chanId]);
+    await this.chat.setCurrentChannel(channel);
+    await this.router.navigate(['main/chat', channel.chanId]);
   }
 
   /**
