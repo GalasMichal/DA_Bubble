@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, Injector, runInInjectionContext, signal } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -48,6 +48,7 @@ export class FirebaseService {
    */
   firestore: Firestore = inject(Firestore);
   private auth: Auth = inject(Auth);
+  private readonly injector = inject(Injector);
   router = inject(Router);
   user = inject(UserServiceService);
   stateControl = inject(StateControlService);
@@ -66,6 +67,11 @@ export class FirebaseService {
   mainChannel: string = environment.mainChannelId;
 
   constructor(private route: ActivatedRoute) {}
+
+  /** Angular Fire: Firestore/Auth APIs nur im Injection-Kontext aufrufen. */
+  private fbCtx<T>(fn: () => T): T {
+    return runInInjectionContext(this.injector, fn);
+  }
 
   /**
    * load user data
@@ -242,8 +248,9 @@ export class FirebaseService {
    */
   async getUserByUid(uid: string): Promise<AppUser | null> {
     try {
-      const userDocRef = doc(this.firestore, `users/${uid}`);
-      const userDocSnapshot = await getDoc(userDocRef);
+      const userDocSnapshot = await this.fbCtx(() =>
+        getDoc(doc(this.firestore, `users/${uid}`))
+      );
       if (userDocSnapshot.exists()) {
         const userData = userDocSnapshot.data() as AppUser;
         this.currentUser.set(userData);
@@ -291,8 +298,10 @@ export class FirebaseService {
    * @returns
    */
   async userExistFirestore(uId: string): Promise<boolean> {
-    return getDocs(
-      query(collection(this.firestore, 'users'), where('uId', '==', uId))
+    return this.fbCtx(() =>
+      getDocs(
+        query(collection(this.firestore, 'users'), where('uId', '==', uId))
+      )
     ).then((querySnapshot) => querySnapshot.size > 0);
   }
 
@@ -376,11 +385,13 @@ export class FirebaseService {
    * @returns user object
    */
   async addUserToFirestore(user: AppUser): Promise<AppUser> {
-    const userCollectionRef = collection(this.firestore, 'users');
-    const userDocRef = doc(userCollectionRef, user.uId);
-    await setDoc(userDocRef, {
-      ...user,
-      createdAt: serverTimestamp(),
+    await this.fbCtx(() => {
+      const userCollectionRef = collection(this.firestore, 'users');
+      const userDocRef = doc(userCollectionRef, user.uId);
+      return setDoc(userDocRef, {
+        ...user,
+        createdAt: serverTimestamp(),
+      });
     });
     return user;
   }
@@ -627,7 +638,9 @@ export class FirebaseService {
   private async deleteUserAccount(user: any, userId: string): Promise<void> {
     try {
       await deleteUser(user);
-      await deleteDoc(doc(this.firestore, 'users', userId));
+      await this.fbCtx(() =>
+        deleteDoc(doc(this.firestore, 'users', userId))
+      );
       this.stateControl.showConfirmationText.set(
         'Dein Konto wurde erfolgreich gelöscht.'
       );
