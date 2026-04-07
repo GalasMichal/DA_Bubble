@@ -11,5 +11,6 @@ export const environment: AppEnvironment = {
     messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
     appId: 'YOUR_FIREBASE_APP_ID',
   },
-  mainChannelId: 'YOUR_DEFAULT_CHANNEL_DOC_ID',
+  /** Gleiche ID wie Dokument in Firestore `channels/{id}` (Willkommen). Bei `YOUR_*` sieht die App keinen Willkommen-Kanal. */
+  mainChannelId: '55dO4OXETme2oZEiCPZH',
 };
