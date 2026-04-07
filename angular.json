@@ -25,6 +25,16 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src"],
+              "sass": {
+                "silenceDeprecations": [
+                  "mixed-decls",
+                  "color-functions",
+                  "global-builtin"
+                ]
+              }
+            },
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -98,6 +108,16 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src"],
+              "sass": {
+                "silenceDeprecations": [
+                  "mixed-decls",
+                  "color-functions",
+                  "global-builtin"
+                ]
+              }
+            },
             "assets": [
               "src/favicon.ico",
               "src/assets"
