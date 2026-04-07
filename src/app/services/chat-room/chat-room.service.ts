@@ -1,4 +1,11 @@
-import { Injectable, Signal, inject, signal } from '@angular/core';
+import {
+  Injectable,
+  Injector,
+  Signal,
+  inject,
+  runInInjectionContext,
+  signal,
+} from '@angular/core';
 import {
   collection,
   deleteDoc,
@@ -36,6 +43,11 @@ export class ChatRoomService {
   route = inject(ActivatedRoute);
   private fireService = inject(FirebaseService);
   private auth = inject(Auth);
+  private injector = inject(Injector);
+
+  private fbCtx<T>(fn: () => T): T {
+    return runInInjectionContext(this.injector, fn);
+  }
 
   /**
    * subscriptions array to manage unsubscribe
@@ -88,8 +100,13 @@ export class ChatRoomService {
     if (this.currentChannelSignal()?.chanId === channel.chanId) {
       return;
     }
+    const previousId = this.currentChannelSignal()?.chanId;
+    if (previousId) {
+      this.unsubscribe(`messages_${previousId}`);
+    }
+    this.messages.set([]);
     this.currentChannelSignal.set(channel);
-    this.subscribeToFirestoreMessages(channel.chanId);
+    await this.subscribeToFirestoreMessages(channel.chanId);
   }
 
   /**
@@ -133,11 +150,14 @@ export class ChatRoomService {
     const fs = this.fireService.firestore;
     const db = await this.dbPromise;
 
-    const q = query(
-      collection(fs, 'channels'),
-      where('specificPeople', 'array-contains', userId)
+    const snapshot = await this.fbCtx(() =>
+      getDocs(
+        query(
+          collection(fs, 'channels'),
+          where('specificPeople', 'array-contains', userId)
+        )
+      )
     );
-    const snapshot = await getDocs(q);
 
     let channelsFromFirestore: Channel[] = snapshot.docs.map((d) => ({
       ...(d.data() as Channel),
@@ -149,7 +169,9 @@ export class ChatRoomService {
       mainId &&
       !channelsFromFirestore.some((c) => c.chanId === mainId)
     ) {
-      const mainSnap = await getDoc(doc(fs, 'channels', mainId));
+      const mainSnap = await this.fbCtx(() =>
+        getDoc(doc(fs, 'channels', mainId))
+      );
       if (mainSnap.exists()) {
         const data = mainSnap.data() as Channel;
         channelsFromFirestore = [
@@ -198,10 +220,11 @@ export class ChatRoomService {
   async subscribeToFirestoreChannels() {
     const userId = this.effectiveUserId();
     if (!userId) return;
-    const channelsRef = collection(this.fireService.firestore, 'channels');
-    this.subscriptions['channelUpdates'] = onSnapshot(
-      channelsRef,
-      async (snapshot) => {
+    this.fbCtx(() => {
+      const channelsRef = collection(this.fireService.firestore, 'channels');
+      this.subscriptions['channelUpdates'] = onSnapshot(
+        channelsRef,
+        async (snapshot) => {
         const db = await this.dbPromise;
         let updatedChannels: Channel[] = snapshot.docs
           .map((d) => ({
@@ -247,8 +270,9 @@ export class ChatRoomService {
           await this.saveOrUpdateChannelInIndexedDB(channel);
         }
         this.channels.set(updatedChannels);
-      }
-    );
+        }
+      );
+    });
   }
 
   /**
@@ -268,10 +292,12 @@ export class ChatRoomService {
    */
   async createChannel(channel: Channel) {
     const db = await this.dbPromise;
-    const channelRef = collection(this.fireService.firestore, 'channels');
-    const newChannelRef = doc(channelRef);
-    await setDoc(newChannelRef, { ...channel, chanId: newChannelRef.id });
-    channel.chanId = newChannelRef.id;
+    await this.fbCtx(() => {
+      const channelRef = collection(this.fireService.firestore, 'channels');
+      const newChannelRef = doc(channelRef);
+      channel.chanId = newChannelRef.id;
+      return setDoc(newChannelRef, { ...channel, chanId: newChannelRef.id });
+    });
     await db.put('channels', channel);
     this.getChannelsFromIndexedDB();
   }
@@ -285,11 +311,13 @@ export class ChatRoomService {
     if (this.isMainChannel(channel.chanId)) {
       return;
     }
-    const channelRef = doc(
-      this.fireService.firestore,
-      `channels/${channel.chanId}`
+    await this.fbCtx(() =>
+      setDoc(
+        doc(this.fireService.firestore, `channels/${channel.chanId}`),
+        channel,
+        { merge: true }
+      )
     );
-    await setDoc(channelRef, channel, { merge: true });
     this.channels.update((channels) =>
       channels.map((c) => (c.chanId === channel.chanId ? channel : c))
     );
@@ -317,8 +345,9 @@ export class ChatRoomService {
     if (this.isMainChannel(chanId)) {
       return;
     }
-    const channelRef = doc(this.fireService.firestore, `channels/${chanId}`);
-    await deleteDoc(channelRef);
+    await this.fbCtx(() =>
+      deleteDoc(doc(this.fireService.firestore, `channels/${chanId}`))
+    );
     const db = await this.dbPromise;
     await db.delete('channels', chanId);
     this.channels.update((channels) =>
@@ -346,6 +375,10 @@ export class ChatRoomService {
       const filteredMessages: Message[] = cachedMessages.filter(
         (message) => message.chatId === chanId
       );
+      // Schneller Kanalwechsel: ältere Loads dürfen den aktuellen Chat nicht überschreiben
+      if (this.currentChannelSignal()?.chanId !== chanId) {
+        return filteredMessages;
+      }
       this.messages.set(filteredMessages);
       return filteredMessages;
     } catch (error) {
@@ -363,24 +396,41 @@ export class ChatRoomService {
    * @param chanId
    */
   async subscribeToFirestoreMessages(chanId: string) {
-    await this.loadMessagesFromIndexedDB(chanId);
-    const messagesRef = collection(
-      this.fireService.firestore,
-      `channels/${chanId}/messages`
-    );
-    this.subscriptions[`messages_${chanId}`] = onSnapshot(
-      messagesRef,
-      async (snapshot) => {
-        const db = await this.dbPromise;
-        const messages: Message[] = snapshot.docs
-          .map((doc) => doc.data() as Message)
-          .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
-        for (const message of messages) {
-          await db.put('messages', message);
-        }
-        this.messages.set(messages);
+    for (const key of Object.keys(this.subscriptions)) {
+      if (key.startsWith('messages_') && key !== `messages_${chanId}`) {
+        this.unsubscribe(key);
       }
+    }
+
+    this.messages.set([]);
+    await this.loadMessagesFromIndexedDB(chanId);
+    if (this.currentChannelSignal()?.chanId !== chanId) {
+      return;
+    }
+
+    const messagesRef = this.fbCtx(() =>
+      collection(this.fireService.firestore, `channels/${chanId}/messages`)
     );
+    this.fbCtx(() => {
+      this.subscriptions[`messages_${chanId}`] = onSnapshot(
+        messagesRef,
+        async (snapshot) => {
+          if (this.currentChannelSignal()?.chanId !== chanId) {
+            return;
+          }
+          const db = await this.dbPromise;
+          const messages: Message[] = snapshot.docs
+            .map((doc) => doc.data() as Message)
+            .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
+          for (const message of messages) {
+            await db.put('messages', message);
+          }
+          if (this.currentChannelSignal()?.chanId === chanId) {
+            this.messages.set(messages);
+          }
+        }
+      );
+    });
   }
 
   /**
@@ -392,13 +442,15 @@ export class ChatRoomService {
    */
   async createMessage(chanId: string, message: Message) {
     const db = await this.dbPromise;
-    const messagesRef = collection(
-      this.fireService.firestore,
-      `channels/${chanId}/messages`
-    );
-    const newMessageRef = doc(messagesRef);
-    await setDoc(newMessageRef, { ...message, messageId: newMessageRef.id });
-    message.messageId = newMessageRef.id;
+    await this.fbCtx(() => {
+      const messagesRef = collection(
+        this.fireService.firestore,
+        `channels/${chanId}/messages`
+      );
+      const newMessageRef = doc(messagesRef);
+      message.messageId = newMessageRef.id;
+      return setDoc(newMessageRef, { ...message, messageId: newMessageRef.id });
+    });
     await db.put('messages', message);
   }
 
@@ -423,11 +475,16 @@ export class ChatRoomService {
    * @param message interface message
    */
   async updateMessage(chanId: string, message: Message) {
-    const messageRef = doc(
-      this.fireService.firestore,
-      `channels/${chanId}/messages/${message.messageId}`
+    await this.fbCtx(() =>
+      setDoc(
+        doc(
+          this.fireService.firestore,
+          `channels/${chanId}/messages/${message.messageId}`
+        ),
+        message,
+        { merge: true }
+      )
     );
-    await setDoc(messageRef, message, { merge: true });
     this.messages.update((messages) =>
       messages.map((m) => (m.messageId === message.messageId ? message : m))
     );
@@ -439,10 +496,12 @@ export class ChatRoomService {
    * @param messageId string message id
    */
   async deleteMessage(chanId: string, messageId: string) {
-    await deleteDoc(
-      doc(
-        this.fireService.firestore,
-        `channels/${chanId}/messages/${messageId}`
+    await this.fbCtx(() =>
+      deleteDoc(
+        doc(
+          this.fireService.firestore,
+          `channels/${chanId}/messages/${messageId}`
+        )
       )
     );
     this.messages.update((messages) =>
@@ -480,18 +539,21 @@ export class ChatRoomService {
     chanId: string,
     messageId: string
   ) {
-    const messageDocRef = doc(
-      this.fireService.firestore,
-      'channels',
-      chanId,
-      'messages',
-      messageId
+    await this.fbCtx(() =>
+      updateDoc(
+        doc(
+          this.fireService.firestore,
+          'channels',
+          chanId,
+          'messages',
+          messageId
+        ),
+        {
+          text: messageText,
+          lastEdit: Timestamp.now(),
+          editCount: increment(1),
+        }
+      )
     );
-
-    await updateDoc(messageDocRef, {
-      text: messageText,
-      lastEdit: Timestamp.now(),
-      editCount: increment(1), // Falls du den Edit-Count hochzählen möchtest
-    });
   }
 }
