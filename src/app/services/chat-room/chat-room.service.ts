@@ -3,12 +3,16 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
+  getDocs,
   increment,
   onSnapshot,
+  query,
   setDoc,
   Timestamp,
   Unsubscribe,
   updateDoc,
+  where,
 } from '@angular/fire/firestore';
 import { Channel } from '../../models/interfaces/channel.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +21,8 @@ import { StateControlService } from '../state-control/state-control.service';
 import { FirebaseService } from '../firebase/firebase.service';
 import { openDB } from 'idb';
 import { User } from '../../models/interfaces/user.model';
+import { environment } from '../../../environments/environment.firebase';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +35,7 @@ export class ChatRoomService {
   router = inject(Router);
   route = inject(ActivatedRoute);
   private fireService = inject(FirebaseService);
+  private auth = inject(Auth);
 
   /**
    * subscriptions array to manage unsubscribe
@@ -38,6 +45,18 @@ export class ChatRoomService {
   public currentChannelSignal = signal<Channel | null>(null);
   channels = signal<Channel[]>([]);
   messages = signal<Message[]>([]);
+
+  /** System-Kanal „Willkommen“ — nicht löschen/ändern (ID = environment.mainChannelId). */
+  isMainChannel(chanId: string | undefined | null): boolean {
+    return !!chanId && chanId === environment.mainChannelId;
+  }
+
+  /** Firestore-Profil oder Firebase-Auth-UID (Profil kann kurz fehlen — sonst bleibt die Kanalliste leer). */
+  private effectiveUserId(): string | null {
+    return (
+      this.fireService.currentUser()?.uId ?? this.auth.currentUser?.uid ?? null
+    );
+  }
 
   /**
    * indexDB initialization
@@ -103,22 +122,126 @@ export class ChatRoomService {
   }
 
   /**
+   * Ersetzt IndexedDB-Kanäle durch Firestore (specificPeople enthält Nutzer).
+   * Willkommen (environment.mainChannelId) wird immer ergänzt, wenn das Dokument existiert — unabhängig von specificPeople.
+   * Sollte nach Login vor dem ersten UI-Lauf ausgeführt werden.
+   */
+  async reconcileChannelsWithFirestore(): Promise<void> {
+    const userId = this.effectiveUserId();
+    if (!userId) return;
+
+    const fs = this.fireService.firestore;
+    const db = await this.dbPromise;
+
+    const q = query(
+      collection(fs, 'channels'),
+      where('specificPeople', 'array-contains', userId)
+    );
+    const snapshot = await getDocs(q);
+
+    let channelsFromFirestore: Channel[] = snapshot.docs.map((d) => ({
+      ...(d.data() as Channel),
+      chanId: d.id,
+    }));
+
+    const mainId = environment.mainChannelId;
+    if (
+      mainId &&
+      !channelsFromFirestore.some((c) => c.chanId === mainId)
+    ) {
+      const mainSnap = await getDoc(doc(fs, 'channels', mainId));
+      if (mainSnap.exists()) {
+        const data = mainSnap.data() as Channel;
+        channelsFromFirestore = [
+          ...channelsFromFirestore,
+          { ...data, chanId: mainId },
+        ];
+      } else if (mainId && !mainId.startsWith('YOUR_')) {
+        console.warn(
+          '[Willkommen] Kein Dokument channels/' +
+            mainId +
+            ' — mainChannelId in environment.firebase.ts anpassen (Firestore-Dokument-ID).'
+        );
+      }
+    }
+
+    const validIds = new Set(channelsFromFirestore.map((c) => c.chanId));
+
+    await db.clear('channels');
+    for (const ch of channelsFromFirestore) {
+      await db.put('channels', ch);
+    }
+
+    const allMsgs = await db.getAll('messages');
+    for (const m of allMsgs) {
+      if (!m.messageId || !m.chatId) continue;
+      if (!validIds.has(m.chatId)) {
+        await db.delete('messages', m.messageId);
+      }
+    }
+
+    this.channels.set(channelsFromFirestore);
+
+    const cur = this.currentChannelSignal();
+    if (cur && !validIds.has(cur.chanId)) {
+      this.currentChannelSignal.set(null);
+      void this.router.navigate(['main']);
+    }
+  }
+
+  /**
    * subscribe to firestore channels
    * filter channels by specific people
    * and update channels in indexedDB
    * set updated channels to signal
    */
   async subscribeToFirestoreChannels() {
-    const userId = this.fireService.currentUser()?.uId;
+    const userId = this.effectiveUserId();
     if (!userId) return;
     const channelsRef = collection(this.fireService.firestore, 'channels');
     this.subscriptions['channelUpdates'] = onSnapshot(
       channelsRef,
       async (snapshot) => {
         const db = await this.dbPromise;
-        const updatedChannels: Channel[] = snapshot.docs
-          .map((doc) => doc.data() as Channel)
-          .filter((channel) => channel.specificPeople.includes(userId));
+        let updatedChannels: Channel[] = snapshot.docs
+          .map((d) => ({
+            ...(d.data() as Channel),
+            chanId: d.id,
+          }))
+          .filter((channel) =>
+            channel.specificPeople?.includes(userId)
+          );
+
+        const mainId = environment.mainChannelId;
+        if (
+          mainId &&
+          !updatedChannels.some((c) => c.chanId === mainId)
+        ) {
+          const mainDoc = snapshot.docs.find((d) => d.id === mainId);
+          if (mainDoc) {
+            updatedChannels = [
+              ...updatedChannels,
+              {
+                ...(mainDoc.data() as Channel),
+                chanId: mainId,
+              },
+            ];
+          }
+        }
+
+        const validIds = new Set(updatedChannels.map((c) => c.chanId));
+        const cachedChannels: Channel[] = await db.getAll('channels');
+        for (const ch of cachedChannels) {
+          if (!validIds.has(ch.chanId)) {
+            await db.delete('channels', ch.chanId);
+            const allMsgs = await db.getAll('messages');
+            for (const m of allMsgs) {
+              if (m.chatId === ch.chanId && m.messageId) {
+                await db.delete('messages', m.messageId);
+              }
+            }
+          }
+        }
 
         for (const channel of updatedChannels) {
           await this.saveOrUpdateChannelInIndexedDB(channel);
@@ -159,6 +282,9 @@ export class ChatRoomService {
    * @param channel interface channel
    */
   async updateChannel(channel: Channel) {
+    if (this.isMainChannel(channel.chanId)) {
+      return;
+    }
     const channelRef = doc(
       this.fireService.firestore,
       `channels/${channel.chanId}`
@@ -188,6 +314,9 @@ export class ChatRoomService {
    * @param chanId string channel id
    */
   async deleteChannel(chanId: string) {
+    if (this.isMainChannel(chanId)) {
+      return;
+    }
     const channelRef = doc(this.fireService.firestore, `channels/${chanId}`);
     await deleteDoc(channelRef);
     const db = await this.dbPromise;
