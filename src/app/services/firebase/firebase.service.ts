@@ -20,6 +20,7 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
+import { serverTimestamp } from 'firebase/firestore';
 import { User as AppUser } from '../../models/interfaces/user.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from '../user-service/user-service.service';
@@ -377,7 +378,10 @@ export class FirebaseService {
   async addUserToFirestore(user: AppUser): Promise<AppUser> {
     const userCollectionRef = collection(this.firestore, 'users');
     const userDocRef = doc(userCollectionRef, user.uId);
-    await setDoc(userDocRef, user);
+    await setDoc(userDocRef, {
+      ...user,
+      createdAt: serverTimestamp(),
+    });
     return user;
   }
 
@@ -569,6 +573,7 @@ export class FirebaseService {
       uId: firebaseUser.uid,
       email: 'guest@gast.com',
       displayName: 'Gast',
+      isGuest: true,
     };
   }
 
