@@ -16,7 +16,7 @@
     <div class="avatar">
         <div class="user-img">
             @if (userService.profileSingleUser) {
-                <img (click)="openDialogWithImage(userService.profileSingleUser.avatarUrl)" [src]="userService.profileSingleUser.avatarUrl" alt="avatar">
+                <img (click)="openDialogWithImage(avatarSrc(userService.profileSingleUser.avatarUrl))" [src]="avatarSrc(userService.profileSingleUser.avatarUrl)" (error)="onAvatarError($event)" alt="avatar">
             }
 
           </div>

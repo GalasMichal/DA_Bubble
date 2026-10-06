@@ -12,6 +12,10 @@ import { Router } from '@angular/router';
 import { StateControlService } from '../../services/state-control/state-control.service';
 import { User } from '../../models/interfaces/user.model';
 import { ShowImageComponent } from '../component/show-image/show-image.component';
+import {
+  onAvatarImageError,
+  resolveAvatarUrl,
+} from '../avatar/avatar-url';
 
 @Component({
     selector: 'app-profile-single-user',
@@ -67,4 +71,10 @@ export class ProfileSingleUserComponent {
       panelClass: 'image-container',
     });
   }
+
+  avatarSrc(url?: string | null): string {
+    return resolveAvatarUrl(url);
+  }
+
+  onAvatarError = onAvatarImageError;
 }

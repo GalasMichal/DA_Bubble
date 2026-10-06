@@ -2,6 +2,10 @@ import { Component, inject } from '@angular/core';
 import { StateControlService } from '../../../services/state-control/state-control.service';
 import { CloseComponent } from "../close/close.component";
 import { MatDialogRef } from '@angular/material/dialog';
+import {
+  onAvatarImageError,
+  resolveAvatarUrl,
+} from '../../avatar/avatar-url';
 
 @Component({
     selector: 'app-show-image',
@@ -17,4 +21,10 @@ export class ShowImageComponent {
  closeDialog() {
   this.dialogRef.close();
  }
+
+ imageSrc(): string {
+  return resolveAvatarUrl(this.stateControl.messageImage);
+ }
+
+ onImageError = onAvatarImageError;
 }

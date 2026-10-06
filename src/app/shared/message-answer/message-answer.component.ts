@@ -24,6 +24,10 @@ import { ShowImageComponent } from '../component/show-image/show-image.component
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { MessageService } from '../../services/messages/message.service';
 import { ActivatedRoute } from '@angular/router';
+import {
+  onAvatarImageError,
+  resolveAvatarUrl,
+} from '../avatar/avatar-url';
 
 @Component({
     selector: 'app-message-answer',
@@ -64,13 +68,16 @@ export class MessageAnswerComponent implements OnChanges, OnInit {
   readonly senderAvatarUrl = computed(() => {
     const msg = this.currentMessageSignal();
     const me = this.fb.currentUser();
-    const fallback = './assets/media/icons/profile-icons/profile-icon.svg';
-    if (!msg?.messageSendBy) return fallback;
-    if (me?.uId === msg.messageSendBy.uId && me.avatarUrl) {
-      return me.avatarUrl;
+    if (!msg?.messageSendBy) {
+      return resolveAvatarUrl(null);
     }
-    return msg.messageSendBy.avatarUrl || fallback;
+    if (me?.uId === msg.messageSendBy.uId) {
+      return resolveAvatarUrl(me.avatarUrl);
+    }
+    return resolveAvatarUrl(msg.messageSendBy.avatarUrl);
   });
+
+  onAvatarError = onAvatarImageError;
 
   /** Wie Avatar: bei eigenen Nachrichten aktuellen Anzeigenamen aus dem Profil. */
   readonly senderDisplayName = computed(() => {

@@ -1,0 +1,122 @@
+name: Deploy DA-Bubble to All-Inkl
+
+on:
+  push:
+    branches:
+      - clean_code_services
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-allinkl-dabubble-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      BASE_HREF: ${{ vars.DABUBBLE_BASE_HREF || '/' }}
+      SITE_URL: ${{ vars.DABUBBLE_SITE_URL || 'http://da-bubble.michal-galas.de' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate FTP secrets
+        run: |
+          missing=0
+          for name in FTP_SERVER FTP_USERNAME FTP_PASSWORD; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing secret $name"
+              missing=1
+            fi
+          done
+          if [ -z "$FTP_REMOTE_DIR" ]; then
+            echo "::error::Missing secret DABUBBLE_FTP_REMOTE_DIR or FTP_REMOTE_DIR"
+            missing=1
+          fi
+          if [ -z "$FIREBASE_API_KEY" ]; then
+            echo "::error::Missing secret FIREBASE_API_KEY"
+            missing=1
+          fi
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: ${{ secrets.DABUBBLE_FTP_REMOTE_DIR || secrets.FTP_REMOTE_DIR }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Write Firebase env for production build
+        run: node scripts/write-ci-firebase-env.cjs
+        env:
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ vars.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ vars.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ vars.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_APP_ID: ${{ vars.FIREBASE_APP_ID }}
+          MAIN_CHANNEL_ID: ${{ vars.MAIN_CHANNEL_ID }}
+
+      - name: Build production
+        run: npx ng build --configuration=production --base-href="$BASE_HREF"
+
+      - name: Normalize FTP remote dir
+        run: |
+          DIR="${{ secrets.DABUBBLE_FTP_REMOTE_DIR || secrets.FTP_REMOTE_DIR }}"
+          if [ "$DIR" = "/" ] || [ "$DIR" = "" ]; then
+            DIR="./"
+          fi
+          case "$DIR" in
+            */) ;;
+            *) DIR="${DIR}/" ;;
+          esac
+          echo "FTP_REMOTE_DIR_NORM=$DIR" >> "$GITHUB_ENV"
+          echo "Using server-dir: $DIR"
+
+      - name: Deploy via FTPS (All-Inkl)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./dist/da-bubble/browser/
+          server-dir: ${{ env.FTP_REMOTE_DIR_NORM }}
+          timeout: 600000
+          log-level: verbose
+          state-name: .ftp-deploy-sync-state-dabubble.json
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+
+      - name: Verify deploy
+        run: |
+          for i in $(seq 1 12); do
+            if curl -fsSL "$SITE_URL/" | grep -q 'DABubble'; then
+              echo "Deploy verified: $SITE_URL"
+              exit 0
+            fi
+            echo "Attempt $i/12: waiting 15s..."
+            sleep 15
+          done
+          echo "::warning::Site not verified — prüfe DABUBBLE_FTP_REMOTE_DIR (Subdomain-Ordner auf All-Inkl)"
+          exit 1

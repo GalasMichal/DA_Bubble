@@ -94,7 +94,7 @@
 
     <img class="avatar"
       (click)="openDialogWithImage(senderAvatarUrl())"
-      [src]="senderAvatarUrl()" alt="profil-image" />
+      [src]="senderAvatarUrl()" (error)="onAvatarError($event)" alt="profil-image" />
 
     <div class="message-content" [ngClass]="{'message-content-right': meUser}">
       <div class="message-container">

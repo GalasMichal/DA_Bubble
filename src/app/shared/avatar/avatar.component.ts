@@ -2,6 +2,10 @@ import { Component, inject, Input } from '@angular/core';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { User } from '../../models/interfaces/user.model';
 import { UserServiceService } from '../../services/user-service/user-service.service';
+import {
+  onAvatarImageError,
+  resolveAvatarUrl,
+} from './avatar-url';
 
 @Component({
     selector: 'app-avatar',
@@ -24,4 +28,10 @@ export class AvatarComponent {
   };
 
   @Input() userMessageReceiver: User | undefined = undefined;
+
+  avatarSrc(url?: string | null): string {
+    return resolveAvatarUrl(url);
+  }
+
+  onAvatarError = onAvatarImageError;
 }
