@@ -21,7 +21,7 @@ jobs:
 
     env:
       BASE_HREF: ${{ vars.DABUBBLE_BASE_HREF || '/' }}
-      SITE_URL: ${{ vars.DABUBBLE_SITE_URL || 'http://da-bubble.michal-galas.de' }}
+      SITE_URL: ${{ vars.DABUBBLE_SITE_URL || 'https://da-bubble.michal-galas.de' }}
 
     steps:
       - name: Checkout

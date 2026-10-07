@@ -15,7 +15,9 @@
     "serve:ssr:dabubble": "node dist/da-bubble/server/server.mjs",
     "lint": "node scripts/use-local-env.cjs serve && ng lint",
     "env:local": "node scripts/use-local-env.cjs serve",
-    "purge:guests": "node scripts/purge-guest-accounts-once.cjs"
+    "purge:guests": "node scripts/purge-guest-accounts-once.cjs",
+    "deploy:local": "node scripts/deploy-allinkl-local.cjs",
+    "deploy:local:upload-only": "node scripts/deploy-allinkl-local.cjs --skip-build"
   },
   "private": true,
   "dependencies": {

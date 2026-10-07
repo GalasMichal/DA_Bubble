@@ -52,6 +52,9 @@ Thumbs.db
 *-debug.log
 .runtimeconfig.json
 
+# Local deploy (Haupt-FTP — never commit)
+.env.deploy.local
+
 # Local Firebase config (real keys — never commit)
 src/environments/environment.local.ts
 # Generated for Firebase init (copy of local or placeholders; never commit)
